@@ -1,0 +1,37 @@
+region,age_band,count
+London,18-24,3590
+London,25-34,6440
+London,35-44,6914
+London,45-54,6390
+London,55-64,5764
+London,65+,7220
+Midlands,18-24,4925
+Midlands,25-34,6758
+Midlands,35-44,8490
+Midlands,45-54,8462
+Midlands,55-64,6808
+Midlands,65+,8245
+North West,18-24,4884
+North West,25-34,7394
+North West,35-44,8511
+North West,45-54,6086
+North West,55-64,4673
+North West,65+,8601
+Scotland,18-24,3124
+Scotland,25-34,4267
+Scotland,35-44,4099
+Scotland,45-54,3728
+Scotland,55-64,4367
+Scotland,65+,4407
+South East,18-24,4172
+South East,25-34,6195
+South East,35-44,6781
+South East,45-54,6607
+South East,55-64,8440
+South East,65+,7768
+Wales,18-24,1761
+Wales,25-34,2911
+Wales,35-44,2957
+Wales,45-54,2441
+Wales,55-64,2572
+Wales,65+,3248

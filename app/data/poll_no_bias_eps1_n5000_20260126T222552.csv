@@ -1,0 +1,5001 @@
+respondent_id,region,age_band,true_choice,reported_choice,epsilon,k,scenario
+1,Midlands,55-64,2,2,1.0,5,no_bias
+2,Scotland,18-24,0,0,1.0,5,no_bias
+3,Scotland,55-64,3,4,1.0,5,no_bias
+4,Wales,35-44,1,1,1.0,5,no_bias
+5,South East,25-34,2,4,1.0,5,no_bias
+6,London,65+,0,0,1.0,5,no_bias
+7,South East,65+,4,4,1.0,5,no_bias
+8,Scotland,55-64,1,1,1.0,5,no_bias
+9,Wales,35-44,0,0,1.0,5,no_bias
+10,London,35-44,4,4,1.0,5,no_bias
+11,London,35-44,4,3,1.0,5,no_bias
+12,South East,45-54,0,0,1.0,5,no_bias
+13,North West,65+,2,0,1.0,5,no_bias
+14,Scotland,65+,3,2,1.0,5,no_bias
+15,London,18-24,1,1,1.0,5,no_bias
+16,London,45-54,1,0,1.0,5,no_bias
+17,South East,45-54,0,0,1.0,5,no_bias
+18,Scotland,55-64,3,2,1.0,5,no_bias
+19,Midlands,35-44,4,1,1.0,5,no_bias
+20,North West,18-24,4,4,1.0,5,no_bias
+21,North West,45-54,1,1,1.0,5,no_bias
+22,South East,45-54,4,2,1.0,5,no_bias
+23,South East,65+,2,2,1.0,5,no_bias
+24,South East,45-54,2,0,1.0,5,no_bias
+25,Midlands,55-64,3,1,1.0,5,no_bias
+26,South East,65+,3,0,1.0,5,no_bias
+27,Midlands,18-24,4,4,1.0,5,no_bias
+28,London,65+,4,1,1.0,5,no_bias
+29,South East,25-34,4,1,1.0,5,no_bias
+30,Midlands,18-24,3,3,1.0,5,no_bias
+31,Scotland,65+,0,2,1.0,5,no_bias
+32,Wales,55-64,4,4,1.0,5,no_bias
+33,North West,35-44,4,0,1.0,5,no_bias
+34,Midlands,45-54,1,4,1.0,5,no_bias
+35,London,45-54,3,3,1.0,5,no_bias
+36,Wales,35-44,3,0,1.0,5,no_bias
+37,London,18-24,4,3,1.0,5,no_bias
+38,Scotland,25-34,1,1,1.0,5,no_bias
+39,North West,35-44,1,1,1.0,5,no_bias
+40,London,65+,4,2,1.0,5,no_bias
+41,Midlands,45-54,3,0,1.0,5,no_bias
+42,Midlands,45-54,4,4,1.0,5,no_bias
+43,North West,65+,4,4,1.0,5,no_bias
+44,South East,45-54,4,3,1.0,5,no_bias
+45,Scotland,25-34,0,4,1.0,5,no_bias
+46,London,45-54,1,4,1.0,5,no_bias
+47,South East,55-64,1,1,1.0,5,no_bias
+48,London,35-44,4,3,1.0,5,no_bias
+49,South East,35-44,3,0,1.0,5,no_bias
+50,North West,65+,1,0,1.0,5,no_bias
+51,London,25-34,4,4,1.0,5,no_bias
+52,Midlands,45-54,1,0,1.0,5,no_bias
+53,Wales,18-24,4,0,1.0,5,no_bias
+54,Midlands,25-34,3,3,1.0,5,no_bias
+55,London,35-44,2,4,1.0,5,no_bias
+56,North West,45-54,0,1,1.0,5,no_bias
+57,South East,65+,3,3,1.0,5,no_bias
+58,North West,55-64,4,1,1.0,5,no_bias
+59,South East,45-54,1,1,1.0,5,no_bias
+60,London,65+,4,2,1.0,5,no_bias
+61,South East,35-44,3,0,1.0,5,no_bias
+62,Scotland,65+,0,3,1.0,5,no_bias
+63,Scotland,35-44,4,3,1.0,5,no_bias
+64,North West,25-34,2,1,1.0,5,no_bias
+65,North West,18-24,4,4,1.0,5,no_bias
+66,London,45-54,0,0,1.0,5,no_bias
+67,South East,55-64,0,3,1.0,5,no_bias
+68,Scotland,65+,4,3,1.0,5,no_bias
+69,London,65+,2,2,1.0,5,no_bias
+70,Midlands,25-34,4,4,1.0,5,no_bias
+71,South East,55-64,1,1,1.0,5,no_bias
+72,Midlands,55-64,4,1,1.0,5,no_bias
+73,Scotland,45-54,3,3,1.0,5,no_bias
+74,South East,65+,1,1,1.0,5,no_bias
+75,Midlands,18-24,4,0,1.0,5,no_bias
+76,North West,65+,4,1,1.0,5,no_bias
+77,Scotland,45-54,4,4,1.0,5,no_bias
+78,Scotland,65+,4,4,1.0,5,no_bias
+79,Wales,35-44,3,3,1.0,5,no_bias
+80,London,45-54,3,2,1.0,5,no_bias
+81,Wales,35-44,0,0,1.0,5,no_bias
+82,North West,18-24,1,3,1.0,5,no_bias
+83,Midlands,18-24,4,4,1.0,5,no_bias
+84,South East,55-64,3,0,1.0,5,no_bias
+85,Midlands,25-34,4,4,1.0,5,no_bias
+86,South East,65+,0,1,1.0,5,no_bias
+87,Midlands,25-34,4,1,1.0,5,no_bias
+88,Scotland,55-64,1,1,1.0,5,no_bias
+89,South East,45-54,1,1,1.0,5,no_bias
+90,North West,35-44,4,4,1.0,5,no_bias
+91,Midlands,45-54,4,4,1.0,5,no_bias
+92,London,25-34,1,1,1.0,5,no_bias
+93,North West,45-54,4,4,1.0,5,no_bias
+94,Scotland,45-54,3,3,1.0,5,no_bias
+95,Wales,55-64,4,2,1.0,5,no_bias
+96,North West,35-44,4,4,1.0,5,no_bias
+97,Scotland,35-44,4,2,1.0,5,no_bias
+98,South East,45-54,4,4,1.0,5,no_bias
+99,Midlands,65+,0,4,1.0,5,no_bias
+100,South East,18-24,4,3,1.0,5,no_bias
+101,South East,55-64,4,0,1.0,5,no_bias
+102,North West,18-24,4,4,1.0,5,no_bias
+103,North West,65+,0,0,1.0,5,no_bias
+104,Scotland,35-44,4,3,1.0,5,no_bias
+105,South East,25-34,3,3,1.0,5,no_bias
+106,London,65+,2,3,1.0,5,no_bias
+107,North West,55-64,1,1,1.0,5,no_bias
+108,North West,35-44,4,1,1.0,5,no_bias
+109,North West,35-44,0,1,1.0,5,no_bias
+110,Midlands,25-34,3,3,1.0,5,no_bias
+111,Midlands,35-44,4,4,1.0,5,no_bias
+112,South East,65+,4,4,1.0,5,no_bias
+113,Midlands,35-44,4,0,1.0,5,no_bias
+114,South East,35-44,3,4,1.0,5,no_bias
+115,North West,25-34,1,2,1.0,5,no_bias
+116,Midlands,65+,3,3,1.0,5,no_bias
+117,Wales,65+,3,1,1.0,5,no_bias
+118,North West,25-34,4,1,1.0,5,no_bias
+119,Midlands,35-44,4,4,1.0,5,no_bias
+120,London,45-54,4,4,1.0,5,no_bias
+121,North West,45-54,2,2,1.0,5,no_bias
+122,South East,65+,1,1,1.0,5,no_bias
+123,Wales,55-64,1,1,1.0,5,no_bias
+124,Scotland,55-64,0,0,1.0,5,no_bias
+125,Scotland,18-24,4,4,1.0,5,no_bias
+126,South East,35-44,4,1,1.0,5,no_bias
+127,South East,65+,1,3,1.0,5,no_bias
+128,Midlands,25-34,4,4,1.0,5,no_bias
+129,London,45-54,3,1,1.0,5,no_bias
+130,London,55-64,3,0,1.0,5,no_bias
+131,London,65+,4,2,1.0,5,no_bias
+132,Scotland,65+,4,2,1.0,5,no_bias
+133,Scotland,55-64,1,2,1.0,5,no_bias
+134,Midlands,35-44,4,3,1.0,5,no_bias
+135,Midlands,45-54,1,3,1.0,5,no_bias
+136,Wales,45-54,1,1,1.0,5,no_bias
+137,South East,55-64,4,4,1.0,5,no_bias
+138,South East,65+,2,4,1.0,5,no_bias
+139,North West,25-34,4,4,1.0,5,no_bias
+140,Midlands,25-34,2,2,1.0,5,no_bias
+141,North West,18-24,1,1,1.0,5,no_bias
+142,North West,18-24,4,3,1.0,5,no_bias
+143,North West,25-34,1,0,1.0,5,no_bias
+144,Midlands,18-24,3,1,1.0,5,no_bias
+145,North West,65+,4,1,1.0,5,no_bias
+146,North West,35-44,4,2,1.0,5,no_bias
+147,Scotland,55-64,1,4,1.0,5,no_bias
+148,North West,65+,4,4,1.0,5,no_bias
+149,Midlands,55-64,1,2,1.0,5,no_bias
+150,Midlands,45-54,1,2,1.0,5,no_bias
+151,Scotland,18-24,4,3,1.0,5,no_bias
+152,London,65+,1,0,1.0,5,no_bias
+153,London,45-54,4,4,1.0,5,no_bias
+154,Wales,25-34,1,1,1.0,5,no_bias
+155,London,45-54,3,3,1.0,5,no_bias
+156,Midlands,45-54,3,1,1.0,5,no_bias
+157,Midlands,45-54,4,3,1.0,5,no_bias
+158,Midlands,65+,4,1,1.0,5,no_bias
+159,North West,25-34,4,0,1.0,5,no_bias
+160,North West,55-64,2,2,1.0,5,no_bias
+161,South East,65+,2,2,1.0,5,no_bias
+162,London,25-34,0,0,1.0,5,no_bias
+163,Midlands,35-44,4,4,1.0,5,no_bias
+164,North West,45-54,1,4,1.0,5,no_bias
+165,Midlands,35-44,4,0,1.0,5,no_bias
+166,North West,65+,4,1,1.0,5,no_bias
+167,Scotland,35-44,4,2,1.0,5,no_bias
+168,North West,18-24,4,4,1.0,5,no_bias
+169,London,35-44,4,3,1.0,5,no_bias
+170,London,45-54,1,1,1.0,5,no_bias
+171,South East,55-64,1,1,1.0,5,no_bias
+172,North West,45-54,1,1,1.0,5,no_bias
+173,London,65+,1,1,1.0,5,no_bias
+174,London,25-34,4,4,1.0,5,no_bias
+175,Wales,35-44,1,1,1.0,5,no_bias
+176,North West,35-44,0,0,1.0,5,no_bias
+177,South East,65+,3,3,1.0,5,no_bias
+178,South East,25-34,1,4,1.0,5,no_bias
+179,London,55-64,1,1,1.0,5,no_bias
+180,London,18-24,1,1,1.0,5,no_bias
+181,Midlands,25-34,4,3,1.0,5,no_bias
+182,South East,45-54,1,3,1.0,5,no_bias
+183,London,25-34,2,2,1.0,5,no_bias
+184,North West,18-24,4,4,1.0,5,no_bias
+185,Wales,65+,2,2,1.0,5,no_bias
+186,Wales,25-34,4,1,1.0,5,no_bias
+187,London,55-64,1,3,1.0,5,no_bias
+188,South East,25-34,4,2,1.0,5,no_bias
+189,North West,55-64,4,3,1.0,5,no_bias
+190,London,35-44,4,0,1.0,5,no_bias
+191,South East,65+,3,4,1.0,5,no_bias
+192,Midlands,55-64,4,3,1.0,5,no_bias
+193,London,55-64,4,4,1.0,5,no_bias
+194,South East,55-64,1,0,1.0,5,no_bias
+195,South East,25-34,1,0,1.0,5,no_bias
+196,South East,65+,1,1,1.0,5,no_bias
+197,Midlands,35-44,4,4,1.0,5,no_bias
+198,Scotland,35-44,4,3,1.0,5,no_bias
+199,Midlands,55-64,4,3,1.0,5,no_bias
+200,Midlands,45-54,0,0,1.0,5,no_bias
+201,London,45-54,1,1,1.0,5,no_bias
+202,London,35-44,1,3,1.0,5,no_bias
+203,North West,25-34,4,4,1.0,5,no_bias
+204,London,25-34,4,2,1.0,5,no_bias
+205,Midlands,35-44,0,1,1.0,5,no_bias
+206,North West,65+,4,2,1.0,5,no_bias
+207,Wales,25-34,3,2,1.0,5,no_bias
+208,North West,45-54,1,2,1.0,5,no_bias
+209,Midlands,65+,4,2,1.0,5,no_bias
+210,London,45-54,1,2,1.0,5,no_bias
+211,South East,35-44,4,4,1.0,5,no_bias
+212,Midlands,55-64,2,4,1.0,5,no_bias
+213,North West,65+,4,0,1.0,5,no_bias
+214,London,55-64,4,0,1.0,5,no_bias
+215,South East,55-64,1,3,1.0,5,no_bias
+216,South East,18-24,2,3,1.0,5,no_bias
+217,South East,25-34,4,0,1.0,5,no_bias
+218,Midlands,65+,4,4,1.0,5,no_bias
+219,London,65+,3,1,1.0,5,no_bias
+220,Midlands,35-44,4,4,1.0,5,no_bias
+221,North West,55-64,1,1,1.0,5,no_bias
+222,North West,35-44,2,2,1.0,5,no_bias
+223,London,55-64,4,4,1.0,5,no_bias
+224,Midlands,55-64,1,4,1.0,5,no_bias
+225,Midlands,35-44,4,2,1.0,5,no_bias
+226,South East,35-44,1,4,1.0,5,no_bias
+227,Wales,65+,1,0,1.0,5,no_bias
+228,South East,55-64,1,4,1.0,5,no_bias
+229,Scotland,45-54,1,2,1.0,5,no_bias
+230,South East,25-34,1,1,1.0,5,no_bias
+231,North West,65+,4,1,1.0,5,no_bias
+232,London,45-54,1,4,1.0,5,no_bias
+233,Wales,65+,4,3,1.0,5,no_bias
+234,Midlands,65+,2,4,1.0,5,no_bias
+235,Midlands,65+,4,1,1.0,5,no_bias
+236,Wales,45-54,0,1,1.0,5,no_bias
+237,South East,55-64,1,3,1.0,5,no_bias
+238,North West,45-54,4,1,1.0,5,no_bias
+239,North West,45-54,1,0,1.0,5,no_bias
+240,Midlands,55-64,1,2,1.0,5,no_bias
+241,Scotland,45-54,1,2,1.0,5,no_bias
+242,South East,65+,4,0,1.0,5,no_bias
+243,North West,45-54,1,3,1.0,5,no_bias
+244,London,25-34,0,2,1.0,5,no_bias
+245,Scotland,35-44,0,0,1.0,5,no_bias
+246,North West,18-24,4,4,1.0,5,no_bias
+247,South East,25-34,2,4,1.0,5,no_bias
+248,Midlands,25-34,4,1,1.0,5,no_bias
+249,Scotland,35-44,4,4,1.0,5,no_bias
+250,London,45-54,1,3,1.0,5,no_bias
+251,South East,45-54,3,4,1.0,5,no_bias
+252,South East,65+,3,1,1.0,5,no_bias
+253,North West,45-54,2,1,1.0,5,no_bias
+254,North West,55-64,1,1,1.0,5,no_bias
+255,Midlands,55-64,1,1,1.0,5,no_bias
+256,North West,65+,4,2,1.0,5,no_bias
+257,South East,55-64,1,1,1.0,5,no_bias
+258,London,45-54,0,4,1.0,5,no_bias
+259,London,55-64,2,0,1.0,5,no_bias
+260,North West,65+,1,1,1.0,5,no_bias
+261,Wales,65+,1,1,1.0,5,no_bias
+262,Scotland,55-64,4,4,1.0,5,no_bias
+263,Scotland,35-44,3,1,1.0,5,no_bias
+264,London,25-34,3,3,1.0,5,no_bias
+265,Midlands,45-54,0,0,1.0,5,no_bias
+266,Scotland,45-54,0,4,1.0,5,no_bias
+267,North West,25-34,1,2,1.0,5,no_bias
+268,Midlands,25-34,4,4,1.0,5,no_bias
+269,Midlands,65+,4,4,1.0,5,no_bias
+270,South East,65+,0,3,1.0,5,no_bias
+271,London,55-64,2,2,1.0,5,no_bias
+272,North West,18-24,4,3,1.0,5,no_bias
+273,London,35-44,1,0,1.0,5,no_bias
+274,South East,35-44,4,4,1.0,5,no_bias
+275,North West,65+,4,0,1.0,5,no_bias
+276,Wales,55-64,4,2,1.0,5,no_bias
+277,North West,25-34,4,1,1.0,5,no_bias
+278,Scotland,25-34,3,1,1.0,5,no_bias
+279,North West,65+,1,0,1.0,5,no_bias
+280,Midlands,45-54,3,1,1.0,5,no_bias
+281,Midlands,45-54,3,2,1.0,5,no_bias
+282,North West,18-24,4,2,1.0,5,no_bias
+283,Wales,35-44,1,2,1.0,5,no_bias
+284,London,55-64,3,3,1.0,5,no_bias
+285,South East,35-44,1,1,1.0,5,no_bias
+286,London,65+,2,2,1.0,5,no_bias
+287,Midlands,25-34,4,4,1.0,5,no_bias
+288,North West,35-44,4,2,1.0,5,no_bias
+289,Midlands,65+,3,3,1.0,5,no_bias
+290,Scotland,55-64,0,0,1.0,5,no_bias
+291,North West,55-64,0,3,1.0,5,no_bias
+292,Midlands,45-54,1,1,1.0,5,no_bias
+293,Midlands,55-64,1,2,1.0,5,no_bias
+294,Midlands,45-54,0,4,1.0,5,no_bias
+295,South East,35-44,4,2,1.0,5,no_bias
+296,Midlands,45-54,3,3,1.0,5,no_bias
+297,North West,25-34,4,4,1.0,5,no_bias
+298,South East,35-44,4,3,1.0,5,no_bias
+299,South East,55-64,0,2,1.0,5,no_bias
+300,South East,18-24,2,4,1.0,5,no_bias
+301,London,18-24,3,1,1.0,5,no_bias
+302,Wales,35-44,4,4,1.0,5,no_bias
+303,South East,25-34,0,2,1.0,5,no_bias
+304,Midlands,55-64,4,0,1.0,5,no_bias
+305,North West,25-34,4,4,1.0,5,no_bias
+306,South East,65+,2,2,1.0,5,no_bias
+307,Scotland,45-54,0,1,1.0,5,no_bias
+308,South East,45-54,1,4,1.0,5,no_bias
+309,Wales,55-64,1,0,1.0,5,no_bias
+310,London,65+,4,4,1.0,5,no_bias
+311,South East,65+,2,2,1.0,5,no_bias
+312,South East,55-64,1,1,1.0,5,no_bias
+313,Midlands,35-44,4,1,1.0,5,no_bias
+314,Midlands,35-44,4,4,1.0,5,no_bias
+315,South East,25-34,4,4,1.0,5,no_bias
+316,Scotland,45-54,2,0,1.0,5,no_bias
+317,North West,45-54,4,4,1.0,5,no_bias
+318,London,65+,1,1,1.0,5,no_bias
+319,South East,18-24,3,0,1.0,5,no_bias
+320,London,35-44,4,4,1.0,5,no_bias
+321,London,25-34,0,3,1.0,5,no_bias
+322,Wales,45-54,1,1,1.0,5,no_bias
+323,Midlands,65+,4,4,1.0,5,no_bias
+324,North West,25-34,4,0,1.0,5,no_bias
+325,Midlands,55-64,2,3,1.0,5,no_bias
+326,London,25-34,4,3,1.0,5,no_bias
+327,Midlands,25-34,4,2,1.0,5,no_bias
+328,Midlands,65+,4,4,1.0,5,no_bias
+329,North West,25-34,4,2,1.0,5,no_bias
+330,Midlands,18-24,4,0,1.0,5,no_bias
+331,North West,35-44,1,1,1.0,5,no_bias
+332,South East,18-24,4,4,1.0,5,no_bias
+333,North West,35-44,4,1,1.0,5,no_bias
+334,South East,65+,3,3,1.0,5,no_bias
+335,North West,18-24,4,4,1.0,5,no_bias
+336,Scotland,55-64,1,2,1.0,5,no_bias
+337,Wales,45-54,1,1,1.0,5,no_bias
+338,North West,18-24,4,4,1.0,5,no_bias
+339,Midlands,25-34,4,0,1.0,5,no_bias
+340,Wales,65+,3,2,1.0,5,no_bias
+341,North West,25-34,4,4,1.0,5,no_bias
+342,North West,65+,4,0,1.0,5,no_bias
+343,North West,25-34,1,3,1.0,5,no_bias
+344,London,35-44,0,1,1.0,5,no_bias
+345,Wales,45-54,3,4,1.0,5,no_bias
+346,Midlands,65+,4,4,1.0,5,no_bias
+347,Scotland,45-54,1,1,1.0,5,no_bias
+348,Scotland,18-24,0,1,1.0,5,no_bias
+349,Wales,65+,1,1,1.0,5,no_bias
+350,South East,45-54,1,1,1.0,5,no_bias
+351,Midlands,55-64,4,4,1.0,5,no_bias
+352,Midlands,55-64,0,0,1.0,5,no_bias
+353,London,35-44,4,1,1.0,5,no_bias
+354,Scotland,55-64,3,4,1.0,5,no_bias
+355,North West,55-64,4,1,1.0,5,no_bias
+356,London,55-64,1,1,1.0,5,no_bias
+357,London,18-24,2,0,1.0,5,no_bias
+358,Scotland,45-54,4,3,1.0,5,no_bias
+359,South East,55-64,3,3,1.0,5,no_bias
+360,North West,45-54,1,1,1.0,5,no_bias
+361,London,45-54,4,2,1.0,5,no_bias
+362,Midlands,65+,1,1,1.0,5,no_bias
+363,North West,35-44,4,4,1.0,5,no_bias
+364,London,45-54,1,3,1.0,5,no_bias
+365,Wales,35-44,4,4,1.0,5,no_bias
+366,North West,65+,1,2,1.0,5,no_bias
+367,South East,35-44,4,3,1.0,5,no_bias
+368,London,35-44,4,4,1.0,5,no_bias
+369,London,35-44,4,4,1.0,5,no_bias
+370,London,18-24,4,3,1.0,5,no_bias
+371,Midlands,55-64,3,0,1.0,5,no_bias
+372,Midlands,18-24,4,1,1.0,5,no_bias
+373,North West,35-44,4,2,1.0,5,no_bias
+374,Midlands,35-44,3,0,1.0,5,no_bias
+375,Midlands,65+,4,0,1.0,5,no_bias
+376,South East,45-54,1,0,1.0,5,no_bias
+377,London,35-44,0,2,1.0,5,no_bias
+378,South East,18-24,3,2,1.0,5,no_bias
+379,South East,45-54,4,0,1.0,5,no_bias
+380,Midlands,25-34,4,3,1.0,5,no_bias
+381,Midlands,65+,4,4,1.0,5,no_bias
+382,Midlands,18-24,4,1,1.0,5,no_bias
+383,Wales,65+,0,4,1.0,5,no_bias
+384,Wales,45-54,1,1,1.0,5,no_bias
+385,North West,65+,1,1,1.0,5,no_bias
+386,Midlands,18-24,4,4,1.0,5,no_bias
+387,Wales,18-24,2,2,1.0,5,no_bias
+388,North West,18-24,1,0,1.0,5,no_bias
+389,South East,25-34,4,3,1.0,5,no_bias
+390,Wales,25-34,4,4,1.0,5,no_bias
+391,Wales,55-64,4,4,1.0,5,no_bias
+392,Midlands,65+,3,3,1.0,5,no_bias
+393,Midlands,18-24,3,3,1.0,5,no_bias
+394,South East,55-64,3,3,1.0,5,no_bias
+395,Wales,25-34,2,1,1.0,5,no_bias
+396,North West,45-54,1,0,1.0,5,no_bias
+397,Scotland,55-64,2,2,1.0,5,no_bias
+398,North West,35-44,4,0,1.0,5,no_bias
+399,South East,55-64,1,0,1.0,5,no_bias
+400,Midlands,55-64,4,1,1.0,5,no_bias
+401,Scotland,45-54,0,0,1.0,5,no_bias
+402,North West,65+,1,3,1.0,5,no_bias
+403,London,45-54,1,1,1.0,5,no_bias
+404,London,55-64,1,1,1.0,5,no_bias
+405,Midlands,45-54,4,0,1.0,5,no_bias
+406,Scotland,45-54,3,1,1.0,5,no_bias
+407,London,45-54,1,3,1.0,5,no_bias
+408,South East,55-64,4,3,1.0,5,no_bias
+409,Scotland,65+,4,4,1.0,5,no_bias
+410,Scotland,35-44,4,1,1.0,5,no_bias
+411,North West,45-54,1,0,1.0,5,no_bias
+412,Midlands,65+,4,4,1.0,5,no_bias
+413,Midlands,45-54,1,1,1.0,5,no_bias
+414,South East,35-44,1,0,1.0,5,no_bias
+415,South East,55-64,1,2,1.0,5,no_bias
+416,Midlands,35-44,4,4,1.0,5,no_bias
+417,London,65+,2,2,1.0,5,no_bias
+418,South East,35-44,4,4,1.0,5,no_bias
+419,Midlands,45-54,3,2,1.0,5,no_bias
+420,Wales,45-54,2,1,1.0,5,no_bias
+421,Midlands,45-54,2,4,1.0,5,no_bias
+422,North West,65+,2,2,1.0,5,no_bias
+423,North West,55-64,1,4,1.0,5,no_bias
+424,London,25-34,1,3,1.0,5,no_bias
+425,North West,45-54,4,3,1.0,5,no_bias
+426,South East,25-34,4,2,1.0,5,no_bias
+427,North West,18-24,3,3,1.0,5,no_bias
+428,Scotland,65+,3,3,1.0,5,no_bias
+429,Midlands,55-64,0,3,1.0,5,no_bias
+430,North West,18-24,4,1,1.0,5,no_bias
+431,Midlands,65+,4,3,1.0,5,no_bias
+432,Midlands,65+,4,1,1.0,5,no_bias
+433,South East,45-54,1,2,1.0,5,no_bias
+434,Midlands,65+,4,4,1.0,5,no_bias
+435,Midlands,55-64,1,1,1.0,5,no_bias
+436,Scotland,18-24,0,2,1.0,5,no_bias
+437,Midlands,25-34,4,4,1.0,5,no_bias
+438,South East,25-34,1,1,1.0,5,no_bias
+439,Wales,35-44,3,4,1.0,5,no_bias
+440,South East,35-44,0,3,1.0,5,no_bias
+441,Midlands,45-54,4,4,1.0,5,no_bias
+442,South East,35-44,4,4,1.0,5,no_bias
+443,London,25-34,0,2,1.0,5,no_bias
+444,Midlands,55-64,1,1,1.0,5,no_bias
+445,Wales,55-64,2,2,1.0,5,no_bias
+446,Midlands,45-54,3,3,1.0,5,no_bias
+447,London,45-54,3,3,1.0,5,no_bias
+448,Wales,45-54,1,1,1.0,5,no_bias
+449,Midlands,65+,2,0,1.0,5,no_bias
+450,South East,18-24,0,1,1.0,5,no_bias
+451,North West,45-54,4,1,1.0,5,no_bias
+452,North West,18-24,0,1,1.0,5,no_bias
+453,London,45-54,1,2,1.0,5,no_bias
+454,North West,35-44,4,0,1.0,5,no_bias
+455,North West,25-34,0,0,1.0,5,no_bias
+456,Midlands,25-34,1,3,1.0,5,no_bias
+457,Midlands,18-24,4,1,1.0,5,no_bias
+458,Scotland,25-34,4,4,1.0,5,no_bias
+459,South East,25-34,1,1,1.0,5,no_bias
+460,Scotland,35-44,4,4,1.0,5,no_bias
+461,London,35-44,4,4,1.0,5,no_bias
+462,Midlands,55-64,4,2,1.0,5,no_bias
+463,London,25-34,1,1,1.0,5,no_bias
+464,South East,55-64,0,4,1.0,5,no_bias
+465,London,65+,3,3,1.0,5,no_bias
+466,South East,55-64,1,0,1.0,5,no_bias
+467,London,55-64,4,4,1.0,5,no_bias
+468,Midlands,45-54,1,3,1.0,5,no_bias
+469,Midlands,45-54,4,4,1.0,5,no_bias
+470,Midlands,25-34,4,1,1.0,5,no_bias
+471,Midlands,45-54,4,2,1.0,5,no_bias
+472,South East,45-54,3,4,1.0,5,no_bias
+473,Midlands,25-34,4,0,1.0,5,no_bias
+474,South East,65+,1,1,1.0,5,no_bias
+475,South East,45-54,0,1,1.0,5,no_bias
+476,North West,25-34,1,1,1.0,5,no_bias
+477,Midlands,18-24,3,0,1.0,5,no_bias
+478,South East,35-44,4,3,1.0,5,no_bias
+479,Wales,55-64,3,3,1.0,5,no_bias
+480,Scotland,65+,1,1,1.0,5,no_bias
+481,London,18-24,1,0,1.0,5,no_bias
+482,South East,18-24,1,0,1.0,5,no_bias
+483,Wales,65+,1,0,1.0,5,no_bias
+484,South East,65+,0,2,1.0,5,no_bias
+485,North West,35-44,4,4,1.0,5,no_bias
+486,London,55-64,1,0,1.0,5,no_bias
+487,London,35-44,4,2,1.0,5,no_bias
+488,South East,55-64,0,4,1.0,5,no_bias
+489,Scotland,45-54,2,4,1.0,5,no_bias
+490,Midlands,65+,3,3,1.0,5,no_bias
+491,North West,25-34,1,3,1.0,5,no_bias
+492,Midlands,65+,2,1,1.0,5,no_bias
+493,Midlands,25-34,2,4,1.0,5,no_bias
+494,Wales,18-24,2,4,1.0,5,no_bias
+495,Midlands,65+,4,4,1.0,5,no_bias
+496,Scotland,55-64,1,4,1.0,5,no_bias
+497,Wales,35-44,4,4,1.0,5,no_bias
+498,Scotland,55-64,3,0,1.0,5,no_bias
+499,South East,45-54,1,4,1.0,5,no_bias
+500,North West,35-44,0,2,1.0,5,no_bias
+501,Midlands,65+,4,0,1.0,5,no_bias
+502,South East,18-24,4,4,1.0,5,no_bias
+503,South East,45-54,0,3,1.0,5,no_bias
+504,South East,45-54,1,3,1.0,5,no_bias
+505,Midlands,65+,4,0,1.0,5,no_bias
+506,South East,65+,4,0,1.0,5,no_bias
+507,North West,65+,1,4,1.0,5,no_bias
+508,North West,25-34,4,3,1.0,5,no_bias
+509,South East,18-24,4,1,1.0,5,no_bias
+510,London,35-44,0,0,1.0,5,no_bias
+511,Midlands,55-64,2,3,1.0,5,no_bias
+512,Midlands,55-64,1,3,1.0,5,no_bias
+513,Scotland,55-64,1,3,1.0,5,no_bias
+514,London,45-54,1,4,1.0,5,no_bias
+515,London,65+,4,4,1.0,5,no_bias
+516,North West,65+,1,1,1.0,5,no_bias
+517,South East,25-34,4,3,1.0,5,no_bias
+518,North West,65+,3,3,1.0,5,no_bias
+519,Wales,18-24,2,2,1.0,5,no_bias
+520,Midlands,65+,1,1,1.0,5,no_bias
+521,Midlands,55-64,1,3,1.0,5,no_bias
+522,London,55-64,1,2,1.0,5,no_bias
+523,Midlands,65+,4,4,1.0,5,no_bias
+524,South East,55-64,1,1,1.0,5,no_bias
+525,North West,35-44,0,3,1.0,5,no_bias
+526,Midlands,65+,4,4,1.0,5,no_bias
+527,London,55-64,1,2,1.0,5,no_bias
+528,Midlands,35-44,4,4,1.0,5,no_bias
+529,South East,55-64,1,3,1.0,5,no_bias
+530,London,35-44,1,3,1.0,5,no_bias
+531,North West,25-34,1,4,1.0,5,no_bias
+532,Midlands,65+,3,3,1.0,5,no_bias
+533,Midlands,65+,4,3,1.0,5,no_bias
+534,Midlands,18-24,4,4,1.0,5,no_bias
+535,London,18-24,1,1,1.0,5,no_bias
+536,Midlands,55-64,1,0,1.0,5,no_bias
+537,South East,45-54,1,0,1.0,5,no_bias
+538,Scotland,18-24,1,0,1.0,5,no_bias
+539,Midlands,35-44,4,0,1.0,5,no_bias
+540,Midlands,35-44,4,3,1.0,5,no_bias
+541,North West,18-24,4,1,1.0,5,no_bias
+542,Midlands,18-24,4,3,1.0,5,no_bias
+543,London,25-34,4,0,1.0,5,no_bias
+544,London,25-34,4,4,1.0,5,no_bias
+545,Wales,65+,4,0,1.0,5,no_bias
+546,North West,25-34,4,4,1.0,5,no_bias
+547,South East,25-34,2,0,1.0,5,no_bias
+548,North West,55-64,0,4,1.0,5,no_bias
+549,South East,45-54,1,0,1.0,5,no_bias
+550,South East,35-44,0,3,1.0,5,no_bias
+551,South East,25-34,3,3,1.0,5,no_bias
+552,Wales,35-44,4,1,1.0,5,no_bias
+553,Wales,18-24,1,0,1.0,5,no_bias
+554,North West,45-54,1,1,1.0,5,no_bias
+555,Midlands,45-54,1,3,1.0,5,no_bias
+556,North West,65+,1,2,1.0,5,no_bias
+557,Midlands,35-44,4,4,1.0,5,no_bias
+558,Midlands,35-44,4,4,1.0,5,no_bias
+559,Scotland,35-44,4,4,1.0,5,no_bias
+560,London,55-64,1,1,1.0,5,no_bias
+561,Midlands,25-34,4,3,1.0,5,no_bias
+562,North West,65+,4,2,1.0,5,no_bias
+563,London,35-44,3,3,1.0,5,no_bias
+564,London,25-34,1,4,1.0,5,no_bias
+565,Wales,35-44,1,1,1.0,5,no_bias
+566,London,45-54,3,4,1.0,5,no_bias
+567,London,45-54,4,3,1.0,5,no_bias
+568,North West,25-34,4,4,1.0,5,no_bias
+569,Midlands,55-64,2,2,1.0,5,no_bias
+570,London,25-34,1,0,1.0,5,no_bias
+571,London,35-44,4,2,1.0,5,no_bias
+572,Midlands,25-34,4,0,1.0,5,no_bias
+573,Scotland,25-34,1,1,1.0,5,no_bias
+574,Scotland,45-54,0,4,1.0,5,no_bias
+575,Midlands,55-64,4,4,1.0,5,no_bias
+576,North West,55-64,3,0,1.0,5,no_bias
+577,Midlands,65+,2,2,1.0,5,no_bias
+578,South East,35-44,0,2,1.0,5,no_bias
+579,Midlands,35-44,4,2,1.0,5,no_bias
+580,South East,35-44,4,0,1.0,5,no_bias
+581,London,65+,1,3,1.0,5,no_bias
+582,North West,55-64,1,3,1.0,5,no_bias
+583,North West,65+,1,1,1.0,5,no_bias
+584,Midlands,18-24,4,4,1.0,5,no_bias
+585,Midlands,65+,3,0,1.0,5,no_bias
+586,Wales,65+,1,1,1.0,5,no_bias
+587,North West,25-34,1,1,1.0,5,no_bias
+588,London,65+,0,4,1.0,5,no_bias
+589,South East,35-44,1,4,1.0,5,no_bias
+590,North West,65+,1,1,1.0,5,no_bias
+591,South East,65+,4,0,1.0,5,no_bias
+592,Midlands,18-24,1,2,1.0,5,no_bias
+593,Scotland,55-64,0,3,1.0,5,no_bias
+594,Wales,25-34,4,2,1.0,5,no_bias
+595,South East,25-34,1,4,1.0,5,no_bias
+596,North West,35-44,3,3,1.0,5,no_bias
+597,London,55-64,1,1,1.0,5,no_bias
+598,London,18-24,1,0,1.0,5,no_bias
+599,North West,18-24,4,1,1.0,5,no_bias
+600,London,35-44,0,0,1.0,5,no_bias
+601,Midlands,35-44,4,2,1.0,5,no_bias
+602,London,65+,3,4,1.0,5,no_bias
+603,South East,55-64,1,0,1.0,5,no_bias
+604,London,65+,4,4,1.0,5,no_bias
+605,Midlands,25-34,0,0,1.0,5,no_bias
+606,North West,18-24,1,1,1.0,5,no_bias
+607,North West,65+,0,1,1.0,5,no_bias
+608,Midlands,25-34,4,0,1.0,5,no_bias
+609,South East,55-64,1,4,1.0,5,no_bias
+610,Midlands,18-24,4,4,1.0,5,no_bias
+611,Wales,25-34,4,0,1.0,5,no_bias
+612,South East,25-34,3,0,1.0,5,no_bias
+613,Midlands,35-44,3,2,1.0,5,no_bias
+614,North West,35-44,4,0,1.0,5,no_bias
+615,North West,35-44,1,2,1.0,5,no_bias
+616,Scotland,45-54,3,0,1.0,5,no_bias
+617,Midlands,18-24,4,3,1.0,5,no_bias
+618,North West,45-54,4,4,1.0,5,no_bias
+619,Midlands,18-24,1,2,1.0,5,no_bias
+620,North West,35-44,4,0,1.0,5,no_bias
+621,Midlands,65+,4,4,1.0,5,no_bias
+622,Scotland,45-54,2,3,1.0,5,no_bias
+623,North West,55-64,4,4,1.0,5,no_bias
+624,Midlands,45-54,3,2,1.0,5,no_bias
+625,Midlands,55-64,3,1,1.0,5,no_bias
+626,South East,65+,3,1,1.0,5,no_bias
+627,London,35-44,4,2,1.0,5,no_bias
+628,Midlands,55-64,4,4,1.0,5,no_bias
+629,Midlands,25-34,4,4,1.0,5,no_bias
+630,Midlands,45-54,4,4,1.0,5,no_bias
+631,North West,35-44,4,1,1.0,5,no_bias
+632,South East,45-54,4,1,1.0,5,no_bias
+633,South East,65+,1,1,1.0,5,no_bias
+634,South East,65+,1,0,1.0,5,no_bias
+635,Midlands,45-54,1,3,1.0,5,no_bias
+636,South East,35-44,4,4,1.0,5,no_bias
+637,London,55-64,0,2,1.0,5,no_bias
+638,Scotland,55-64,0,0,1.0,5,no_bias
+639,London,45-54,2,2,1.0,5,no_bias
+640,Midlands,45-54,1,1,1.0,5,no_bias
+641,London,35-44,4,2,1.0,5,no_bias
+642,North West,25-34,1,3,1.0,5,no_bias
+643,South East,45-54,3,2,1.0,5,no_bias
+644,Scotland,65+,3,3,1.0,5,no_bias
+645,South East,18-24,0,4,1.0,5,no_bias
+646,London,55-64,4,4,1.0,5,no_bias
+647,North West,55-64,1,2,1.0,5,no_bias
+648,Midlands,45-54,1,3,1.0,5,no_bias
+649,London,45-54,0,0,1.0,5,no_bias
+650,Midlands,45-54,4,4,1.0,5,no_bias
+651,London,35-44,3,0,1.0,5,no_bias
+652,Midlands,65+,3,0,1.0,5,no_bias
+653,London,25-34,1,1,1.0,5,no_bias
+654,North West,18-24,1,2,1.0,5,no_bias
+655,North West,25-34,3,1,1.0,5,no_bias
+656,North West,35-44,4,3,1.0,5,no_bias
+657,London,18-24,4,4,1.0,5,no_bias
+658,North West,35-44,0,4,1.0,5,no_bias
+659,South East,55-64,1,1,1.0,5,no_bias
+660,Midlands,55-64,3,1,1.0,5,no_bias
+661,South East,65+,3,4,1.0,5,no_bias
+662,Scotland,45-54,1,2,1.0,5,no_bias
+663,London,45-54,4,4,1.0,5,no_bias
+664,Scotland,35-44,1,1,1.0,5,no_bias
+665,North West,18-24,0,0,1.0,5,no_bias
+666,Wales,45-54,1,1,1.0,5,no_bias
+667,South East,45-54,1,3,1.0,5,no_bias
+668,South East,25-34,4,0,1.0,5,no_bias
+669,South East,35-44,3,3,1.0,5,no_bias
+670,Midlands,45-54,4,2,1.0,5,no_bias
+671,Wales,45-54,4,4,1.0,5,no_bias
+672,Midlands,45-54,4,1,1.0,5,no_bias
+673,South East,35-44,4,4,1.0,5,no_bias
+674,South East,18-24,0,2,1.0,5,no_bias
+675,London,35-44,4,3,1.0,5,no_bias
+676,South East,55-64,4,0,1.0,5,no_bias
+677,North West,45-54,2,2,1.0,5,no_bias
+678,South East,55-64,1,3,1.0,5,no_bias
+679,Scotland,18-24,3,3,1.0,5,no_bias
+680,North West,35-44,4,2,1.0,5,no_bias
+681,Wales,18-24,2,2,1.0,5,no_bias
+682,North West,65+,4,3,1.0,5,no_bias
+683,North West,55-64,1,1,1.0,5,no_bias
+684,South East,55-64,1,4,1.0,5,no_bias
+685,London,25-34,0,0,1.0,5,no_bias
+686,Scotland,45-54,3,3,1.0,5,no_bias
+687,Scotland,45-54,1,2,1.0,5,no_bias
+688,South East,55-64,1,0,1.0,5,no_bias
+689,London,18-24,0,3,1.0,5,no_bias
+690,Scotland,25-34,0,2,1.0,5,no_bias
+691,London,55-64,4,1,1.0,5,no_bias
+692,London,45-54,0,0,1.0,5,no_bias
+693,Scotland,45-54,4,4,1.0,5,no_bias
+694,North West,25-34,4,1,1.0,5,no_bias
+695,London,25-34,0,2,1.0,5,no_bias
+696,London,55-64,4,4,1.0,5,no_bias
+697,Midlands,55-64,4,4,1.0,5,no_bias
+698,North West,18-24,1,2,1.0,5,no_bias
+699,North West,18-24,0,2,1.0,5,no_bias
+700,South East,45-54,3,1,1.0,5,no_bias
+701,South East,55-64,1,3,1.0,5,no_bias
+702,South East,55-64,3,3,1.0,5,no_bias
+703,Wales,65+,4,3,1.0,5,no_bias
+704,London,25-34,1,4,1.0,5,no_bias
+705,North West,35-44,4,4,1.0,5,no_bias
+706,London,45-54,4,4,1.0,5,no_bias
+707,London,55-64,2,0,1.0,5,no_bias
+708,Wales,35-44,1,2,1.0,5,no_bias
+709,London,55-64,1,4,1.0,5,no_bias
+710,North West,65+,4,2,1.0,5,no_bias
+711,Wales,45-54,4,2,1.0,5,no_bias
+712,South East,35-44,1,1,1.0,5,no_bias
+713,Scotland,45-54,1,4,1.0,5,no_bias
+714,Scotland,25-34,4,4,1.0,5,no_bias
+715,Midlands,45-54,4,0,1.0,5,no_bias
+716,Midlands,65+,4,3,1.0,5,no_bias
+717,Scotland,35-44,1,1,1.0,5,no_bias
+718,Wales,18-24,2,3,1.0,5,no_bias
+719,Midlands,18-24,4,4,1.0,5,no_bias
+720,Midlands,18-24,2,1,1.0,5,no_bias
+721,North West,35-44,4,4,1.0,5,no_bias
+722,London,55-64,0,0,1.0,5,no_bias
+723,South East,65+,3,3,1.0,5,no_bias
+724,South East,35-44,0,0,1.0,5,no_bias
+725,London,35-44,4,4,1.0,5,no_bias
+726,London,65+,1,2,1.0,5,no_bias
+727,South East,55-64,3,3,1.0,5,no_bias
+728,Wales,45-54,4,3,1.0,5,no_bias
+729,North West,55-64,3,3,1.0,5,no_bias
+730,Midlands,25-34,4,4,1.0,5,no_bias
+731,London,65+,1,4,1.0,5,no_bias
+732,Midlands,35-44,3,2,1.0,5,no_bias
+733,London,55-64,2,1,1.0,5,no_bias
+734,South East,45-54,1,2,1.0,5,no_bias
+735,Midlands,45-54,1,4,1.0,5,no_bias
+736,London,18-24,1,1,1.0,5,no_bias
+737,Midlands,35-44,4,3,1.0,5,no_bias
+738,North West,25-34,4,0,1.0,5,no_bias
+739,Scotland,65+,1,0,1.0,5,no_bias
+740,Scotland,35-44,3,4,1.0,5,no_bias
+741,London,65+,3,3,1.0,5,no_bias
+742,North West,18-24,0,2,1.0,5,no_bias
+743,South East,55-64,1,4,1.0,5,no_bias
+744,South East,45-54,3,0,1.0,5,no_bias
+745,London,55-64,1,4,1.0,5,no_bias
+746,London,18-24,1,4,1.0,5,no_bias
+747,Wales,55-64,0,2,1.0,5,no_bias
+748,North West,65+,3,3,1.0,5,no_bias
+749,South East,35-44,4,1,1.0,5,no_bias
+750,North West,65+,1,3,1.0,5,no_bias
+751,Scotland,35-44,1,1,1.0,5,no_bias
+752,North West,65+,0,1,1.0,5,no_bias
+753,South East,45-54,2,0,1.0,5,no_bias
+754,Scotland,45-54,3,2,1.0,5,no_bias
+755,Midlands,25-34,4,4,1.0,5,no_bias
+756,Midlands,55-64,1,1,1.0,5,no_bias
+757,London,35-44,2,2,1.0,5,no_bias
+758,Midlands,18-24,4,4,1.0,5,no_bias
+759,North West,35-44,4,4,1.0,5,no_bias
+760,Wales,65+,0,0,1.0,5,no_bias
+761,London,35-44,0,1,1.0,5,no_bias
+762,North West,55-64,4,0,1.0,5,no_bias
+763,London,18-24,2,4,1.0,5,no_bias
+764,Scotland,65+,1,3,1.0,5,no_bias
+765,Midlands,35-44,4,4,1.0,5,no_bias
+766,North West,35-44,4,3,1.0,5,no_bias
+767,Scotland,25-34,4,4,1.0,5,no_bias
+768,London,65+,0,1,1.0,5,no_bias
+769,Wales,65+,4,0,1.0,5,no_bias
+770,North West,55-64,4,4,1.0,5,no_bias
+771,Midlands,35-44,4,0,1.0,5,no_bias
+772,Scotland,35-44,4,4,1.0,5,no_bias
+773,Wales,45-54,1,4,1.0,5,no_bias
+774,Midlands,18-24,4,4,1.0,5,no_bias
+775,South East,25-34,4,0,1.0,5,no_bias
+776,Scotland,35-44,4,1,1.0,5,no_bias
+777,South East,45-54,3,2,1.0,5,no_bias
+778,Scotland,65+,0,0,1.0,5,no_bias
+779,North West,35-44,4,1,1.0,5,no_bias
+780,Midlands,65+,4,2,1.0,5,no_bias
+781,London,35-44,1,2,1.0,5,no_bias
+782,Midlands,45-54,3,3,1.0,5,no_bias
+783,South East,55-64,1,3,1.0,5,no_bias
+784,Midlands,18-24,3,1,1.0,5,no_bias
+785,South East,35-44,4,1,1.0,5,no_bias
+786,Midlands,55-64,4,4,1.0,5,no_bias
+787,London,18-24,1,1,1.0,5,no_bias
+788,South East,45-54,3,4,1.0,5,no_bias
+789,Midlands,45-54,4,1,1.0,5,no_bias
+790,Midlands,25-34,4,0,1.0,5,no_bias
+791,North West,45-54,4,2,1.0,5,no_bias
+792,London,55-64,4,1,1.0,5,no_bias
+793,London,35-44,4,4,1.0,5,no_bias
+794,London,45-54,0,3,1.0,5,no_bias
+795,North West,18-24,4,3,1.0,5,no_bias
+796,London,55-64,4,3,1.0,5,no_bias
+797,South East,55-64,1,1,1.0,5,no_bias
+798,Scotland,65+,3,4,1.0,5,no_bias
+799,North West,35-44,4,3,1.0,5,no_bias
+800,Midlands,65+,2,1,1.0,5,no_bias
+801,Midlands,25-34,4,3,1.0,5,no_bias
+802,South East,35-44,0,4,1.0,5,no_bias
+803,North West,35-44,4,4,1.0,5,no_bias
+804,Scotland,25-34,4,0,1.0,5,no_bias
+805,South East,45-54,1,3,1.0,5,no_bias
+806,South East,55-64,0,0,1.0,5,no_bias
+807,South East,35-44,3,3,1.0,5,no_bias
+808,Scotland,25-34,1,3,1.0,5,no_bias
+809,London,45-54,1,0,1.0,5,no_bias
+810,Scotland,18-24,4,2,1.0,5,no_bias
+811,London,35-44,4,2,1.0,5,no_bias
+812,Midlands,35-44,4,4,1.0,5,no_bias
+813,Midlands,45-54,4,4,1.0,5,no_bias
+814,Scotland,65+,0,4,1.0,5,no_bias
+815,South East,35-44,4,3,1.0,5,no_bias
+816,London,18-24,4,0,1.0,5,no_bias
+817,Midlands,35-44,4,4,1.0,5,no_bias
+818,North West,55-64,1,2,1.0,5,no_bias
+819,London,55-64,3,1,1.0,5,no_bias
+820,North West,65+,4,0,1.0,5,no_bias
+821,South East,45-54,3,3,1.0,5,no_bias
+822,North West,65+,2,2,1.0,5,no_bias
+823,Wales,25-34,4,4,1.0,5,no_bias
+824,London,55-64,2,2,1.0,5,no_bias
+825,Midlands,35-44,3,3,1.0,5,no_bias
+826,London,55-64,2,3,1.0,5,no_bias
+827,Scotland,65+,4,4,1.0,5,no_bias
+828,London,65+,4,3,1.0,5,no_bias
+829,South East,25-34,4,1,1.0,5,no_bias
+830,Wales,18-24,2,3,1.0,5,no_bias
+831,North West,45-54,1,4,1.0,5,no_bias
+832,Midlands,25-34,4,4,1.0,5,no_bias
+833,South East,55-64,1,2,1.0,5,no_bias
+834,South East,18-24,3,4,1.0,5,no_bias
+835,Wales,55-64,1,1,1.0,5,no_bias
+836,Midlands,18-24,3,0,1.0,5,no_bias
+837,North West,65+,1,0,1.0,5,no_bias
+838,London,18-24,1,3,1.0,5,no_bias
+839,Midlands,35-44,2,2,1.0,5,no_bias
+840,London,65+,1,4,1.0,5,no_bias
+841,Scotland,35-44,1,1,1.0,5,no_bias
+842,Midlands,45-54,2,2,1.0,5,no_bias
+843,Wales,65+,4,1,1.0,5,no_bias
+844,Midlands,35-44,4,4,1.0,5,no_bias
+845,South East,35-44,0,2,1.0,5,no_bias
+846,South East,45-54,1,2,1.0,5,no_bias
+847,Wales,45-54,1,1,1.0,5,no_bias
+848,North West,18-24,4,4,1.0,5,no_bias
+849,North West,35-44,4,4,1.0,5,no_bias
+850,South East,45-54,1,1,1.0,5,no_bias
+851,Midlands,25-34,1,2,1.0,5,no_bias
+852,Wales,35-44,4,4,1.0,5,no_bias
+853,London,65+,4,2,1.0,5,no_bias
+854,Scotland,18-24,4,4,1.0,5,no_bias
+855,North West,35-44,4,4,1.0,5,no_bias
+856,Midlands,65+,2,1,1.0,5,no_bias
+857,Wales,65+,4,1,1.0,5,no_bias
+858,London,25-34,4,3,1.0,5,no_bias
+859,Midlands,65+,4,1,1.0,5,no_bias
+860,Scotland,35-44,1,4,1.0,5,no_bias
+861,London,45-54,1,0,1.0,5,no_bias
+862,Midlands,55-64,1,4,1.0,5,no_bias
+863,Midlands,35-44,1,2,1.0,5,no_bias
+864,North West,65+,4,4,1.0,5,no_bias
+865,London,18-24,1,1,1.0,5,no_bias
+866,Midlands,18-24,1,3,1.0,5,no_bias
+867,Wales,55-64,1,1,1.0,5,no_bias
+868,North West,55-64,1,1,1.0,5,no_bias
+869,North West,35-44,0,2,1.0,5,no_bias
+870,South East,45-54,3,3,1.0,5,no_bias
+871,South East,18-24,2,3,1.0,5,no_bias
+872,Wales,65+,3,4,1.0,5,no_bias
+873,London,45-54,0,4,1.0,5,no_bias
+874,South East,65+,4,4,1.0,5,no_bias
+875,Wales,45-54,1,2,1.0,5,no_bias
+876,Midlands,45-54,4,3,1.0,5,no_bias
+877,Wales,25-34,1,3,1.0,5,no_bias
+878,Midlands,35-44,4,0,1.0,5,no_bias
+879,Wales,45-54,1,1,1.0,5,no_bias
+880,South East,55-64,1,2,1.0,5,no_bias
+881,South East,25-34,1,4,1.0,5,no_bias
+882,North West,65+,2,0,1.0,5,no_bias
+883,London,45-54,1,2,1.0,5,no_bias
+884,Midlands,65+,3,2,1.0,5,no_bias
+885,Midlands,65+,1,1,1.0,5,no_bias
+886,South East,65+,4,2,1.0,5,no_bias
+887,London,25-34,4,4,1.0,5,no_bias
+888,Scotland,35-44,4,4,1.0,5,no_bias
+889,North West,65+,4,4,1.0,5,no_bias
+890,London,55-64,1,4,1.0,5,no_bias
+891,London,65+,0,0,1.0,5,no_bias
+892,South East,25-34,3,4,1.0,5,no_bias
+893,South East,55-64,1,1,1.0,5,no_bias
+894,South East,65+,1,3,1.0,5,no_bias
+895,London,65+,2,3,1.0,5,no_bias
+896,London,25-34,4,4,1.0,5,no_bias
+897,North West,18-24,4,4,1.0,5,no_bias
+898,North West,65+,1,4,1.0,5,no_bias
+899,Scotland,25-34,1,3,1.0,5,no_bias
+900,South East,55-64,3,2,1.0,5,no_bias
+901,North West,45-54,4,4,1.0,5,no_bias
+902,North West,25-34,1,1,1.0,5,no_bias
+903,Midlands,55-64,3,4,1.0,5,no_bias
+904,London,65+,4,4,1.0,5,no_bias
+905,North West,35-44,4,2,1.0,5,no_bias
+906,Wales,25-34,1,2,1.0,5,no_bias
+907,London,55-64,4,3,1.0,5,no_bias
+908,North West,65+,4,3,1.0,5,no_bias
+909,North West,18-24,1,4,1.0,5,no_bias
+910,Midlands,65+,4,2,1.0,5,no_bias
+911,South East,25-34,1,3,1.0,5,no_bias
+912,North West,65+,4,1,1.0,5,no_bias
+913,South East,25-34,4,1,1.0,5,no_bias
+914,North West,45-54,1,1,1.0,5,no_bias
+915,South East,55-64,1,1,1.0,5,no_bias
+916,Midlands,55-64,4,0,1.0,5,no_bias
+917,Midlands,55-64,1,2,1.0,5,no_bias
+918,Midlands,45-54,1,2,1.0,5,no_bias
+919,South East,55-64,1,4,1.0,5,no_bias
+920,Midlands,25-34,3,2,1.0,5,no_bias
+921,Midlands,25-34,1,4,1.0,5,no_bias
+922,South East,25-34,4,4,1.0,5,no_bias
+923,North West,25-34,3,4,1.0,5,no_bias
+924,London,25-34,1,1,1.0,5,no_bias
+925,London,25-34,1,1,1.0,5,no_bias
+926,North West,25-34,4,4,1.0,5,no_bias
+927,London,25-34,4,1,1.0,5,no_bias
+928,London,25-34,1,1,1.0,5,no_bias
+929,London,65+,4,0,1.0,5,no_bias
+930,South East,25-34,4,3,1.0,5,no_bias
+931,Midlands,65+,4,4,1.0,5,no_bias
+932,Midlands,55-64,4,1,1.0,5,no_bias
+933,London,35-44,3,1,1.0,5,no_bias
+934,South East,35-44,4,4,1.0,5,no_bias
+935,London,35-44,4,1,1.0,5,no_bias
+936,London,35-44,3,1,1.0,5,no_bias
+937,Midlands,45-54,4,4,1.0,5,no_bias
+938,North West,65+,0,3,1.0,5,no_bias
+939,Scotland,35-44,4,0,1.0,5,no_bias
+940,South East,18-24,3,1,1.0,5,no_bias
+941,Midlands,65+,4,3,1.0,5,no_bias
+942,Scotland,25-34,1,2,1.0,5,no_bias
+943,London,45-54,4,4,1.0,5,no_bias
+944,Scotland,55-64,4,0,1.0,5,no_bias
+945,South East,65+,4,4,1.0,5,no_bias
+946,London,45-54,4,1,1.0,5,no_bias
+947,Midlands,45-54,4,3,1.0,5,no_bias
+948,North West,25-34,1,3,1.0,5,no_bias
+949,London,45-54,2,1,1.0,5,no_bias
+950,London,45-54,1,1,1.0,5,no_bias
+951,Midlands,45-54,1,3,1.0,5,no_bias
+952,Wales,65+,4,4,1.0,5,no_bias
+953,Midlands,25-34,4,4,1.0,5,no_bias
+954,South East,55-64,4,3,1.0,5,no_bias
+955,London,35-44,4,4,1.0,5,no_bias
+956,Scotland,18-24,0,0,1.0,5,no_bias
+957,North West,25-34,1,4,1.0,5,no_bias
+958,Midlands,25-34,4,0,1.0,5,no_bias
+959,South East,65+,3,0,1.0,5,no_bias
+960,London,55-64,1,2,1.0,5,no_bias
+961,South East,65+,3,0,1.0,5,no_bias
+962,South East,65+,3,2,1.0,5,no_bias
+963,Scotland,65+,4,3,1.0,5,no_bias
+964,Scotland,55-64,2,1,1.0,5,no_bias
+965,London,45-54,3,2,1.0,5,no_bias
+966,Midlands,45-54,3,3,1.0,5,no_bias
+967,London,25-34,4,3,1.0,5,no_bias
+968,London,55-64,3,3,1.0,5,no_bias
+969,South East,25-34,0,0,1.0,5,no_bias
+970,London,65+,2,3,1.0,5,no_bias
+971,South East,65+,3,1,1.0,5,no_bias
+972,South East,65+,4,0,1.0,5,no_bias
+973,North West,55-64,1,1,1.0,5,no_bias
+974,North West,45-54,1,4,1.0,5,no_bias
+975,London,25-34,1,4,1.0,5,no_bias
+976,South East,35-44,4,4,1.0,5,no_bias
+977,Midlands,65+,3,3,1.0,5,no_bias
+978,Wales,25-34,0,4,1.0,5,no_bias
+979,Midlands,35-44,3,1,1.0,5,no_bias
+980,London,25-34,0,0,1.0,5,no_bias
+981,North West,25-34,4,4,1.0,5,no_bias
+982,Scotland,55-64,1,1,1.0,5,no_bias
+983,Scotland,35-44,4,0,1.0,5,no_bias
+984,Midlands,35-44,4,4,1.0,5,no_bias
+985,South East,65+,4,4,1.0,5,no_bias
+986,Midlands,65+,4,3,1.0,5,no_bias
+987,North West,25-34,1,2,1.0,5,no_bias
+988,Scotland,25-34,4,3,1.0,5,no_bias
+989,London,65+,4,2,1.0,5,no_bias
+990,North West,45-54,1,2,1.0,5,no_bias
+991,London,35-44,0,0,1.0,5,no_bias
+992,North West,55-64,4,3,1.0,5,no_bias
+993,North West,45-54,0,1,1.0,5,no_bias
+994,North West,25-34,4,2,1.0,5,no_bias
+995,Scotland,35-44,2,0,1.0,5,no_bias
+996,London,18-24,1,1,1.0,5,no_bias
+997,Scotland,45-54,3,4,1.0,5,no_bias
+998,Midlands,45-54,4,3,1.0,5,no_bias
+999,South East,18-24,3,3,1.0,5,no_bias
+1000,London,25-34,3,3,1.0,5,no_bias
+1001,Scotland,65+,1,1,1.0,5,no_bias
+1002,Midlands,35-44,4,4,1.0,5,no_bias
+1003,Scotland,35-44,4,1,1.0,5,no_bias
+1004,Midlands,35-44,2,4,1.0,5,no_bias
+1005,Midlands,55-64,2,2,1.0,5,no_bias
+1006,South East,55-64,1,2,1.0,5,no_bias
+1007,South East,25-34,3,2,1.0,5,no_bias
+1008,Midlands,45-54,1,0,1.0,5,no_bias
+1009,Scotland,45-54,0,4,1.0,5,no_bias
+1010,Midlands,45-54,4,4,1.0,5,no_bias
+1011,Midlands,65+,4,2,1.0,5,no_bias
+1012,Wales,65+,0,1,1.0,5,no_bias
+1013,South East,25-34,1,0,1.0,5,no_bias
+1014,South East,65+,4,0,1.0,5,no_bias
+1015,South East,35-44,1,1,1.0,5,no_bias
+1016,Scotland,25-34,4,4,1.0,5,no_bias
+1017,Midlands,45-54,4,1,1.0,5,no_bias
+1018,London,35-44,4,4,1.0,5,no_bias
+1019,Midlands,45-54,0,0,1.0,5,no_bias
+1020,North West,65+,4,4,1.0,5,no_bias
+1021,London,35-44,4,3,1.0,5,no_bias
+1022,London,45-54,0,1,1.0,5,no_bias
+1023,Midlands,55-64,0,2,1.0,5,no_bias
+1024,London,45-54,3,1,1.0,5,no_bias
+1025,South East,65+,4,2,1.0,5,no_bias
+1026,North West,35-44,4,0,1.0,5,no_bias
+1027,South East,25-34,1,0,1.0,5,no_bias
+1028,North West,25-34,4,0,1.0,5,no_bias
+1029,Wales,18-24,1,0,1.0,5,no_bias
+1030,North West,25-34,3,2,1.0,5,no_bias
+1031,London,65+,4,4,1.0,5,no_bias
+1032,South East,65+,1,1,1.0,5,no_bias
+1033,South East,45-54,2,2,1.0,5,no_bias
+1034,Midlands,35-44,4,4,1.0,5,no_bias
+1035,South East,45-54,1,1,1.0,5,no_bias
+1036,North West,45-54,0,0,1.0,5,no_bias
+1037,North West,25-34,1,0,1.0,5,no_bias
+1038,Scotland,35-44,3,2,1.0,5,no_bias
+1039,Midlands,65+,3,0,1.0,5,no_bias
+1040,Wales,55-64,1,1,1.0,5,no_bias
+1041,London,35-44,4,2,1.0,5,no_bias
+1042,Midlands,55-64,3,0,1.0,5,no_bias
+1043,Midlands,35-44,4,2,1.0,5,no_bias
+1044,London,45-54,1,1,1.0,5,no_bias
+1045,North West,35-44,4,0,1.0,5,no_bias
+1046,London,65+,4,4,1.0,5,no_bias
+1047,South East,55-64,3,0,1.0,5,no_bias
+1048,South East,18-24,4,4,1.0,5,no_bias
+1049,North West,55-64,1,2,1.0,5,no_bias
+1050,North West,25-34,1,3,1.0,5,no_bias
+1051,Midlands,35-44,4,3,1.0,5,no_bias
+1052,North West,25-34,4,2,1.0,5,no_bias
+1053,South East,25-34,1,1,1.0,5,no_bias
+1054,Midlands,18-24,4,4,1.0,5,no_bias
+1055,Midlands,45-54,1,1,1.0,5,no_bias
+1056,Wales,65+,2,0,1.0,5,no_bias
+1057,South East,25-34,4,2,1.0,5,no_bias
+1058,Midlands,25-34,4,2,1.0,5,no_bias
+1059,London,65+,2,0,1.0,5,no_bias
+1060,North West,18-24,1,3,1.0,5,no_bias
+1061,North West,18-24,4,0,1.0,5,no_bias
+1062,South East,65+,1,1,1.0,5,no_bias
+1063,London,25-34,1,1,1.0,5,no_bias
+1064,North West,65+,1,2,1.0,5,no_bias
+1065,London,45-54,3,2,1.0,5,no_bias
+1066,North West,65+,2,3,1.0,5,no_bias
+1067,South East,55-64,0,0,1.0,5,no_bias
+1068,Midlands,35-44,0,1,1.0,5,no_bias
+1069,Wales,65+,1,1,1.0,5,no_bias
+1070,Scotland,45-54,4,4,1.0,5,no_bias
+1071,South East,65+,4,4,1.0,5,no_bias
+1072,Midlands,55-64,4,3,1.0,5,no_bias
+1073,North West,65+,1,1,1.0,5,no_bias
+1074,Wales,18-24,1,3,1.0,5,no_bias
+1075,North West,45-54,1,3,1.0,5,no_bias
+1076,South East,65+,0,0,1.0,5,no_bias
+1077,Midlands,55-64,1,2,1.0,5,no_bias
+1078,London,45-54,0,2,1.0,5,no_bias
+1079,South East,45-54,3,3,1.0,5,no_bias
+1080,Scotland,25-34,4,4,1.0,5,no_bias
+1081,South East,25-34,0,3,1.0,5,no_bias
+1082,Midlands,65+,3,0,1.0,5,no_bias
+1083,Midlands,35-44,4,1,1.0,5,no_bias
+1084,London,35-44,1,1,1.0,5,no_bias
+1085,North West,18-24,0,0,1.0,5,no_bias
+1086,Midlands,45-54,1,1,1.0,5,no_bias
+1087,North West,45-54,0,3,1.0,5,no_bias
+1088,Scotland,18-24,3,2,1.0,5,no_bias
+1089,Scotland,55-64,0,0,1.0,5,no_bias
+1090,South East,35-44,4,1,1.0,5,no_bias
+1091,South East,25-34,2,2,1.0,5,no_bias
+1092,South East,35-44,3,2,1.0,5,no_bias
+1093,North West,35-44,4,3,1.0,5,no_bias
+1094,Scotland,65+,4,0,1.0,5,no_bias
+1095,South East,55-64,3,0,1.0,5,no_bias
+1096,South East,45-54,4,4,1.0,5,no_bias
+1097,London,45-54,1,1,1.0,5,no_bias
+1098,South East,45-54,3,2,1.0,5,no_bias
+1099,Scotland,25-34,4,3,1.0,5,no_bias
+1100,Midlands,25-34,4,4,1.0,5,no_bias
+1101,Wales,25-34,2,2,1.0,5,no_bias
+1102,London,55-64,4,4,1.0,5,no_bias
+1103,Wales,65+,0,2,1.0,5,no_bias
+1104,Midlands,65+,4,2,1.0,5,no_bias
+1105,North West,35-44,4,0,1.0,5,no_bias
+1106,North West,35-44,2,4,1.0,5,no_bias
+1107,Midlands,35-44,4,4,1.0,5,no_bias
+1108,London,65+,0,4,1.0,5,no_bias
+1109,South East,35-44,4,2,1.0,5,no_bias
+1110,London,35-44,4,4,1.0,5,no_bias
+1111,Wales,45-54,1,4,1.0,5,no_bias
+1112,Scotland,25-34,4,2,1.0,5,no_bias
+1113,South East,35-44,4,4,1.0,5,no_bias
+1114,South East,45-54,4,3,1.0,5,no_bias
+1115,Midlands,35-44,4,2,1.0,5,no_bias
+1116,North West,65+,1,3,1.0,5,no_bias
+1117,London,25-34,4,2,1.0,5,no_bias
+1118,Midlands,25-34,1,1,1.0,5,no_bias
+1119,South East,25-34,3,4,1.0,5,no_bias
+1120,Midlands,45-54,1,1,1.0,5,no_bias
+1121,Midlands,45-54,4,4,1.0,5,no_bias
+1122,Scotland,25-34,4,1,1.0,5,no_bias
+1123,South East,45-54,1,1,1.0,5,no_bias
+1124,North West,18-24,0,1,1.0,5,no_bias
+1125,Midlands,35-44,4,4,1.0,5,no_bias
+1126,Midlands,55-64,4,4,1.0,5,no_bias
+1127,North West,35-44,4,1,1.0,5,no_bias
+1128,Midlands,45-54,4,4,1.0,5,no_bias
+1129,North West,65+,3,4,1.0,5,no_bias
+1130,South East,65+,2,2,1.0,5,no_bias
+1131,Midlands,35-44,4,1,1.0,5,no_bias
+1132,North West,18-24,4,1,1.0,5,no_bias
+1133,Wales,65+,3,0,1.0,5,no_bias
+1134,Wales,55-64,4,4,1.0,5,no_bias
+1135,North West,65+,4,0,1.0,5,no_bias
+1136,London,35-44,1,1,1.0,5,no_bias
+1137,North West,65+,4,4,1.0,5,no_bias
+1138,South East,18-24,4,4,1.0,5,no_bias
+1139,Midlands,25-34,3,0,1.0,5,no_bias
+1140,Wales,45-54,2,4,1.0,5,no_bias
+1141,London,65+,1,0,1.0,5,no_bias
+1142,North West,65+,0,2,1.0,5,no_bias
+1143,Scotland,25-34,0,0,1.0,5,no_bias
+1144,Midlands,25-34,4,4,1.0,5,no_bias
+1145,Midlands,25-34,4,0,1.0,5,no_bias
+1146,Midlands,35-44,4,4,1.0,5,no_bias
+1147,North West,55-64,1,1,1.0,5,no_bias
+1148,North West,65+,4,2,1.0,5,no_bias
+1149,London,35-44,0,1,1.0,5,no_bias
+1150,North West,55-64,4,1,1.0,5,no_bias
+1151,South East,35-44,2,2,1.0,5,no_bias
+1152,South East,25-34,1,1,1.0,5,no_bias
+1153,South East,55-64,0,4,1.0,5,no_bias
+1154,Midlands,25-34,4,4,1.0,5,no_bias
+1155,North West,35-44,3,3,1.0,5,no_bias
+1156,South East,65+,4,3,1.0,5,no_bias
+1157,North West,35-44,2,2,1.0,5,no_bias
+1158,South East,55-64,0,0,1.0,5,no_bias
+1159,Midlands,18-24,1,3,1.0,5,no_bias
+1160,London,55-64,0,2,1.0,5,no_bias
+1161,London,65+,1,2,1.0,5,no_bias
+1162,London,55-64,1,0,1.0,5,no_bias
+1163,Midlands,45-54,3,3,1.0,5,no_bias
+1164,London,35-44,0,4,1.0,5,no_bias
+1165,Midlands,25-34,1,4,1.0,5,no_bias
+1166,London,35-44,4,4,1.0,5,no_bias
+1167,South East,55-64,1,3,1.0,5,no_bias
+1168,North West,55-64,1,1,1.0,5,no_bias
+1169,Wales,45-54,0,3,1.0,5,no_bias
+1170,South East,18-24,4,3,1.0,5,no_bias
+1171,Wales,55-64,4,0,1.0,5,no_bias
+1172,Wales,45-54,0,0,1.0,5,no_bias
+1173,North West,55-64,0,0,1.0,5,no_bias
+1174,Midlands,25-34,4,4,1.0,5,no_bias
+1175,South East,45-54,3,3,1.0,5,no_bias
+1176,South East,25-34,3,2,1.0,5,no_bias
+1177,South East,65+,3,4,1.0,5,no_bias
+1178,Midlands,65+,1,0,1.0,5,no_bias
+1179,Midlands,65+,1,1,1.0,5,no_bias
+1180,Midlands,25-34,4,2,1.0,5,no_bias
+1181,North West,65+,4,1,1.0,5,no_bias
+1182,Scotland,65+,4,3,1.0,5,no_bias
+1183,South East,55-64,1,3,1.0,5,no_bias
+1184,Midlands,25-34,4,4,1.0,5,no_bias
+1185,Midlands,35-44,4,4,1.0,5,no_bias
+1186,Midlands,45-54,4,0,1.0,5,no_bias
+1187,Scotland,45-54,2,4,1.0,5,no_bias
+1188,South East,25-34,1,3,1.0,5,no_bias
+1189,London,55-64,1,1,1.0,5,no_bias
+1190,North West,65+,4,2,1.0,5,no_bias
+1191,North West,45-54,0,0,1.0,5,no_bias
+1192,Midlands,55-64,4,2,1.0,5,no_bias
+1193,South East,18-24,1,0,1.0,5,no_bias
+1194,Wales,18-24,4,4,1.0,5,no_bias
+1195,Scotland,25-34,3,0,1.0,5,no_bias
+1196,North West,18-24,4,3,1.0,5,no_bias
+1197,North West,45-54,1,2,1.0,5,no_bias
+1198,Midlands,55-64,4,4,1.0,5,no_bias
+1199,North West,45-54,1,4,1.0,5,no_bias
+1200,London,55-64,1,1,1.0,5,no_bias
+1201,London,35-44,0,2,1.0,5,no_bias
+1202,South East,65+,2,4,1.0,5,no_bias
+1203,London,45-54,1,1,1.0,5,no_bias
+1204,Midlands,35-44,4,1,1.0,5,no_bias
+1205,North West,55-64,4,3,1.0,5,no_bias
+1206,Midlands,65+,3,2,1.0,5,no_bias
+1207,North West,65+,4,4,1.0,5,no_bias
+1208,North West,45-54,1,3,1.0,5,no_bias
+1209,London,45-54,1,2,1.0,5,no_bias
+1210,Wales,35-44,1,4,1.0,5,no_bias
+1211,Midlands,35-44,1,2,1.0,5,no_bias
+1212,Midlands,55-64,3,0,1.0,5,no_bias
+1213,South East,45-54,1,4,1.0,5,no_bias
+1214,South East,25-34,1,1,1.0,5,no_bias
+1215,Wales,55-64,3,0,1.0,5,no_bias
+1216,South East,25-34,0,0,1.0,5,no_bias
+1217,London,65+,0,2,1.0,5,no_bias
+1218,South East,18-24,1,1,1.0,5,no_bias
+1219,North West,55-64,2,2,1.0,5,no_bias
+1220,London,45-54,4,4,1.0,5,no_bias
+1221,North West,45-54,1,0,1.0,5,no_bias
+1222,Midlands,65+,4,1,1.0,5,no_bias
+1223,North West,18-24,4,0,1.0,5,no_bias
+1224,North West,45-54,3,4,1.0,5,no_bias
+1225,North West,25-34,4,1,1.0,5,no_bias
+1226,South East,25-34,4,0,1.0,5,no_bias
+1227,Midlands,25-34,4,2,1.0,5,no_bias
+1228,Wales,65+,4,0,1.0,5,no_bias
+1229,Scotland,55-64,1,1,1.0,5,no_bias
+1230,London,55-64,0,3,1.0,5,no_bias
+1231,Wales,45-54,2,4,1.0,5,no_bias
+1232,Midlands,55-64,4,2,1.0,5,no_bias
+1233,Midlands,35-44,4,0,1.0,5,no_bias
+1234,North West,65+,4,1,1.0,5,no_bias
+1235,South East,18-24,4,0,1.0,5,no_bias
+1236,Scotland,25-34,3,3,1.0,5,no_bias
+1237,Midlands,25-34,4,1,1.0,5,no_bias
+1238,South East,25-34,3,4,1.0,5,no_bias
+1239,Wales,35-44,3,4,1.0,5,no_bias
+1240,Midlands,55-64,1,0,1.0,5,no_bias
+1241,Midlands,55-64,1,4,1.0,5,no_bias
+1242,Midlands,45-54,1,0,1.0,5,no_bias
+1243,London,45-54,1,4,1.0,5,no_bias
+1244,Wales,55-64,1,1,1.0,5,no_bias
+1245,London,35-44,0,3,1.0,5,no_bias
+1246,Scotland,25-34,4,4,1.0,5,no_bias
+1247,North West,65+,0,4,1.0,5,no_bias
+1248,Wales,45-54,1,0,1.0,5,no_bias
+1249,Midlands,45-54,1,2,1.0,5,no_bias
+1250,London,25-34,4,3,1.0,5,no_bias
+1251,London,55-64,3,2,1.0,5,no_bias
+1252,London,25-34,0,3,1.0,5,no_bias
+1253,Midlands,55-64,4,3,1.0,5,no_bias
+1254,Scotland,65+,4,1,1.0,5,no_bias
+1255,London,25-34,4,2,1.0,5,no_bias
+1256,Wales,55-64,4,0,1.0,5,no_bias
+1257,Scotland,35-44,4,3,1.0,5,no_bias
+1258,South East,18-24,3,3,1.0,5,no_bias
+1259,Midlands,65+,4,4,1.0,5,no_bias
+1260,North West,65+,4,1,1.0,5,no_bias
+1261,South East,65+,1,2,1.0,5,no_bias
+1262,North West,35-44,4,0,1.0,5,no_bias
+1263,Wales,25-34,4,2,1.0,5,no_bias
+1264,London,65+,1,1,1.0,5,no_bias
+1265,London,55-64,1,3,1.0,5,no_bias
+1266,South East,35-44,4,1,1.0,5,no_bias
+1267,London,18-24,1,3,1.0,5,no_bias
+1268,South East,45-54,4,1,1.0,5,no_bias
+1269,South East,55-64,1,1,1.0,5,no_bias
+1270,North West,65+,2,1,1.0,5,no_bias
+1271,North West,35-44,4,3,1.0,5,no_bias
+1272,Midlands,65+,1,2,1.0,5,no_bias
+1273,Wales,18-24,2,2,1.0,5,no_bias
+1274,Midlands,35-44,4,4,1.0,5,no_bias
+1275,South East,18-24,1,2,1.0,5,no_bias
+1276,North West,45-54,2,2,1.0,5,no_bias
+1277,London,25-34,0,0,1.0,5,no_bias
+1278,London,18-24,1,3,1.0,5,no_bias
+1279,Midlands,45-54,4,4,1.0,5,no_bias
+1280,London,55-64,4,0,1.0,5,no_bias
+1281,London,35-44,4,2,1.0,5,no_bias
+1282,Scotland,45-54,1,3,1.0,5,no_bias
+1283,North West,65+,4,3,1.0,5,no_bias
+1284,Wales,35-44,4,0,1.0,5,no_bias
+1285,South East,65+,0,0,1.0,5,no_bias
+1286,Wales,45-54,1,1,1.0,5,no_bias
+1287,North West,65+,4,1,1.0,5,no_bias
+1288,Wales,45-54,1,0,1.0,5,no_bias
+1289,Midlands,35-44,2,2,1.0,5,no_bias
+1290,London,65+,4,4,1.0,5,no_bias
+1291,Midlands,55-64,0,0,1.0,5,no_bias
+1292,Midlands,55-64,4,4,1.0,5,no_bias
+1293,North West,55-64,1,4,1.0,5,no_bias
+1294,North West,18-24,4,0,1.0,5,no_bias
+1295,South East,55-64,1,2,1.0,5,no_bias
+1296,North West,35-44,1,0,1.0,5,no_bias
+1297,South East,35-44,4,1,1.0,5,no_bias
+1298,South East,35-44,1,1,1.0,5,no_bias
+1299,Midlands,35-44,1,2,1.0,5,no_bias
+1300,Scotland,55-64,4,4,1.0,5,no_bias
+1301,South East,45-54,1,1,1.0,5,no_bias
+1302,South East,55-64,1,2,1.0,5,no_bias
+1303,London,65+,1,4,1.0,5,no_bias
+1304,London,45-54,1,0,1.0,5,no_bias
+1305,South East,25-34,1,0,1.0,5,no_bias
+1306,Scotland,25-34,1,1,1.0,5,no_bias
+1307,London,65+,1,1,1.0,5,no_bias
+1308,Wales,35-44,0,2,1.0,5,no_bias
+1309,London,25-34,4,4,1.0,5,no_bias
+1310,Scotland,45-54,1,1,1.0,5,no_bias
+1311,London,35-44,2,2,1.0,5,no_bias
+1312,North West,65+,4,2,1.0,5,no_bias
+1313,Midlands,25-34,4,4,1.0,5,no_bias
+1314,Midlands,65+,4,4,1.0,5,no_bias
+1315,North West,65+,1,1,1.0,5,no_bias
+1316,London,65+,2,0,1.0,5,no_bias
+1317,South East,65+,3,0,1.0,5,no_bias
+1318,Wales,35-44,2,2,1.0,5,no_bias
+1319,London,18-24,3,2,1.0,5,no_bias
+1320,London,65+,4,0,1.0,5,no_bias
+1321,Midlands,65+,4,3,1.0,5,no_bias
+1322,North West,18-24,4,4,1.0,5,no_bias
+1323,London,65+,2,3,1.0,5,no_bias
+1324,Midlands,25-34,3,2,1.0,5,no_bias
+1325,London,18-24,1,2,1.0,5,no_bias
+1326,North West,18-24,2,2,1.0,5,no_bias
+1327,Scotland,25-34,4,3,1.0,5,no_bias
+1328,Wales,55-64,2,3,1.0,5,no_bias
+1329,North West,65+,1,0,1.0,5,no_bias
+1330,London,25-34,1,2,1.0,5,no_bias
+1331,South East,55-64,0,4,1.0,5,no_bias
+1332,Scotland,25-34,1,3,1.0,5,no_bias
+1333,Wales,55-64,1,4,1.0,5,no_bias
+1334,Scotland,65+,1,0,1.0,5,no_bias
+1335,Midlands,65+,4,0,1.0,5,no_bias
+1336,Midlands,35-44,4,3,1.0,5,no_bias
+1337,Midlands,18-24,1,4,1.0,5,no_bias
+1338,Wales,65+,0,0,1.0,5,no_bias
+1339,South East,35-44,0,0,1.0,5,no_bias
+1340,North West,35-44,4,3,1.0,5,no_bias
+1341,North West,35-44,4,2,1.0,5,no_bias
+1342,South East,65+,2,2,1.0,5,no_bias
+1343,North West,25-34,2,2,1.0,5,no_bias
+1344,London,55-64,4,1,1.0,5,no_bias
+1345,North West,45-54,1,2,1.0,5,no_bias
+1346,Scotland,65+,4,4,1.0,5,no_bias
+1347,London,65+,4,4,1.0,5,no_bias
+1348,North West,35-44,2,2,1.0,5,no_bias
+1349,Midlands,25-34,1,0,1.0,5,no_bias
+1350,Wales,25-34,4,0,1.0,5,no_bias
+1351,Midlands,45-54,4,0,1.0,5,no_bias
+1352,Scotland,35-44,4,4,1.0,5,no_bias
+1353,Scotland,65+,3,1,1.0,5,no_bias
+1354,London,45-54,2,2,1.0,5,no_bias
+1355,London,65+,3,1,1.0,5,no_bias
+1356,London,45-54,1,4,1.0,5,no_bias
+1357,South East,55-64,1,1,1.0,5,no_bias
+1358,North West,45-54,1,0,1.0,5,no_bias
+1359,Midlands,35-44,4,4,1.0,5,no_bias
+1360,London,55-64,4,1,1.0,5,no_bias
+1361,Midlands,45-54,4,3,1.0,5,no_bias
+1362,South East,35-44,4,1,1.0,5,no_bias
+1363,Midlands,25-34,4,4,1.0,5,no_bias
+1364,Midlands,45-54,1,4,1.0,5,no_bias
+1365,Midlands,65+,4,0,1.0,5,no_bias
+1366,Wales,55-64,1,1,1.0,5,no_bias
+1367,South East,65+,4,4,1.0,5,no_bias
+1368,Midlands,35-44,4,2,1.0,5,no_bias
+1369,North West,55-64,0,1,1.0,5,no_bias
+1370,Midlands,25-34,3,3,1.0,5,no_bias
+1371,London,25-34,0,1,1.0,5,no_bias
+1372,South East,45-54,1,1,1.0,5,no_bias
+1373,London,35-44,4,4,1.0,5,no_bias
+1374,Midlands,45-54,3,4,1.0,5,no_bias
+1375,Midlands,65+,2,2,1.0,5,no_bias
+1376,Midlands,65+,4,2,1.0,5,no_bias
+1377,North West,35-44,0,3,1.0,5,no_bias
+1378,Scotland,25-34,3,3,1.0,5,no_bias
+1379,Midlands,35-44,4,0,1.0,5,no_bias
+1380,London,18-24,0,1,1.0,5,no_bias
+1381,London,65+,3,3,1.0,5,no_bias
+1382,Wales,35-44,4,3,1.0,5,no_bias
+1383,Midlands,45-54,0,0,1.0,5,no_bias
+1384,North West,55-64,4,2,1.0,5,no_bias
+1385,South East,18-24,3,2,1.0,5,no_bias
+1386,North West,25-34,4,1,1.0,5,no_bias
+1387,London,18-24,2,3,1.0,5,no_bias
+1388,Midlands,65+,4,1,1.0,5,no_bias
+1389,South East,55-64,4,0,1.0,5,no_bias
+1390,North West,65+,1,2,1.0,5,no_bias
+1391,North West,18-24,2,3,1.0,5,no_bias
+1392,Midlands,65+,4,4,1.0,5,no_bias
+1393,North West,55-64,4,1,1.0,5,no_bias
+1394,North West,18-24,3,3,1.0,5,no_bias
+1395,South East,45-54,3,2,1.0,5,no_bias
+1396,Wales,55-64,1,1,1.0,5,no_bias
+1397,South East,65+,1,1,1.0,5,no_bias
+1398,Wales,65+,0,0,1.0,5,no_bias
+1399,North West,35-44,4,3,1.0,5,no_bias
+1400,North West,35-44,4,4,1.0,5,no_bias
+1401,North West,65+,4,4,1.0,5,no_bias
+1402,South East,18-24,4,4,1.0,5,no_bias
+1403,North West,18-24,4,3,1.0,5,no_bias
+1404,London,55-64,1,4,1.0,5,no_bias
+1405,London,55-64,3,4,1.0,5,no_bias
+1406,Wales,35-44,0,0,1.0,5,no_bias
+1407,Midlands,35-44,4,4,1.0,5,no_bias
+1408,South East,35-44,1,1,1.0,5,no_bias
+1409,South East,18-24,1,3,1.0,5,no_bias
+1410,London,45-54,3,3,1.0,5,no_bias
+1411,South East,45-54,1,1,1.0,5,no_bias
+1412,North West,45-54,1,1,1.0,5,no_bias
+1413,North West,65+,0,2,1.0,5,no_bias
+1414,South East,45-54,1,0,1.0,5,no_bias
+1415,London,18-24,3,4,1.0,5,no_bias
+1416,London,18-24,4,1,1.0,5,no_bias
+1417,Midlands,45-54,1,3,1.0,5,no_bias
+1418,North West,35-44,4,1,1.0,5,no_bias
+1419,Midlands,35-44,4,0,1.0,5,no_bias
+1420,Midlands,18-24,4,3,1.0,5,no_bias
+1421,North West,65+,2,2,1.0,5,no_bias
+1422,South East,65+,3,0,1.0,5,no_bias
+1423,Scotland,45-54,1,4,1.0,5,no_bias
+1424,South East,65+,0,0,1.0,5,no_bias
+1425,London,35-44,4,4,1.0,5,no_bias
+1426,Scotland,18-24,4,1,1.0,5,no_bias
+1427,North West,45-54,1,4,1.0,5,no_bias
+1428,North West,65+,4,2,1.0,5,no_bias
+1429,London,35-44,1,4,1.0,5,no_bias
+1430,London,45-54,0,1,1.0,5,no_bias
+1431,South East,65+,1,3,1.0,5,no_bias
+1432,London,25-34,1,4,1.0,5,no_bias
+1433,South East,65+,3,3,1.0,5,no_bias
+1434,London,35-44,2,4,1.0,5,no_bias
+1435,Scotland,65+,1,3,1.0,5,no_bias
+1436,Scotland,65+,1,4,1.0,5,no_bias
+1437,Midlands,65+,3,3,1.0,5,no_bias
+1438,Scotland,18-24,4,1,1.0,5,no_bias
+1439,Scotland,35-44,0,0,1.0,5,no_bias
+1440,South East,18-24,2,2,1.0,5,no_bias
+1441,North West,35-44,4,4,1.0,5,no_bias
+1442,Scotland,55-64,4,2,1.0,5,no_bias
+1443,South East,45-54,3,3,1.0,5,no_bias
+1444,North West,65+,4,2,1.0,5,no_bias
+1445,Wales,35-44,0,1,1.0,5,no_bias
+1446,Midlands,65+,4,1,1.0,5,no_bias
+1447,South East,65+,4,4,1.0,5,no_bias
+1448,Wales,55-64,2,2,1.0,5,no_bias
+1449,Wales,25-34,4,3,1.0,5,no_bias
+1450,London,65+,1,1,1.0,5,no_bias
+1451,Midlands,25-34,1,4,1.0,5,no_bias
+1452,North West,35-44,4,2,1.0,5,no_bias
+1453,London,45-54,4,4,1.0,5,no_bias
+1454,South East,65+,2,4,1.0,5,no_bias
+1455,Midlands,45-54,4,4,1.0,5,no_bias
+1456,North West,45-54,0,1,1.0,5,no_bias
+1457,Midlands,18-24,4,4,1.0,5,no_bias
+1458,North West,35-44,4,1,1.0,5,no_bias
+1459,Scotland,55-64,3,0,1.0,5,no_bias
+1460,London,55-64,1,0,1.0,5,no_bias
+1461,Midlands,65+,4,2,1.0,5,no_bias
+1462,North West,25-34,1,1,1.0,5,no_bias
+1463,Midlands,25-34,4,4,1.0,5,no_bias
+1464,Midlands,55-64,4,0,1.0,5,no_bias
+1465,North West,65+,2,0,1.0,5,no_bias
+1466,Midlands,55-64,4,2,1.0,5,no_bias
+1467,Wales,35-44,4,2,1.0,5,no_bias
+1468,Wales,45-54,0,2,1.0,5,no_bias
+1469,South East,55-64,3,1,1.0,5,no_bias
+1470,London,35-44,4,2,1.0,5,no_bias
+1471,South East,65+,3,0,1.0,5,no_bias
+1472,London,18-24,1,1,1.0,5,no_bias
+1473,Wales,25-34,1,0,1.0,5,no_bias
+1474,Scotland,45-54,0,2,1.0,5,no_bias
+1475,Midlands,25-34,1,2,1.0,5,no_bias
+1476,North West,35-44,4,0,1.0,5,no_bias
+1477,London,55-64,1,0,1.0,5,no_bias
+1478,London,25-34,4,3,1.0,5,no_bias
+1479,Midlands,18-24,1,1,1.0,5,no_bias
+1480,North West,55-64,4,0,1.0,5,no_bias
+1481,South East,25-34,1,0,1.0,5,no_bias
+1482,London,25-34,4,4,1.0,5,no_bias
+1483,London,35-44,4,4,1.0,5,no_bias
+1484,Scotland,65+,3,1,1.0,5,no_bias
+1485,Midlands,45-54,2,3,1.0,5,no_bias
+1486,South East,45-54,0,3,1.0,5,no_bias
+1487,Midlands,65+,1,1,1.0,5,no_bias
+1488,London,45-54,1,1,1.0,5,no_bias
+1489,London,55-64,1,3,1.0,5,no_bias
+1490,Scotland,65+,4,4,1.0,5,no_bias
+1491,Midlands,35-44,1,1,1.0,5,no_bias
+1492,London,25-34,0,1,1.0,5,no_bias
+1493,South East,55-64,4,0,1.0,5,no_bias
+1494,South East,65+,0,4,1.0,5,no_bias
+1495,London,45-54,2,4,1.0,5,no_bias
+1496,Midlands,25-34,1,4,1.0,5,no_bias
+1497,Scotland,35-44,4,3,1.0,5,no_bias
+1498,Wales,65+,1,1,1.0,5,no_bias
+1499,London,45-54,1,3,1.0,5,no_bias
+1500,Midlands,35-44,4,0,1.0,5,no_bias
+1501,London,35-44,4,4,1.0,5,no_bias
+1502,Wales,25-34,2,1,1.0,5,no_bias
+1503,North West,45-54,1,4,1.0,5,no_bias
+1504,Scotland,55-64,1,1,1.0,5,no_bias
+1505,London,35-44,4,2,1.0,5,no_bias
+1506,Wales,18-24,4,4,1.0,5,no_bias
+1507,Midlands,65+,2,2,1.0,5,no_bias
+1508,Midlands,55-64,0,2,1.0,5,no_bias
+1509,South East,35-44,4,1,1.0,5,no_bias
+1510,London,35-44,4,0,1.0,5,no_bias
+1511,Scotland,45-54,0,2,1.0,5,no_bias
+1512,Midlands,65+,4,0,1.0,5,no_bias
+1513,Scotland,65+,3,4,1.0,5,no_bias
+1514,London,35-44,0,0,1.0,5,no_bias
+1515,North West,18-24,4,4,1.0,5,no_bias
+1516,North West,25-34,1,1,1.0,5,no_bias
+1517,Scotland,25-34,1,1,1.0,5,no_bias
+1518,Wales,65+,4,4,1.0,5,no_bias
+1519,London,45-54,0,0,1.0,5,no_bias
+1520,South East,65+,1,4,1.0,5,no_bias
+1521,Midlands,45-54,2,0,1.0,5,no_bias
+1522,Midlands,65+,4,1,1.0,5,no_bias
+1523,South East,55-64,1,2,1.0,5,no_bias
+1524,London,25-34,2,3,1.0,5,no_bias
+1525,South East,65+,3,3,1.0,5,no_bias
+1526,London,25-34,1,1,1.0,5,no_bias
+1527,South East,55-64,1,3,1.0,5,no_bias
+1528,London,45-54,4,4,1.0,5,no_bias
+1529,Midlands,45-54,4,1,1.0,5,no_bias
+1530,South East,18-24,3,3,1.0,5,no_bias
+1531,Midlands,25-34,1,1,1.0,5,no_bias
+1532,North West,45-54,1,1,1.0,5,no_bias
+1533,Scotland,25-34,3,2,1.0,5,no_bias
+1534,Scotland,35-44,4,1,1.0,5,no_bias
+1535,London,65+,1,2,1.0,5,no_bias
+1536,Midlands,18-24,4,4,1.0,5,no_bias
+1537,North West,35-44,1,0,1.0,5,no_bias
+1538,Scotland,55-64,1,1,1.0,5,no_bias
+1539,North West,45-54,4,2,1.0,5,no_bias
+1540,London,65+,4,1,1.0,5,no_bias
+1541,Midlands,55-64,4,4,1.0,5,no_bias
+1542,South East,65+,4,0,1.0,5,no_bias
+1543,Wales,25-34,4,0,1.0,5,no_bias
+1544,London,65+,4,1,1.0,5,no_bias
+1545,Midlands,25-34,4,4,1.0,5,no_bias
+1546,Midlands,65+,4,4,1.0,5,no_bias
+1547,Scotland,45-54,1,1,1.0,5,no_bias
+1548,South East,18-24,2,2,1.0,5,no_bias
+1549,Scotland,55-64,1,1,1.0,5,no_bias
+1550,North West,55-64,2,4,1.0,5,no_bias
+1551,South East,25-34,4,0,1.0,5,no_bias
+1552,North West,55-64,1,2,1.0,5,no_bias
+1553,Wales,65+,4,4,1.0,5,no_bias
+1554,London,18-24,4,4,1.0,5,no_bias
+1555,Wales,55-64,1,3,1.0,5,no_bias
+1556,South East,65+,2,2,1.0,5,no_bias
+1557,North West,25-34,1,0,1.0,5,no_bias
+1558,North West,65+,4,2,1.0,5,no_bias
+1559,London,65+,4,1,1.0,5,no_bias
+1560,Midlands,55-64,2,4,1.0,5,no_bias
+1561,Midlands,65+,4,4,1.0,5,no_bias
+1562,North West,65+,4,4,1.0,5,no_bias
+1563,Midlands,35-44,4,4,1.0,5,no_bias
+1564,North West,65+,4,1,1.0,5,no_bias
+1565,North West,25-34,4,4,1.0,5,no_bias
+1566,Scotland,55-64,4,4,1.0,5,no_bias
+1567,Midlands,55-64,4,1,1.0,5,no_bias
+1568,London,25-34,4,4,1.0,5,no_bias
+1569,South East,65+,0,0,1.0,5,no_bias
+1570,South East,65+,3,1,1.0,5,no_bias
+1571,North West,55-64,1,3,1.0,5,no_bias
+1572,South East,18-24,2,2,1.0,5,no_bias
+1573,North West,65+,1,1,1.0,5,no_bias
+1574,South East,55-64,1,4,1.0,5,no_bias
+1575,London,25-34,4,1,1.0,5,no_bias
+1576,South East,35-44,0,0,1.0,5,no_bias
+1577,North West,35-44,4,1,1.0,5,no_bias
+1578,Midlands,35-44,4,4,1.0,5,no_bias
+1579,London,25-34,4,4,1.0,5,no_bias
+1580,London,65+,1,2,1.0,5,no_bias
+1581,South East,45-54,1,2,1.0,5,no_bias
+1582,Midlands,45-54,1,1,1.0,5,no_bias
+1583,London,45-54,1,1,1.0,5,no_bias
+1584,Midlands,25-34,4,1,1.0,5,no_bias
+1585,Midlands,18-24,4,0,1.0,5,no_bias
+1586,South East,18-24,1,4,1.0,5,no_bias
+1587,Midlands,65+,1,3,1.0,5,no_bias
+1588,London,25-34,4,3,1.0,5,no_bias
+1589,Scotland,25-34,0,4,1.0,5,no_bias
+1590,South East,65+,3,0,1.0,5,no_bias
+1591,London,65+,1,2,1.0,5,no_bias
+1592,North West,35-44,4,0,1.0,5,no_bias
+1593,North West,45-54,1,1,1.0,5,no_bias
+1594,South East,18-24,2,0,1.0,5,no_bias
+1595,South East,55-64,1,2,1.0,5,no_bias
+1596,North West,25-34,4,4,1.0,5,no_bias
+1597,South East,25-34,4,1,1.0,5,no_bias
+1598,London,55-64,1,1,1.0,5,no_bias
+1599,Midlands,18-24,4,3,1.0,5,no_bias
+1600,London,25-34,3,4,1.0,5,no_bias
+1601,Midlands,45-54,1,4,1.0,5,no_bias
+1602,Midlands,35-44,4,0,1.0,5,no_bias
+1603,Scotland,35-44,4,4,1.0,5,no_bias
+1604,South East,65+,4,4,1.0,5,no_bias
+1605,North West,35-44,4,4,1.0,5,no_bias
+1606,North West,35-44,1,1,1.0,5,no_bias
+1607,South East,45-54,4,0,1.0,5,no_bias
+1608,London,35-44,4,0,1.0,5,no_bias
+1609,North West,35-44,4,2,1.0,5,no_bias
+1610,London,25-34,1,3,1.0,5,no_bias
+1611,Scotland,55-64,1,1,1.0,5,no_bias
+1612,London,65+,4,4,1.0,5,no_bias
+1613,Midlands,25-34,4,3,1.0,5,no_bias
+1614,London,45-54,4,3,1.0,5,no_bias
+1615,South East,25-34,1,0,1.0,5,no_bias
+1616,South East,45-54,4,0,1.0,5,no_bias
+1617,Midlands,25-34,4,3,1.0,5,no_bias
+1618,Wales,65+,1,1,1.0,5,no_bias
+1619,Scotland,45-54,4,1,1.0,5,no_bias
+1620,Wales,35-44,3,3,1.0,5,no_bias
+1621,Midlands,45-54,2,1,1.0,5,no_bias
+1622,Midlands,35-44,4,0,1.0,5,no_bias
+1623,London,65+,3,2,1.0,5,no_bias
+1624,Wales,65+,2,4,1.0,5,no_bias
+1625,Midlands,25-34,4,0,1.0,5,no_bias
+1626,South East,55-64,1,2,1.0,5,no_bias
+1627,North West,45-54,1,1,1.0,5,no_bias
+1628,South East,45-54,3,0,1.0,5,no_bias
+1629,Midlands,65+,3,2,1.0,5,no_bias
+1630,South East,35-44,3,2,1.0,5,no_bias
+1631,Wales,45-54,2,1,1.0,5,no_bias
+1632,London,55-64,0,0,1.0,5,no_bias
+1633,South East,45-54,1,1,1.0,5,no_bias
+1634,London,45-54,3,2,1.0,5,no_bias
+1635,Midlands,25-34,4,4,1.0,5,no_bias
+1636,Midlands,65+,4,0,1.0,5,no_bias
+1637,Midlands,65+,3,2,1.0,5,no_bias
+1638,South East,25-34,1,2,1.0,5,no_bias
+1639,North West,25-34,4,4,1.0,5,no_bias
+1640,Scotland,65+,0,0,1.0,5,no_bias
+1641,London,65+,4,2,1.0,5,no_bias
+1642,London,55-64,1,2,1.0,5,no_bias
+1643,North West,65+,0,0,1.0,5,no_bias
+1644,Scotland,55-64,0,0,1.0,5,no_bias
+1645,North West,45-54,1,1,1.0,5,no_bias
+1646,Scotland,45-54,1,1,1.0,5,no_bias
+1647,North West,65+,2,4,1.0,5,no_bias
+1648,Scotland,55-64,4,4,1.0,5,no_bias
+1649,North West,35-44,2,3,1.0,5,no_bias
+1650,North West,35-44,4,4,1.0,5,no_bias
+1651,Midlands,45-54,1,1,1.0,5,no_bias
+1652,North West,25-34,4,3,1.0,5,no_bias
+1653,North West,65+,1,2,1.0,5,no_bias
+1654,Scotland,65+,2,4,1.0,5,no_bias
+1655,London,45-54,4,4,1.0,5,no_bias
+1656,London,45-54,2,2,1.0,5,no_bias
+1657,London,55-64,0,3,1.0,5,no_bias
+1658,Midlands,25-34,4,4,1.0,5,no_bias
+1659,Wales,35-44,4,3,1.0,5,no_bias
+1660,North West,55-64,4,2,1.0,5,no_bias
+1661,North West,35-44,4,4,1.0,5,no_bias
+1662,North West,45-54,0,1,1.0,5,no_bias
+1663,Midlands,25-34,4,2,1.0,5,no_bias
+1664,Midlands,65+,4,4,1.0,5,no_bias
+1665,South East,65+,3,4,1.0,5,no_bias
+1666,Wales,35-44,1,2,1.0,5,no_bias
+1667,Midlands,35-44,4,3,1.0,5,no_bias
+1668,South East,55-64,3,3,1.0,5,no_bias
+1669,Scotland,55-64,4,4,1.0,5,no_bias
+1670,London,45-54,1,4,1.0,5,no_bias
+1671,Midlands,45-54,1,4,1.0,5,no_bias
+1672,Scotland,35-44,4,0,1.0,5,no_bias
+1673,London,35-44,4,1,1.0,5,no_bias
+1674,London,55-64,2,2,1.0,5,no_bias
+1675,Midlands,45-54,1,3,1.0,5,no_bias
+1676,London,55-64,1,1,1.0,5,no_bias
+1677,London,35-44,4,4,1.0,5,no_bias
+1678,South East,55-64,1,3,1.0,5,no_bias
+1679,Midlands,35-44,4,4,1.0,5,no_bias
+1680,South East,45-54,3,4,1.0,5,no_bias
+1681,North West,35-44,4,4,1.0,5,no_bias
+1682,Midlands,65+,4,2,1.0,5,no_bias
+1683,Midlands,18-24,4,4,1.0,5,no_bias
+1684,Scotland,25-34,1,1,1.0,5,no_bias
+1685,Midlands,55-64,4,4,1.0,5,no_bias
+1686,South East,18-24,4,2,1.0,5,no_bias
+1687,South East,25-34,3,0,1.0,5,no_bias
+1688,London,35-44,2,2,1.0,5,no_bias
+1689,North West,25-34,1,2,1.0,5,no_bias
+1690,Midlands,55-64,1,1,1.0,5,no_bias
+1691,London,55-64,2,1,1.0,5,no_bias
+1692,Midlands,35-44,4,4,1.0,5,no_bias
+1693,Scotland,45-54,3,3,1.0,5,no_bias
+1694,Wales,55-64,2,4,1.0,5,no_bias
+1695,North West,35-44,4,3,1.0,5,no_bias
+1696,London,65+,2,2,1.0,5,no_bias
+1697,South East,18-24,3,0,1.0,5,no_bias
+1698,South East,25-34,1,1,1.0,5,no_bias
+1699,Midlands,35-44,4,0,1.0,5,no_bias
+1700,Midlands,18-24,4,4,1.0,5,no_bias
+1701,Scotland,45-54,3,2,1.0,5,no_bias
+1702,London,25-34,4,4,1.0,5,no_bias
+1703,South East,55-64,0,3,1.0,5,no_bias
+1704,North West,25-34,4,2,1.0,5,no_bias
+1705,London,18-24,2,1,1.0,5,no_bias
+1706,Midlands,35-44,4,4,1.0,5,no_bias
+1707,North West,45-54,1,0,1.0,5,no_bias
+1708,Midlands,65+,3,0,1.0,5,no_bias
+1709,Midlands,45-54,4,4,1.0,5,no_bias
+1710,North West,18-24,4,3,1.0,5,no_bias
+1711,Scotland,35-44,4,0,1.0,5,no_bias
+1712,North West,25-34,1,1,1.0,5,no_bias
+1713,Scotland,18-24,4,0,1.0,5,no_bias
+1714,South East,45-54,0,0,1.0,5,no_bias
+1715,South East,65+,1,1,1.0,5,no_bias
+1716,Scotland,55-64,4,4,1.0,5,no_bias
+1717,Midlands,35-44,2,4,1.0,5,no_bias
+1718,London,35-44,4,2,1.0,5,no_bias
+1719,South East,25-34,4,1,1.0,5,no_bias
+1720,Midlands,35-44,2,0,1.0,5,no_bias
+1721,Wales,65+,4,0,1.0,5,no_bias
+1722,London,45-54,1,1,1.0,5,no_bias
+1723,South East,55-64,4,4,1.0,5,no_bias
+1724,Midlands,25-34,1,4,1.0,5,no_bias
+1725,North West,35-44,2,0,1.0,5,no_bias
+1726,South East,55-64,3,1,1.0,5,no_bias
+1727,South East,55-64,0,0,1.0,5,no_bias
+1728,London,35-44,0,4,1.0,5,no_bias
+1729,North West,35-44,4,4,1.0,5,no_bias
+1730,North West,18-24,0,4,1.0,5,no_bias
+1731,London,45-54,1,1,1.0,5,no_bias
+1732,Scotland,35-44,0,3,1.0,5,no_bias
+1733,Midlands,55-64,4,4,1.0,5,no_bias
+1734,Scotland,25-34,1,1,1.0,5,no_bias
+1735,North West,45-54,4,4,1.0,5,no_bias
+1736,Midlands,25-34,4,4,1.0,5,no_bias
+1737,Scotland,35-44,4,2,1.0,5,no_bias
+1738,London,45-54,4,4,1.0,5,no_bias
+1739,Midlands,35-44,3,3,1.0,5,no_bias
+1740,London,35-44,4,1,1.0,5,no_bias
+1741,Midlands,18-24,3,0,1.0,5,no_bias
+1742,Wales,65+,4,3,1.0,5,no_bias
+1743,Scotland,55-64,1,0,1.0,5,no_bias
+1744,South East,35-44,0,0,1.0,5,no_bias
+1745,Wales,45-54,4,4,1.0,5,no_bias
+1746,North West,45-54,0,1,1.0,5,no_bias
+1747,North West,25-34,0,1,1.0,5,no_bias
+1748,Scotland,25-34,4,3,1.0,5,no_bias
+1749,North West,25-34,0,2,1.0,5,no_bias
+1750,London,25-34,1,1,1.0,5,no_bias
+1751,Scotland,35-44,4,4,1.0,5,no_bias
+1752,London,45-54,3,3,1.0,5,no_bias
+1753,Midlands,18-24,4,3,1.0,5,no_bias
+1754,Midlands,18-24,0,3,1.0,5,no_bias
+1755,Midlands,45-54,1,3,1.0,5,no_bias
+1756,South East,55-64,4,4,1.0,5,no_bias
+1757,Scotland,65+,1,0,1.0,5,no_bias
+1758,Wales,65+,2,0,1.0,5,no_bias
+1759,London,35-44,2,3,1.0,5,no_bias
+1760,South East,35-44,4,4,1.0,5,no_bias
+1761,Midlands,45-54,1,3,1.0,5,no_bias
+1762,London,65+,4,1,1.0,5,no_bias
+1763,South East,25-34,4,0,1.0,5,no_bias
+1764,London,45-54,1,2,1.0,5,no_bias
+1765,Scotland,65+,0,4,1.0,5,no_bias
+1766,South East,65+,3,0,1.0,5,no_bias
+1767,London,25-34,4,0,1.0,5,no_bias
+1768,Midlands,65+,4,0,1.0,5,no_bias
+1769,South East,55-64,1,2,1.0,5,no_bias
+1770,London,18-24,4,4,1.0,5,no_bias
+1771,London,45-54,1,0,1.0,5,no_bias
+1772,London,25-34,4,4,1.0,5,no_bias
+1773,North West,25-34,3,2,1.0,5,no_bias
+1774,North West,25-34,1,4,1.0,5,no_bias
+1775,Wales,25-34,4,1,1.0,5,no_bias
+1776,North West,45-54,0,0,1.0,5,no_bias
+1777,London,35-44,3,3,1.0,5,no_bias
+1778,Midlands,65+,1,1,1.0,5,no_bias
+1779,Midlands,55-64,3,3,1.0,5,no_bias
+1780,Midlands,35-44,1,2,1.0,5,no_bias
+1781,North West,65+,2,1,1.0,5,no_bias
+1782,Midlands,35-44,4,4,1.0,5,no_bias
+1783,North West,55-64,1,2,1.0,5,no_bias
+1784,Scotland,25-34,4,1,1.0,5,no_bias
+1785,Midlands,45-54,0,1,1.0,5,no_bias
+1786,Midlands,35-44,4,2,1.0,5,no_bias
+1787,Midlands,35-44,2,2,1.0,5,no_bias
+1788,North West,18-24,4,4,1.0,5,no_bias
+1789,Midlands,35-44,4,3,1.0,5,no_bias
+1790,Wales,25-34,3,0,1.0,5,no_bias
+1791,London,25-34,1,1,1.0,5,no_bias
+1792,North West,18-24,1,3,1.0,5,no_bias
+1793,London,35-44,0,4,1.0,5,no_bias
+1794,North West,35-44,4,2,1.0,5,no_bias
+1795,North West,65+,0,3,1.0,5,no_bias
+1796,North West,65+,2,2,1.0,5,no_bias
+1797,London,45-54,1,2,1.0,5,no_bias
+1798,Midlands,55-64,4,0,1.0,5,no_bias
+1799,Wales,25-34,4,3,1.0,5,no_bias
+1800,South East,65+,3,0,1.0,5,no_bias
+1801,North West,45-54,2,0,1.0,5,no_bias
+1802,London,65+,2,2,1.0,5,no_bias
+1803,Midlands,18-24,4,3,1.0,5,no_bias
+1804,South East,25-34,1,2,1.0,5,no_bias
+1805,Scotland,25-34,4,3,1.0,5,no_bias
+1806,North West,25-34,4,0,1.0,5,no_bias
+1807,North West,45-54,4,4,1.0,5,no_bias
+1808,Scotland,65+,4,2,1.0,5,no_bias
+1809,London,25-34,2,2,1.0,5,no_bias
+1810,North West,35-44,4,1,1.0,5,no_bias
+1811,Scotland,25-34,1,1,1.0,5,no_bias
+1812,South East,35-44,3,0,1.0,5,no_bias
+1813,London,55-64,1,4,1.0,5,no_bias
+1814,Midlands,25-34,2,2,1.0,5,no_bias
+1815,London,25-34,4,4,1.0,5,no_bias
+1816,South East,55-64,3,4,1.0,5,no_bias
+1817,North West,55-64,1,3,1.0,5,no_bias
+1818,Midlands,18-24,4,4,1.0,5,no_bias
+1819,South East,45-54,0,0,1.0,5,no_bias
+1820,South East,35-44,3,3,1.0,5,no_bias
+1821,London,65+,4,0,1.0,5,no_bias
+1822,Wales,55-64,1,1,1.0,5,no_bias
+1823,North West,65+,0,0,1.0,5,no_bias
+1824,Scotland,25-34,4,0,1.0,5,no_bias
+1825,London,65+,3,3,1.0,5,no_bias
+1826,Scotland,35-44,3,1,1.0,5,no_bias
+1827,London,45-54,4,0,1.0,5,no_bias
+1828,North West,25-34,1,0,1.0,5,no_bias
+1829,North West,35-44,4,3,1.0,5,no_bias
+1830,North West,35-44,4,4,1.0,5,no_bias
+1831,Midlands,55-64,4,3,1.0,5,no_bias
+1832,Midlands,55-64,1,3,1.0,5,no_bias
+1833,South East,45-54,0,0,1.0,5,no_bias
+1834,Midlands,25-34,1,1,1.0,5,no_bias
+1835,Midlands,65+,4,1,1.0,5,no_bias
+1836,Scotland,25-34,1,0,1.0,5,no_bias
+1837,London,65+,3,4,1.0,5,no_bias
+1838,North West,18-24,4,1,1.0,5,no_bias
+1839,Scotland,45-54,0,1,1.0,5,no_bias
+1840,Wales,55-64,2,0,1.0,5,no_bias
+1841,Scotland,45-54,1,3,1.0,5,no_bias
+1842,North West,25-34,1,1,1.0,5,no_bias
+1843,North West,55-64,1,3,1.0,5,no_bias
+1844,London,45-54,1,1,1.0,5,no_bias
+1845,North West,18-24,4,0,1.0,5,no_bias
+1846,Midlands,35-44,4,4,1.0,5,no_bias
+1847,North West,65+,1,2,1.0,5,no_bias
+1848,Scotland,25-34,4,1,1.0,5,no_bias
+1849,North West,65+,4,2,1.0,5,no_bias
+1850,London,45-54,4,1,1.0,5,no_bias
+1851,South East,35-44,4,4,1.0,5,no_bias
+1852,North West,25-34,0,3,1.0,5,no_bias
+1853,Scotland,45-54,4,4,1.0,5,no_bias
+1854,Midlands,45-54,1,2,1.0,5,no_bias
+1855,South East,35-44,4,3,1.0,5,no_bias
+1856,Midlands,18-24,4,3,1.0,5,no_bias
+1857,London,45-54,4,3,1.0,5,no_bias
+1858,London,65+,2,0,1.0,5,no_bias
+1859,North West,35-44,4,1,1.0,5,no_bias
+1860,Midlands,45-54,2,2,1.0,5,no_bias
+1861,London,65+,0,4,1.0,5,no_bias
+1862,Scotland,25-34,4,1,1.0,5,no_bias
+1863,London,45-54,2,2,1.0,5,no_bias
+1864,South East,65+,1,1,1.0,5,no_bias
+1865,Midlands,65+,4,2,1.0,5,no_bias
+1866,North West,25-34,4,4,1.0,5,no_bias
+1867,North West,55-64,4,0,1.0,5,no_bias
+1868,Midlands,65+,4,3,1.0,5,no_bias
+1869,Scotland,45-54,1,1,1.0,5,no_bias
+1870,North West,18-24,0,4,1.0,5,no_bias
+1871,London,45-54,1,1,1.0,5,no_bias
+1872,North West,35-44,4,2,1.0,5,no_bias
+1873,London,45-54,3,2,1.0,5,no_bias
+1874,North West,35-44,4,3,1.0,5,no_bias
+1875,Midlands,65+,4,0,1.0,5,no_bias
+1876,London,25-34,1,4,1.0,5,no_bias
+1877,North West,35-44,4,2,1.0,5,no_bias
+1878,South East,65+,2,2,1.0,5,no_bias
+1879,South East,65+,3,0,1.0,5,no_bias
+1880,Wales,35-44,4,4,1.0,5,no_bias
+1881,Midlands,18-24,4,4,1.0,5,no_bias
+1882,Midlands,35-44,4,4,1.0,5,no_bias
+1883,North West,65+,0,0,1.0,5,no_bias
+1884,North West,25-34,4,4,1.0,5,no_bias
+1885,North West,18-24,4,4,1.0,5,no_bias
+1886,Wales,65+,4,4,1.0,5,no_bias
+1887,Midlands,25-34,4,4,1.0,5,no_bias
+1888,North West,45-54,4,4,1.0,5,no_bias
+1889,North West,45-54,1,0,1.0,5,no_bias
+1890,South East,45-54,1,2,1.0,5,no_bias
+1891,Scotland,35-44,3,3,1.0,5,no_bias
+1892,Scotland,35-44,1,4,1.0,5,no_bias
+1893,London,55-64,1,2,1.0,5,no_bias
+1894,Wales,55-64,1,2,1.0,5,no_bias
+1895,Scotland,25-34,1,4,1.0,5,no_bias
+1896,London,18-24,4,0,1.0,5,no_bias
+1897,North West,45-54,1,0,1.0,5,no_bias
+1898,Wales,18-24,3,1,1.0,5,no_bias
+1899,South East,55-64,2,2,1.0,5,no_bias
+1900,South East,25-34,4,3,1.0,5,no_bias
+1901,South East,25-34,4,4,1.0,5,no_bias
+1902,North West,35-44,4,0,1.0,5,no_bias
+1903,South East,65+,1,2,1.0,5,no_bias
+1904,Midlands,65+,4,4,1.0,5,no_bias
+1905,Midlands,65+,4,4,1.0,5,no_bias
+1906,London,18-24,4,0,1.0,5,no_bias
+1907,Midlands,25-34,1,1,1.0,5,no_bias
+1908,London,65+,1,3,1.0,5,no_bias
+1909,North West,45-54,3,2,1.0,5,no_bias
+1910,London,45-54,1,1,1.0,5,no_bias
+1911,South East,35-44,4,3,1.0,5,no_bias
+1912,London,35-44,0,0,1.0,5,no_bias
+1913,Midlands,55-64,3,3,1.0,5,no_bias
+1914,Scotland,45-54,2,2,1.0,5,no_bias
+1915,Scotland,55-64,4,3,1.0,5,no_bias
+1916,North West,65+,1,1,1.0,5,no_bias
+1917,Wales,45-54,2,4,1.0,5,no_bias
+1918,London,35-44,4,4,1.0,5,no_bias
+1919,North West,45-54,4,3,1.0,5,no_bias
+1920,Scotland,55-64,1,4,1.0,5,no_bias
+1921,Midlands,25-34,4,1,1.0,5,no_bias
+1922,London,65+,2,2,1.0,5,no_bias
+1923,Midlands,65+,3,3,1.0,5,no_bias
+1924,South East,65+,1,0,1.0,5,no_bias
+1925,Wales,35-44,4,4,1.0,5,no_bias
+1926,North West,55-64,3,4,1.0,5,no_bias
+1927,Midlands,65+,4,1,1.0,5,no_bias
+1928,London,25-34,1,2,1.0,5,no_bias
+1929,South East,18-24,2,2,1.0,5,no_bias
+1930,North West,25-34,0,0,1.0,5,no_bias
+1931,South East,55-64,3,3,1.0,5,no_bias
+1932,South East,45-54,4,4,1.0,5,no_bias
+1933,South East,25-34,2,4,1.0,5,no_bias
+1934,North West,25-34,4,0,1.0,5,no_bias
+1935,South East,55-64,3,4,1.0,5,no_bias
+1936,London,65+,4,4,1.0,5,no_bias
+1937,Scotland,65+,1,4,1.0,5,no_bias
+1938,Midlands,55-64,0,0,1.0,5,no_bias
+1939,Scotland,55-64,1,4,1.0,5,no_bias
+1940,London,35-44,4,0,1.0,5,no_bias
+1941,Midlands,35-44,4,0,1.0,5,no_bias
+1942,Wales,18-24,0,0,1.0,5,no_bias
+1943,Midlands,65+,4,2,1.0,5,no_bias
+1944,Midlands,65+,4,4,1.0,5,no_bias
+1945,South East,45-54,0,2,1.0,5,no_bias
+1946,Scotland,35-44,4,4,1.0,5,no_bias
+1947,South East,45-54,3,3,1.0,5,no_bias
+1948,South East,45-54,0,2,1.0,5,no_bias
+1949,Midlands,25-34,4,1,1.0,5,no_bias
+1950,Wales,55-64,3,0,1.0,5,no_bias
+1951,Scotland,18-24,4,2,1.0,5,no_bias
+1952,Midlands,55-64,4,0,1.0,5,no_bias
+1953,North West,25-34,1,2,1.0,5,no_bias
+1954,London,55-64,2,2,1.0,5,no_bias
+1955,South East,65+,4,0,1.0,5,no_bias
+1956,London,55-64,4,1,1.0,5,no_bias
+1957,Midlands,35-44,4,1,1.0,5,no_bias
+1958,Midlands,18-24,1,4,1.0,5,no_bias
+1959,Scotland,45-54,4,4,1.0,5,no_bias
+1960,Scotland,65+,4,0,1.0,5,no_bias
+1961,North West,35-44,0,0,1.0,5,no_bias
+1962,Midlands,35-44,3,3,1.0,5,no_bias
+1963,Midlands,18-24,3,1,1.0,5,no_bias
+1964,London,65+,1,3,1.0,5,no_bias
+1965,Wales,45-54,4,4,1.0,5,no_bias
+1966,South East,35-44,0,0,1.0,5,no_bias
+1967,North West,65+,2,2,1.0,5,no_bias
+1968,North West,35-44,2,2,1.0,5,no_bias
+1969,Scotland,35-44,3,1,1.0,5,no_bias
+1970,London,25-34,1,3,1.0,5,no_bias
+1971,Scotland,65+,0,0,1.0,5,no_bias
+1972,South East,45-54,4,4,1.0,5,no_bias
+1973,North West,45-54,1,1,1.0,5,no_bias
+1974,Wales,55-64,4,4,1.0,5,no_bias
+1975,Midlands,25-34,4,4,1.0,5,no_bias
+1976,Midlands,65+,4,2,1.0,5,no_bias
+1977,London,35-44,4,3,1.0,5,no_bias
+1978,North West,45-54,1,1,1.0,5,no_bias
+1979,Scotland,18-24,3,4,1.0,5,no_bias
+1980,Midlands,45-54,4,3,1.0,5,no_bias
+1981,North West,25-34,4,2,1.0,5,no_bias
+1982,Midlands,65+,2,4,1.0,5,no_bias
+1983,South East,65+,4,4,1.0,5,no_bias
+1984,North West,25-34,4,4,1.0,5,no_bias
+1985,South East,65+,0,4,1.0,5,no_bias
+1986,Wales,25-34,3,0,1.0,5,no_bias
+1987,North West,35-44,4,3,1.0,5,no_bias
+1988,North West,35-44,4,4,1.0,5,no_bias
+1989,Midlands,45-54,0,0,1.0,5,no_bias
+1990,London,45-54,1,1,1.0,5,no_bias
+1991,South East,45-54,1,1,1.0,5,no_bias
+1992,South East,45-54,1,4,1.0,5,no_bias
+1993,Midlands,25-34,4,3,1.0,5,no_bias
+1994,South East,45-54,1,3,1.0,5,no_bias
+1995,Midlands,35-44,4,4,1.0,5,no_bias
+1996,Scotland,45-54,0,0,1.0,5,no_bias
+1997,London,45-54,3,2,1.0,5,no_bias
+1998,Midlands,55-64,0,2,1.0,5,no_bias
+1999,South East,35-44,4,1,1.0,5,no_bias
+2000,London,18-24,1,3,1.0,5,no_bias
+2001,North West,45-54,1,3,1.0,5,no_bias
+2002,South East,65+,0,1,1.0,5,no_bias
+2003,Midlands,25-34,4,4,1.0,5,no_bias
+2004,Scotland,45-54,0,1,1.0,5,no_bias
+2005,London,25-34,2,2,1.0,5,no_bias
+2006,Wales,25-34,2,2,1.0,5,no_bias
+2007,North West,25-34,0,0,1.0,5,no_bias
+2008,London,45-54,3,3,1.0,5,no_bias
+2009,Scotland,35-44,4,3,1.0,5,no_bias
+2010,London,45-54,1,0,1.0,5,no_bias
+2011,Scotland,65+,3,3,1.0,5,no_bias
+2012,North West,25-34,3,1,1.0,5,no_bias
+2013,Scotland,25-34,0,2,1.0,5,no_bias
+2014,London,65+,2,2,1.0,5,no_bias
+2015,Midlands,18-24,1,3,1.0,5,no_bias
+2016,North West,25-34,1,1,1.0,5,no_bias
+2017,London,35-44,4,3,1.0,5,no_bias
+2018,Midlands,65+,4,2,1.0,5,no_bias
+2019,Midlands,18-24,2,1,1.0,5,no_bias
+2020,Midlands,25-34,3,2,1.0,5,no_bias
+2021,Midlands,65+,2,2,1.0,5,no_bias
+2022,South East,35-44,4,2,1.0,5,no_bias
+2023,Scotland,25-34,1,4,1.0,5,no_bias
+2024,London,18-24,2,2,1.0,5,no_bias
+2025,Scotland,25-34,4,4,1.0,5,no_bias
+2026,Midlands,65+,3,0,1.0,5,no_bias
+2027,Midlands,65+,3,1,1.0,5,no_bias
+2028,South East,65+,4,3,1.0,5,no_bias
+2029,Midlands,35-44,4,4,1.0,5,no_bias
+2030,South East,45-54,1,3,1.0,5,no_bias
+2031,South East,55-64,1,3,1.0,5,no_bias
+2032,London,65+,4,4,1.0,5,no_bias
+2033,South East,65+,0,0,1.0,5,no_bias
+2034,London,45-54,2,2,1.0,5,no_bias
+2035,London,65+,4,4,1.0,5,no_bias
+2036,Scotland,25-34,4,0,1.0,5,no_bias
+2037,Midlands,45-54,1,1,1.0,5,no_bias
+2038,South East,25-34,3,2,1.0,5,no_bias
+2039,Scotland,18-24,0,0,1.0,5,no_bias
+2040,Midlands,25-34,4,0,1.0,5,no_bias
+2041,Wales,25-34,1,1,1.0,5,no_bias
+2042,Midlands,55-64,4,2,1.0,5,no_bias
+2043,South East,65+,4,4,1.0,5,no_bias
+2044,North West,25-34,1,4,1.0,5,no_bias
+2045,Midlands,65+,4,3,1.0,5,no_bias
+2046,London,55-64,1,0,1.0,5,no_bias
+2047,Midlands,35-44,3,0,1.0,5,no_bias
+2048,South East,55-64,2,3,1.0,5,no_bias
+2049,North West,65+,2,2,1.0,5,no_bias
+2050,Midlands,65+,1,2,1.0,5,no_bias
+2051,London,18-24,2,2,1.0,5,no_bias
+2052,North West,65+,4,3,1.0,5,no_bias
+2053,North West,45-54,4,3,1.0,5,no_bias
+2054,London,35-44,0,3,1.0,5,no_bias
+2055,Wales,18-24,2,2,1.0,5,no_bias
+2056,Midlands,25-34,1,3,1.0,5,no_bias
+2057,Midlands,35-44,4,0,1.0,5,no_bias
+2058,South East,35-44,4,4,1.0,5,no_bias
+2059,London,25-34,2,0,1.0,5,no_bias
+2060,Midlands,45-54,3,0,1.0,5,no_bias
+2061,North West,65+,4,0,1.0,5,no_bias
+2062,North West,25-34,4,4,1.0,5,no_bias
+2063,Midlands,35-44,4,1,1.0,5,no_bias
+2064,North West,65+,1,1,1.0,5,no_bias
+2065,Midlands,35-44,4,4,1.0,5,no_bias
+2066,Midlands,45-54,4,3,1.0,5,no_bias
+2067,Scotland,65+,1,0,1.0,5,no_bias
+2068,Wales,25-34,4,1,1.0,5,no_bias
+2069,North West,45-54,1,2,1.0,5,no_bias
+2070,North West,25-34,1,1,1.0,5,no_bias
+2071,London,25-34,4,1,1.0,5,no_bias
+2072,North West,45-54,2,1,1.0,5,no_bias
+2073,Midlands,35-44,3,3,1.0,5,no_bias
+2074,London,35-44,4,4,1.0,5,no_bias
+2075,South East,45-54,0,3,1.0,5,no_bias
+2076,North West,65+,0,3,1.0,5,no_bias
+2077,South East,25-34,1,1,1.0,5,no_bias
+2078,Midlands,35-44,3,3,1.0,5,no_bias
+2079,Midlands,25-34,4,4,1.0,5,no_bias
+2080,Midlands,55-64,4,0,1.0,5,no_bias
+2081,South East,18-24,3,1,1.0,5,no_bias
+2082,North West,25-34,1,1,1.0,5,no_bias
+2083,North West,18-24,3,0,1.0,5,no_bias
+2084,London,45-54,4,1,1.0,5,no_bias
+2085,Scotland,65+,4,1,1.0,5,no_bias
+2086,South East,45-54,3,4,1.0,5,no_bias
+2087,South East,55-64,3,3,1.0,5,no_bias
+2088,North West,18-24,1,1,1.0,5,no_bias
+2089,London,65+,4,4,1.0,5,no_bias
+2090,Wales,55-64,4,4,1.0,5,no_bias
+2091,London,55-64,1,3,1.0,5,no_bias
+2092,South East,45-54,2,3,1.0,5,no_bias
+2093,South East,45-54,2,2,1.0,5,no_bias
+2094,Midlands,65+,4,4,1.0,5,no_bias
+2095,Scotland,18-24,3,3,1.0,5,no_bias
+2096,Wales,55-64,2,2,1.0,5,no_bias
+2097,Scotland,25-34,3,1,1.0,5,no_bias
+2098,London,35-44,4,4,1.0,5,no_bias
+2099,North West,35-44,1,4,1.0,5,no_bias
+2100,London,35-44,4,0,1.0,5,no_bias
+2101,Midlands,65+,3,1,1.0,5,no_bias
+2102,London,35-44,4,4,1.0,5,no_bias
+2103,Wales,18-24,1,1,1.0,5,no_bias
+2104,London,65+,4,4,1.0,5,no_bias
+2105,London,18-24,3,2,1.0,5,no_bias
+2106,South East,55-64,1,1,1.0,5,no_bias
+2107,London,18-24,3,0,1.0,5,no_bias
+2108,London,55-64,1,3,1.0,5,no_bias
+2109,London,45-54,1,3,1.0,5,no_bias
+2110,North West,25-34,1,1,1.0,5,no_bias
+2111,South East,18-24,1,0,1.0,5,no_bias
+2112,North West,35-44,4,0,1.0,5,no_bias
+2113,Midlands,45-54,3,0,1.0,5,no_bias
+2114,South East,55-64,1,1,1.0,5,no_bias
+2115,Midlands,18-24,2,2,1.0,5,no_bias
+2116,Midlands,35-44,4,1,1.0,5,no_bias
+2117,London,35-44,4,4,1.0,5,no_bias
+2118,London,18-24,4,0,1.0,5,no_bias
+2119,Midlands,45-54,2,0,1.0,5,no_bias
+2120,North West,55-64,1,1,1.0,5,no_bias
+2121,South East,35-44,4,2,1.0,5,no_bias
+2122,South East,55-64,0,2,1.0,5,no_bias
+2123,North West,35-44,4,0,1.0,5,no_bias
+2124,North West,45-54,1,0,1.0,5,no_bias
+2125,Midlands,45-54,3,4,1.0,5,no_bias
+2126,Midlands,35-44,4,4,1.0,5,no_bias
+2127,London,18-24,1,1,1.0,5,no_bias
+2128,Wales,45-54,0,3,1.0,5,no_bias
+2129,South East,65+,1,3,1.0,5,no_bias
+2130,North West,35-44,4,1,1.0,5,no_bias
+2131,South East,35-44,4,4,1.0,5,no_bias
+2132,London,45-54,0,4,1.0,5,no_bias
+2133,South East,18-24,2,3,1.0,5,no_bias
+2134,North West,25-34,2,1,1.0,5,no_bias
+2135,London,55-64,0,1,1.0,5,no_bias
+2136,North West,35-44,4,4,1.0,5,no_bias
+2137,Midlands,25-34,2,4,1.0,5,no_bias
+2138,North West,25-34,1,1,1.0,5,no_bias
+2139,Midlands,55-64,4,1,1.0,5,no_bias
+2140,South East,25-34,3,0,1.0,5,no_bias
+2141,North West,25-34,4,0,1.0,5,no_bias
+2142,Scotland,65+,3,3,1.0,5,no_bias
+2143,Midlands,65+,4,4,1.0,5,no_bias
+2144,South East,25-34,2,0,1.0,5,no_bias
+2145,South East,45-54,1,1,1.0,5,no_bias
+2146,North West,55-64,0,2,1.0,5,no_bias
+2147,Midlands,35-44,4,1,1.0,5,no_bias
+2148,North West,25-34,4,4,1.0,5,no_bias
+2149,North West,65+,1,3,1.0,5,no_bias
+2150,South East,45-54,3,3,1.0,5,no_bias
+2151,Wales,65+,1,4,1.0,5,no_bias
+2152,Wales,65+,1,1,1.0,5,no_bias
+2153,Midlands,45-54,1,3,1.0,5,no_bias
+2154,North West,55-64,1,3,1.0,5,no_bias
+2155,Midlands,18-24,2,1,1.0,5,no_bias
+2156,South East,18-24,0,1,1.0,5,no_bias
+2157,London,45-54,4,0,1.0,5,no_bias
+2158,Scotland,18-24,4,4,1.0,5,no_bias
+2159,Midlands,65+,1,4,1.0,5,no_bias
+2160,London,55-64,4,1,1.0,5,no_bias
+2161,Scotland,35-44,1,4,1.0,5,no_bias
+2162,South East,55-64,0,0,1.0,5,no_bias
+2163,London,65+,3,1,1.0,5,no_bias
+2164,South East,18-24,1,1,1.0,5,no_bias
+2165,North West,35-44,4,3,1.0,5,no_bias
+2166,South East,25-34,1,1,1.0,5,no_bias
+2167,North West,35-44,1,1,1.0,5,no_bias
+2168,South East,55-64,0,4,1.0,5,no_bias
+2169,Midlands,55-64,4,1,1.0,5,no_bias
+2170,Midlands,35-44,4,2,1.0,5,no_bias
+2171,North West,65+,0,0,1.0,5,no_bias
+2172,Midlands,35-44,2,2,1.0,5,no_bias
+2173,South East,45-54,4,0,1.0,5,no_bias
+2174,London,65+,4,2,1.0,5,no_bias
+2175,London,25-34,2,3,1.0,5,no_bias
+2176,Midlands,45-54,0,4,1.0,5,no_bias
+2177,Scotland,65+,4,2,1.0,5,no_bias
+2178,Midlands,45-54,4,2,1.0,5,no_bias
+2179,South East,25-34,3,0,1.0,5,no_bias
+2180,North West,18-24,4,1,1.0,5,no_bias
+2181,North West,65+,4,2,1.0,5,no_bias
+2182,Midlands,35-44,2,3,1.0,5,no_bias
+2183,Midlands,65+,0,4,1.0,5,no_bias
+2184,Scotland,55-64,2,0,1.0,5,no_bias
+2185,South East,55-64,3,3,1.0,5,no_bias
+2186,South East,65+,3,4,1.0,5,no_bias
+2187,South East,65+,4,3,1.0,5,no_bias
+2188,South East,65+,1,3,1.0,5,no_bias
+2189,London,55-64,4,4,1.0,5,no_bias
+2190,Scotland,45-54,1,1,1.0,5,no_bias
+2191,Midlands,18-24,4,4,1.0,5,no_bias
+2192,Midlands,25-34,4,4,1.0,5,no_bias
+2193,Midlands,35-44,4,3,1.0,5,no_bias
+2194,South East,65+,1,1,1.0,5,no_bias
+2195,Midlands,35-44,4,3,1.0,5,no_bias
+2196,Scotland,25-34,1,1,1.0,5,no_bias
+2197,North West,35-44,1,2,1.0,5,no_bias
+2198,Midlands,25-34,4,0,1.0,5,no_bias
+2199,South East,35-44,4,0,1.0,5,no_bias
+2200,Scotland,35-44,3,3,1.0,5,no_bias
+2201,London,45-54,4,2,1.0,5,no_bias
+2202,London,55-64,3,2,1.0,5,no_bias
+2203,North West,65+,4,2,1.0,5,no_bias
+2204,North West,65+,0,0,1.0,5,no_bias
+2205,London,25-34,1,1,1.0,5,no_bias
+2206,North West,35-44,4,4,1.0,5,no_bias
+2207,London,18-24,4,1,1.0,5,no_bias
+2208,Midlands,35-44,4,4,1.0,5,no_bias
+2209,Midlands,35-44,3,0,1.0,5,no_bias
+2210,Midlands,25-34,1,1,1.0,5,no_bias
+2211,Scotland,45-54,1,1,1.0,5,no_bias
+2212,Wales,25-34,1,1,1.0,5,no_bias
+2213,London,65+,4,4,1.0,5,no_bias
+2214,Midlands,65+,4,2,1.0,5,no_bias
+2215,Wales,55-64,4,2,1.0,5,no_bias
+2216,South East,65+,4,4,1.0,5,no_bias
+2217,South East,45-54,4,4,1.0,5,no_bias
+2218,North West,18-24,4,3,1.0,5,no_bias
+2219,London,25-34,1,1,1.0,5,no_bias
+2220,Scotland,55-64,1,1,1.0,5,no_bias
+2221,North West,18-24,4,1,1.0,5,no_bias
+2222,South East,55-64,1,3,1.0,5,no_bias
+2223,London,45-54,1,4,1.0,5,no_bias
+2224,North West,45-54,1,1,1.0,5,no_bias
+2225,Scotland,65+,4,4,1.0,5,no_bias
+2226,Midlands,65+,3,1,1.0,5,no_bias
+2227,North West,55-64,4,4,1.0,5,no_bias
+2228,South East,25-34,1,0,1.0,5,no_bias
+2229,North West,25-34,1,0,1.0,5,no_bias
+2230,Midlands,35-44,4,0,1.0,5,no_bias
+2231,South East,35-44,2,2,1.0,5,no_bias
+2232,South East,25-34,0,3,1.0,5,no_bias
+2233,North West,18-24,3,1,1.0,5,no_bias
+2234,Midlands,45-54,2,0,1.0,5,no_bias
+2235,South East,65+,1,2,1.0,5,no_bias
+2236,Midlands,18-24,1,1,1.0,5,no_bias
+2237,North West,45-54,1,1,1.0,5,no_bias
+2238,Midlands,35-44,4,0,1.0,5,no_bias
+2239,Scotland,55-64,0,4,1.0,5,no_bias
+2240,North West,45-54,4,3,1.0,5,no_bias
+2241,North West,25-34,4,4,1.0,5,no_bias
+2242,North West,25-34,4,2,1.0,5,no_bias
+2243,North West,35-44,4,1,1.0,5,no_bias
+2244,South East,35-44,3,3,1.0,5,no_bias
+2245,South East,55-64,4,1,1.0,5,no_bias
+2246,South East,45-54,2,2,1.0,5,no_bias
+2247,Midlands,55-64,4,2,1.0,5,no_bias
+2248,North West,55-64,0,0,1.0,5,no_bias
+2249,Scotland,35-44,4,0,1.0,5,no_bias
+2250,South East,18-24,3,1,1.0,5,no_bias
+2251,North West,65+,4,3,1.0,5,no_bias
+2252,North West,65+,2,0,1.0,5,no_bias
+2253,South East,65+,1,3,1.0,5,no_bias
+2254,South East,55-64,4,4,1.0,5,no_bias
+2255,London,55-64,1,3,1.0,5,no_bias
+2256,London,25-34,3,4,1.0,5,no_bias
+2257,London,35-44,4,1,1.0,5,no_bias
+2258,North West,18-24,4,2,1.0,5,no_bias
+2259,North West,35-44,0,1,1.0,5,no_bias
+2260,Wales,65+,4,2,1.0,5,no_bias
+2261,North West,35-44,4,4,1.0,5,no_bias
+2262,London,25-34,1,4,1.0,5,no_bias
+2263,Scotland,55-64,1,4,1.0,5,no_bias
+2264,Scotland,45-54,1,1,1.0,5,no_bias
+2265,Midlands,35-44,4,4,1.0,5,no_bias
+2266,South East,18-24,4,0,1.0,5,no_bias
+2267,Wales,25-34,2,0,1.0,5,no_bias
+2268,South East,65+,4,2,1.0,5,no_bias
+2269,Midlands,55-64,4,4,1.0,5,no_bias
+2270,North West,45-54,0,1,1.0,5,no_bias
+2271,Scotland,35-44,4,2,1.0,5,no_bias
+2272,Scotland,35-44,4,3,1.0,5,no_bias
+2273,South East,65+,4,1,1.0,5,no_bias
+2274,Midlands,25-34,1,4,1.0,5,no_bias
+2275,South East,45-54,3,3,1.0,5,no_bias
+2276,North West,55-64,1,2,1.0,5,no_bias
+2277,Wales,45-54,1,3,1.0,5,no_bias
+2278,North West,65+,4,1,1.0,5,no_bias
+2279,South East,55-64,1,1,1.0,5,no_bias
+2280,North West,65+,4,4,1.0,5,no_bias
+2281,Midlands,25-34,3,4,1.0,5,no_bias
+2282,Midlands,45-54,4,4,1.0,5,no_bias
+2283,Midlands,65+,4,0,1.0,5,no_bias
+2284,Scotland,55-64,1,0,1.0,5,no_bias
+2285,London,18-24,4,4,1.0,5,no_bias
+2286,London,35-44,4,1,1.0,5,no_bias
+2287,Midlands,55-64,4,4,1.0,5,no_bias
+2288,Midlands,18-24,0,2,1.0,5,no_bias
+2289,Scotland,45-54,3,0,1.0,5,no_bias
+2290,South East,45-54,3,2,1.0,5,no_bias
+2291,Wales,55-64,0,2,1.0,5,no_bias
+2292,South East,35-44,4,4,1.0,5,no_bias
+2293,Midlands,35-44,2,1,1.0,5,no_bias
+2294,North West,35-44,4,3,1.0,5,no_bias
+2295,London,25-34,4,1,1.0,5,no_bias
+2296,South East,18-24,4,1,1.0,5,no_bias
+2297,London,65+,0,1,1.0,5,no_bias
+2298,Midlands,65+,4,1,1.0,5,no_bias
+2299,London,25-34,4,3,1.0,5,no_bias
+2300,Scotland,35-44,4,2,1.0,5,no_bias
+2301,Wales,25-34,2,3,1.0,5,no_bias
+2302,Scotland,45-54,1,1,1.0,5,no_bias
+2303,Scotland,25-34,4,0,1.0,5,no_bias
+2304,London,35-44,4,0,1.0,5,no_bias
+2305,North West,35-44,2,1,1.0,5,no_bias
+2306,Midlands,45-54,0,0,1.0,5,no_bias
+2307,Midlands,55-64,1,1,1.0,5,no_bias
+2308,South East,45-54,0,0,1.0,5,no_bias
+2309,North West,18-24,0,1,1.0,5,no_bias
+2310,Wales,45-54,1,1,1.0,5,no_bias
+2311,Midlands,45-54,0,0,1.0,5,no_bias
+2312,Wales,35-44,1,1,1.0,5,no_bias
+2313,North West,65+,1,2,1.0,5,no_bias
+2314,Midlands,45-54,1,3,1.0,5,no_bias
+2315,South East,65+,4,4,1.0,5,no_bias
+2316,Midlands,35-44,1,1,1.0,5,no_bias
+2317,Scotland,55-64,1,0,1.0,5,no_bias
+2318,Midlands,65+,4,4,1.0,5,no_bias
+2319,South East,65+,3,0,1.0,5,no_bias
+2320,Scotland,35-44,4,4,1.0,5,no_bias
+2321,Midlands,35-44,4,4,1.0,5,no_bias
+2322,South East,65+,3,2,1.0,5,no_bias
+2323,London,45-54,3,3,1.0,5,no_bias
+2324,North West,55-64,4,4,1.0,5,no_bias
+2325,Midlands,35-44,3,1,1.0,5,no_bias
+2326,Midlands,45-54,0,0,1.0,5,no_bias
+2327,South East,18-24,3,0,1.0,5,no_bias
+2328,South East,18-24,2,1,1.0,5,no_bias
+2329,Midlands,45-54,1,1,1.0,5,no_bias
+2330,Midlands,55-64,4,2,1.0,5,no_bias
+2331,South East,35-44,4,1,1.0,5,no_bias
+2332,Midlands,35-44,4,0,1.0,5,no_bias
+2333,South East,35-44,4,0,1.0,5,no_bias
+2334,Midlands,45-54,1,0,1.0,5,no_bias
+2335,South East,55-64,2,2,1.0,5,no_bias
+2336,North West,55-64,2,0,1.0,5,no_bias
+2337,Midlands,45-54,3,1,1.0,5,no_bias
+2338,South East,65+,4,2,1.0,5,no_bias
+2339,Scotland,45-54,3,2,1.0,5,no_bias
+2340,Midlands,18-24,4,4,1.0,5,no_bias
+2341,Midlands,45-54,3,3,1.0,5,no_bias
+2342,South East,65+,2,2,1.0,5,no_bias
+2343,Wales,45-54,0,3,1.0,5,no_bias
+2344,Midlands,45-54,4,3,1.0,5,no_bias
+2345,South East,55-64,1,4,1.0,5,no_bias
+2346,Scotland,65+,4,2,1.0,5,no_bias
+2347,Midlands,18-24,4,4,1.0,5,no_bias
+2348,London,65+,3,4,1.0,5,no_bias
+2349,Midlands,65+,4,1,1.0,5,no_bias
+2350,London,35-44,4,4,1.0,5,no_bias
+2351,Midlands,65+,4,0,1.0,5,no_bias
+2352,South East,45-54,0,1,1.0,5,no_bias
+2353,London,65+,4,4,1.0,5,no_bias
+2354,Wales,65+,2,3,1.0,5,no_bias
+2355,Midlands,35-44,4,2,1.0,5,no_bias
+2356,Midlands,45-54,0,1,1.0,5,no_bias
+2357,South East,45-54,4,1,1.0,5,no_bias
+2358,London,45-54,3,3,1.0,5,no_bias
+2359,South East,45-54,3,0,1.0,5,no_bias
+2360,London,25-34,1,1,1.0,5,no_bias
+2361,South East,25-34,4,3,1.0,5,no_bias
+2362,Scotland,55-64,3,0,1.0,5,no_bias
+2363,Midlands,55-64,4,3,1.0,5,no_bias
+2364,North West,25-34,2,2,1.0,5,no_bias
+2365,North West,18-24,4,0,1.0,5,no_bias
+2366,North West,65+,2,1,1.0,5,no_bias
+2367,Midlands,25-34,4,0,1.0,5,no_bias
+2368,South East,65+,1,0,1.0,5,no_bias
+2369,South East,65+,4,4,1.0,5,no_bias
+2370,London,55-64,1,1,1.0,5,no_bias
+2371,North West,65+,1,1,1.0,5,no_bias
+2372,South East,18-24,3,4,1.0,5,no_bias
+2373,South East,45-54,0,0,1.0,5,no_bias
+2374,Midlands,65+,3,3,1.0,5,no_bias
+2375,South East,55-64,1,1,1.0,5,no_bias
+2376,Scotland,65+,4,1,1.0,5,no_bias
+2377,Midlands,35-44,4,2,1.0,5,no_bias
+2378,Wales,35-44,4,0,1.0,5,no_bias
+2379,North West,65+,4,4,1.0,5,no_bias
+2380,Wales,35-44,1,3,1.0,5,no_bias
+2381,Midlands,25-34,1,3,1.0,5,no_bias
+2382,Scotland,35-44,4,1,1.0,5,no_bias
+2383,South East,35-44,4,4,1.0,5,no_bias
+2384,Midlands,35-44,4,1,1.0,5,no_bias
+2385,South East,65+,1,1,1.0,5,no_bias
+2386,North West,65+,0,3,1.0,5,no_bias
+2387,Midlands,65+,4,0,1.0,5,no_bias
+2388,North West,25-34,1,0,1.0,5,no_bias
+2389,London,25-34,4,4,1.0,5,no_bias
+2390,South East,18-24,4,4,1.0,5,no_bias
+2391,London,65+,4,1,1.0,5,no_bias
+2392,Scotland,25-34,3,3,1.0,5,no_bias
+2393,North West,25-34,4,0,1.0,5,no_bias
+2394,Scotland,45-54,4,0,1.0,5,no_bias
+2395,Midlands,18-24,4,4,1.0,5,no_bias
+2396,South East,45-54,0,3,1.0,5,no_bias
+2397,Midlands,35-44,4,3,1.0,5,no_bias
+2398,Midlands,65+,0,4,1.0,5,no_bias
+2399,Midlands,45-54,1,1,1.0,5,no_bias
+2400,North West,35-44,4,2,1.0,5,no_bias
+2401,South East,65+,3,3,1.0,5,no_bias
+2402,London,65+,4,4,1.0,5,no_bias
+2403,Midlands,45-54,3,2,1.0,5,no_bias
+2404,South East,45-54,1,3,1.0,5,no_bias
+2405,Scotland,65+,2,2,1.0,5,no_bias
+2406,Midlands,35-44,4,3,1.0,5,no_bias
+2407,South East,35-44,4,0,1.0,5,no_bias
+2408,Scotland,45-54,3,3,1.0,5,no_bias
+2409,North West,65+,4,2,1.0,5,no_bias
+2410,North West,65+,1,0,1.0,5,no_bias
+2411,South East,55-64,3,2,1.0,5,no_bias
+2412,North West,35-44,4,4,1.0,5,no_bias
+2413,Midlands,25-34,4,3,1.0,5,no_bias
+2414,South East,55-64,1,4,1.0,5,no_bias
+2415,Scotland,35-44,4,4,1.0,5,no_bias
+2416,South East,45-54,0,0,1.0,5,no_bias
+2417,Midlands,25-34,2,3,1.0,5,no_bias
+2418,London,18-24,4,1,1.0,5,no_bias
+2419,South East,55-64,1,1,1.0,5,no_bias
+2420,London,18-24,2,3,1.0,5,no_bias
+2421,South East,55-64,1,1,1.0,5,no_bias
+2422,Midlands,25-34,4,1,1.0,5,no_bias
+2423,Midlands,18-24,4,3,1.0,5,no_bias
+2424,Midlands,35-44,4,4,1.0,5,no_bias
+2425,North West,25-34,2,2,1.0,5,no_bias
+2426,London,35-44,4,3,1.0,5,no_bias
+2427,Wales,65+,3,3,1.0,5,no_bias
+2428,Midlands,55-64,3,3,1.0,5,no_bias
+2429,South East,55-64,4,3,1.0,5,no_bias
+2430,Midlands,45-54,4,4,1.0,5,no_bias
+2431,Midlands,65+,3,1,1.0,5,no_bias
+2432,North West,65+,4,4,1.0,5,no_bias
+2433,South East,65+,1,4,1.0,5,no_bias
+2434,North West,35-44,4,2,1.0,5,no_bias
+2435,North West,45-54,4,4,1.0,5,no_bias
+2436,South East,65+,4,4,1.0,5,no_bias
+2437,North West,35-44,0,4,1.0,5,no_bias
+2438,North West,55-64,0,2,1.0,5,no_bias
+2439,London,45-54,1,3,1.0,5,no_bias
+2440,North West,35-44,4,4,1.0,5,no_bias
+2441,Midlands,55-64,4,1,1.0,5,no_bias
+2442,Midlands,35-44,4,3,1.0,5,no_bias
+2443,Midlands,65+,4,3,1.0,5,no_bias
+2444,Midlands,45-54,3,2,1.0,5,no_bias
+2445,North West,35-44,4,1,1.0,5,no_bias
+2446,London,25-34,4,0,1.0,5,no_bias
+2447,North West,45-54,1,0,1.0,5,no_bias
+2448,London,55-64,1,1,1.0,5,no_bias
+2449,Midlands,55-64,4,2,1.0,5,no_bias
+2450,North West,65+,0,2,1.0,5,no_bias
+2451,London,65+,1,2,1.0,5,no_bias
+2452,London,65+,1,2,1.0,5,no_bias
+2453,Midlands,35-44,4,4,1.0,5,no_bias
+2454,London,45-54,0,4,1.0,5,no_bias
+2455,Scotland,25-34,0,1,1.0,5,no_bias
+2456,Midlands,25-34,1,4,1.0,5,no_bias
+2457,North West,45-54,2,1,1.0,5,no_bias
+2458,South East,55-64,1,4,1.0,5,no_bias
+2459,North West,18-24,2,2,1.0,5,no_bias
+2460,Midlands,65+,4,1,1.0,5,no_bias
+2461,North West,45-54,0,3,1.0,5,no_bias
+2462,South East,55-64,1,3,1.0,5,no_bias
+2463,South East,25-34,0,2,1.0,5,no_bias
+2464,Wales,55-64,4,4,1.0,5,no_bias
+2465,London,35-44,1,0,1.0,5,no_bias
+2466,Scotland,18-24,3,4,1.0,5,no_bias
+2467,London,65+,4,3,1.0,5,no_bias
+2468,Midlands,65+,0,0,1.0,5,no_bias
+2469,South East,35-44,0,0,1.0,5,no_bias
+2470,South East,35-44,4,4,1.0,5,no_bias
+2471,Wales,25-34,1,2,1.0,5,no_bias
+2472,Midlands,25-34,4,2,1.0,5,no_bias
+2473,London,18-24,2,2,1.0,5,no_bias
+2474,Scotland,45-54,1,1,1.0,5,no_bias
+2475,North West,18-24,4,4,1.0,5,no_bias
+2476,South East,65+,4,4,1.0,5,no_bias
+2477,Scotland,35-44,1,1,1.0,5,no_bias
+2478,London,18-24,0,3,1.0,5,no_bias
+2479,North West,18-24,2,2,1.0,5,no_bias
+2480,Midlands,55-64,3,4,1.0,5,no_bias
+2481,Midlands,55-64,1,1,1.0,5,no_bias
+2482,South East,55-64,1,4,1.0,5,no_bias
+2483,Midlands,35-44,0,1,1.0,5,no_bias
+2484,Midlands,45-54,4,2,1.0,5,no_bias
+2485,Scotland,35-44,4,4,1.0,5,no_bias
+2486,Midlands,25-34,4,4,1.0,5,no_bias
+2487,North West,18-24,4,2,1.0,5,no_bias
+2488,South East,25-34,4,4,1.0,5,no_bias
+2489,South East,45-54,2,1,1.0,5,no_bias
+2490,Wales,45-54,3,1,1.0,5,no_bias
+2491,North West,18-24,0,0,1.0,5,no_bias
+2492,Wales,45-54,1,1,1.0,5,no_bias
+2493,Scotland,25-34,4,0,1.0,5,no_bias
+2494,Wales,25-34,3,3,1.0,5,no_bias
+2495,Midlands,45-54,4,1,1.0,5,no_bias
+2496,London,25-34,0,0,1.0,5,no_bias
+2497,South East,45-54,2,2,1.0,5,no_bias
+2498,South East,55-64,2,2,1.0,5,no_bias
+2499,Midlands,18-24,4,4,1.0,5,no_bias
+2500,Wales,45-54,4,4,1.0,5,no_bias
+2501,Wales,65+,4,2,1.0,5,no_bias
+2502,Midlands,65+,1,3,1.0,5,no_bias
+2503,North West,35-44,4,4,1.0,5,no_bias
+2504,North West,25-34,4,2,1.0,5,no_bias
+2505,London,45-54,2,2,1.0,5,no_bias
+2506,South East,55-64,4,4,1.0,5,no_bias
+2507,North West,45-54,1,4,1.0,5,no_bias
+2508,North West,65+,4,1,1.0,5,no_bias
+2509,London,35-44,0,0,1.0,5,no_bias
+2510,South East,25-34,1,0,1.0,5,no_bias
+2511,Wales,55-64,3,3,1.0,5,no_bias
+2512,Scotland,45-54,1,4,1.0,5,no_bias
+2513,Midlands,65+,4,2,1.0,5,no_bias
+2514,Scotland,25-34,2,3,1.0,5,no_bias
+2515,London,35-44,4,0,1.0,5,no_bias
+2516,Midlands,45-54,4,1,1.0,5,no_bias
+2517,Wales,35-44,0,3,1.0,5,no_bias
+2518,South East,35-44,4,1,1.0,5,no_bias
+2519,Midlands,65+,4,4,1.0,5,no_bias
+2520,Midlands,65+,4,4,1.0,5,no_bias
+2521,South East,45-54,0,0,1.0,5,no_bias
+2522,Scotland,55-64,1,2,1.0,5,no_bias
+2523,South East,35-44,3,3,1.0,5,no_bias
+2524,London,35-44,4,4,1.0,5,no_bias
+2525,London,45-54,1,0,1.0,5,no_bias
+2526,Scotland,25-34,0,0,1.0,5,no_bias
+2527,North West,35-44,4,4,1.0,5,no_bias
+2528,London,18-24,4,4,1.0,5,no_bias
+2529,South East,55-64,2,2,1.0,5,no_bias
+2530,Wales,65+,4,4,1.0,5,no_bias
+2531,Midlands,45-54,4,4,1.0,5,no_bias
+2532,Wales,55-64,1,1,1.0,5,no_bias
+2533,London,45-54,4,4,1.0,5,no_bias
+2534,London,18-24,4,1,1.0,5,no_bias
+2535,Scotland,65+,1,3,1.0,5,no_bias
+2536,North West,35-44,4,4,1.0,5,no_bias
+2537,Midlands,25-34,4,4,1.0,5,no_bias
+2538,South East,35-44,1,2,1.0,5,no_bias
+2539,London,18-24,3,1,1.0,5,no_bias
+2540,London,55-64,4,2,1.0,5,no_bias
+2541,Midlands,45-54,4,3,1.0,5,no_bias
+2542,South East,35-44,0,1,1.0,5,no_bias
+2543,Midlands,65+,4,4,1.0,5,no_bias
+2544,Midlands,25-34,4,4,1.0,5,no_bias
+2545,Midlands,45-54,4,3,1.0,5,no_bias
+2546,North West,65+,0,4,1.0,5,no_bias
+2547,North West,55-64,4,1,1.0,5,no_bias
+2548,North West,65+,4,0,1.0,5,no_bias
+2549,South East,65+,2,0,1.0,5,no_bias
+2550,North West,55-64,1,0,1.0,5,no_bias
+2551,South East,25-34,2,3,1.0,5,no_bias
+2552,Midlands,55-64,4,0,1.0,5,no_bias
+2553,South East,55-64,1,3,1.0,5,no_bias
+2554,South East,55-64,1,3,1.0,5,no_bias
+2555,London,25-34,4,4,1.0,5,no_bias
+2556,North West,25-34,4,0,1.0,5,no_bias
+2557,Midlands,35-44,4,1,1.0,5,no_bias
+2558,South East,25-34,1,3,1.0,5,no_bias
+2559,London,35-44,0,4,1.0,5,no_bias
+2560,London,18-24,2,3,1.0,5,no_bias
+2561,Wales,35-44,0,2,1.0,5,no_bias
+2562,North West,35-44,0,2,1.0,5,no_bias
+2563,North West,45-54,4,3,1.0,5,no_bias
+2564,North West,25-34,1,3,1.0,5,no_bias
+2565,Scotland,55-64,1,2,1.0,5,no_bias
+2566,South East,45-54,0,3,1.0,5,no_bias
+2567,Midlands,45-54,2,0,1.0,5,no_bias
+2568,Scotland,25-34,0,0,1.0,5,no_bias
+2569,South East,45-54,4,2,1.0,5,no_bias
+2570,South East,65+,4,4,1.0,5,no_bias
+2571,Scotland,65+,3,2,1.0,5,no_bias
+2572,North West,55-64,3,4,1.0,5,no_bias
+2573,Midlands,25-34,1,1,1.0,5,no_bias
+2574,London,45-54,2,2,1.0,5,no_bias
+2575,South East,65+,1,0,1.0,5,no_bias
+2576,Scotland,65+,4,4,1.0,5,no_bias
+2577,Scotland,25-34,0,2,1.0,5,no_bias
+2578,South East,25-34,1,1,1.0,5,no_bias
+2579,North West,35-44,4,4,1.0,5,no_bias
+2580,Midlands,45-54,4,2,1.0,5,no_bias
+2581,North West,25-34,2,2,1.0,5,no_bias
+2582,Wales,25-34,4,4,1.0,5,no_bias
+2583,North West,25-34,1,1,1.0,5,no_bias
+2584,Midlands,65+,4,4,1.0,5,no_bias
+2585,North West,18-24,2,3,1.0,5,no_bias
+2586,Midlands,35-44,4,0,1.0,5,no_bias
+2587,Wales,18-24,0,0,1.0,5,no_bias
+2588,North West,18-24,4,4,1.0,5,no_bias
+2589,London,55-64,0,1,1.0,5,no_bias
+2590,South East,18-24,4,4,1.0,5,no_bias
+2591,North West,35-44,4,4,1.0,5,no_bias
+2592,Midlands,45-54,1,3,1.0,5,no_bias
+2593,Wales,65+,4,4,1.0,5,no_bias
+2594,South East,45-54,1,0,1.0,5,no_bias
+2595,Wales,65+,4,2,1.0,5,no_bias
+2596,South East,35-44,4,4,1.0,5,no_bias
+2597,Wales,65+,4,2,1.0,5,no_bias
+2598,London,35-44,4,1,1.0,5,no_bias
+2599,Scotland,18-24,0,4,1.0,5,no_bias
+2600,North West,45-54,2,2,1.0,5,no_bias
+2601,Midlands,65+,4,4,1.0,5,no_bias
+2602,Midlands,55-64,3,0,1.0,5,no_bias
+2603,London,25-34,4,3,1.0,5,no_bias
+2604,London,65+,2,4,1.0,5,no_bias
+2605,Scotland,45-54,1,4,1.0,5,no_bias
+2606,Midlands,65+,4,4,1.0,5,no_bias
+2607,Scotland,65+,0,0,1.0,5,no_bias
+2608,Midlands,65+,4,3,1.0,5,no_bias
+2609,London,65+,1,0,1.0,5,no_bias
+2610,Midlands,55-64,2,0,1.0,5,no_bias
+2611,Midlands,55-64,4,0,1.0,5,no_bias
+2612,North West,35-44,1,2,1.0,5,no_bias
+2613,South East,55-64,1,1,1.0,5,no_bias
+2614,South East,45-54,3,2,1.0,5,no_bias
+2615,North West,18-24,1,3,1.0,5,no_bias
+2616,Scotland,35-44,4,1,1.0,5,no_bias
+2617,Midlands,55-64,1,2,1.0,5,no_bias
+2618,South East,45-54,4,3,1.0,5,no_bias
+2619,Midlands,55-64,4,0,1.0,5,no_bias
+2620,North West,45-54,4,4,1.0,5,no_bias
+2621,Scotland,18-24,0,0,1.0,5,no_bias
+2622,South East,55-64,3,4,1.0,5,no_bias
+2623,North West,45-54,4,4,1.0,5,no_bias
+2624,North West,65+,4,3,1.0,5,no_bias
+2625,South East,55-64,1,1,1.0,5,no_bias
+2626,North West,18-24,4,2,1.0,5,no_bias
+2627,Midlands,55-64,4,3,1.0,5,no_bias
+2628,North West,35-44,2,1,1.0,5,no_bias
+2629,North West,25-34,4,4,1.0,5,no_bias
+2630,Midlands,55-64,0,0,1.0,5,no_bias
+2631,Midlands,65+,4,1,1.0,5,no_bias
+2632,North West,55-64,4,2,1.0,5,no_bias
+2633,Midlands,65+,4,1,1.0,5,no_bias
+2634,London,45-54,4,4,1.0,5,no_bias
+2635,North West,55-64,1,2,1.0,5,no_bias
+2636,London,35-44,4,1,1.0,5,no_bias
+2637,London,18-24,0,4,1.0,5,no_bias
+2638,London,65+,2,0,1.0,5,no_bias
+2639,North West,18-24,4,2,1.0,5,no_bias
+2640,Scotland,55-64,4,2,1.0,5,no_bias
+2641,Midlands,65+,3,3,1.0,5,no_bias
+2642,North West,55-64,0,0,1.0,5,no_bias
+2643,Wales,25-34,3,1,1.0,5,no_bias
+2644,London,25-34,4,1,1.0,5,no_bias
+2645,London,45-54,4,1,1.0,5,no_bias
+2646,Wales,18-24,4,2,1.0,5,no_bias
+2647,South East,65+,1,3,1.0,5,no_bias
+2648,North West,25-34,4,2,1.0,5,no_bias
+2649,North West,45-54,0,0,1.0,5,no_bias
+2650,Midlands,45-54,1,0,1.0,5,no_bias
+2651,Midlands,65+,3,3,1.0,5,no_bias
+2652,Midlands,25-34,4,4,1.0,5,no_bias
+2653,London,65+,4,3,1.0,5,no_bias
+2654,South East,45-54,3,0,1.0,5,no_bias
+2655,London,55-64,3,0,1.0,5,no_bias
+2656,North West,65+,0,0,1.0,5,no_bias
+2657,Midlands,55-64,4,4,1.0,5,no_bias
+2658,Midlands,45-54,1,2,1.0,5,no_bias
+2659,South East,35-44,1,3,1.0,5,no_bias
+2660,London,25-34,1,4,1.0,5,no_bias
+2661,South East,25-34,4,4,1.0,5,no_bias
+2662,North West,25-34,1,1,1.0,5,no_bias
+2663,North West,35-44,1,4,1.0,5,no_bias
+2664,London,35-44,4,2,1.0,5,no_bias
+2665,London,65+,4,4,1.0,5,no_bias
+2666,South East,65+,2,3,1.0,5,no_bias
+2667,South East,18-24,4,3,1.0,5,no_bias
+2668,Midlands,65+,4,3,1.0,5,no_bias
+2669,South East,35-44,3,3,1.0,5,no_bias
+2670,South East,55-64,3,1,1.0,5,no_bias
+2671,London,35-44,4,1,1.0,5,no_bias
+2672,South East,25-34,1,3,1.0,5,no_bias
+2673,North West,65+,1,3,1.0,5,no_bias
+2674,London,25-34,1,0,1.0,5,no_bias
+2675,North West,25-34,0,2,1.0,5,no_bias
+2676,Wales,25-34,4,1,1.0,5,no_bias
+2677,Wales,25-34,1,0,1.0,5,no_bias
+2678,Midlands,25-34,4,4,1.0,5,no_bias
+2679,South East,35-44,4,4,1.0,5,no_bias
+2680,Scotland,55-64,3,3,1.0,5,no_bias
+2681,North West,65+,4,0,1.0,5,no_bias
+2682,North West,45-54,4,0,1.0,5,no_bias
+2683,London,55-64,1,4,1.0,5,no_bias
+2684,North West,65+,0,0,1.0,5,no_bias
+2685,London,35-44,4,4,1.0,5,no_bias
+2686,South East,35-44,4,3,1.0,5,no_bias
+2687,Midlands,25-34,4,0,1.0,5,no_bias
+2688,Scotland,35-44,3,4,1.0,5,no_bias
+2689,Midlands,65+,4,2,1.0,5,no_bias
+2690,Midlands,45-54,1,3,1.0,5,no_bias
+2691,Wales,55-64,0,4,1.0,5,no_bias
+2692,Wales,25-34,1,1,1.0,5,no_bias
+2693,London,55-64,1,2,1.0,5,no_bias
+2694,Scotland,65+,4,0,1.0,5,no_bias
+2695,North West,55-64,0,0,1.0,5,no_bias
+2696,North West,55-64,0,0,1.0,5,no_bias
+2697,North West,45-54,4,0,1.0,5,no_bias
+2698,South East,45-54,3,3,1.0,5,no_bias
+2699,London,18-24,4,4,1.0,5,no_bias
+2700,Scotland,25-34,0,0,1.0,5,no_bias
+2701,Midlands,65+,1,1,1.0,5,no_bias
+2702,North West,35-44,2,2,1.0,5,no_bias
+2703,Midlands,35-44,4,2,1.0,5,no_bias
+2704,South East,35-44,4,2,1.0,5,no_bias
+2705,London,18-24,0,0,1.0,5,no_bias
+2706,South East,35-44,3,3,1.0,5,no_bias
+2707,Midlands,65+,4,3,1.0,5,no_bias
+2708,South East,45-54,3,3,1.0,5,no_bias
+2709,South East,55-64,1,1,1.0,5,no_bias
+2710,London,65+,1,1,1.0,5,no_bias
+2711,North West,65+,1,1,1.0,5,no_bias
+2712,London,65+,4,1,1.0,5,no_bias
+2713,South East,18-24,3,0,1.0,5,no_bias
+2714,North West,35-44,4,0,1.0,5,no_bias
+2715,Midlands,55-64,4,1,1.0,5,no_bias
+2716,London,65+,1,0,1.0,5,no_bias
+2717,Scotland,35-44,0,1,1.0,5,no_bias
+2718,London,25-34,2,2,1.0,5,no_bias
+2719,South East,65+,1,0,1.0,5,no_bias
+2720,Midlands,55-64,4,1,1.0,5,no_bias
+2721,South East,55-64,3,3,1.0,5,no_bias
+2722,Midlands,65+,4,4,1.0,5,no_bias
+2723,South East,25-34,2,4,1.0,5,no_bias
+2724,South East,45-54,0,4,1.0,5,no_bias
+2725,London,65+,1,3,1.0,5,no_bias
+2726,South East,18-24,2,2,1.0,5,no_bias
+2727,Midlands,65+,4,3,1.0,5,no_bias
+2728,London,35-44,1,3,1.0,5,no_bias
+2729,Midlands,25-34,4,3,1.0,5,no_bias
+2730,Scotland,65+,4,0,1.0,5,no_bias
+2731,London,35-44,4,1,1.0,5,no_bias
+2732,Midlands,35-44,0,0,1.0,5,no_bias
+2733,Scotland,65+,3,3,1.0,5,no_bias
+2734,Wales,45-54,1,2,1.0,5,no_bias
+2735,London,25-34,0,1,1.0,5,no_bias
+2736,North West,65+,4,4,1.0,5,no_bias
+2737,South East,45-54,0,1,1.0,5,no_bias
+2738,London,45-54,0,2,1.0,5,no_bias
+2739,London,35-44,1,0,1.0,5,no_bias
+2740,Midlands,55-64,4,4,1.0,5,no_bias
+2741,London,25-34,4,0,1.0,5,no_bias
+2742,Midlands,65+,4,4,1.0,5,no_bias
+2743,London,55-64,1,4,1.0,5,no_bias
+2744,London,25-34,1,4,1.0,5,no_bias
+2745,Wales,55-64,1,1,1.0,5,no_bias
+2746,Midlands,55-64,3,3,1.0,5,no_bias
+2747,North West,18-24,1,3,1.0,5,no_bias
+2748,Midlands,25-34,1,4,1.0,5,no_bias
+2749,South East,65+,0,1,1.0,5,no_bias
+2750,London,35-44,2,0,1.0,5,no_bias
+2751,London,18-24,1,0,1.0,5,no_bias
+2752,Wales,55-64,3,1,1.0,5,no_bias
+2753,North West,65+,0,1,1.0,5,no_bias
+2754,Wales,18-24,4,0,1.0,5,no_bias
+2755,South East,18-24,1,2,1.0,5,no_bias
+2756,Midlands,65+,3,1,1.0,5,no_bias
+2757,London,55-64,2,2,1.0,5,no_bias
+2758,London,55-64,1,1,1.0,5,no_bias
+2759,Scotland,65+,4,4,1.0,5,no_bias
+2760,London,25-34,3,3,1.0,5,no_bias
+2761,South East,55-64,0,3,1.0,5,no_bias
+2762,Midlands,65+,4,2,1.0,5,no_bias
+2763,London,25-34,4,4,1.0,5,no_bias
+2764,Midlands,25-34,4,4,1.0,5,no_bias
+2765,South East,18-24,3,3,1.0,5,no_bias
+2766,Scotland,18-24,1,3,1.0,5,no_bias
+2767,London,65+,4,2,1.0,5,no_bias
+2768,Scotland,55-64,3,3,1.0,5,no_bias
+2769,Scotland,18-24,3,2,1.0,5,no_bias
+2770,Midlands,45-54,3,0,1.0,5,no_bias
+2771,Wales,25-34,1,4,1.0,5,no_bias
+2772,London,55-64,1,3,1.0,5,no_bias
+2773,Midlands,18-24,4,4,1.0,5,no_bias
+2774,Midlands,35-44,4,4,1.0,5,no_bias
+2775,Scotland,35-44,0,1,1.0,5,no_bias
+2776,Midlands,45-54,4,4,1.0,5,no_bias
+2777,London,55-64,2,2,1.0,5,no_bias
+2778,Wales,35-44,4,1,1.0,5,no_bias
+2779,North West,35-44,4,1,1.0,5,no_bias
+2780,London,55-64,1,2,1.0,5,no_bias
+2781,London,35-44,4,1,1.0,5,no_bias
+2782,South East,45-54,0,0,1.0,5,no_bias
+2783,London,45-54,0,0,1.0,5,no_bias
+2784,Midlands,55-64,0,0,1.0,5,no_bias
+2785,Midlands,18-24,4,0,1.0,5,no_bias
+2786,South East,25-34,3,3,1.0,5,no_bias
+2787,North West,65+,2,4,1.0,5,no_bias
+2788,Midlands,35-44,3,1,1.0,5,no_bias
+2789,North West,35-44,4,3,1.0,5,no_bias
+2790,South East,35-44,4,3,1.0,5,no_bias
+2791,London,65+,2,2,1.0,5,no_bias
+2792,Midlands,45-54,3,3,1.0,5,no_bias
+2793,London,65+,1,4,1.0,5,no_bias
+2794,Scotland,65+,1,1,1.0,5,no_bias
+2795,South East,65+,1,1,1.0,5,no_bias
+2796,South East,55-64,1,2,1.0,5,no_bias
+2797,Midlands,45-54,0,0,1.0,5,no_bias
+2798,North West,18-24,1,0,1.0,5,no_bias
+2799,Wales,25-34,1,4,1.0,5,no_bias
+2800,South East,45-54,3,3,1.0,5,no_bias
+2801,South East,25-34,4,3,1.0,5,no_bias
+2802,London,25-34,1,1,1.0,5,no_bias
+2803,North West,45-54,0,0,1.0,5,no_bias
+2804,Midlands,25-34,4,2,1.0,5,no_bias
+2805,Midlands,65+,4,3,1.0,5,no_bias
+2806,North West,25-34,1,1,1.0,5,no_bias
+2807,Midlands,25-34,4,4,1.0,5,no_bias
+2808,London,55-64,1,1,1.0,5,no_bias
+2809,Wales,55-64,0,0,1.0,5,no_bias
+2810,South East,18-24,4,3,1.0,5,no_bias
+2811,South East,65+,4,4,1.0,5,no_bias
+2812,London,25-34,1,1,1.0,5,no_bias
+2813,London,25-34,3,3,1.0,5,no_bias
+2814,London,45-54,2,4,1.0,5,no_bias
+2815,North West,35-44,4,2,1.0,5,no_bias
+2816,Midlands,25-34,4,1,1.0,5,no_bias
+2817,London,65+,4,2,1.0,5,no_bias
+2818,Midlands,65+,4,1,1.0,5,no_bias
+2819,Wales,45-54,2,3,1.0,5,no_bias
+2820,Midlands,35-44,1,1,1.0,5,no_bias
+2821,London,65+,4,0,1.0,5,no_bias
+2822,London,35-44,4,4,1.0,5,no_bias
+2823,North West,55-64,1,1,1.0,5,no_bias
+2824,London,25-34,4,3,1.0,5,no_bias
+2825,London,55-64,1,0,1.0,5,no_bias
+2826,South East,18-24,1,2,1.0,5,no_bias
+2827,Wales,65+,0,0,1.0,5,no_bias
+2828,London,65+,0,2,1.0,5,no_bias
+2829,Wales,35-44,4,2,1.0,5,no_bias
+2830,Midlands,65+,1,3,1.0,5,no_bias
+2831,London,35-44,4,4,1.0,5,no_bias
+2832,Wales,25-34,4,4,1.0,5,no_bias
+2833,London,45-54,1,2,1.0,5,no_bias
+2834,South East,45-54,3,0,1.0,5,no_bias
+2835,Scotland,18-24,2,4,1.0,5,no_bias
+2836,South East,35-44,3,2,1.0,5,no_bias
+2837,Midlands,25-34,1,4,1.0,5,no_bias
+2838,London,18-24,1,3,1.0,5,no_bias
+2839,Wales,45-54,1,1,1.0,5,no_bias
+2840,London,65+,0,3,1.0,5,no_bias
+2841,North West,65+,0,0,1.0,5,no_bias
+2842,Midlands,65+,4,4,1.0,5,no_bias
+2843,Wales,55-64,1,1,1.0,5,no_bias
+2844,South East,18-24,1,4,1.0,5,no_bias
+2845,North West,35-44,2,2,1.0,5,no_bias
+2846,London,35-44,4,0,1.0,5,no_bias
+2847,London,65+,4,0,1.0,5,no_bias
+2848,North West,25-34,1,3,1.0,5,no_bias
+2849,Scotland,65+,1,3,1.0,5,no_bias
+2850,North West,45-54,0,0,1.0,5,no_bias
+2851,London,25-34,4,4,1.0,5,no_bias
+2852,Midlands,45-54,1,1,1.0,5,no_bias
+2853,Midlands,35-44,4,2,1.0,5,no_bias
+2854,London,18-24,4,4,1.0,5,no_bias
+2855,London,55-64,4,2,1.0,5,no_bias
+2856,Midlands,35-44,4,4,1.0,5,no_bias
+2857,London,45-54,0,0,1.0,5,no_bias
+2858,South East,65+,3,2,1.0,5,no_bias
+2859,London,65+,1,2,1.0,5,no_bias
+2860,South East,55-64,3,2,1.0,5,no_bias
+2861,South East,55-64,1,1,1.0,5,no_bias
+2862,South East,55-64,3,4,1.0,5,no_bias
+2863,North West,18-24,0,2,1.0,5,no_bias
+2864,Wales,18-24,1,0,1.0,5,no_bias
+2865,Scotland,45-54,2,3,1.0,5,no_bias
+2866,South East,65+,1,0,1.0,5,no_bias
+2867,Midlands,65+,4,4,1.0,5,no_bias
+2868,Wales,35-44,4,4,1.0,5,no_bias
+2869,Midlands,45-54,4,3,1.0,5,no_bias
+2870,South East,45-54,0,1,1.0,5,no_bias
+2871,South East,65+,0,4,1.0,5,no_bias
+2872,Wales,35-44,0,0,1.0,5,no_bias
+2873,London,55-64,1,4,1.0,5,no_bias
+2874,Midlands,45-54,4,3,1.0,5,no_bias
+2875,Scotland,35-44,4,2,1.0,5,no_bias
+2876,Wales,65+,4,4,1.0,5,no_bias
+2877,Scotland,18-24,3,3,1.0,5,no_bias
+2878,South East,35-44,3,3,1.0,5,no_bias
+2879,Scotland,25-34,2,3,1.0,5,no_bias
+2880,London,65+,1,1,1.0,5,no_bias
+2881,Midlands,55-64,1,1,1.0,5,no_bias
+2882,Scotland,25-34,4,1,1.0,5,no_bias
+2883,South East,65+,2,2,1.0,5,no_bias
+2884,London,18-24,1,4,1.0,5,no_bias
+2885,London,45-54,3,2,1.0,5,no_bias
+2886,North West,65+,1,3,1.0,5,no_bias
+2887,North West,35-44,0,4,1.0,5,no_bias
+2888,North West,65+,4,4,1.0,5,no_bias
+2889,South East,65+,1,4,1.0,5,no_bias
+2890,Scotland,35-44,4,1,1.0,5,no_bias
+2891,North West,65+,4,4,1.0,5,no_bias
+2892,London,18-24,4,0,1.0,5,no_bias
+2893,Midlands,45-54,3,0,1.0,5,no_bias
+2894,North West,45-54,0,2,1.0,5,no_bias
+2895,Scotland,45-54,3,3,1.0,5,no_bias
+2896,Scotland,35-44,4,4,1.0,5,no_bias
+2897,North West,65+,4,2,1.0,5,no_bias
+2898,South East,45-54,4,4,1.0,5,no_bias
+2899,Midlands,25-34,4,4,1.0,5,no_bias
+2900,Scotland,18-24,3,3,1.0,5,no_bias
+2901,London,35-44,4,2,1.0,5,no_bias
+2902,Midlands,35-44,4,3,1.0,5,no_bias
+2903,London,65+,4,3,1.0,5,no_bias
+2904,London,25-34,4,4,1.0,5,no_bias
+2905,Scotland,35-44,3,1,1.0,5,no_bias
+2906,North West,65+,0,3,1.0,5,no_bias
+2907,Scotland,35-44,0,0,1.0,5,no_bias
+2908,Midlands,35-44,3,3,1.0,5,no_bias
+2909,Scotland,65+,0,4,1.0,5,no_bias
+2910,South East,45-54,1,0,1.0,5,no_bias
+2911,London,65+,1,0,1.0,5,no_bias
+2912,London,55-64,1,0,1.0,5,no_bias
+2913,Wales,18-24,3,0,1.0,5,no_bias
+2914,London,65+,3,4,1.0,5,no_bias
+2915,North West,18-24,1,3,1.0,5,no_bias
+2916,Scotland,18-24,2,4,1.0,5,no_bias
+2917,Midlands,45-54,2,2,1.0,5,no_bias
+2918,Scotland,55-64,1,2,1.0,5,no_bias
+2919,North West,25-34,1,0,1.0,5,no_bias
+2920,South East,55-64,3,3,1.0,5,no_bias
+2921,Midlands,45-54,1,1,1.0,5,no_bias
+2922,South East,65+,4,0,1.0,5,no_bias
+2923,North West,45-54,0,4,1.0,5,no_bias
+2924,Midlands,18-24,2,2,1.0,5,no_bias
+2925,South East,25-34,0,2,1.0,5,no_bias
+2926,London,65+,1,2,1.0,5,no_bias
+2927,North West,45-54,0,1,1.0,5,no_bias
+2928,Scotland,65+,3,3,1.0,5,no_bias
+2929,North West,65+,1,2,1.0,5,no_bias
+2930,North West,65+,4,4,1.0,5,no_bias
+2931,London,45-54,1,4,1.0,5,no_bias
+2932,North West,35-44,4,3,1.0,5,no_bias
+2933,Midlands,45-54,4,4,1.0,5,no_bias
+2934,Midlands,25-34,4,3,1.0,5,no_bias
+2935,Midlands,65+,4,4,1.0,5,no_bias
+2936,North West,18-24,1,0,1.0,5,no_bias
+2937,Midlands,45-54,4,2,1.0,5,no_bias
+2938,North West,45-54,1,0,1.0,5,no_bias
+2939,Scotland,18-24,4,1,1.0,5,no_bias
+2940,Midlands,25-34,1,1,1.0,5,no_bias
+2941,London,25-34,4,3,1.0,5,no_bias
+2942,North West,25-34,1,3,1.0,5,no_bias
+2943,South East,45-54,1,1,1.0,5,no_bias
+2944,North West,45-54,1,2,1.0,5,no_bias
+2945,North West,55-64,4,2,1.0,5,no_bias
+2946,Midlands,55-64,0,0,1.0,5,no_bias
+2947,Scotland,25-34,3,3,1.0,5,no_bias
+2948,London,65+,1,1,1.0,5,no_bias
+2949,South East,35-44,4,0,1.0,5,no_bias
+2950,North West,18-24,4,1,1.0,5,no_bias
+2951,Midlands,25-34,2,0,1.0,5,no_bias
+2952,London,65+,2,3,1.0,5,no_bias
+2953,Midlands,55-64,2,4,1.0,5,no_bias
+2954,North West,45-54,1,1,1.0,5,no_bias
+2955,Midlands,25-34,4,1,1.0,5,no_bias
+2956,London,18-24,4,0,1.0,5,no_bias
+2957,North West,18-24,0,3,1.0,5,no_bias
+2958,London,35-44,2,4,1.0,5,no_bias
+2959,Midlands,45-54,4,4,1.0,5,no_bias
+2960,Scotland,65+,0,1,1.0,5,no_bias
+2961,Scotland,18-24,4,4,1.0,5,no_bias
+2962,Wales,45-54,0,0,1.0,5,no_bias
+2963,South East,45-54,1,1,1.0,5,no_bias
+2964,Midlands,65+,1,3,1.0,5,no_bias
+2965,Wales,65+,0,2,1.0,5,no_bias
+2966,South East,25-34,1,3,1.0,5,no_bias
+2967,North West,45-54,1,1,1.0,5,no_bias
+2968,South East,65+,1,3,1.0,5,no_bias
+2969,London,45-54,1,2,1.0,5,no_bias
+2970,South East,18-24,3,3,1.0,5,no_bias
+2971,North West,25-34,4,4,1.0,5,no_bias
+2972,London,45-54,1,1,1.0,5,no_bias
+2973,South East,35-44,3,3,1.0,5,no_bias
+2974,South East,25-34,1,1,1.0,5,no_bias
+2975,London,45-54,0,1,1.0,5,no_bias
+2976,North West,45-54,3,3,1.0,5,no_bias
+2977,Scotland,25-34,1,0,1.0,5,no_bias
+2978,Scotland,35-44,4,3,1.0,5,no_bias
+2979,North West,25-34,1,0,1.0,5,no_bias
+2980,South East,18-24,4,4,1.0,5,no_bias
+2981,North West,65+,4,4,1.0,5,no_bias
+2982,South East,55-64,3,3,1.0,5,no_bias
+2983,North West,65+,1,1,1.0,5,no_bias
+2984,Midlands,55-64,3,1,1.0,5,no_bias
+2985,North West,45-54,2,2,1.0,5,no_bias
+2986,South East,45-54,0,2,1.0,5,no_bias
+2987,North West,25-34,1,1,1.0,5,no_bias
+2988,Midlands,45-54,1,0,1.0,5,no_bias
+2989,Midlands,65+,3,0,1.0,5,no_bias
+2990,Midlands,18-24,0,0,1.0,5,no_bias
+2991,Midlands,45-54,4,3,1.0,5,no_bias
+2992,Wales,35-44,4,2,1.0,5,no_bias
+2993,North West,25-34,4,4,1.0,5,no_bias
+2994,London,25-34,1,4,1.0,5,no_bias
+2995,South East,18-24,1,0,1.0,5,no_bias
+2996,North West,35-44,0,4,1.0,5,no_bias
+2997,South East,35-44,3,2,1.0,5,no_bias
+2998,Scotland,65+,3,0,1.0,5,no_bias
+2999,North West,35-44,4,4,1.0,5,no_bias
+3000,North West,65+,1,1,1.0,5,no_bias
+3001,South East,25-34,1,1,1.0,5,no_bias
+3002,Scotland,65+,4,0,1.0,5,no_bias
+3003,Wales,65+,1,3,1.0,5,no_bias
+3004,Midlands,65+,4,4,1.0,5,no_bias
+3005,South East,18-24,2,4,1.0,5,no_bias
+3006,South East,35-44,1,0,1.0,5,no_bias
+3007,Scotland,55-64,2,3,1.0,5,no_bias
+3008,London,25-34,4,1,1.0,5,no_bias
+3009,London,35-44,2,0,1.0,5,no_bias
+3010,Scotland,55-64,1,1,1.0,5,no_bias
+3011,South East,25-34,4,2,1.0,5,no_bias
+3012,South East,45-54,0,0,1.0,5,no_bias
+3013,South East,45-54,3,3,1.0,5,no_bias
+3014,Midlands,65+,4,2,1.0,5,no_bias
+3015,London,35-44,1,4,1.0,5,no_bias
+3016,North West,18-24,0,1,1.0,5,no_bias
+3017,North West,35-44,4,3,1.0,5,no_bias
+3018,North West,55-64,0,4,1.0,5,no_bias
+3019,Wales,35-44,1,1,1.0,5,no_bias
+3020,South East,55-64,0,0,1.0,5,no_bias
+3021,North West,65+,4,4,1.0,5,no_bias
+3022,North West,35-44,4,4,1.0,5,no_bias
+3023,North West,35-44,3,0,1.0,5,no_bias
+3024,Scotland,25-34,4,3,1.0,5,no_bias
+3025,Midlands,18-24,4,3,1.0,5,no_bias
+3026,Midlands,55-64,4,4,1.0,5,no_bias
+3027,North West,65+,1,4,1.0,5,no_bias
+3028,Midlands,55-64,3,1,1.0,5,no_bias
+3029,South East,65+,4,1,1.0,5,no_bias
+3030,Wales,35-44,4,4,1.0,5,no_bias
+3031,Midlands,25-34,4,4,1.0,5,no_bias
+3032,South East,35-44,3,4,1.0,5,no_bias
+3033,North West,25-34,1,1,1.0,5,no_bias
+3034,Midlands,45-54,4,1,1.0,5,no_bias
+3035,South East,55-64,1,0,1.0,5,no_bias
+3036,Midlands,55-64,4,4,1.0,5,no_bias
+3037,Scotland,55-64,2,0,1.0,5,no_bias
+3038,South East,55-64,4,4,1.0,5,no_bias
+3039,North West,65+,3,3,1.0,5,no_bias
+3040,North West,65+,4,0,1.0,5,no_bias
+3041,South East,65+,1,1,1.0,5,no_bias
+3042,South East,45-54,3,3,1.0,5,no_bias
+3043,Midlands,35-44,4,4,1.0,5,no_bias
+3044,South East,45-54,2,3,1.0,5,no_bias
+3045,North West,35-44,2,4,1.0,5,no_bias
+3046,South East,18-24,3,3,1.0,5,no_bias
+3047,Midlands,35-44,4,3,1.0,5,no_bias
+3048,London,35-44,4,4,1.0,5,no_bias
+3049,South East,55-64,1,4,1.0,5,no_bias
+3050,North West,65+,4,4,1.0,5,no_bias
+3051,Midlands,65+,1,3,1.0,5,no_bias
+3052,Midlands,55-64,4,4,1.0,5,no_bias
+3053,North West,35-44,0,1,1.0,5,no_bias
+3054,Midlands,25-34,4,0,1.0,5,no_bias
+3055,South East,35-44,4,0,1.0,5,no_bias
+3056,South East,35-44,0,3,1.0,5,no_bias
+3057,Wales,25-34,4,1,1.0,5,no_bias
+3058,Scotland,25-34,2,2,1.0,5,no_bias
+3059,London,55-64,4,4,1.0,5,no_bias
+3060,North West,25-34,1,1,1.0,5,no_bias
+3061,London,55-64,1,0,1.0,5,no_bias
+3062,Wales,45-54,1,1,1.0,5,no_bias
+3063,North West,35-44,1,0,1.0,5,no_bias
+3064,Midlands,55-64,1,4,1.0,5,no_bias
+3065,North West,25-34,4,0,1.0,5,no_bias
+3066,South East,45-54,0,0,1.0,5,no_bias
+3067,South East,65+,4,2,1.0,5,no_bias
+3068,North West,25-34,4,4,1.0,5,no_bias
+3069,South East,25-34,1,0,1.0,5,no_bias
+3070,North West,35-44,4,2,1.0,5,no_bias
+3071,Midlands,25-34,3,0,1.0,5,no_bias
+3072,North West,35-44,4,3,1.0,5,no_bias
+3073,Wales,65+,4,3,1.0,5,no_bias
+3074,North West,45-54,4,2,1.0,5,no_bias
+3075,London,45-54,1,1,1.0,5,no_bias
+3076,Scotland,55-64,1,0,1.0,5,no_bias
+3077,London,35-44,0,4,1.0,5,no_bias
+3078,Midlands,55-64,2,3,1.0,5,no_bias
+3079,London,35-44,4,4,1.0,5,no_bias
+3080,North West,18-24,1,1,1.0,5,no_bias
+3081,Wales,25-34,4,2,1.0,5,no_bias
+3082,South East,18-24,4,4,1.0,5,no_bias
+3083,North West,18-24,4,0,1.0,5,no_bias
+3084,Midlands,65+,4,1,1.0,5,no_bias
+3085,London,35-44,4,4,1.0,5,no_bias
+3086,Scotland,35-44,0,3,1.0,5,no_bias
+3087,Midlands,18-24,1,1,1.0,5,no_bias
+3088,London,25-34,3,3,1.0,5,no_bias
+3089,London,18-24,2,3,1.0,5,no_bias
+3090,London,65+,3,3,1.0,5,no_bias
+3091,Wales,45-54,2,4,1.0,5,no_bias
+3092,Midlands,65+,3,3,1.0,5,no_bias
+3093,Midlands,25-34,2,2,1.0,5,no_bias
+3094,North West,55-64,2,0,1.0,5,no_bias
+3095,South East,45-54,1,4,1.0,5,no_bias
+3096,Midlands,45-54,4,1,1.0,5,no_bias
+3097,London,25-34,4,2,1.0,5,no_bias
+3098,Scotland,65+,4,4,1.0,5,no_bias
+3099,London,45-54,1,2,1.0,5,no_bias
+3100,North West,45-54,0,0,1.0,5,no_bias
+3101,Scotland,25-34,1,2,1.0,5,no_bias
+3102,Midlands,35-44,4,3,1.0,5,no_bias
+3103,South East,65+,1,0,1.0,5,no_bias
+3104,South East,18-24,3,1,1.0,5,no_bias
+3105,South East,55-64,0,0,1.0,5,no_bias
+3106,North West,35-44,0,0,1.0,5,no_bias
+3107,London,35-44,4,2,1.0,5,no_bias
+3108,North West,35-44,4,2,1.0,5,no_bias
+3109,South East,65+,4,3,1.0,5,no_bias
+3110,Wales,35-44,4,4,1.0,5,no_bias
+3111,Midlands,45-54,4,4,1.0,5,no_bias
+3112,Midlands,18-24,4,1,1.0,5,no_bias
+3113,South East,55-64,4,2,1.0,5,no_bias
+3114,Midlands,65+,1,3,1.0,5,no_bias
+3115,North West,65+,3,4,1.0,5,no_bias
+3116,London,65+,1,0,1.0,5,no_bias
+3117,South East,25-34,1,1,1.0,5,no_bias
+3118,South East,35-44,0,0,1.0,5,no_bias
+3119,North West,35-44,4,4,1.0,5,no_bias
+3120,Midlands,55-64,4,4,1.0,5,no_bias
+3121,Midlands,25-34,1,4,1.0,5,no_bias
+3122,London,65+,2,0,1.0,5,no_bias
+3123,Wales,35-44,3,3,1.0,5,no_bias
+3124,Midlands,65+,4,0,1.0,5,no_bias
+3125,Midlands,25-34,4,3,1.0,5,no_bias
+3126,North West,45-54,1,1,1.0,5,no_bias
+3127,Midlands,18-24,3,0,1.0,5,no_bias
+3128,North West,45-54,4,1,1.0,5,no_bias
+3129,Midlands,18-24,1,1,1.0,5,no_bias
+3130,South East,65+,1,4,1.0,5,no_bias
+3131,London,65+,4,1,1.0,5,no_bias
+3132,Midlands,25-34,4,4,1.0,5,no_bias
+3133,North West,45-54,1,4,1.0,5,no_bias
+3134,London,35-44,4,4,1.0,5,no_bias
+3135,Midlands,35-44,4,4,1.0,5,no_bias
+3136,London,25-34,0,2,1.0,5,no_bias
+3137,Midlands,35-44,0,4,1.0,5,no_bias
+3138,Midlands,25-34,1,0,1.0,5,no_bias
+3139,London,55-64,4,4,1.0,5,no_bias
+3140,South East,65+,4,2,1.0,5,no_bias
+3141,Midlands,35-44,3,3,1.0,5,no_bias
+3142,London,65+,4,4,1.0,5,no_bias
+3143,Midlands,35-44,3,3,1.0,5,no_bias
+3144,South East,35-44,1,3,1.0,5,no_bias
+3145,Wales,65+,3,4,1.0,5,no_bias
+3146,South East,55-64,1,2,1.0,5,no_bias
+3147,London,65+,4,4,1.0,5,no_bias
+3148,South East,65+,3,3,1.0,5,no_bias
+3149,Midlands,65+,4,3,1.0,5,no_bias
+3150,Scotland,35-44,1,3,1.0,5,no_bias
+3151,North West,25-34,0,2,1.0,5,no_bias
+3152,Midlands,55-64,4,4,1.0,5,no_bias
+3153,North West,45-54,4,3,1.0,5,no_bias
+3154,Midlands,65+,4,4,1.0,5,no_bias
+3155,Midlands,55-64,4,2,1.0,5,no_bias
+3156,North West,55-64,1,1,1.0,5,no_bias
+3157,North West,35-44,0,4,1.0,5,no_bias
+3158,South East,25-34,1,1,1.0,5,no_bias
+3159,London,25-34,2,3,1.0,5,no_bias
+3160,Midlands,65+,4,0,1.0,5,no_bias
+3161,Wales,45-54,0,0,1.0,5,no_bias
+3162,Midlands,35-44,4,1,1.0,5,no_bias
+3163,North West,55-64,4,4,1.0,5,no_bias
+3164,South East,65+,4,2,1.0,5,no_bias
+3165,London,18-24,4,3,1.0,5,no_bias
+3166,Wales,65+,0,0,1.0,5,no_bias
+3167,North West,25-34,1,1,1.0,5,no_bias
+3168,London,55-64,1,1,1.0,5,no_bias
+3169,London,65+,4,1,1.0,5,no_bias
+3170,London,18-24,4,4,1.0,5,no_bias
+3171,North West,55-64,1,4,1.0,5,no_bias
+3172,Scotland,55-64,3,1,1.0,5,no_bias
+3173,Midlands,45-54,2,0,1.0,5,no_bias
+3174,London,35-44,0,0,1.0,5,no_bias
+3175,Scotland,65+,2,2,1.0,5,no_bias
+3176,Wales,25-34,3,2,1.0,5,no_bias
+3177,Midlands,45-54,4,4,1.0,5,no_bias
+3178,Midlands,45-54,0,0,1.0,5,no_bias
+3179,Midlands,55-64,1,1,1.0,5,no_bias
+3180,Midlands,35-44,4,2,1.0,5,no_bias
+3181,Scotland,65+,4,4,1.0,5,no_bias
+3182,North West,35-44,4,0,1.0,5,no_bias
+3183,Wales,25-34,3,4,1.0,5,no_bias
+3184,London,65+,4,2,1.0,5,no_bias
+3185,Midlands,45-54,4,2,1.0,5,no_bias
+3186,Midlands,35-44,0,0,1.0,5,no_bias
+3187,South East,18-24,0,2,1.0,5,no_bias
+3188,South East,35-44,4,0,1.0,5,no_bias
+3189,South East,25-34,2,2,1.0,5,no_bias
+3190,London,55-64,1,0,1.0,5,no_bias
+3191,Scotland,65+,1,3,1.0,5,no_bias
+3192,South East,35-44,1,2,1.0,5,no_bias
+3193,South East,35-44,4,3,1.0,5,no_bias
+3194,London,35-44,2,2,1.0,5,no_bias
+3195,North West,55-64,2,0,1.0,5,no_bias
+3196,North West,25-34,4,3,1.0,5,no_bias
+3197,London,55-64,0,0,1.0,5,no_bias
+3198,North West,65+,4,1,1.0,5,no_bias
+3199,Scotland,35-44,3,3,1.0,5,no_bias
+3200,North West,35-44,4,4,1.0,5,no_bias
+3201,Midlands,65+,4,4,1.0,5,no_bias
+3202,Scotland,25-34,0,0,1.0,5,no_bias
+3203,Midlands,35-44,4,4,1.0,5,no_bias
+3204,Midlands,55-64,1,0,1.0,5,no_bias
+3205,London,55-64,4,4,1.0,5,no_bias
+3206,Scotland,65+,4,4,1.0,5,no_bias
+3207,Midlands,35-44,1,2,1.0,5,no_bias
+3208,London,25-34,0,3,1.0,5,no_bias
+3209,South East,35-44,0,1,1.0,5,no_bias
+3210,Midlands,35-44,4,4,1.0,5,no_bias
+3211,South East,45-54,4,2,1.0,5,no_bias
+3212,South East,55-64,1,1,1.0,5,no_bias
+3213,Midlands,35-44,4,3,1.0,5,no_bias
+3214,Midlands,25-34,4,3,1.0,5,no_bias
+3215,Midlands,35-44,4,2,1.0,5,no_bias
+3216,South East,55-64,1,4,1.0,5,no_bias
+3217,Scotland,55-64,1,1,1.0,5,no_bias
+3218,London,35-44,3,4,1.0,5,no_bias
+3219,Midlands,45-54,3,1,1.0,5,no_bias
+3220,Scotland,65+,4,4,1.0,5,no_bias
+3221,London,45-54,2,2,1.0,5,no_bias
+3222,Scotland,55-64,2,2,1.0,5,no_bias
+3223,Midlands,35-44,4,1,1.0,5,no_bias
+3224,Midlands,35-44,4,1,1.0,5,no_bias
+3225,Scotland,35-44,4,2,1.0,5,no_bias
+3226,North West,45-54,0,3,1.0,5,no_bias
+3227,Midlands,35-44,3,1,1.0,5,no_bias
+3228,London,65+,4,4,1.0,5,no_bias
+3229,North West,55-64,0,3,1.0,5,no_bias
+3230,South East,55-64,1,1,1.0,5,no_bias
+3231,North West,25-34,1,1,1.0,5,no_bias
+3232,South East,25-34,2,3,1.0,5,no_bias
+3233,North West,35-44,4,4,1.0,5,no_bias
+3234,London,65+,1,0,1.0,5,no_bias
+3235,Wales,35-44,3,3,1.0,5,no_bias
+3236,South East,65+,3,3,1.0,5,no_bias
+3237,Wales,35-44,2,1,1.0,5,no_bias
+3238,North West,55-64,0,2,1.0,5,no_bias
+3239,Wales,65+,4,2,1.0,5,no_bias
+3240,South East,35-44,0,0,1.0,5,no_bias
+3241,London,65+,3,4,1.0,5,no_bias
+3242,Wales,35-44,4,4,1.0,5,no_bias
+3243,South East,25-34,4,4,1.0,5,no_bias
+3244,North West,18-24,1,0,1.0,5,no_bias
+3245,London,25-34,4,1,1.0,5,no_bias
+3246,North West,25-34,2,0,1.0,5,no_bias
+3247,North West,35-44,4,4,1.0,5,no_bias
+3248,Scotland,55-64,1,1,1.0,5,no_bias
+3249,South East,35-44,0,0,1.0,5,no_bias
+3250,Scotland,55-64,3,3,1.0,5,no_bias
+3251,South East,65+,2,3,1.0,5,no_bias
+3252,Wales,45-54,1,1,1.0,5,no_bias
+3253,Wales,45-54,1,3,1.0,5,no_bias
+3254,South East,25-34,0,0,1.0,5,no_bias
+3255,Scotland,55-64,1,2,1.0,5,no_bias
+3256,Scotland,55-64,1,0,1.0,5,no_bias
+3257,Midlands,65+,1,1,1.0,5,no_bias
+3258,Midlands,25-34,0,3,1.0,5,no_bias
+3259,North West,18-24,4,4,1.0,5,no_bias
+3260,South East,55-64,0,4,1.0,5,no_bias
+3261,South East,65+,4,1,1.0,5,no_bias
+3262,London,45-54,2,0,1.0,5,no_bias
+3263,South East,65+,4,0,1.0,5,no_bias
+3264,London,45-54,0,1,1.0,5,no_bias
+3265,South East,55-64,1,2,1.0,5,no_bias
+3266,Midlands,45-54,4,4,1.0,5,no_bias
+3267,Midlands,65+,4,1,1.0,5,no_bias
+3268,South East,55-64,1,1,1.0,5,no_bias
+3269,Wales,65+,1,4,1.0,5,no_bias
+3270,London,45-54,3,0,1.0,5,no_bias
+3271,London,45-54,1,1,1.0,5,no_bias
+3272,South East,25-34,1,1,1.0,5,no_bias
+3273,South East,25-34,4,1,1.0,5,no_bias
+3274,London,65+,2,2,1.0,5,no_bias
+3275,Midlands,35-44,4,3,1.0,5,no_bias
+3276,South East,18-24,3,3,1.0,5,no_bias
+3277,South East,65+,1,4,1.0,5,no_bias
+3278,London,25-34,4,3,1.0,5,no_bias
+3279,South East,35-44,3,2,1.0,5,no_bias
+3280,London,25-34,4,4,1.0,5,no_bias
+3281,Midlands,25-34,4,0,1.0,5,no_bias
+3282,Midlands,45-54,0,0,1.0,5,no_bias
+3283,Scotland,55-64,3,0,1.0,5,no_bias
+3284,South East,25-34,3,4,1.0,5,no_bias
+3285,London,65+,4,0,1.0,5,no_bias
+3286,North West,45-54,1,3,1.0,5,no_bias
+3287,North West,45-54,2,0,1.0,5,no_bias
+3288,South East,35-44,1,1,1.0,5,no_bias
+3289,North West,25-34,4,3,1.0,5,no_bias
+3290,North West,45-54,1,1,1.0,5,no_bias
+3291,Wales,18-24,4,1,1.0,5,no_bias
+3292,London,18-24,4,3,1.0,5,no_bias
+3293,Scotland,65+,2,3,1.0,5,no_bias
+3294,Midlands,18-24,1,1,1.0,5,no_bias
+3295,London,35-44,1,0,1.0,5,no_bias
+3296,Scotland,65+,3,3,1.0,5,no_bias
+3297,Midlands,45-54,4,4,1.0,5,no_bias
+3298,London,45-54,2,0,1.0,5,no_bias
+3299,North West,35-44,4,0,1.0,5,no_bias
+3300,Midlands,65+,3,3,1.0,5,no_bias
+3301,Midlands,55-64,4,0,1.0,5,no_bias
+3302,Midlands,35-44,4,1,1.0,5,no_bias
+3303,Scotland,18-24,4,3,1.0,5,no_bias
+3304,London,65+,0,0,1.0,5,no_bias
+3305,London,45-54,1,2,1.0,5,no_bias
+3306,London,18-24,3,3,1.0,5,no_bias
+3307,London,25-34,4,4,1.0,5,no_bias
+3308,Scotland,65+,4,4,1.0,5,no_bias
+3309,Midlands,25-34,4,4,1.0,5,no_bias
+3310,North West,25-34,4,1,1.0,5,no_bias
+3311,South East,18-24,3,3,1.0,5,no_bias
+3312,London,25-34,4,4,1.0,5,no_bias
+3313,London,18-24,4,3,1.0,5,no_bias
+3314,South East,45-54,1,1,1.0,5,no_bias
+3315,North West,18-24,2,4,1.0,5,no_bias
+3316,North West,35-44,4,3,1.0,5,no_bias
+3317,Wales,25-34,4,4,1.0,5,no_bias
+3318,Midlands,65+,1,1,1.0,5,no_bias
+3319,North West,35-44,4,1,1.0,5,no_bias
+3320,Midlands,65+,4,4,1.0,5,no_bias
+3321,London,18-24,0,0,1.0,5,no_bias
+3322,Midlands,45-54,1,3,1.0,5,no_bias
+3323,London,35-44,2,4,1.0,5,no_bias
+3324,South East,45-54,1,1,1.0,5,no_bias
+3325,Scotland,25-34,0,0,1.0,5,no_bias
+3326,London,35-44,1,2,1.0,5,no_bias
+3327,London,55-64,4,2,1.0,5,no_bias
+3328,London,65+,1,0,1.0,5,no_bias
+3329,Midlands,35-44,4,4,1.0,5,no_bias
+3330,Midlands,65+,3,2,1.0,5,no_bias
+3331,Midlands,25-34,1,1,1.0,5,no_bias
+3332,Midlands,35-44,4,0,1.0,5,no_bias
+3333,North West,25-34,1,1,1.0,5,no_bias
+3334,London,55-64,4,4,1.0,5,no_bias
+3335,North West,45-54,1,2,1.0,5,no_bias
+3336,Midlands,65+,4,2,1.0,5,no_bias
+3337,Midlands,65+,1,3,1.0,5,no_bias
+3338,North West,65+,0,1,1.0,5,no_bias
+3339,London,18-24,1,4,1.0,5,no_bias
+3340,London,35-44,1,2,1.0,5,no_bias
+3341,London,55-64,0,0,1.0,5,no_bias
+3342,South East,55-64,0,0,1.0,5,no_bias
+3343,Midlands,35-44,4,4,1.0,5,no_bias
+3344,North West,18-24,3,0,1.0,5,no_bias
+3345,Wales,65+,2,4,1.0,5,no_bias
+3346,Wales,35-44,3,3,1.0,5,no_bias
+3347,South East,65+,1,3,1.0,5,no_bias
+3348,South East,55-64,1,1,1.0,5,no_bias
+3349,North West,65+,3,2,1.0,5,no_bias
+3350,London,65+,4,1,1.0,5,no_bias
+3351,Wales,35-44,4,3,1.0,5,no_bias
+3352,South East,65+,3,3,1.0,5,no_bias
+3353,North West,35-44,0,3,1.0,5,no_bias
+3354,Midlands,25-34,3,3,1.0,5,no_bias
+3355,South East,45-54,3,1,1.0,5,no_bias
+3356,Midlands,18-24,4,4,1.0,5,no_bias
+3357,South East,35-44,0,4,1.0,5,no_bias
+3358,Wales,18-24,2,2,1.0,5,no_bias
+3359,North West,65+,2,1,1.0,5,no_bias
+3360,Wales,55-64,4,4,1.0,5,no_bias
+3361,North West,45-54,3,1,1.0,5,no_bias
+3362,London,35-44,4,3,1.0,5,no_bias
+3363,Midlands,45-54,4,4,1.0,5,no_bias
+3364,London,18-24,4,4,1.0,5,no_bias
+3365,South East,18-24,2,3,1.0,5,no_bias
+3366,South East,18-24,0,1,1.0,5,no_bias
+3367,Scotland,45-54,0,2,1.0,5,no_bias
+3368,North West,55-64,1,4,1.0,5,no_bias
+3369,North West,18-24,4,1,1.0,5,no_bias
+3370,North West,18-24,4,1,1.0,5,no_bias
+3371,North West,25-34,4,0,1.0,5,no_bias
+3372,North West,45-54,1,4,1.0,5,no_bias
+3373,Scotland,25-34,4,4,1.0,5,no_bias
+3374,North West,35-44,4,4,1.0,5,no_bias
+3375,Midlands,55-64,1,3,1.0,5,no_bias
+3376,Scotland,45-54,1,2,1.0,5,no_bias
+3377,Midlands,45-54,0,3,1.0,5,no_bias
+3378,Scotland,45-54,4,4,1.0,5,no_bias
+3379,Midlands,18-24,4,0,1.0,5,no_bias
+3380,Scotland,35-44,4,1,1.0,5,no_bias
+3381,London,35-44,2,0,1.0,5,no_bias
+3382,South East,65+,1,0,1.0,5,no_bias
+3383,Midlands,35-44,4,4,1.0,5,no_bias
+3384,North West,65+,4,4,1.0,5,no_bias
+3385,Scotland,45-54,0,4,1.0,5,no_bias
+3386,Scotland,45-54,2,0,1.0,5,no_bias
+3387,Midlands,25-34,4,0,1.0,5,no_bias
+3388,London,55-64,2,2,1.0,5,no_bias
+3389,Midlands,65+,4,0,1.0,5,no_bias
+3390,London,18-24,2,2,1.0,5,no_bias
+3391,North West,55-64,4,4,1.0,5,no_bias
+3392,North West,35-44,4,4,1.0,5,no_bias
+3393,North West,25-34,1,1,1.0,5,no_bias
+3394,North West,65+,1,3,1.0,5,no_bias
+3395,South East,65+,1,1,1.0,5,no_bias
+3396,South East,45-54,2,3,1.0,5,no_bias
+3397,North West,18-24,4,1,1.0,5,no_bias
+3398,Midlands,45-54,4,1,1.0,5,no_bias
+3399,Midlands,18-24,4,3,1.0,5,no_bias
+3400,Scotland,25-34,1,3,1.0,5,no_bias
+3401,North West,65+,4,0,1.0,5,no_bias
+3402,Midlands,65+,4,1,1.0,5,no_bias
+3403,South East,35-44,4,1,1.0,5,no_bias
+3404,Wales,25-34,4,3,1.0,5,no_bias
+3405,Wales,25-34,1,0,1.0,5,no_bias
+3406,Midlands,35-44,1,1,1.0,5,no_bias
+3407,North West,25-34,4,4,1.0,5,no_bias
+3408,South East,25-34,1,4,1.0,5,no_bias
+3409,Scotland,55-64,1,1,1.0,5,no_bias
+3410,South East,65+,2,2,1.0,5,no_bias
+3411,North West,25-34,4,2,1.0,5,no_bias
+3412,Scotland,35-44,2,2,1.0,5,no_bias
+3413,London,65+,4,2,1.0,5,no_bias
+3414,London,45-54,2,0,1.0,5,no_bias
+3415,Scotland,35-44,4,4,1.0,5,no_bias
+3416,Midlands,65+,3,3,1.0,5,no_bias
+3417,Midlands,45-54,4,2,1.0,5,no_bias
+3418,South East,65+,4,3,1.0,5,no_bias
+3419,London,65+,4,4,1.0,5,no_bias
+3420,North West,35-44,4,1,1.0,5,no_bias
+3421,Scotland,55-64,1,3,1.0,5,no_bias
+3422,South East,45-54,0,0,1.0,5,no_bias
+3423,South East,45-54,1,1,1.0,5,no_bias
+3424,South East,55-64,0,3,1.0,5,no_bias
+3425,South East,65+,4,4,1.0,5,no_bias
+3426,Midlands,25-34,4,4,1.0,5,no_bias
+3427,South East,65+,1,1,1.0,5,no_bias
+3428,Scotland,18-24,3,3,1.0,5,no_bias
+3429,London,18-24,2,1,1.0,5,no_bias
+3430,South East,35-44,4,0,1.0,5,no_bias
+3431,Midlands,25-34,4,0,1.0,5,no_bias
+3432,South East,65+,1,1,1.0,5,no_bias
+3433,Scotland,45-54,4,3,1.0,5,no_bias
+3434,Scotland,65+,1,4,1.0,5,no_bias
+3435,Wales,18-24,1,1,1.0,5,no_bias
+3436,South East,65+,4,2,1.0,5,no_bias
+3437,North West,25-34,1,4,1.0,5,no_bias
+3438,South East,65+,1,0,1.0,5,no_bias
+3439,South East,45-54,3,3,1.0,5,no_bias
+3440,London,18-24,1,3,1.0,5,no_bias
+3441,Midlands,25-34,4,4,1.0,5,no_bias
+3442,Midlands,18-24,4,4,1.0,5,no_bias
+3443,South East,55-64,3,0,1.0,5,no_bias
+3444,North West,65+,1,1,1.0,5,no_bias
+3445,Midlands,55-64,0,2,1.0,5,no_bias
+3446,South East,45-54,1,2,1.0,5,no_bias
+3447,North West,18-24,4,4,1.0,5,no_bias
+3448,London,55-64,1,2,1.0,5,no_bias
+3449,Midlands,18-24,4,4,1.0,5,no_bias
+3450,South East,65+,3,3,1.0,5,no_bias
+3451,Midlands,25-34,4,0,1.0,5,no_bias
+3452,South East,45-54,1,3,1.0,5,no_bias
+3453,North West,55-64,1,4,1.0,5,no_bias
+3454,Midlands,18-24,4,4,1.0,5,no_bias
+3455,South East,55-64,2,2,1.0,5,no_bias
+3456,North West,25-34,0,2,1.0,5,no_bias
+3457,Wales,65+,2,4,1.0,5,no_bias
+3458,London,45-54,1,1,1.0,5,no_bias
+3459,Wales,35-44,4,2,1.0,5,no_bias
+3460,North West,45-54,4,0,1.0,5,no_bias
+3461,North West,65+,4,4,1.0,5,no_bias
+3462,North West,25-34,4,4,1.0,5,no_bias
+3463,South East,45-54,4,2,1.0,5,no_bias
+3464,North West,18-24,4,0,1.0,5,no_bias
+3465,Wales,45-54,0,1,1.0,5,no_bias
+3466,South East,55-64,3,3,1.0,5,no_bias
+3467,London,55-64,1,4,1.0,5,no_bias
+3468,Midlands,45-54,1,3,1.0,5,no_bias
+3469,Midlands,25-34,0,3,1.0,5,no_bias
+3470,London,25-34,1,1,1.0,5,no_bias
+3471,Scotland,18-24,4,4,1.0,5,no_bias
+3472,London,25-34,1,2,1.0,5,no_bias
+3473,London,18-24,1,2,1.0,5,no_bias
+3474,South East,65+,2,4,1.0,5,no_bias
+3475,South East,18-24,4,3,1.0,5,no_bias
+3476,Midlands,35-44,4,0,1.0,5,no_bias
+3477,London,35-44,4,4,1.0,5,no_bias
+3478,Wales,18-24,1,4,1.0,5,no_bias
+3479,South East,65+,1,2,1.0,5,no_bias
+3480,London,25-34,1,2,1.0,5,no_bias
+3481,London,65+,0,1,1.0,5,no_bias
+3482,Midlands,55-64,4,1,1.0,5,no_bias
+3483,Scotland,18-24,3,1,1.0,5,no_bias
+3484,London,25-34,4,0,1.0,5,no_bias
+3485,Midlands,25-34,4,3,1.0,5,no_bias
+3486,London,45-54,1,1,1.0,5,no_bias
+3487,Scotland,25-34,4,3,1.0,5,no_bias
+3488,Midlands,45-54,3,4,1.0,5,no_bias
+3489,Midlands,65+,4,4,1.0,5,no_bias
+3490,Scotland,65+,1,3,1.0,5,no_bias
+3491,London,25-34,1,1,1.0,5,no_bias
+3492,North West,18-24,3,3,1.0,5,no_bias
+3493,Midlands,65+,3,2,1.0,5,no_bias
+3494,North West,65+,4,4,1.0,5,no_bias
+3495,South East,45-54,1,1,1.0,5,no_bias
+3496,North West,45-54,4,2,1.0,5,no_bias
+3497,South East,55-64,4,2,1.0,5,no_bias
+3498,Midlands,45-54,4,0,1.0,5,no_bias
+3499,London,25-34,0,4,1.0,5,no_bias
+3500,London,35-44,1,1,1.0,5,no_bias
+3501,Midlands,25-34,4,3,1.0,5,no_bias
+3502,London,35-44,4,4,1.0,5,no_bias
+3503,North West,65+,4,0,1.0,5,no_bias
+3504,Midlands,45-54,0,0,1.0,5,no_bias
+3505,South East,65+,4,0,1.0,5,no_bias
+3506,London,45-54,2,0,1.0,5,no_bias
+3507,Wales,55-64,1,0,1.0,5,no_bias
+3508,London,18-24,4,1,1.0,5,no_bias
+3509,North West,18-24,0,0,1.0,5,no_bias
+3510,London,55-64,1,3,1.0,5,no_bias
+3511,Scotland,25-34,0,3,1.0,5,no_bias
+3512,Wales,45-54,2,2,1.0,5,no_bias
+3513,London,45-54,2,1,1.0,5,no_bias
+3514,Scotland,55-64,3,4,1.0,5,no_bias
+3515,North West,65+,4,3,1.0,5,no_bias
+3516,Midlands,18-24,3,0,1.0,5,no_bias
+3517,North West,25-34,1,4,1.0,5,no_bias
+3518,London,55-64,4,1,1.0,5,no_bias
+3519,Scotland,25-34,0,0,1.0,5,no_bias
+3520,South East,18-24,0,1,1.0,5,no_bias
+3521,South East,18-24,1,1,1.0,5,no_bias
+3522,South East,18-24,4,4,1.0,5,no_bias
+3523,London,35-44,2,2,1.0,5,no_bias
+3524,North West,25-34,1,3,1.0,5,no_bias
+3525,South East,25-34,1,4,1.0,5,no_bias
+3526,North West,18-24,4,2,1.0,5,no_bias
+3527,North West,25-34,4,0,1.0,5,no_bias
+3528,South East,45-54,1,4,1.0,5,no_bias
+3529,North West,35-44,4,4,1.0,5,no_bias
+3530,London,35-44,4,4,1.0,5,no_bias
+3531,Midlands,65+,4,4,1.0,5,no_bias
+3532,South East,25-34,4,1,1.0,5,no_bias
+3533,Wales,65+,0,2,1.0,5,no_bias
+3534,South East,55-64,3,1,1.0,5,no_bias
+3535,London,65+,1,0,1.0,5,no_bias
+3536,South East,45-54,0,4,1.0,5,no_bias
+3537,South East,45-54,0,4,1.0,5,no_bias
+3538,Scotland,45-54,2,4,1.0,5,no_bias
+3539,North West,18-24,4,2,1.0,5,no_bias
+3540,Midlands,45-54,4,0,1.0,5,no_bias
+3541,North West,45-54,1,1,1.0,5,no_bias
+3542,Scotland,55-64,1,4,1.0,5,no_bias
+3543,Wales,55-64,4,3,1.0,5,no_bias
+3544,London,55-64,4,4,1.0,5,no_bias
+3545,South East,25-34,1,1,1.0,5,no_bias
+3546,Midlands,35-44,4,4,1.0,5,no_bias
+3547,Midlands,55-64,4,3,1.0,5,no_bias
+3548,London,55-64,1,4,1.0,5,no_bias
+3549,North West,45-54,0,2,1.0,5,no_bias
+3550,Scotland,55-64,1,1,1.0,5,no_bias
+3551,North West,45-54,4,4,1.0,5,no_bias
+3552,South East,55-64,1,2,1.0,5,no_bias
+3553,Midlands,55-64,4,1,1.0,5,no_bias
+3554,Midlands,45-54,2,1,1.0,5,no_bias
+3555,London,55-64,2,2,1.0,5,no_bias
+3556,North West,18-24,4,4,1.0,5,no_bias
+3557,Scotland,25-34,1,4,1.0,5,no_bias
+3558,North West,35-44,0,0,1.0,5,no_bias
+3559,Scotland,45-54,1,4,1.0,5,no_bias
+3560,London,25-34,1,2,1.0,5,no_bias
+3561,North West,45-54,1,3,1.0,5,no_bias
+3562,London,65+,4,4,1.0,5,no_bias
+3563,Wales,55-64,1,3,1.0,5,no_bias
+3564,Wales,45-54,1,2,1.0,5,no_bias
+3565,North West,35-44,4,4,1.0,5,no_bias
+3566,Scotland,18-24,0,3,1.0,5,no_bias
+3567,Wales,45-54,3,0,1.0,5,no_bias
+3568,London,55-64,0,0,1.0,5,no_bias
+3569,Wales,35-44,4,2,1.0,5,no_bias
+3570,Midlands,18-24,1,4,1.0,5,no_bias
+3571,Midlands,55-64,3,0,1.0,5,no_bias
+3572,Midlands,65+,3,3,1.0,5,no_bias
+3573,Midlands,55-64,4,3,1.0,5,no_bias
+3574,South East,45-54,2,2,1.0,5,no_bias
+3575,Midlands,45-54,4,4,1.0,5,no_bias
+3576,London,65+,4,1,1.0,5,no_bias
+3577,London,35-44,1,1,1.0,5,no_bias
+3578,South East,45-54,3,3,1.0,5,no_bias
+3579,Midlands,18-24,1,3,1.0,5,no_bias
+3580,Midlands,35-44,4,0,1.0,5,no_bias
+3581,London,25-34,4,4,1.0,5,no_bias
+3582,North West,65+,4,0,1.0,5,no_bias
+3583,North West,35-44,4,4,1.0,5,no_bias
+3584,London,45-54,0,3,1.0,5,no_bias
+3585,Midlands,18-24,4,4,1.0,5,no_bias
+3586,South East,35-44,3,3,1.0,5,no_bias
+3587,South East,65+,4,3,1.0,5,no_bias
+3588,Midlands,55-64,4,0,1.0,5,no_bias
+3589,South East,25-34,4,3,1.0,5,no_bias
+3590,London,35-44,1,0,1.0,5,no_bias
+3591,Wales,25-34,4,4,1.0,5,no_bias
+3592,North West,45-54,4,4,1.0,5,no_bias
+3593,South East,25-34,4,4,1.0,5,no_bias
+3594,Midlands,35-44,4,4,1.0,5,no_bias
+3595,Scotland,55-64,0,2,1.0,5,no_bias
+3596,Midlands,55-64,4,1,1.0,5,no_bias
+3597,Midlands,55-64,4,0,1.0,5,no_bias
+3598,North West,25-34,4,0,1.0,5,no_bias
+3599,Midlands,35-44,4,2,1.0,5,no_bias
+3600,North West,35-44,4,4,1.0,5,no_bias
+3601,Midlands,65+,0,3,1.0,5,no_bias
+3602,North West,65+,1,4,1.0,5,no_bias
+3603,South East,18-24,3,3,1.0,5,no_bias
+3604,London,55-64,3,0,1.0,5,no_bias
+3605,Midlands,45-54,3,4,1.0,5,no_bias
+3606,North West,25-34,4,4,1.0,5,no_bias
+3607,North West,18-24,1,1,1.0,5,no_bias
+3608,Scotland,35-44,4,4,1.0,5,no_bias
+3609,Scotland,25-34,3,4,1.0,5,no_bias
+3610,Scotland,45-54,4,3,1.0,5,no_bias
+3611,Scotland,35-44,4,4,1.0,5,no_bias
+3612,North West,18-24,1,2,1.0,5,no_bias
+3613,Midlands,45-54,4,3,1.0,5,no_bias
+3614,North West,35-44,2,3,1.0,5,no_bias
+3615,Wales,65+,4,0,1.0,5,no_bias
+3616,North West,18-24,1,4,1.0,5,no_bias
+3617,Midlands,45-54,2,3,1.0,5,no_bias
+3618,Scotland,35-44,4,4,1.0,5,no_bias
+3619,Wales,35-44,0,0,1.0,5,no_bias
+3620,Wales,65+,4,1,1.0,5,no_bias
+3621,Scotland,65+,2,3,1.0,5,no_bias
+3622,Midlands,65+,1,1,1.0,5,no_bias
+3623,North West,45-54,1,2,1.0,5,no_bias
+3624,Midlands,55-64,2,1,1.0,5,no_bias
+3625,North West,45-54,4,4,1.0,5,no_bias
+3626,London,45-54,1,0,1.0,5,no_bias
+3627,North West,18-24,1,4,1.0,5,no_bias
+3628,Midlands,65+,3,3,1.0,5,no_bias
+3629,South East,45-54,1,1,1.0,5,no_bias
+3630,Midlands,35-44,4,1,1.0,5,no_bias
+3631,South East,45-54,3,3,1.0,5,no_bias
+3632,North West,65+,4,2,1.0,5,no_bias
+3633,South East,45-54,3,0,1.0,5,no_bias
+3634,Midlands,25-34,4,4,1.0,5,no_bias
+3635,Midlands,35-44,2,2,1.0,5,no_bias
+3636,South East,45-54,1,1,1.0,5,no_bias
+3637,Midlands,55-64,3,3,1.0,5,no_bias
+3638,North West,55-64,1,1,1.0,5,no_bias
+3639,South East,55-64,4,4,1.0,5,no_bias
+3640,Midlands,35-44,4,4,1.0,5,no_bias
+3641,South East,65+,1,1,1.0,5,no_bias
+3642,Wales,35-44,1,2,1.0,5,no_bias
+3643,Wales,35-44,1,1,1.0,5,no_bias
+3644,Midlands,45-54,1,1,1.0,5,no_bias
+3645,London,55-64,1,1,1.0,5,no_bias
+3646,North West,18-24,0,0,1.0,5,no_bias
+3647,Midlands,25-34,2,2,1.0,5,no_bias
+3648,Midlands,35-44,1,4,1.0,5,no_bias
+3649,London,65+,1,1,1.0,5,no_bias
+3650,Wales,45-54,0,3,1.0,5,no_bias
+3651,Midlands,35-44,4,4,1.0,5,no_bias
+3652,South East,45-54,4,1,1.0,5,no_bias
+3653,London,18-24,3,2,1.0,5,no_bias
+3654,Wales,25-34,4,3,1.0,5,no_bias
+3655,Midlands,55-64,4,4,1.0,5,no_bias
+3656,Scotland,18-24,0,4,1.0,5,no_bias
+3657,Midlands,35-44,4,2,1.0,5,no_bias
+3658,South East,65+,1,0,1.0,5,no_bias
+3659,North West,35-44,4,1,1.0,5,no_bias
+3660,North West,18-24,4,0,1.0,5,no_bias
+3661,Midlands,65+,3,3,1.0,5,no_bias
+3662,North West,35-44,4,2,1.0,5,no_bias
+3663,Midlands,35-44,4,0,1.0,5,no_bias
+3664,London,35-44,4,0,1.0,5,no_bias
+3665,Scotland,25-34,1,3,1.0,5,no_bias
+3666,South East,55-64,1,1,1.0,5,no_bias
+3667,Scotland,35-44,4,4,1.0,5,no_bias
+3668,Midlands,25-34,4,4,1.0,5,no_bias
+3669,Midlands,18-24,4,0,1.0,5,no_bias
+3670,London,65+,2,0,1.0,5,no_bias
+3671,Midlands,25-34,4,4,1.0,5,no_bias
+3672,Wales,65+,3,3,1.0,5,no_bias
+3673,Midlands,25-34,0,0,1.0,5,no_bias
+3674,Midlands,45-54,3,3,1.0,5,no_bias
+3675,Wales,35-44,2,1,1.0,5,no_bias
+3676,Midlands,25-34,4,4,1.0,5,no_bias
+3677,Scotland,65+,0,4,1.0,5,no_bias
+3678,London,25-34,4,1,1.0,5,no_bias
+3679,Midlands,55-64,4,2,1.0,5,no_bias
+3680,North West,35-44,4,4,1.0,5,no_bias
+3681,London,55-64,2,3,1.0,5,no_bias
+3682,North West,55-64,4,1,1.0,5,no_bias
+3683,London,65+,2,2,1.0,5,no_bias
+3684,South East,45-54,2,2,1.0,5,no_bias
+3685,North West,45-54,2,3,1.0,5,no_bias
+3686,North West,18-24,4,4,1.0,5,no_bias
+3687,North West,45-54,2,4,1.0,5,no_bias
+3688,London,65+,1,2,1.0,5,no_bias
+3689,South East,35-44,1,0,1.0,5,no_bias
+3690,Midlands,25-34,4,4,1.0,5,no_bias
+3691,South East,65+,1,3,1.0,5,no_bias
+3692,North West,25-34,1,4,1.0,5,no_bias
+3693,London,25-34,2,2,1.0,5,no_bias
+3694,South East,55-64,3,3,1.0,5,no_bias
+3695,South East,35-44,4,3,1.0,5,no_bias
+3696,South East,55-64,2,3,1.0,5,no_bias
+3697,North West,65+,4,4,1.0,5,no_bias
+3698,Midlands,18-24,3,4,1.0,5,no_bias
+3699,Midlands,18-24,3,1,1.0,5,no_bias
+3700,London,25-34,4,0,1.0,5,no_bias
+3701,North West,45-54,0,0,1.0,5,no_bias
+3702,North West,65+,4,4,1.0,5,no_bias
+3703,Wales,35-44,0,2,1.0,5,no_bias
+3704,Wales,35-44,4,3,1.0,5,no_bias
+3705,North West,65+,4,2,1.0,5,no_bias
+3706,London,65+,2,0,1.0,5,no_bias
+3707,Midlands,65+,4,4,1.0,5,no_bias
+3708,Midlands,65+,4,2,1.0,5,no_bias
+3709,South East,65+,3,1,1.0,5,no_bias
+3710,South East,25-34,3,2,1.0,5,no_bias
+3711,South East,45-54,0,0,1.0,5,no_bias
+3712,South East,45-54,2,3,1.0,5,no_bias
+3713,Scotland,45-54,1,0,1.0,5,no_bias
+3714,Wales,18-24,2,3,1.0,5,no_bias
+3715,Scotland,25-34,4,3,1.0,5,no_bias
+3716,Scotland,55-64,1,1,1.0,5,no_bias
+3717,South East,65+,1,3,1.0,5,no_bias
+3718,Midlands,45-54,3,3,1.0,5,no_bias
+3719,North West,25-34,1,1,1.0,5,no_bias
+3720,North West,25-34,1,1,1.0,5,no_bias
+3721,Scotland,65+,4,1,1.0,5,no_bias
+3722,London,55-64,1,1,1.0,5,no_bias
+3723,London,45-54,3,4,1.0,5,no_bias
+3724,Midlands,18-24,4,3,1.0,5,no_bias
+3725,South East,45-54,0,3,1.0,5,no_bias
+3726,Scotland,35-44,4,1,1.0,5,no_bias
+3727,London,55-64,3,0,1.0,5,no_bias
+3728,Midlands,25-34,4,2,1.0,5,no_bias
+3729,London,65+,1,0,1.0,5,no_bias
+3730,North West,65+,3,3,1.0,5,no_bias
+3731,South East,45-54,1,2,1.0,5,no_bias
+3732,London,55-64,2,2,1.0,5,no_bias
+3733,Wales,55-64,1,3,1.0,5,no_bias
+3734,South East,65+,3,1,1.0,5,no_bias
+3735,Midlands,65+,4,4,1.0,5,no_bias
+3736,North West,65+,2,4,1.0,5,no_bias
+3737,Midlands,65+,4,2,1.0,5,no_bias
+3738,South East,55-64,1,2,1.0,5,no_bias
+3739,North West,45-54,1,1,1.0,5,no_bias
+3740,London,55-64,1,4,1.0,5,no_bias
+3741,North West,18-24,4,1,1.0,5,no_bias
+3742,London,55-64,4,2,1.0,5,no_bias
+3743,Scotland,18-24,3,0,1.0,5,no_bias
+3744,North West,45-54,2,2,1.0,5,no_bias
+3745,London,55-64,4,3,1.0,5,no_bias
+3746,Wales,45-54,2,2,1.0,5,no_bias
+3747,North West,55-64,4,4,1.0,5,no_bias
+3748,Scotland,25-34,0,3,1.0,5,no_bias
+3749,Midlands,25-34,4,2,1.0,5,no_bias
+3750,London,45-54,4,4,1.0,5,no_bias
+3751,Midlands,45-54,1,1,1.0,5,no_bias
+3752,Scotland,45-54,1,1,1.0,5,no_bias
+3753,North West,35-44,2,2,1.0,5,no_bias
+3754,Midlands,45-54,4,4,1.0,5,no_bias
+3755,Scotland,65+,0,0,1.0,5,no_bias
+3756,Midlands,55-64,3,3,1.0,5,no_bias
+3757,North West,55-64,1,2,1.0,5,no_bias
+3758,London,35-44,2,4,1.0,5,no_bias
+3759,Midlands,35-44,2,4,1.0,5,no_bias
+3760,Scotland,45-54,3,3,1.0,5,no_bias
+3761,North West,55-64,0,0,1.0,5,no_bias
+3762,South East,45-54,1,4,1.0,5,no_bias
+3763,Midlands,65+,4,4,1.0,5,no_bias
+3764,South East,25-34,4,1,1.0,5,no_bias
+3765,Midlands,25-34,4,1,1.0,5,no_bias
+3766,South East,45-54,4,2,1.0,5,no_bias
+3767,Scotland,35-44,2,2,1.0,5,no_bias
+3768,Midlands,45-54,1,4,1.0,5,no_bias
+3769,North West,65+,4,4,1.0,5,no_bias
+3770,London,25-34,0,4,1.0,5,no_bias
+3771,North West,25-34,0,2,1.0,5,no_bias
+3772,London,18-24,1,2,1.0,5,no_bias
+3773,Scotland,35-44,4,0,1.0,5,no_bias
+3774,Midlands,35-44,3,3,1.0,5,no_bias
+3775,London,65+,4,2,1.0,5,no_bias
+3776,London,35-44,3,4,1.0,5,no_bias
+3777,Midlands,65+,4,4,1.0,5,no_bias
+3778,Wales,35-44,2,4,1.0,5,no_bias
+3779,South East,25-34,0,0,1.0,5,no_bias
+3780,Scotland,55-64,4,0,1.0,5,no_bias
+3781,London,25-34,4,4,1.0,5,no_bias
+3782,Midlands,55-64,1,4,1.0,5,no_bias
+3783,Scotland,55-64,4,0,1.0,5,no_bias
+3784,London,65+,2,4,1.0,5,no_bias
+3785,London,35-44,4,1,1.0,5,no_bias
+3786,London,35-44,2,2,1.0,5,no_bias
+3787,Scotland,18-24,0,0,1.0,5,no_bias
+3788,South East,45-54,1,0,1.0,5,no_bias
+3789,South East,65+,3,2,1.0,5,no_bias
+3790,Midlands,65+,4,4,1.0,5,no_bias
+3791,Scotland,25-34,1,0,1.0,5,no_bias
+3792,London,45-54,1,2,1.0,5,no_bias
+3793,Midlands,35-44,3,2,1.0,5,no_bias
+3794,North West,35-44,3,3,1.0,5,no_bias
+3795,London,45-54,0,4,1.0,5,no_bias
+3796,South East,35-44,2,2,1.0,5,no_bias
+3797,Wales,25-34,0,1,1.0,5,no_bias
+3798,North West,65+,4,3,1.0,5,no_bias
+3799,London,55-64,2,0,1.0,5,no_bias
+3800,London,65+,3,0,1.0,5,no_bias
+3801,Midlands,55-64,4,2,1.0,5,no_bias
+3802,London,65+,1,4,1.0,5,no_bias
+3803,South East,35-44,0,0,1.0,5,no_bias
+3804,Midlands,65+,4,4,1.0,5,no_bias
+3805,London,65+,4,3,1.0,5,no_bias
+3806,London,45-54,1,3,1.0,5,no_bias
+3807,Wales,55-64,1,3,1.0,5,no_bias
+3808,Midlands,45-54,1,1,1.0,5,no_bias
+3809,Midlands,45-54,4,4,1.0,5,no_bias
+3810,Wales,45-54,1,1,1.0,5,no_bias
+3811,London,18-24,4,0,1.0,5,no_bias
+3812,South East,65+,4,2,1.0,5,no_bias
+3813,South East,35-44,3,0,1.0,5,no_bias
+3814,London,55-64,4,4,1.0,5,no_bias
+3815,London,55-64,1,1,1.0,5,no_bias
+3816,North West,45-54,4,0,1.0,5,no_bias
+3817,London,35-44,0,2,1.0,5,no_bias
+3818,Midlands,65+,0,0,1.0,5,no_bias
+3819,South East,65+,2,1,1.0,5,no_bias
+3820,Midlands,65+,4,3,1.0,5,no_bias
+3821,Scotland,55-64,0,0,1.0,5,no_bias
+3822,Midlands,25-34,4,4,1.0,5,no_bias
+3823,London,25-34,4,0,1.0,5,no_bias
+3824,South East,55-64,1,1,1.0,5,no_bias
+3825,Scotland,25-34,1,0,1.0,5,no_bias
+3826,Midlands,18-24,4,4,1.0,5,no_bias
+3827,Scotland,45-54,1,0,1.0,5,no_bias
+3828,London,25-34,4,4,1.0,5,no_bias
+3829,London,65+,4,4,1.0,5,no_bias
+3830,Midlands,55-64,0,1,1.0,5,no_bias
+3831,Midlands,45-54,3,3,1.0,5,no_bias
+3832,North West,25-34,4,0,1.0,5,no_bias
+3833,Scotland,45-54,1,0,1.0,5,no_bias
+3834,London,65+,4,4,1.0,5,no_bias
+3835,South East,55-64,1,3,1.0,5,no_bias
+3836,North West,65+,4,4,1.0,5,no_bias
+3837,North West,25-34,0,0,1.0,5,no_bias
+3838,Scotland,55-64,2,3,1.0,5,no_bias
+3839,Wales,25-34,0,1,1.0,5,no_bias
+3840,Scotland,25-34,4,4,1.0,5,no_bias
+3841,North West,35-44,0,0,1.0,5,no_bias
+3842,Midlands,18-24,4,4,1.0,5,no_bias
+3843,South East,55-64,0,0,1.0,5,no_bias
+3844,North West,65+,2,2,1.0,5,no_bias
+3845,Scotland,25-34,3,3,1.0,5,no_bias
+3846,Midlands,35-44,4,0,1.0,5,no_bias
+3847,Wales,65+,1,1,1.0,5,no_bias
+3848,London,35-44,4,4,1.0,5,no_bias
+3849,South East,55-64,1,4,1.0,5,no_bias
+3850,Midlands,25-34,4,2,1.0,5,no_bias
+3851,South East,25-34,0,0,1.0,5,no_bias
+3852,London,35-44,1,3,1.0,5,no_bias
+3853,London,18-24,4,1,1.0,5,no_bias
+3854,South East,35-44,4,3,1.0,5,no_bias
+3855,Midlands,65+,2,1,1.0,5,no_bias
+3856,Scotland,18-24,2,2,1.0,5,no_bias
+3857,Midlands,65+,3,3,1.0,5,no_bias
+3858,North West,35-44,0,1,1.0,5,no_bias
+3859,Midlands,55-64,2,1,1.0,5,no_bias
+3860,Scotland,25-34,1,4,1.0,5,no_bias
+3861,Midlands,25-34,4,3,1.0,5,no_bias
+3862,North West,45-54,1,1,1.0,5,no_bias
+3863,Wales,65+,3,3,1.0,5,no_bias
+3864,Midlands,55-64,2,1,1.0,5,no_bias
+3865,North West,35-44,1,0,1.0,5,no_bias
+3866,Midlands,18-24,3,2,1.0,5,no_bias
+3867,North West,45-54,1,1,1.0,5,no_bias
+3868,South East,55-64,1,3,1.0,5,no_bias
+3869,London,35-44,3,0,1.0,5,no_bias
+3870,London,55-64,1,3,1.0,5,no_bias
+3871,North West,45-54,1,1,1.0,5,no_bias
+3872,Midlands,25-34,3,3,1.0,5,no_bias
+3873,North West,18-24,4,2,1.0,5,no_bias
+3874,Midlands,18-24,4,4,1.0,5,no_bias
+3875,Scotland,55-64,3,0,1.0,5,no_bias
+3876,Midlands,35-44,4,4,1.0,5,no_bias
+3877,Midlands,45-54,3,0,1.0,5,no_bias
+3878,South East,55-64,1,4,1.0,5,no_bias
+3879,South East,55-64,3,2,1.0,5,no_bias
+3880,London,65+,4,0,1.0,5,no_bias
+3881,North West,65+,1,2,1.0,5,no_bias
+3882,South East,55-64,0,2,1.0,5,no_bias
+3883,Scotland,65+,4,3,1.0,5,no_bias
+3884,Midlands,18-24,4,0,1.0,5,no_bias
+3885,North West,65+,1,4,1.0,5,no_bias
+3886,London,45-54,1,0,1.0,5,no_bias
+3887,North West,25-34,4,2,1.0,5,no_bias
+3888,London,65+,2,1,1.0,5,no_bias
+3889,South East,35-44,4,0,1.0,5,no_bias
+3890,London,45-54,1,4,1.0,5,no_bias
+3891,Wales,18-24,3,0,1.0,5,no_bias
+3892,Wales,18-24,4,0,1.0,5,no_bias
+3893,Wales,45-54,0,2,1.0,5,no_bias
+3894,Midlands,35-44,3,2,1.0,5,no_bias
+3895,North West,65+,2,1,1.0,5,no_bias
+3896,Midlands,45-54,4,4,1.0,5,no_bias
+3897,London,25-34,4,4,1.0,5,no_bias
+3898,North West,25-34,1,0,1.0,5,no_bias
+3899,London,55-64,0,0,1.0,5,no_bias
+3900,Midlands,18-24,3,3,1.0,5,no_bias
+3901,South East,55-64,0,4,1.0,5,no_bias
+3902,Scotland,65+,4,4,1.0,5,no_bias
+3903,South East,35-44,4,1,1.0,5,no_bias
+3904,South East,55-64,1,1,1.0,5,no_bias
+3905,London,65+,0,3,1.0,5,no_bias
+3906,North West,35-44,4,4,1.0,5,no_bias
+3907,North West,35-44,0,0,1.0,5,no_bias
+3908,North West,45-54,4,4,1.0,5,no_bias
+3909,South East,45-54,1,0,1.0,5,no_bias
+3910,North West,65+,2,4,1.0,5,no_bias
+3911,Midlands,18-24,1,0,1.0,5,no_bias
+3912,South East,25-34,1,0,1.0,5,no_bias
+3913,London,55-64,4,0,1.0,5,no_bias
+3914,Scotland,65+,4,2,1.0,5,no_bias
+3915,Midlands,18-24,4,2,1.0,5,no_bias
+3916,Wales,18-24,0,0,1.0,5,no_bias
+3917,Midlands,65+,1,1,1.0,5,no_bias
+3918,North West,65+,4,4,1.0,5,no_bias
+3919,London,35-44,4,4,1.0,5,no_bias
+3920,South East,55-64,3,0,1.0,5,no_bias
+3921,Scotland,25-34,1,1,1.0,5,no_bias
+3922,Scotland,45-54,1,1,1.0,5,no_bias
+3923,Midlands,65+,3,3,1.0,5,no_bias
+3924,North West,45-54,4,2,1.0,5,no_bias
+3925,Wales,18-24,1,1,1.0,5,no_bias
+3926,London,25-34,4,3,1.0,5,no_bias
+3927,Midlands,55-64,1,2,1.0,5,no_bias
+3928,Scotland,35-44,4,3,1.0,5,no_bias
+3929,London,18-24,3,0,1.0,5,no_bias
+3930,London,45-54,3,0,1.0,5,no_bias
+3931,South East,55-64,4,4,1.0,5,no_bias
+3932,Midlands,55-64,4,4,1.0,5,no_bias
+3933,North West,45-54,2,0,1.0,5,no_bias
+3934,Scotland,25-34,1,1,1.0,5,no_bias
+3935,South East,45-54,0,1,1.0,5,no_bias
+3936,North West,35-44,4,4,1.0,5,no_bias
+3937,North West,25-34,4,4,1.0,5,no_bias
+3938,London,65+,2,1,1.0,5,no_bias
+3939,South East,35-44,1,1,1.0,5,no_bias
+3940,North West,65+,4,2,1.0,5,no_bias
+3941,Midlands,65+,3,2,1.0,5,no_bias
+3942,London,55-64,3,0,1.0,5,no_bias
+3943,North West,55-64,1,1,1.0,5,no_bias
+3944,Midlands,45-54,1,4,1.0,5,no_bias
+3945,North West,25-34,1,3,1.0,5,no_bias
+3946,North West,35-44,4,2,1.0,5,no_bias
+3947,Scotland,35-44,4,4,1.0,5,no_bias
+3948,Wales,65+,2,4,1.0,5,no_bias
+3949,North West,35-44,0,3,1.0,5,no_bias
+3950,North West,55-64,4,0,1.0,5,no_bias
+3951,Wales,45-54,4,2,1.0,5,no_bias
+3952,Midlands,65+,4,4,1.0,5,no_bias
+3953,South East,45-54,2,4,1.0,5,no_bias
+3954,Midlands,35-44,4,1,1.0,5,no_bias
+3955,Scotland,55-64,4,1,1.0,5,no_bias
+3956,North West,25-34,1,4,1.0,5,no_bias
+3957,Midlands,55-64,0,0,1.0,5,no_bias
+3958,North West,25-34,1,3,1.0,5,no_bias
+3959,North West,35-44,4,3,1.0,5,no_bias
+3960,North West,65+,2,2,1.0,5,no_bias
+3961,South East,35-44,4,1,1.0,5,no_bias
+3962,North West,18-24,4,1,1.0,5,no_bias
+3963,London,45-54,2,3,1.0,5,no_bias
+3964,London,55-64,4,4,1.0,5,no_bias
+3965,North West,65+,4,3,1.0,5,no_bias
+3966,Midlands,45-54,4,3,1.0,5,no_bias
+3967,Midlands,25-34,3,3,1.0,5,no_bias
+3968,Midlands,25-34,2,2,1.0,5,no_bias
+3969,North West,65+,1,1,1.0,5,no_bias
+3970,Scotland,55-64,1,4,1.0,5,no_bias
+3971,North West,25-34,1,1,1.0,5,no_bias
+3972,Scotland,35-44,4,4,1.0,5,no_bias
+3973,South East,65+,3,3,1.0,5,no_bias
+3974,Midlands,45-54,3,3,1.0,5,no_bias
+3975,Wales,25-34,4,2,1.0,5,no_bias
+3976,Wales,55-64,4,1,1.0,5,no_bias
+3977,Midlands,25-34,3,0,1.0,5,no_bias
+3978,North West,35-44,4,4,1.0,5,no_bias
+3979,South East,45-54,1,1,1.0,5,no_bias
+3980,London,65+,4,4,1.0,5,no_bias
+3981,Midlands,25-34,4,0,1.0,5,no_bias
+3982,Wales,25-34,0,0,1.0,5,no_bias
+3983,North West,35-44,1,1,1.0,5,no_bias
+3984,Midlands,45-54,3,3,1.0,5,no_bias
+3985,Scotland,25-34,1,4,1.0,5,no_bias
+3986,North West,45-54,4,1,1.0,5,no_bias
+3987,North West,45-54,1,1,1.0,5,no_bias
+3988,Wales,65+,1,1,1.0,5,no_bias
+3989,South East,35-44,2,3,1.0,5,no_bias
+3990,London,65+,1,0,1.0,5,no_bias
+3991,South East,35-44,1,0,1.0,5,no_bias
+3992,London,55-64,0,0,1.0,5,no_bias
+3993,North West,35-44,4,4,1.0,5,no_bias
+3994,Midlands,65+,4,3,1.0,5,no_bias
+3995,Midlands,35-44,2,2,1.0,5,no_bias
+3996,South East,45-54,0,3,1.0,5,no_bias
+3997,London,55-64,4,3,1.0,5,no_bias
+3998,London,55-64,1,1,1.0,5,no_bias
+3999,London,55-64,3,2,1.0,5,no_bias
+4000,London,65+,4,0,1.0,5,no_bias
+4001,Midlands,55-64,4,0,1.0,5,no_bias
+4002,Scotland,35-44,0,3,1.0,5,no_bias
+4003,Midlands,35-44,4,1,1.0,5,no_bias
+4004,North West,25-34,4,3,1.0,5,no_bias
+4005,Scotland,18-24,0,0,1.0,5,no_bias
+4006,Midlands,45-54,0,0,1.0,5,no_bias
+4007,Scotland,55-64,1,1,1.0,5,no_bias
+4008,Midlands,25-34,2,1,1.0,5,no_bias
+4009,Wales,55-64,1,1,1.0,5,no_bias
+4010,Wales,65+,0,0,1.0,5,no_bias
+4011,London,65+,0,1,1.0,5,no_bias
+4012,London,45-54,1,1,1.0,5,no_bias
+4013,London,18-24,1,3,1.0,5,no_bias
+4014,South East,45-54,4,2,1.0,5,no_bias
+4015,Wales,25-34,1,1,1.0,5,no_bias
+4016,South East,55-64,1,4,1.0,5,no_bias
+4017,London,35-44,0,2,1.0,5,no_bias
+4018,Midlands,18-24,4,1,1.0,5,no_bias
+4019,South East,45-54,2,4,1.0,5,no_bias
+4020,London,65+,1,0,1.0,5,no_bias
+4021,South East,35-44,4,3,1.0,5,no_bias
+4022,North West,65+,4,1,1.0,5,no_bias
+4023,Midlands,55-64,1,3,1.0,5,no_bias
+4024,North West,45-54,3,2,1.0,5,no_bias
+4025,Midlands,35-44,3,4,1.0,5,no_bias
+4026,South East,65+,4,1,1.0,5,no_bias
+4027,Midlands,45-54,4,4,1.0,5,no_bias
+4028,Midlands,35-44,4,2,1.0,5,no_bias
+4029,South East,35-44,3,2,1.0,5,no_bias
+4030,North West,18-24,2,2,1.0,5,no_bias
+4031,South East,45-54,3,3,1.0,5,no_bias
+4032,South East,65+,1,4,1.0,5,no_bias
+4033,Midlands,65+,4,2,1.0,5,no_bias
+4034,Wales,25-34,2,2,1.0,5,no_bias
+4035,London,18-24,1,2,1.0,5,no_bias
+4036,London,45-54,1,4,1.0,5,no_bias
+4037,Scotland,18-24,3,4,1.0,5,no_bias
+4038,Midlands,18-24,4,2,1.0,5,no_bias
+4039,South East,55-64,3,2,1.0,5,no_bias
+4040,Scotland,65+,4,2,1.0,5,no_bias
+4041,South East,55-64,1,3,1.0,5,no_bias
+4042,Midlands,55-64,4,4,1.0,5,no_bias
+4043,Midlands,35-44,1,1,1.0,5,no_bias
+4044,North West,25-34,1,2,1.0,5,no_bias
+4045,North West,35-44,4,2,1.0,5,no_bias
+4046,South East,55-64,1,0,1.0,5,no_bias
+4047,Scotland,55-64,0,1,1.0,5,no_bias
+4048,South East,35-44,4,4,1.0,5,no_bias
+4049,Scotland,55-64,1,1,1.0,5,no_bias
+4050,Wales,65+,1,3,1.0,5,no_bias
+4051,North West,35-44,4,4,1.0,5,no_bias
+4052,North West,25-34,4,4,1.0,5,no_bias
+4053,Scotland,55-64,0,3,1.0,5,no_bias
+4054,Midlands,65+,4,4,1.0,5,no_bias
+4055,North West,35-44,4,4,1.0,5,no_bias
+4056,London,35-44,0,0,1.0,5,no_bias
+4057,South East,35-44,4,4,1.0,5,no_bias
+4058,Midlands,55-64,4,2,1.0,5,no_bias
+4059,North West,25-34,1,4,1.0,5,no_bias
+4060,Scotland,35-44,4,1,1.0,5,no_bias
+4061,North West,55-64,0,1,1.0,5,no_bias
+4062,Wales,25-34,1,2,1.0,5,no_bias
+4063,London,35-44,4,1,1.0,5,no_bias
+4064,London,65+,2,2,1.0,5,no_bias
+4065,South East,35-44,4,0,1.0,5,no_bias
+4066,London,18-24,1,2,1.0,5,no_bias
+4067,London,45-54,4,2,1.0,5,no_bias
+4068,North West,65+,4,4,1.0,5,no_bias
+4069,South East,45-54,4,3,1.0,5,no_bias
+4070,South East,18-24,2,0,1.0,5,no_bias
+4071,North West,35-44,1,0,1.0,5,no_bias
+4072,North West,35-44,4,3,1.0,5,no_bias
+4073,South East,25-34,4,4,1.0,5,no_bias
+4074,Midlands,18-24,4,4,1.0,5,no_bias
+4075,South East,55-64,1,1,1.0,5,no_bias
+4076,Midlands,55-64,3,1,1.0,5,no_bias
+4077,Midlands,25-34,4,3,1.0,5,no_bias
+4078,South East,55-64,0,0,1.0,5,no_bias
+4079,North West,45-54,1,1,1.0,5,no_bias
+4080,Scotland,25-34,0,3,1.0,5,no_bias
+4081,South East,18-24,2,2,1.0,5,no_bias
+4082,London,25-34,2,3,1.0,5,no_bias
+4083,Scotland,18-24,4,3,1.0,5,no_bias
+4084,London,45-54,1,0,1.0,5,no_bias
+4085,South East,35-44,1,0,1.0,5,no_bias
+4086,Midlands,25-34,4,2,1.0,5,no_bias
+4087,South East,55-64,1,4,1.0,5,no_bias
+4088,Midlands,18-24,2,2,1.0,5,no_bias
+4089,London,55-64,1,4,1.0,5,no_bias
+4090,South East,55-64,0,0,1.0,5,no_bias
+4091,London,65+,2,2,1.0,5,no_bias
+4092,South East,18-24,3,0,1.0,5,no_bias
+4093,North West,35-44,4,1,1.0,5,no_bias
+4094,London,45-54,1,2,1.0,5,no_bias
+4095,South East,55-64,1,1,1.0,5,no_bias
+4096,North West,25-34,4,3,1.0,5,no_bias
+4097,London,65+,4,0,1.0,5,no_bias
+4098,Midlands,35-44,4,0,1.0,5,no_bias
+4099,London,65+,4,1,1.0,5,no_bias
+4100,North West,45-54,2,3,1.0,5,no_bias
+4101,South East,55-64,3,1,1.0,5,no_bias
+4102,Scotland,65+,2,3,1.0,5,no_bias
+4103,Midlands,35-44,4,1,1.0,5,no_bias
+4104,North West,55-64,1,3,1.0,5,no_bias
+4105,Scotland,55-64,0,4,1.0,5,no_bias
+4106,North West,45-54,3,3,1.0,5,no_bias
+4107,South East,55-64,4,4,1.0,5,no_bias
+4108,Scotland,18-24,4,2,1.0,5,no_bias
+4109,Scotland,65+,1,0,1.0,5,no_bias
+4110,Midlands,25-34,0,3,1.0,5,no_bias
+4111,South East,18-24,3,0,1.0,5,no_bias
+4112,Wales,25-34,4,1,1.0,5,no_bias
+4113,North West,25-34,4,4,1.0,5,no_bias
+4114,London,25-34,1,3,1.0,5,no_bias
+4115,London,65+,1,1,1.0,5,no_bias
+4116,Midlands,55-64,4,2,1.0,5,no_bias
+4117,Midlands,55-64,1,1,1.0,5,no_bias
+4118,South East,65+,3,0,1.0,5,no_bias
+4119,Midlands,45-54,3,0,1.0,5,no_bias
+4120,North West,45-54,4,2,1.0,5,no_bias
+4121,North West,45-54,1,0,1.0,5,no_bias
+4122,Midlands,55-64,4,0,1.0,5,no_bias
+4123,Midlands,65+,3,3,1.0,5,no_bias
+4124,London,25-34,2,1,1.0,5,no_bias
+4125,Midlands,25-34,4,4,1.0,5,no_bias
+4126,North West,35-44,4,2,1.0,5,no_bias
+4127,Wales,18-24,4,0,1.0,5,no_bias
+4128,Scotland,45-54,0,3,1.0,5,no_bias
+4129,London,35-44,1,1,1.0,5,no_bias
+4130,London,35-44,4,4,1.0,5,no_bias
+4131,Midlands,55-64,4,0,1.0,5,no_bias
+4132,North West,25-34,1,3,1.0,5,no_bias
+4133,South East,65+,0,4,1.0,5,no_bias
+4134,South East,35-44,2,0,1.0,5,no_bias
+4135,Midlands,55-64,4,1,1.0,5,no_bias
+4136,Midlands,55-64,2,2,1.0,5,no_bias
+4137,London,65+,4,3,1.0,5,no_bias
+4138,North West,55-64,0,0,1.0,5,no_bias
+4139,Wales,55-64,1,2,1.0,5,no_bias
+4140,South East,25-34,1,3,1.0,5,no_bias
+4141,Scotland,55-64,1,3,1.0,5,no_bias
+4142,London,65+,4,3,1.0,5,no_bias
+4143,South East,35-44,2,1,1.0,5,no_bias
+4144,London,45-54,4,4,1.0,5,no_bias
+4145,London,25-34,4,3,1.0,5,no_bias
+4146,North West,65+,4,2,1.0,5,no_bias
+4147,Midlands,65+,1,0,1.0,5,no_bias
+4148,Scotland,18-24,1,1,1.0,5,no_bias
+4149,London,65+,0,1,1.0,5,no_bias
+4150,North West,65+,1,2,1.0,5,no_bias
+4151,North West,55-64,1,2,1.0,5,no_bias
+4152,Scotland,18-24,1,1,1.0,5,no_bias
+4153,Midlands,65+,4,4,1.0,5,no_bias
+4154,Midlands,65+,3,4,1.0,5,no_bias
+4155,Midlands,65+,1,0,1.0,5,no_bias
+4156,London,25-34,4,2,1.0,5,no_bias
+4157,Midlands,45-54,4,4,1.0,5,no_bias
+4158,Wales,65+,2,1,1.0,5,no_bias
+4159,North West,65+,1,1,1.0,5,no_bias
+4160,South East,25-34,0,0,1.0,5,no_bias
+4161,Midlands,25-34,4,4,1.0,5,no_bias
+4162,London,25-34,4,4,1.0,5,no_bias
+4163,South East,25-34,3,3,1.0,5,no_bias
+4164,South East,45-54,3,2,1.0,5,no_bias
+4165,London,45-54,1,2,1.0,5,no_bias
+4166,Scotland,18-24,0,0,1.0,5,no_bias
+4167,North West,25-34,4,3,1.0,5,no_bias
+4168,London,55-64,4,4,1.0,5,no_bias
+4169,North West,25-34,4,3,1.0,5,no_bias
+4170,South East,25-34,1,1,1.0,5,no_bias
+4171,South East,55-64,1,1,1.0,5,no_bias
+4172,Midlands,18-24,2,2,1.0,5,no_bias
+4173,Midlands,65+,4,4,1.0,5,no_bias
+4174,London,25-34,4,4,1.0,5,no_bias
+4175,Wales,18-24,1,2,1.0,5,no_bias
+4176,South East,55-64,4,4,1.0,5,no_bias
+4177,Midlands,18-24,1,2,1.0,5,no_bias
+4178,North West,45-54,1,1,1.0,5,no_bias
+4179,North West,45-54,4,0,1.0,5,no_bias
+4180,Scotland,65+,3,3,1.0,5,no_bias
+4181,Wales,65+,0,2,1.0,5,no_bias
+4182,Midlands,18-24,4,1,1.0,5,no_bias
+4183,Wales,25-34,0,2,1.0,5,no_bias
+4184,Midlands,45-54,4,1,1.0,5,no_bias
+4185,Midlands,65+,3,3,1.0,5,no_bias
+4186,Wales,45-54,1,1,1.0,5,no_bias
+4187,Scotland,25-34,4,2,1.0,5,no_bias
+4188,South East,25-34,4,2,1.0,5,no_bias
+4189,Scotland,35-44,4,0,1.0,5,no_bias
+4190,South East,55-64,2,2,1.0,5,no_bias
+4191,Midlands,35-44,4,4,1.0,5,no_bias
+4192,London,45-54,1,4,1.0,5,no_bias
+4193,Midlands,55-64,3,1,1.0,5,no_bias
+4194,South East,35-44,0,4,1.0,5,no_bias
+4195,London,45-54,1,1,1.0,5,no_bias
+4196,Midlands,25-34,2,3,1.0,5,no_bias
+4197,North West,65+,4,0,1.0,5,no_bias
+4198,South East,25-34,3,4,1.0,5,no_bias
+4199,London,45-54,0,0,1.0,5,no_bias
+4200,North West,35-44,1,1,1.0,5,no_bias
+4201,London,45-54,4,0,1.0,5,no_bias
+4202,South East,35-44,4,4,1.0,5,no_bias
+4203,London,25-34,1,3,1.0,5,no_bias
+4204,South East,18-24,0,0,1.0,5,no_bias
+4205,North West,65+,4,2,1.0,5,no_bias
+4206,South East,18-24,3,4,1.0,5,no_bias
+4207,Midlands,18-24,4,4,1.0,5,no_bias
+4208,Scotland,55-64,4,3,1.0,5,no_bias
+4209,North West,45-54,2,0,1.0,5,no_bias
+4210,Midlands,45-54,4,2,1.0,5,no_bias
+4211,Wales,25-34,3,0,1.0,5,no_bias
+4212,Midlands,35-44,4,0,1.0,5,no_bias
+4213,South East,25-34,1,0,1.0,5,no_bias
+4214,London,65+,4,4,1.0,5,no_bias
+4215,North West,35-44,1,2,1.0,5,no_bias
+4216,North West,45-54,4,4,1.0,5,no_bias
+4217,London,25-34,4,4,1.0,5,no_bias
+4218,South East,55-64,1,0,1.0,5,no_bias
+4219,South East,55-64,1,0,1.0,5,no_bias
+4220,Wales,55-64,0,0,1.0,5,no_bias
+4221,Midlands,65+,1,2,1.0,5,no_bias
+4222,Scotland,65+,2,2,1.0,5,no_bias
+4223,South East,18-24,3,0,1.0,5,no_bias
+4224,Midlands,25-34,3,4,1.0,5,no_bias
+4225,London,55-64,1,3,1.0,5,no_bias
+4226,North West,45-54,4,3,1.0,5,no_bias
+4227,London,18-24,0,3,1.0,5,no_bias
+4228,Scotland,55-64,4,3,1.0,5,no_bias
+4229,Midlands,55-64,4,3,1.0,5,no_bias
+4230,London,35-44,1,1,1.0,5,no_bias
+4231,Midlands,45-54,2,0,1.0,5,no_bias
+4232,Midlands,65+,4,4,1.0,5,no_bias
+4233,Scotland,55-64,4,4,1.0,5,no_bias
+4234,Scotland,18-24,4,4,1.0,5,no_bias
+4235,Midlands,55-64,1,1,1.0,5,no_bias
+4236,South East,45-54,1,0,1.0,5,no_bias
+4237,London,35-44,4,2,1.0,5,no_bias
+4238,Midlands,18-24,4,1,1.0,5,no_bias
+4239,North West,55-64,1,4,1.0,5,no_bias
+4240,North West,55-64,4,1,1.0,5,no_bias
+4241,Wales,65+,1,1,1.0,5,no_bias
+4242,Wales,65+,1,3,1.0,5,no_bias
+4243,Scotland,25-34,0,0,1.0,5,no_bias
+4244,North West,25-34,4,1,1.0,5,no_bias
+4245,South East,55-64,4,4,1.0,5,no_bias
+4246,South East,55-64,1,0,1.0,5,no_bias
+4247,London,35-44,2,1,1.0,5,no_bias
+4248,South East,35-44,0,3,1.0,5,no_bias
+4249,North West,65+,1,2,1.0,5,no_bias
+4250,South East,35-44,4,1,1.0,5,no_bias
+4251,Midlands,45-54,4,1,1.0,5,no_bias
+4252,London,35-44,4,3,1.0,5,no_bias
+4253,Midlands,35-44,2,4,1.0,5,no_bias
+4254,London,45-54,4,2,1.0,5,no_bias
+4255,Scotland,35-44,1,1,1.0,5,no_bias
+4256,Midlands,25-34,4,4,1.0,5,no_bias
+4257,Midlands,45-54,4,1,1.0,5,no_bias
+4258,Scotland,35-44,4,1,1.0,5,no_bias
+4259,Midlands,55-64,4,4,1.0,5,no_bias
+4260,South East,45-54,1,1,1.0,5,no_bias
+4261,North West,35-44,4,3,1.0,5,no_bias
+4262,London,55-64,4,3,1.0,5,no_bias
+4263,South East,35-44,1,1,1.0,5,no_bias
+4264,North West,25-34,4,4,1.0,5,no_bias
+4265,London,55-64,2,1,1.0,5,no_bias
+4266,South East,18-24,4,4,1.0,5,no_bias
+4267,South East,45-54,3,3,1.0,5,no_bias
+4268,London,25-34,1,1,1.0,5,no_bias
+4269,North West,55-64,1,1,1.0,5,no_bias
+4270,Midlands,25-34,1,1,1.0,5,no_bias
+4271,Midlands,35-44,4,4,1.0,5,no_bias
+4272,Wales,25-34,4,2,1.0,5,no_bias
+4273,South East,25-34,4,1,1.0,5,no_bias
+4274,London,35-44,4,4,1.0,5,no_bias
+4275,South East,35-44,4,0,1.0,5,no_bias
+4276,North West,55-64,4,1,1.0,5,no_bias
+4277,London,25-34,1,4,1.0,5,no_bias
+4278,Wales,65+,4,4,1.0,5,no_bias
+4279,Wales,65+,1,4,1.0,5,no_bias
+4280,North West,35-44,2,2,1.0,5,no_bias
+4281,Scotland,35-44,4,3,1.0,5,no_bias
+4282,Scotland,18-24,2,0,1.0,5,no_bias
+4283,South East,65+,4,4,1.0,5,no_bias
+4284,Scotland,55-64,1,2,1.0,5,no_bias
+4285,Wales,18-24,1,1,1.0,5,no_bias
+4286,London,18-24,4,4,1.0,5,no_bias
+4287,Scotland,65+,2,0,1.0,5,no_bias
+4288,Wales,45-54,0,1,1.0,5,no_bias
+4289,North West,35-44,0,0,1.0,5,no_bias
+4290,Wales,65+,1,0,1.0,5,no_bias
+4291,Wales,25-34,1,2,1.0,5,no_bias
+4292,Midlands,25-34,0,2,1.0,5,no_bias
+4293,South East,18-24,1,1,1.0,5,no_bias
+4294,South East,55-64,3,0,1.0,5,no_bias
+4295,Midlands,45-54,4,4,1.0,5,no_bias
+4296,Midlands,55-64,1,1,1.0,5,no_bias
+4297,London,55-64,2,3,1.0,5,no_bias
+4298,South East,55-64,3,4,1.0,5,no_bias
+4299,South East,45-54,2,4,1.0,5,no_bias
+4300,North West,45-54,3,3,1.0,5,no_bias
+4301,South East,55-64,2,1,1.0,5,no_bias
+4302,North West,65+,1,3,1.0,5,no_bias
+4303,Midlands,55-64,4,0,1.0,5,no_bias
+4304,South East,55-64,1,0,1.0,5,no_bias
+4305,London,35-44,4,4,1.0,5,no_bias
+4306,North West,65+,1,4,1.0,5,no_bias
+4307,South East,35-44,4,4,1.0,5,no_bias
+4308,Midlands,35-44,4,4,1.0,5,no_bias
+4309,North West,25-34,0,0,1.0,5,no_bias
+4310,Midlands,55-64,1,1,1.0,5,no_bias
+4311,Midlands,45-54,4,4,1.0,5,no_bias
+4312,Wales,25-34,1,1,1.0,5,no_bias
+4313,Midlands,65+,1,1,1.0,5,no_bias
+4314,South East,18-24,1,3,1.0,5,no_bias
+4315,South East,65+,4,1,1.0,5,no_bias
+4316,London,55-64,2,4,1.0,5,no_bias
+4317,London,35-44,0,3,1.0,5,no_bias
+4318,Midlands,65+,4,1,1.0,5,no_bias
+4319,South East,25-34,1,3,1.0,5,no_bias
+4320,South East,55-64,1,3,1.0,5,no_bias
+4321,Scotland,55-64,4,4,1.0,5,no_bias
+4322,Scotland,55-64,4,2,1.0,5,no_bias
+4323,North West,65+,1,4,1.0,5,no_bias
+4324,Midlands,65+,2,0,1.0,5,no_bias
+4325,Scotland,35-44,0,0,1.0,5,no_bias
+4326,South East,65+,0,4,1.0,5,no_bias
+4327,Midlands,65+,4,2,1.0,5,no_bias
+4328,North West,55-64,0,0,1.0,5,no_bias
+4329,Midlands,35-44,4,0,1.0,5,no_bias
+4330,Midlands,55-64,4,1,1.0,5,no_bias
+4331,North West,25-34,1,0,1.0,5,no_bias
+4332,Wales,35-44,4,4,1.0,5,no_bias
+4333,Midlands,65+,4,0,1.0,5,no_bias
+4334,North West,35-44,4,4,1.0,5,no_bias
+4335,South East,35-44,1,1,1.0,5,no_bias
+4336,Midlands,35-44,4,1,1.0,5,no_bias
+4337,North West,25-34,4,2,1.0,5,no_bias
+4338,London,35-44,4,0,1.0,5,no_bias
+4339,North West,35-44,0,0,1.0,5,no_bias
+4340,South East,55-64,3,3,1.0,5,no_bias
+4341,Midlands,65+,4,2,1.0,5,no_bias
+4342,Wales,35-44,1,4,1.0,5,no_bias
+4343,North West,65+,4,1,1.0,5,no_bias
+4344,North West,18-24,2,1,1.0,5,no_bias
+4345,North West,18-24,0,1,1.0,5,no_bias
+4346,North West,55-64,4,4,1.0,5,no_bias
+4347,Midlands,55-64,1,4,1.0,5,no_bias
+4348,South East,18-24,1,1,1.0,5,no_bias
+4349,London,45-54,4,4,1.0,5,no_bias
+4350,London,55-64,1,1,1.0,5,no_bias
+4351,Scotland,65+,1,2,1.0,5,no_bias
+4352,North West,65+,4,4,1.0,5,no_bias
+4353,Wales,35-44,4,3,1.0,5,no_bias
+4354,North West,35-44,4,0,1.0,5,no_bias
+4355,Midlands,65+,4,4,1.0,5,no_bias
+4356,Scotland,55-64,1,1,1.0,5,no_bias
+4357,North West,25-34,1,1,1.0,5,no_bias
+4358,Midlands,18-24,3,2,1.0,5,no_bias
+4359,Midlands,45-54,4,4,1.0,5,no_bias
+4360,North West,65+,3,1,1.0,5,no_bias
+4361,South East,35-44,4,4,1.0,5,no_bias
+4362,Wales,25-34,1,0,1.0,5,no_bias
+4363,Wales,25-34,1,4,1.0,5,no_bias
+4364,North West,35-44,0,0,1.0,5,no_bias
+4365,Midlands,25-34,1,1,1.0,5,no_bias
+4366,South East,55-64,1,1,1.0,5,no_bias
+4367,London,25-34,1,4,1.0,5,no_bias
+4368,South East,65+,4,2,1.0,5,no_bias
+4369,London,45-54,4,2,1.0,5,no_bias
+4370,South East,55-64,3,0,1.0,5,no_bias
+4371,Midlands,65+,4,4,1.0,5,no_bias
+4372,Wales,45-54,0,4,1.0,5,no_bias
+4373,North West,25-34,4,3,1.0,5,no_bias
+4374,London,35-44,4,4,1.0,5,no_bias
+4375,North West,35-44,4,4,1.0,5,no_bias
+4376,London,65+,4,4,1.0,5,no_bias
+4377,North West,55-64,1,4,1.0,5,no_bias
+4378,London,55-64,4,4,1.0,5,no_bias
+4379,London,45-54,2,2,1.0,5,no_bias
+4380,Midlands,25-34,1,2,1.0,5,no_bias
+4381,London,65+,4,4,1.0,5,no_bias
+4382,Midlands,25-34,1,1,1.0,5,no_bias
+4383,London,35-44,4,2,1.0,5,no_bias
+4384,Wales,65+,2,2,1.0,5,no_bias
+4385,Midlands,55-64,1,0,1.0,5,no_bias
+4386,South East,45-54,3,3,1.0,5,no_bias
+4387,South East,45-54,0,0,1.0,5,no_bias
+4388,South East,25-34,1,3,1.0,5,no_bias
+4389,South East,45-54,1,3,1.0,5,no_bias
+4390,North West,55-64,2,2,1.0,5,no_bias
+4391,North West,35-44,1,4,1.0,5,no_bias
+4392,Midlands,25-34,4,4,1.0,5,no_bias
+4393,London,55-64,2,3,1.0,5,no_bias
+4394,North West,55-64,1,1,1.0,5,no_bias
+4395,North West,25-34,4,0,1.0,5,no_bias
+4396,Scotland,65+,4,0,1.0,5,no_bias
+4397,Scotland,18-24,4,0,1.0,5,no_bias
+4398,London,25-34,4,4,1.0,5,no_bias
+4399,North West,25-34,4,4,1.0,5,no_bias
+4400,North West,25-34,1,1,1.0,5,no_bias
+4401,Midlands,55-64,3,2,1.0,5,no_bias
+4402,Midlands,55-64,4,2,1.0,5,no_bias
+4403,North West,18-24,4,1,1.0,5,no_bias
+4404,Scotland,65+,4,2,1.0,5,no_bias
+4405,London,45-54,1,1,1.0,5,no_bias
+4406,Wales,65+,2,2,1.0,5,no_bias
+4407,North West,18-24,4,4,1.0,5,no_bias
+4408,South East,25-34,2,0,1.0,5,no_bias
+4409,Scotland,25-34,4,4,1.0,5,no_bias
+4410,South East,65+,1,0,1.0,5,no_bias
+4411,South East,55-64,3,3,1.0,5,no_bias
+4412,Scotland,18-24,0,2,1.0,5,no_bias
+4413,Midlands,35-44,4,4,1.0,5,no_bias
+4414,London,25-34,1,4,1.0,5,no_bias
+4415,Midlands,35-44,4,4,1.0,5,no_bias
+4416,North West,25-34,4,4,1.0,5,no_bias
+4417,Midlands,55-64,1,2,1.0,5,no_bias
+4418,Scotland,35-44,4,4,1.0,5,no_bias
+4419,South East,25-34,3,3,1.0,5,no_bias
+4420,London,35-44,4,4,1.0,5,no_bias
+4421,North West,18-24,1,1,1.0,5,no_bias
+4422,Scotland,65+,1,4,1.0,5,no_bias
+4423,North West,65+,4,4,1.0,5,no_bias
+4424,South East,55-64,1,2,1.0,5,no_bias
+4425,London,45-54,1,0,1.0,5,no_bias
+4426,Midlands,45-54,1,1,1.0,5,no_bias
+4427,Scotland,45-54,1,0,1.0,5,no_bias
+4428,Wales,55-64,0,4,1.0,5,no_bias
+4429,Midlands,65+,4,2,1.0,5,no_bias
+4430,South East,35-44,4,1,1.0,5,no_bias
+4431,South East,25-34,3,1,1.0,5,no_bias
+4432,Midlands,18-24,4,4,1.0,5,no_bias
+4433,Midlands,35-44,4,4,1.0,5,no_bias
+4434,North West,65+,4,4,1.0,5,no_bias
+4435,London,65+,2,1,1.0,5,no_bias
+4436,Wales,55-64,4,2,1.0,5,no_bias
+4437,South East,45-54,1,1,1.0,5,no_bias
+4438,Midlands,35-44,4,0,1.0,5,no_bias
+4439,Wales,45-54,1,0,1.0,5,no_bias
+4440,Wales,45-54,1,3,1.0,5,no_bias
+4441,South East,35-44,4,1,1.0,5,no_bias
+4442,South East,35-44,4,4,1.0,5,no_bias
+4443,Scotland,55-64,1,1,1.0,5,no_bias
+4444,Midlands,45-54,4,1,1.0,5,no_bias
+4445,South East,55-64,1,1,1.0,5,no_bias
+4446,North West,35-44,0,0,1.0,5,no_bias
+4447,London,55-64,4,3,1.0,5,no_bias
+4448,Midlands,55-64,3,3,1.0,5,no_bias
+4449,Wales,65+,4,4,1.0,5,no_bias
+4450,North West,65+,1,1,1.0,5,no_bias
+4451,London,35-44,4,4,1.0,5,no_bias
+4452,Midlands,65+,4,0,1.0,5,no_bias
+4453,Midlands,25-34,3,1,1.0,5,no_bias
+4454,London,65+,0,3,1.0,5,no_bias
+4455,Scotland,35-44,1,3,1.0,5,no_bias
+4456,Midlands,35-44,4,2,1.0,5,no_bias
+4457,Midlands,45-54,1,1,1.0,5,no_bias
+4458,London,35-44,4,3,1.0,5,no_bias
+4459,Scotland,55-64,1,3,1.0,5,no_bias
+4460,North West,35-44,4,1,1.0,5,no_bias
+4461,Scotland,25-34,2,3,1.0,5,no_bias
+4462,Scotland,35-44,3,0,1.0,5,no_bias
+4463,London,65+,3,3,1.0,5,no_bias
+4464,North West,35-44,4,1,1.0,5,no_bias
+4465,South East,45-54,1,3,1.0,5,no_bias
+4466,South East,18-24,4,4,1.0,5,no_bias
+4467,London,65+,4,3,1.0,5,no_bias
+4468,Scotland,35-44,0,1,1.0,5,no_bias
+4469,South East,55-64,4,4,1.0,5,no_bias
+4470,Wales,35-44,4,2,1.0,5,no_bias
+4471,Scotland,55-64,2,1,1.0,5,no_bias
+4472,Scotland,18-24,4,4,1.0,5,no_bias
+4473,Scotland,55-64,2,2,1.0,5,no_bias
+4474,Midlands,65+,4,0,1.0,5,no_bias
+4475,London,25-34,2,1,1.0,5,no_bias
+4476,London,35-44,4,4,1.0,5,no_bias
+4477,South East,65+,4,4,1.0,5,no_bias
+4478,London,35-44,1,0,1.0,5,no_bias
+4479,South East,18-24,2,2,1.0,5,no_bias
+4480,South East,35-44,4,4,1.0,5,no_bias
+4481,London,25-34,3,4,1.0,5,no_bias
+4482,North West,18-24,4,2,1.0,5,no_bias
+4483,Wales,35-44,0,3,1.0,5,no_bias
+4484,Scotland,55-64,4,4,1.0,5,no_bias
+4485,London,55-64,1,4,1.0,5,no_bias
+4486,North West,35-44,4,4,1.0,5,no_bias
+4487,North West,18-24,2,2,1.0,5,no_bias
+4488,South East,65+,1,1,1.0,5,no_bias
+4489,South East,55-64,0,2,1.0,5,no_bias
+4490,North West,25-34,2,1,1.0,5,no_bias
+4491,London,18-24,1,1,1.0,5,no_bias
+4492,Scotland,55-64,3,4,1.0,5,no_bias
+4493,South East,25-34,4,0,1.0,5,no_bias
+4494,Midlands,65+,3,0,1.0,5,no_bias
+4495,London,35-44,4,2,1.0,5,no_bias
+4496,London,18-24,4,3,1.0,5,no_bias
+4497,North West,65+,4,1,1.0,5,no_bias
+4498,North West,18-24,4,1,1.0,5,no_bias
+4499,Scotland,35-44,4,0,1.0,5,no_bias
+4500,London,55-64,4,4,1.0,5,no_bias
+4501,South East,65+,0,0,1.0,5,no_bias
+4502,North West,35-44,4,0,1.0,5,no_bias
+4503,South East,65+,0,1,1.0,5,no_bias
+4504,Midlands,55-64,1,1,1.0,5,no_bias
+4505,North West,25-34,4,3,1.0,5,no_bias
+4506,Wales,35-44,0,0,1.0,5,no_bias
+4507,Wales,55-64,3,2,1.0,5,no_bias
+4508,South East,18-24,1,1,1.0,5,no_bias
+4509,South East,35-44,4,3,1.0,5,no_bias
+4510,Midlands,18-24,3,3,1.0,5,no_bias
+4511,Midlands,25-34,3,2,1.0,5,no_bias
+4512,London,25-34,2,1,1.0,5,no_bias
+4513,Wales,65+,4,1,1.0,5,no_bias
+4514,North West,65+,4,0,1.0,5,no_bias
+4515,North West,35-44,4,2,1.0,5,no_bias
+4516,North West,65+,1,4,1.0,5,no_bias
+4517,Scotland,45-54,4,4,1.0,5,no_bias
+4518,South East,65+,1,4,1.0,5,no_bias
+4519,North West,25-34,3,3,1.0,5,no_bias
+4520,London,45-54,3,3,1.0,5,no_bias
+4521,South East,45-54,4,4,1.0,5,no_bias
+4522,Midlands,35-44,1,1,1.0,5,no_bias
+4523,South East,18-24,4,2,1.0,5,no_bias
+4524,South East,45-54,1,2,1.0,5,no_bias
+4525,North West,55-64,4,1,1.0,5,no_bias
+4526,London,45-54,2,1,1.0,5,no_bias
+4527,Midlands,45-54,1,2,1.0,5,no_bias
+4528,Midlands,35-44,4,2,1.0,5,no_bias
+4529,Wales,25-34,4,1,1.0,5,no_bias
+4530,North West,18-24,1,1,1.0,5,no_bias
+4531,London,55-64,2,3,1.0,5,no_bias
+4532,London,35-44,2,4,1.0,5,no_bias
+4533,North West,45-54,4,4,1.0,5,no_bias
+4534,Wales,25-34,2,2,1.0,5,no_bias
+4535,Scotland,45-54,3,4,1.0,5,no_bias
+4536,Midlands,55-64,1,2,1.0,5,no_bias
+4537,South East,45-54,1,2,1.0,5,no_bias
+4538,London,45-54,0,4,1.0,5,no_bias
+4539,Midlands,65+,4,4,1.0,5,no_bias
+4540,Scotland,35-44,4,2,1.0,5,no_bias
+4541,Midlands,65+,1,4,1.0,5,no_bias
+4542,Scotland,35-44,0,0,1.0,5,no_bias
+4543,North West,55-64,4,4,1.0,5,no_bias
+4544,London,45-54,0,0,1.0,5,no_bias
+4545,Midlands,65+,3,4,1.0,5,no_bias
+4546,London,65+,1,0,1.0,5,no_bias
+4547,Wales,35-44,4,1,1.0,5,no_bias
+4548,South East,55-64,1,4,1.0,5,no_bias
+4549,Midlands,25-34,4,4,1.0,5,no_bias
+4550,South East,35-44,3,2,1.0,5,no_bias
+4551,Wales,35-44,4,4,1.0,5,no_bias
+4552,London,18-24,4,1,1.0,5,no_bias
+4553,North West,65+,4,3,1.0,5,no_bias
+4554,London,55-64,4,3,1.0,5,no_bias
+4555,North West,35-44,4,3,1.0,5,no_bias
+4556,Scotland,65+,1,1,1.0,5,no_bias
+4557,Midlands,65+,4,2,1.0,5,no_bias
+4558,Midlands,25-34,3,0,1.0,5,no_bias
+4559,Wales,55-64,0,4,1.0,5,no_bias
+4560,North West,65+,0,2,1.0,5,no_bias
+4561,Midlands,18-24,4,4,1.0,5,no_bias
+4562,South East,65+,2,2,1.0,5,no_bias
+4563,Scotland,45-54,3,1,1.0,5,no_bias
+4564,London,45-54,1,4,1.0,5,no_bias
+4565,Midlands,25-34,1,0,1.0,5,no_bias
+4566,Wales,55-64,1,2,1.0,5,no_bias
+4567,Midlands,45-54,4,4,1.0,5,no_bias
+4568,North West,35-44,4,1,1.0,5,no_bias
+4569,Midlands,35-44,3,2,1.0,5,no_bias
+4570,South East,18-24,3,2,1.0,5,no_bias
+4571,North West,45-54,1,3,1.0,5,no_bias
+4572,South East,18-24,0,0,1.0,5,no_bias
+4573,Scotland,35-44,1,4,1.0,5,no_bias
+4574,London,25-34,3,2,1.0,5,no_bias
+4575,London,45-54,1,4,1.0,5,no_bias
+4576,North West,18-24,1,4,1.0,5,no_bias
+4577,North West,35-44,4,1,1.0,5,no_bias
+4578,South East,45-54,3,3,1.0,5,no_bias
+4579,London,55-64,1,1,1.0,5,no_bias
+4580,Midlands,65+,4,0,1.0,5,no_bias
+4581,South East,45-54,1,3,1.0,5,no_bias
+4582,Scotland,35-44,1,1,1.0,5,no_bias
+4583,North West,18-24,0,4,1.0,5,no_bias
+4584,Midlands,35-44,4,3,1.0,5,no_bias
+4585,Wales,65+,2,3,1.0,5,no_bias
+4586,North West,65+,1,2,1.0,5,no_bias
+4587,Midlands,55-64,1,0,1.0,5,no_bias
+4588,Scotland,25-34,0,0,1.0,5,no_bias
+4589,Midlands,35-44,4,4,1.0,5,no_bias
+4590,Midlands,35-44,4,1,1.0,5,no_bias
+4591,North West,55-64,1,4,1.0,5,no_bias
+4592,Midlands,45-54,4,3,1.0,5,no_bias
+4593,London,55-64,1,4,1.0,5,no_bias
+4594,Wales,65+,4,1,1.0,5,no_bias
+4595,Scotland,45-54,2,1,1.0,5,no_bias
+4596,London,35-44,1,0,1.0,5,no_bias
+4597,Midlands,35-44,4,4,1.0,5,no_bias
+4598,South East,65+,4,4,1.0,5,no_bias
+4599,North West,65+,1,1,1.0,5,no_bias
+4600,North West,25-34,1,1,1.0,5,no_bias
+4601,South East,55-64,1,3,1.0,5,no_bias
+4602,South East,35-44,3,3,1.0,5,no_bias
+4603,North West,25-34,4,0,1.0,5,no_bias
+4604,London,65+,3,4,1.0,5,no_bias
+4605,Scotland,35-44,4,4,1.0,5,no_bias
+4606,North West,25-34,4,4,1.0,5,no_bias
+4607,South East,35-44,4,0,1.0,5,no_bias
+4608,Midlands,25-34,4,3,1.0,5,no_bias
+4609,Midlands,25-34,4,0,1.0,5,no_bias
+4610,South East,45-54,3,2,1.0,5,no_bias
+4611,Scotland,25-34,4,4,1.0,5,no_bias
+4612,North West,55-64,1,4,1.0,5,no_bias
+4613,North West,65+,0,0,1.0,5,no_bias
+4614,South East,55-64,1,3,1.0,5,no_bias
+4615,North West,25-34,4,2,1.0,5,no_bias
+4616,Wales,55-64,2,2,1.0,5,no_bias
+4617,South East,65+,1,1,1.0,5,no_bias
+4618,North West,35-44,4,4,1.0,5,no_bias
+4619,Midlands,65+,1,0,1.0,5,no_bias
+4620,Scotland,65+,0,0,1.0,5,no_bias
+4621,South East,55-64,2,1,1.0,5,no_bias
+4622,North West,18-24,4,2,1.0,5,no_bias
+4623,London,25-34,1,2,1.0,5,no_bias
+4624,London,65+,4,0,1.0,5,no_bias
+4625,South East,55-64,3,3,1.0,5,no_bias
+4626,Scotland,35-44,4,3,1.0,5,no_bias
+4627,Midlands,55-64,0,1,1.0,5,no_bias
+4628,Wales,45-54,1,4,1.0,5,no_bias
+4629,South East,65+,4,3,1.0,5,no_bias
+4630,London,25-34,2,2,1.0,5,no_bias
+4631,London,25-34,0,3,1.0,5,no_bias
+4632,Midlands,45-54,2,2,1.0,5,no_bias
+4633,South East,45-54,2,2,1.0,5,no_bias
+4634,North West,55-64,1,2,1.0,5,no_bias
+4635,Scotland,65+,4,4,1.0,5,no_bias
+4636,Scotland,45-54,1,1,1.0,5,no_bias
+4637,North West,45-54,2,0,1.0,5,no_bias
+4638,North West,25-34,2,1,1.0,5,no_bias
+4639,South East,35-44,1,1,1.0,5,no_bias
+4640,Midlands,45-54,2,2,1.0,5,no_bias
+4641,South East,25-34,2,3,1.0,5,no_bias
+4642,North West,35-44,4,4,1.0,5,no_bias
+4643,Scotland,55-64,1,1,1.0,5,no_bias
+4644,Wales,65+,1,1,1.0,5,no_bias
+4645,North West,35-44,4,4,1.0,5,no_bias
+4646,North West,65+,2,2,1.0,5,no_bias
+4647,Scotland,25-34,1,3,1.0,5,no_bias
+4648,South East,55-64,0,0,1.0,5,no_bias
+4649,Scotland,25-34,4,4,1.0,5,no_bias
+4650,Scotland,18-24,4,0,1.0,5,no_bias
+4651,North West,65+,4,4,1.0,5,no_bias
+4652,London,45-54,1,4,1.0,5,no_bias
+4653,Scotland,55-64,4,0,1.0,5,no_bias
+4654,South East,18-24,4,4,1.0,5,no_bias
+4655,London,55-64,4,3,1.0,5,no_bias
+4656,Midlands,18-24,4,4,1.0,5,no_bias
+4657,London,55-64,1,1,1.0,5,no_bias
+4658,South East,55-64,1,4,1.0,5,no_bias
+4659,South East,18-24,2,2,1.0,5,no_bias
+4660,South East,55-64,0,2,1.0,5,no_bias
+4661,Midlands,45-54,1,1,1.0,5,no_bias
+4662,Wales,25-34,2,2,1.0,5,no_bias
+4663,North West,25-34,4,1,1.0,5,no_bias
+4664,Midlands,45-54,4,0,1.0,5,no_bias
+4665,London,45-54,1,1,1.0,5,no_bias
+4666,Midlands,55-64,4,4,1.0,5,no_bias
+4667,London,45-54,0,0,1.0,5,no_bias
+4668,Scotland,55-64,2,2,1.0,5,no_bias
+4669,Midlands,25-34,3,0,1.0,5,no_bias
+4670,London,35-44,4,1,1.0,5,no_bias
+4671,Scotland,25-34,4,4,1.0,5,no_bias
+4672,Midlands,45-54,2,4,1.0,5,no_bias
+4673,Midlands,45-54,4,4,1.0,5,no_bias
+4674,South East,35-44,4,0,1.0,5,no_bias
+4675,London,25-34,1,3,1.0,5,no_bias
+4676,South East,45-54,1,1,1.0,5,no_bias
+4677,South East,25-34,4,0,1.0,5,no_bias
+4678,North West,65+,0,1,1.0,5,no_bias
+4679,Wales,65+,4,0,1.0,5,no_bias
+4680,Wales,45-54,1,2,1.0,5,no_bias
+4681,London,18-24,1,4,1.0,5,no_bias
+4682,Midlands,45-54,4,4,1.0,5,no_bias
+4683,Midlands,35-44,4,4,1.0,5,no_bias
+4684,South East,55-64,1,2,1.0,5,no_bias
+4685,Midlands,35-44,4,1,1.0,5,no_bias
+4686,Scotland,35-44,0,3,1.0,5,no_bias
+4687,Scotland,18-24,4,4,1.0,5,no_bias
+4688,North West,65+,1,3,1.0,5,no_bias
+4689,London,55-64,0,1,1.0,5,no_bias
+4690,North West,45-54,1,1,1.0,5,no_bias
+4691,London,65+,3,3,1.0,5,no_bias
+4692,North West,45-54,2,2,1.0,5,no_bias
+4693,North West,45-54,0,1,1.0,5,no_bias
+4694,Midlands,45-54,4,0,1.0,5,no_bias
+4695,North West,18-24,4,0,1.0,5,no_bias
+4696,Scotland,35-44,4,4,1.0,5,no_bias
+4697,North West,65+,2,2,1.0,5,no_bias
+4698,London,65+,1,1,1.0,5,no_bias
+4699,South East,18-24,1,0,1.0,5,no_bias
+4700,North West,65+,1,1,1.0,5,no_bias
+4701,North West,18-24,4,3,1.0,5,no_bias
+4702,Wales,65+,2,2,1.0,5,no_bias
+4703,Midlands,25-34,4,4,1.0,5,no_bias
+4704,Midlands,65+,4,2,1.0,5,no_bias
+4705,Scotland,25-34,4,3,1.0,5,no_bias
+4706,London,35-44,2,3,1.0,5,no_bias
+4707,Midlands,45-54,1,2,1.0,5,no_bias
+4708,South East,35-44,1,2,1.0,5,no_bias
+4709,North West,55-64,1,4,1.0,5,no_bias
+4710,Scotland,55-64,0,4,1.0,5,no_bias
+4711,Midlands,35-44,1,1,1.0,5,no_bias
+4712,Midlands,45-54,1,2,1.0,5,no_bias
+4713,Wales,25-34,2,2,1.0,5,no_bias
+4714,Scotland,55-64,1,3,1.0,5,no_bias
+4715,Midlands,18-24,3,3,1.0,5,no_bias
+4716,Midlands,65+,1,2,1.0,5,no_bias
+4717,South East,18-24,4,0,1.0,5,no_bias
+4718,Midlands,35-44,4,4,1.0,5,no_bias
+4719,London,65+,1,1,1.0,5,no_bias
+4720,Scotland,25-34,4,4,1.0,5,no_bias
+4721,Scotland,35-44,4,3,1.0,5,no_bias
+4722,Midlands,25-34,1,1,1.0,5,no_bias
+4723,Midlands,65+,1,0,1.0,5,no_bias
+4724,Midlands,45-54,0,2,1.0,5,no_bias
+4725,Midlands,25-34,0,3,1.0,5,no_bias
+4726,Midlands,45-54,1,1,1.0,5,no_bias
+4727,Midlands,25-34,2,1,1.0,5,no_bias
+4728,North West,45-54,2,0,1.0,5,no_bias
+4729,London,25-34,2,2,1.0,5,no_bias
+4730,South East,18-24,3,3,1.0,5,no_bias
+4731,London,65+,2,0,1.0,5,no_bias
+4732,Midlands,55-64,3,3,1.0,5,no_bias
+4733,Scotland,18-24,0,0,1.0,5,no_bias
+4734,Wales,65+,1,3,1.0,5,no_bias
+4735,North West,45-54,0,2,1.0,5,no_bias
+4736,Scotland,55-64,3,3,1.0,5,no_bias
+4737,London,55-64,4,4,1.0,5,no_bias
+4738,South East,45-54,4,4,1.0,5,no_bias
+4739,London,35-44,4,4,1.0,5,no_bias
+4740,North West,65+,4,2,1.0,5,no_bias
+4741,South East,18-24,4,0,1.0,5,no_bias
+4742,North West,25-34,4,4,1.0,5,no_bias
+4743,Wales,65+,3,3,1.0,5,no_bias
+4744,South East,25-34,3,1,1.0,5,no_bias
+4745,North West,45-54,0,0,1.0,5,no_bias
+4746,North West,25-34,1,4,1.0,5,no_bias
+4747,Midlands,18-24,4,1,1.0,5,no_bias
+4748,North West,45-54,4,3,1.0,5,no_bias
+4749,London,55-64,0,4,1.0,5,no_bias
+4750,London,45-54,4,4,1.0,5,no_bias
+4751,South East,65+,0,0,1.0,5,no_bias
+4752,Wales,45-54,4,3,1.0,5,no_bias
+4753,London,55-64,2,2,1.0,5,no_bias
+4754,North West,35-44,1,2,1.0,5,no_bias
+4755,London,35-44,0,4,1.0,5,no_bias
+4756,Midlands,35-44,4,0,1.0,5,no_bias
+4757,London,45-54,0,0,1.0,5,no_bias
+4758,North West,55-64,1,1,1.0,5,no_bias
+4759,Midlands,35-44,4,1,1.0,5,no_bias
+4760,London,35-44,4,4,1.0,5,no_bias
+4761,Wales,45-54,3,1,1.0,5,no_bias
+4762,Midlands,45-54,2,2,1.0,5,no_bias
+4763,North West,55-64,1,0,1.0,5,no_bias
+4764,Midlands,45-54,1,3,1.0,5,no_bias
+4765,North West,35-44,4,4,1.0,5,no_bias
+4766,North West,35-44,4,1,1.0,5,no_bias
+4767,North West,65+,4,4,1.0,5,no_bias
+4768,Wales,65+,1,2,1.0,5,no_bias
+4769,London,35-44,1,1,1.0,5,no_bias
+4770,Wales,45-54,3,1,1.0,5,no_bias
+4771,South East,25-34,4,3,1.0,5,no_bias
+4772,Midlands,35-44,4,4,1.0,5,no_bias
+4773,North West,45-54,2,0,1.0,5,no_bias
+4774,Midlands,55-64,4,1,1.0,5,no_bias
+4775,Midlands,25-34,4,2,1.0,5,no_bias
+4776,South East,25-34,1,3,1.0,5,no_bias
+4777,South East,65+,3,2,1.0,5,no_bias
+4778,South East,35-44,4,3,1.0,5,no_bias
+4779,Wales,18-24,4,4,1.0,5,no_bias
+4780,South East,55-64,1,2,1.0,5,no_bias
+4781,South East,18-24,1,2,1.0,5,no_bias
+4782,Midlands,55-64,3,3,1.0,5,no_bias
+4783,Midlands,65+,4,1,1.0,5,no_bias
+4784,South East,18-24,2,0,1.0,5,no_bias
+4785,North West,45-54,0,1,1.0,5,no_bias
+4786,North West,55-64,1,1,1.0,5,no_bias
+4787,Midlands,35-44,4,3,1.0,5,no_bias
+4788,South East,65+,1,2,1.0,5,no_bias
+4789,London,65+,0,0,1.0,5,no_bias
+4790,South East,35-44,0,0,1.0,5,no_bias
+4791,Midlands,65+,4,4,1.0,5,no_bias
+4792,South East,65+,3,2,1.0,5,no_bias
+4793,South East,55-64,4,4,1.0,5,no_bias
+4794,South East,18-24,3,3,1.0,5,no_bias
+4795,South East,65+,1,1,1.0,5,no_bias
+4796,London,45-54,3,3,1.0,5,no_bias
+4797,London,65+,1,0,1.0,5,no_bias
+4798,London,18-24,2,3,1.0,5,no_bias
+4799,South East,55-64,3,3,1.0,5,no_bias
+4800,South East,55-64,4,4,1.0,5,no_bias
+4801,North West,65+,1,1,1.0,5,no_bias
+4802,Midlands,25-34,4,4,1.0,5,no_bias
+4803,London,65+,4,0,1.0,5,no_bias
+4804,North West,65+,4,0,1.0,5,no_bias
+4805,London,55-64,1,2,1.0,5,no_bias
+4806,South East,35-44,4,0,1.0,5,no_bias
+4807,Midlands,45-54,1,4,1.0,5,no_bias
+4808,South East,55-64,1,4,1.0,5,no_bias
+4809,South East,25-34,4,3,1.0,5,no_bias
+4810,North West,65+,1,4,1.0,5,no_bias
+4811,London,35-44,0,4,1.0,5,no_bias
+4812,Midlands,35-44,4,0,1.0,5,no_bias
+4813,South East,18-24,0,1,1.0,5,no_bias
+4814,North West,45-54,0,2,1.0,5,no_bias
+4815,Scotland,65+,4,3,1.0,5,no_bias
+4816,North West,25-34,4,1,1.0,5,no_bias
+4817,Midlands,45-54,2,2,1.0,5,no_bias
+4818,South East,25-34,1,0,1.0,5,no_bias
+4819,Scotland,35-44,4,4,1.0,5,no_bias
+4820,London,18-24,4,4,1.0,5,no_bias
+4821,London,65+,1,1,1.0,5,no_bias
+4822,Midlands,18-24,0,4,1.0,5,no_bias
+4823,South East,25-34,3,4,1.0,5,no_bias
+4824,Midlands,18-24,4,4,1.0,5,no_bias
+4825,London,55-64,4,1,1.0,5,no_bias
+4826,Wales,25-34,1,0,1.0,5,no_bias
+4827,South East,45-54,1,2,1.0,5,no_bias
+4828,Midlands,65+,4,1,1.0,5,no_bias
+4829,North West,45-54,3,3,1.0,5,no_bias
+4830,South East,18-24,1,3,1.0,5,no_bias
+4831,Midlands,35-44,4,0,1.0,5,no_bias
+4832,London,45-54,2,2,1.0,5,no_bias
+4833,Midlands,45-54,1,3,1.0,5,no_bias
+4834,Scotland,35-44,2,1,1.0,5,no_bias
+4835,London,35-44,3,3,1.0,5,no_bias
+4836,South East,65+,1,3,1.0,5,no_bias
+4837,Midlands,55-64,4,4,1.0,5,no_bias
+4838,North West,18-24,0,2,1.0,5,no_bias
+4839,North West,65+,0,2,1.0,5,no_bias
+4840,South East,65+,1,0,1.0,5,no_bias
+4841,London,25-34,4,3,1.0,5,no_bias
+4842,Scotland,35-44,4,0,1.0,5,no_bias
+4843,Scotland,65+,4,4,1.0,5,no_bias
+4844,Scotland,25-34,1,4,1.0,5,no_bias
+4845,London,45-54,0,0,1.0,5,no_bias
+4846,Wales,18-24,2,0,1.0,5,no_bias
+4847,Scotland,55-64,1,1,1.0,5,no_bias
+4848,South East,65+,1,3,1.0,5,no_bias
+4849,Scotland,25-34,4,2,1.0,5,no_bias
+4850,North West,65+,1,1,1.0,5,no_bias
+4851,Midlands,18-24,4,3,1.0,5,no_bias
+4852,North West,25-34,4,0,1.0,5,no_bias
+4853,Scotland,35-44,0,3,1.0,5,no_bias
+4854,London,35-44,4,1,1.0,5,no_bias
+4855,North West,55-64,1,1,1.0,5,no_bias
+4856,Midlands,65+,0,2,1.0,5,no_bias
+4857,North West,35-44,4,4,1.0,5,no_bias
+4858,Midlands,25-34,4,4,1.0,5,no_bias
+4859,Midlands,25-34,4,4,1.0,5,no_bias
+4860,North West,18-24,4,3,1.0,5,no_bias
+4861,Midlands,55-64,1,1,1.0,5,no_bias
+4862,London,45-54,2,2,1.0,5,no_bias
+4863,London,35-44,1,1,1.0,5,no_bias
+4864,Midlands,45-54,4,0,1.0,5,no_bias
+4865,North West,18-24,4,3,1.0,5,no_bias
+4866,London,35-44,4,1,1.0,5,no_bias
+4867,Midlands,18-24,4,2,1.0,5,no_bias
+4868,North West,65+,2,4,1.0,5,no_bias
+4869,London,25-34,4,4,1.0,5,no_bias
+4870,London,25-34,4,4,1.0,5,no_bias
+4871,Midlands,35-44,4,2,1.0,5,no_bias
+4872,Midlands,45-54,3,2,1.0,5,no_bias
+4873,South East,65+,2,1,1.0,5,no_bias
+4874,Scotland,35-44,4,1,1.0,5,no_bias
+4875,North West,18-24,4,4,1.0,5,no_bias
+4876,Wales,65+,1,1,1.0,5,no_bias
+4877,Midlands,35-44,4,3,1.0,5,no_bias
+4878,Scotland,35-44,4,4,1.0,5,no_bias
+4879,London,18-24,4,0,1.0,5,no_bias
+4880,Midlands,55-64,4,3,1.0,5,no_bias
+4881,North West,45-54,1,1,1.0,5,no_bias
+4882,North West,18-24,2,4,1.0,5,no_bias
+4883,Scotland,65+,2,2,1.0,5,no_bias
+4884,Midlands,18-24,3,1,1.0,5,no_bias
+4885,South East,35-44,4,2,1.0,5,no_bias
+4886,Midlands,25-34,0,4,1.0,5,no_bias
+4887,Midlands,45-54,4,1,1.0,5,no_bias
+4888,South East,45-54,4,4,1.0,5,no_bias
+4889,South East,45-54,1,0,1.0,5,no_bias
+4890,South East,25-34,0,3,1.0,5,no_bias
+4891,Midlands,65+,4,1,1.0,5,no_bias
+4892,North West,25-34,4,4,1.0,5,no_bias
+4893,Scotland,45-54,2,1,1.0,5,no_bias
+4894,Wales,65+,0,1,1.0,5,no_bias
+4895,Scotland,45-54,4,4,1.0,5,no_bias
+4896,London,65+,1,2,1.0,5,no_bias
+4897,South East,55-64,1,2,1.0,5,no_bias
+4898,South East,35-44,2,1,1.0,5,no_bias
+4899,South East,18-24,0,1,1.0,5,no_bias
+4900,North West,45-54,4,4,1.0,5,no_bias
+4901,South East,65+,0,0,1.0,5,no_bias
+4902,South East,25-34,0,3,1.0,5,no_bias
+4903,Midlands,55-64,1,2,1.0,5,no_bias
+4904,London,35-44,4,4,1.0,5,no_bias
+4905,South East,55-64,1,3,1.0,5,no_bias
+4906,London,18-24,0,0,1.0,5,no_bias
+4907,Scotland,35-44,4,4,1.0,5,no_bias
+4908,South East,35-44,4,0,1.0,5,no_bias
+4909,Midlands,65+,4,2,1.0,5,no_bias
+4910,Scotland,18-24,1,0,1.0,5,no_bias
+4911,Midlands,25-34,4,2,1.0,5,no_bias
+4912,North West,35-44,4,4,1.0,5,no_bias
+4913,South East,45-54,4,3,1.0,5,no_bias
+4914,London,35-44,1,1,1.0,5,no_bias
+4915,Scotland,65+,1,1,1.0,5,no_bias
+4916,Midlands,35-44,4,2,1.0,5,no_bias
+4917,North West,18-24,2,2,1.0,5,no_bias
+4918,North West,35-44,4,0,1.0,5,no_bias
+4919,London,35-44,3,0,1.0,5,no_bias
+4920,North West,25-34,2,0,1.0,5,no_bias
+4921,South East,25-34,3,3,1.0,5,no_bias
+4922,South East,18-24,1,3,1.0,5,no_bias
+4923,Midlands,25-34,4,3,1.0,5,no_bias
+4924,South East,55-64,1,1,1.0,5,no_bias
+4925,Midlands,18-24,4,1,1.0,5,no_bias
+4926,South East,45-54,3,4,1.0,5,no_bias
+4927,Scotland,65+,1,3,1.0,5,no_bias
+4928,Scotland,25-34,1,1,1.0,5,no_bias
+4929,Midlands,65+,1,1,1.0,5,no_bias
+4930,Scotland,65+,0,4,1.0,5,no_bias
+4931,Scotland,55-64,3,3,1.0,5,no_bias
+4932,London,55-64,1,2,1.0,5,no_bias
+4933,Midlands,25-34,4,4,1.0,5,no_bias
+4934,London,18-24,1,3,1.0,5,no_bias
+4935,Scotland,55-64,1,2,1.0,5,no_bias
+4936,South East,35-44,4,3,1.0,5,no_bias
+4937,Midlands,65+,4,0,1.0,5,no_bias
+4938,South East,65+,0,0,1.0,5,no_bias
+4939,London,55-64,1,2,1.0,5,no_bias
+4940,South East,25-34,4,1,1.0,5,no_bias
+4941,Midlands,35-44,4,4,1.0,5,no_bias
+4942,Midlands,25-34,4,1,1.0,5,no_bias
+4943,South East,18-24,0,0,1.0,5,no_bias
+4944,Wales,65+,1,2,1.0,5,no_bias
+4945,North West,45-54,4,0,1.0,5,no_bias
+4946,Scotland,65+,4,1,1.0,5,no_bias
+4947,Wales,25-34,4,3,1.0,5,no_bias
+4948,London,18-24,1,4,1.0,5,no_bias
+4949,Scotland,35-44,4,4,1.0,5,no_bias
+4950,North West,35-44,4,4,1.0,5,no_bias
+4951,Midlands,55-64,1,2,1.0,5,no_bias
+4952,London,45-54,4,4,1.0,5,no_bias
+4953,Scotland,18-24,0,3,1.0,5,no_bias
+4954,North West,25-34,4,3,1.0,5,no_bias
+4955,South East,45-54,3,4,1.0,5,no_bias
+4956,London,35-44,2,2,1.0,5,no_bias
+4957,Wales,65+,3,3,1.0,5,no_bias
+4958,South East,35-44,1,1,1.0,5,no_bias
+4959,London,25-34,3,2,1.0,5,no_bias
+4960,Wales,25-34,3,3,1.0,5,no_bias
+4961,North West,25-34,1,1,1.0,5,no_bias
+4962,North West,45-54,4,2,1.0,5,no_bias
+4963,Scotland,35-44,4,4,1.0,5,no_bias
+4964,North West,18-24,0,4,1.0,5,no_bias
+4965,South East,18-24,1,1,1.0,5,no_bias
+4966,Wales,65+,3,3,1.0,5,no_bias
+4967,Midlands,65+,2,3,1.0,5,no_bias
+4968,Midlands,35-44,4,4,1.0,5,no_bias
+4969,South East,55-64,1,0,1.0,5,no_bias
+4970,South East,55-64,1,4,1.0,5,no_bias
+4971,London,25-34,4,4,1.0,5,no_bias
+4972,North West,65+,4,4,1.0,5,no_bias
+4973,London,25-34,1,2,1.0,5,no_bias
+4974,South East,25-34,4,3,1.0,5,no_bias
+4975,Midlands,25-34,4,4,1.0,5,no_bias
+4976,London,35-44,4,3,1.0,5,no_bias
+4977,London,35-44,4,2,1.0,5,no_bias
+4978,South East,55-64,4,3,1.0,5,no_bias
+4979,London,65+,1,1,1.0,5,no_bias
+4980,North West,55-64,1,1,1.0,5,no_bias
+4981,Midlands,35-44,4,0,1.0,5,no_bias
+4982,Scotland,55-64,4,2,1.0,5,no_bias
+4983,North West,55-64,4,1,1.0,5,no_bias
+4984,South East,35-44,0,2,1.0,5,no_bias
+4985,Midlands,45-54,0,2,1.0,5,no_bias
+4986,Midlands,65+,4,0,1.0,5,no_bias
+4987,South East,25-34,3,2,1.0,5,no_bias
+4988,London,55-64,1,4,1.0,5,no_bias
+4989,London,25-34,4,2,1.0,5,no_bias
+4990,North West,55-64,4,0,1.0,5,no_bias
+4991,North West,25-34,4,0,1.0,5,no_bias
+4992,London,55-64,3,2,1.0,5,no_bias
+4993,South East,65+,4,0,1.0,5,no_bias
+4994,North West,35-44,2,3,1.0,5,no_bias
+4995,North West,25-34,2,4,1.0,5,no_bias
+4996,London,35-44,1,4,1.0,5,no_bias
+4997,Midlands,18-24,4,1,1.0,5,no_bias
+4998,South East,18-24,3,3,1.0,5,no_bias
+4999,North West,18-24,4,1,1.0,5,no_bias
+5000,Midlands,65+,4,1,1.0,5,no_bias

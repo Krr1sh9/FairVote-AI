@@ -1,0 +1,16 @@
+{
+  "name": "FairVote Survey",
+  "short_name": "FairVote",
+  "description": "Privacy-preserving polling client (research demo).",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#0d6efd",
+  "icons": [
+    {
+      "src": "/static/fairvote_icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

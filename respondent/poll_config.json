@@ -1,0 +1,23 @@
+{
+  "question": "Which party do you most support?",
+  "options": ["Labour", "Conservative", "Reform", "LibDem", "Green"],
+  "epsilon": 2.0,
+  "demographic_fields": [
+    {
+      "name": "age_group",
+      "label": "Age group",
+      "options": ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"],
+      "required": false
+    },
+    {
+      "name": "region",
+      "label": "Region",
+      "options": [
+        "London", "South East", "South West", "East of England",
+        "East Midlands", "West Midlands", "North West",
+        "North East", "Yorkshire", "Wales", "Scotland"
+      ],
+      "required": false
+    }
+  ]
+}

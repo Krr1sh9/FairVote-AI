@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fairvote-ai"
+version = "1.0.0"
+description = "FairVote-AI: AI-assisted privacy-preserving polling with RR-aware MRP"
+requires-python = ">=3.14,<3.15"
+dependencies = ["numpy"]
+
+[tool.setuptools.packages.find]
+include = ["fairvote*", "experiments*", "respondent*"]
+
+[project.scripts]
+fairvote = "fairvote.cli:main"
+
+[project.optional-dependencies]
+ai = ["torch"]
+dev = ["pytest"]
+respondent = ["flask", "gunicorn"]
+streamlit = ["streamlit", "matplotlib"]

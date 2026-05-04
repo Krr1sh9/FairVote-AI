@@ -1,0 +1,79 @@
+{
+  "allocation": "proportional",
+  "biased_feature": "region",
+  "comparison_baselines": [
+    "baseline_rr_debias",
+    "mrp_rr_poststrat",
+    "mrp_misreport_rr_poststrat",
+    "mrp_learned_misreport_rr_poststrat"
+  ],
+  "core_methods_expected": [
+    "baseline_rr_debias",
+    "mrp_rr_poststrat",
+    "mrp_misreport_rr_poststrat",
+    "neural_rr_mrp"
+  ],
+  "enable_neural": true,
+  "eps": [
+    0.2,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "features": [
+    "region",
+    "age_group",
+    "education",
+    "gender",
+    "urbanicity"
+  ],
+  "k": 5,
+  "major_mass": 0.02,
+  "min_per_stratum": 0,
+  "mrp_batch_size": 512,
+  "mrp_l2": 1.0,
+  "mrp_lr": 0.05,
+  "mrp_steps": 5,
+  "multipliers": {},
+  "neural_batch_size": 512,
+  "neural_dropout": 0.0,
+  "neural_hidden_layers": [
+    16
+  ],
+  "neural_lr": 0.01,
+  "neural_seed": 321,
+  "neural_steps": 5,
+  "neural_weight_decay": 0.0001,
+  "notes": [
+    "Training uses privatized reported RR labels; true simulator labels are used only for evaluation.",
+    "Negative error deltas in neural_comparison.csv favour neural; positive runtime deltas mean neural is slower.",
+    "Do not claim neural is better unless the output tables support that for the chosen scenarios."
+  ],
+  "population_n": 5000,
+  "preset": "full",
+  "purpose": "Evaluate whether RR-aware Neural MRP is justified against simpler baselines.",
+  "sample_sizes": [
+    500,
+    1000
+  ],
+  "sampling": "srs",
+  "scenarios_canonical": [
+    "no_bias",
+    "nonresponse",
+    "shy_fixed",
+    "shy_privacy_helps"
+  ],
+  "scenarios_requested": [
+    "no_bias",
+    "nonresponse",
+    "shy_voter",
+    "privacy_helps"
+  ],
+  "seed": 123,
+  "shy_category": 0,
+  "shy_honesty": 0.8,
+  "strata": [
+    "region"
+  ],
+  "trials": 1
+}

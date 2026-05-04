@@ -1,0 +1,67 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONUNBUFFERED: "1"
+      # Pin all numerical libraries to a single thread so CI timing is
+      # deterministic and does not vary with runner core count.
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install full development dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,ai,streamlit,respondent]"
+          pip check
+
+      - name: Verify Python, optional AI, and JavaScript test dependencies
+        run: |
+          python --version
+          python - <<'PY'
+          import torch
+          print(f"torch {torch.__version__}")
+          from fairvote.inference.mrp.rr_neural_mrp import RRNeuralMRPModel
+          print(RRNeuralMRPModel.__name__)
+          PY
+          node --version
+
+      # Run the full test suite first, then re-run targeted subsets to surface
+      # any import or ordering regressions in isolation.
+      - name: Run full test suite
+        run: pytest -q
+
+      - name: Run neural MRP tests explicitly
+        run: pytest tests/test_rr_neural_mrp.py -q
+
+      - name: Run respondent privacy and JavaScript RR tests explicitly
+        run: |
+          pytest tests/test_respondent_server.py -q
+          pytest tests/test_respondent_client_privacy.py -q
+          pytest tests/test_respondent_rr_js.py -q
+
+      - name: Run experiment and dashboard checks explicitly
+        run: |
+          pytest tests/test_evaluate_neural_mrp.py -q
+          pytest tests/test_mrp_vs_baselines.py -q
+          pytest tests/test_streamlit_app_syntax.py -q
+
+      - name: Note slow experiment checks are local-only
+        run: |
+          echo "Slow integration tests are intentionally not run in CI."
+          echo "Run locally with: FV_RUN_SLOW=1 pytest tests/test_mrp_vs_baselines.py -q"

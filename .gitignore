@@ -1,0 +1,52 @@
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Packaging / build outputs
+*.egg-info/
+build/
+dist/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local/editor files
+Thumbs.db
+desktop.ini
+.DS_Store
+.idea/
+.vscode/
+
+# Generated experiment artefacts
+# Keep only the intentional checked-in final evidence pack.
+experiments/outputs/*
+!experiments/outputs/.gitkeep
+!experiments/outputs/final_neural_evidence/
+!experiments/outputs/final_neural_evidence/**
+
+# Temporary local output folders/files
+tmp/
+temp/
+.tmp/
+scratch/
+local_outputs/
+*.tmp
+bad_payload.json
+
+# Local respondent/demo data that may contain submissions
+respondent/data/*.jsonl
+!respondent/data/.gitkeep
+# Local archives / submission bundles
+*.zip
+*.tar
+*.tar.gz
+*.tgz
