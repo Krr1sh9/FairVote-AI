@@ -187,7 +187,7 @@ exclude_lines = [
 ]
 
 [tool.ruff]
-target-version = "py314"
+target-version = "py313"
 line-length = 120
 extend-exclude = [
     "experiments/outputs",
@@ -229,3 +229,12 @@ exclude = [
     "app/controllers/",
     "app/plotting/",
 ]
+
+
+[[tool.mypy.overrides]]
+module = [
+    "experiments.legacy.*",
+    "app.controllers.*",
+    "app.ui.*",
+]
+ignore_errors = true

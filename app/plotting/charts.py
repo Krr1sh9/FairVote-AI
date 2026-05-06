@@ -9,18 +9,20 @@ from typing import Any
 
 import numpy as np
 
+plt: Any = None
+AutoMinorLocator: Any = None
 HAS_MPL = True
 try:
-    import matplotlib.pyplot as plt
-    from matplotlib.ticker import AutoMinorLocator
+    import matplotlib.pyplot as _plt
+    from matplotlib.ticker import AutoMinorLocator as _AutoMinorLocator
 
+    plt = _plt
+    AutoMinorLocator = _AutoMinorLocator
     plt.rcParams["figure.dpi"] = 120
     plt.rcParams["savefig.dpi"] = 150
     plt.rcParams["figure.figsize"] = (8, 4)
 except Exception:
     HAS_MPL = False
-    plt = None  # type: ignore[assignment]
-    AutoMinorLocator = None  # type: ignore[assignment]
 
 
 def fig_to_png_bytes(fig: Any) -> bytes:

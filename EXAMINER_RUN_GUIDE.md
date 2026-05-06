@@ -67,7 +67,7 @@ On Windows PowerShell this command should be entered exactly as one line:
 python -m pytest -q
 ```
 
-Optional browser and slow tests are intentionally skipped unless their environment variables are set. A result such as `168 passed, 2 skipped` is therefore a successful standard-suite run, not a failure.
+Optional browser and slow tests are intentionally skipped unless their environment variables are set. A result such as `174 passed, 2 skipped` is therefore a successful standard-suite run, not a failure.
 
 ### Coverage command — Windows PowerShell
 

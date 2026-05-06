@@ -1,0 +1,73 @@
+{
+  "allocation": "proportional",
+  "biased_feature": "region",
+  "biased_multipliers": {},
+  "continue_on_error": false,
+  "enable_neural": false,
+  "eps": [
+    1.0
+  ],
+  "eps_list": [
+    1.0
+  ],
+  "feature_order": [
+    "region",
+    "age_group",
+    "education",
+    "gender",
+    "urbanicity"
+  ],
+  "features": [
+    "region",
+    "age_group",
+    "education",
+    "gender",
+    "urbanicity"
+  ],
+  "hierarchical_effect_l2": 1.0,
+  "hierarchical_global_l2": 0.01,
+  "k": 5,
+  "major_mass": 0.02,
+  "methods": [
+    "raw_reported_distribution",
+    "baseline_rr_debias",
+    "mrp_rr_poststrat",
+    "mrp_misreport_rr_poststrat",
+    "mrp_learned_misreport_rr_poststrat"
+  ],
+  "min_per_stratum": 0,
+  "mrp_batch_size": 2048,
+  "mrp_l2": 1.0,
+  "mrp_lr": 0.05,
+  "mrp_steps": 5,
+  "multipliers": {},
+  "n_sample": 120,
+  "neural_batch_size": 512,
+  "neural_dropout": 0.0,
+  "neural_hidden_layers": [
+    16
+  ],
+  "neural_lr": 0.01,
+  "neural_patience": 2,
+  "neural_seed": 321,
+  "neural_steps": 5,
+  "neural_validation_fraction": 0.2,
+  "neural_weight_decay": 0.0001,
+  "population_n": 1500,
+  "preset": "smoke_test",
+  "sample_sizes": [
+    120
+  ],
+  "sampling": "srs",
+  "scenarios": [
+    "simple_linear"
+  ],
+  "seed": 123,
+  "shy_category": 0,
+  "shy_honesty": 0.8,
+  "strata": [
+    "region"
+  ],
+  "trials": 1,
+  "verbose_every": 0
+}

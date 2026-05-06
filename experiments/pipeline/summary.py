@@ -14,7 +14,7 @@ from .metrics import SUMMARY_METRICS
 def _as_float(value: Any, default: float = float("nan")) -> float:
     try:
         return float(value)
-    except TypeError, ValueError:
+    except (TypeError, ValueError):
         return default
 
 

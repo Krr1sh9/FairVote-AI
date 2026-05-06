@@ -71,7 +71,6 @@ experiments/outputs/*
 !experiments/outputs/.gitkeep
 
 # Ignore throwaway evidence; keep final/privacy/ci evidence.
-evidence/smoke/
 evidence/tmp/
 evidence/local/
 evidence/debug/

@@ -134,7 +134,7 @@ def create_app(config_path: Path | None = None, data_path: Path | None = None) -
             if isinstance(perturbed, bool):
                 raise ValueError
             perturbed = int(perturbed)
-        except TypeError, ValueError:
+        except (TypeError, ValueError):
             return jsonify({"error": "'perturbed_answer' must be an integer"}), 400
         if perturbed < 0 or perturbed >= k:
             return jsonify({"error": f"'perturbed_answer' must be in [0, {k - 1}]"}), 400

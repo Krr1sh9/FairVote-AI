@@ -93,7 +93,7 @@ def main() -> int:
         shutil.rmtree(bundle_dir)
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
-    copied: list[Path] = []
+    copied: list[str] = []
 
     # Core CSVs
     for name in (

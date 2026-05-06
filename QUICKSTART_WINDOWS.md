@@ -77,7 +77,7 @@ Standard suite:
 python -m pytest -q
 ```
 
-Optional browser and slow tests are intentionally skipped unless their environment variables are set. A result such as `168 passed, 2 skipped` means the standard suite passed and the opt-in tests were skipped.
+Optional browser and slow tests are intentionally skipped unless their environment variables are set. A result such as `174 passed, 2 skipped` means the standard suite passed and the opt-in tests were skipped.
 
 Coverage command for Windows PowerShell (same 60% gate as CI):
 
