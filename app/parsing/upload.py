@@ -163,8 +163,8 @@ def category_index_from_value(value: Any) -> int | None:
 
         if isinstance(value, np.bool_):
             return None
-        integer_types = (int, np.integer)
-        float_types = (float, np.floating)
+        integer_types: tuple[type[Any], ...] = (int, np.integer)
+        float_types: tuple[type[Any], ...] = (float, np.floating)
     except Exception:
         integer_types = (int,)
         float_types = (float,)

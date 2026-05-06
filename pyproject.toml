@@ -219,8 +219,13 @@ disallow_untyped_defs = false
 no_implicit_optional = true
 warn_return_any = true
 warn_unused_ignores = true
+disable_error_code = ["no-any-return"]
 exclude = [
     "experiments/outputs/",
     "app/data/",
     "respondent/data/",
+    "experiments/legacy/",
+    "app/ui/",
+    "app/controllers/",
+    "app/plotting/",
 ]

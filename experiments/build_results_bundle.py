@@ -39,7 +39,7 @@ def _copy_if_exists(src: Path, dst: Path) -> bool:
 
 
 def _copy_glob(src_dir: Path, pattern: str, dst_dir: Path) -> list[Path]:
-    copied = []
+    copied: list[Path] = []
     for p in sorted(src_dir.glob(pattern)):
         if p.is_file():
             out = dst_dir / p.name
@@ -50,7 +50,7 @@ def _copy_glob(src_dir: Path, pattern: str, dst_dir: Path) -> list[Path]:
 
 
 def _copy_tree_filtered(src_dir: Path, dst_dir: Path, exts: list[str]) -> list[Path]:
-    copied = []
+    copied: list[Path] = []
     if not src_dir.exists():
         return copied
     for p in sorted(src_dir.rglob("*")):
@@ -93,7 +93,7 @@ def main() -> int:
         shutil.rmtree(bundle_dir)
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
-    copied = []
+    copied: list[Path] = []
 
     # Core CSVs
     for name in (

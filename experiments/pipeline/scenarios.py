@@ -252,6 +252,6 @@ def _softmax(logits: np.ndarray) -> np.ndarray:
 
 
 def _sample_categorical_rows(probs: np.ndarray, rng: np.random.Generator) -> np.ndarray:
-    u = rng.random(probs.shape[0])
+    u = np.asarray(rng.random(probs.shape[0]), dtype=float)
     cdf = np.cumsum(probs, axis=1)
     return np.sum(cdf < u[:, None], axis=1).astype(int)

@@ -70,11 +70,14 @@ respondent/*.jsonl
 experiments/outputs/*
 !experiments/outputs/.gitkeep
 
-# Ignore throwaway evidence, keep final/privacy/ci evidence
+# Ignore throwaway evidence; keep final/privacy/ci evidence.
 evidence/smoke/
 evidence/tmp/
 evidence/local/
 evidence/debug/
+
+# Generated draft/report artefacts
+paper/generated/
 
 # Large generated model/data artefacts
 *.pkl

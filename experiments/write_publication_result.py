@@ -14,6 +14,7 @@ import json
 import math
 from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
 METRICS = [
     "overall_l1",
@@ -31,10 +32,13 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return [dict(row) for row in csv.DictReader(f)]
 
 
-def read_json(path: Path) -> dict:
+def read_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
-    return json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected JSON object in {path}")
+    return data
 
 
 def as_float(value: object) -> float:

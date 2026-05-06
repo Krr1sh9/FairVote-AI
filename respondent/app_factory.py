@@ -14,11 +14,12 @@ except ImportError as exc:  # pragma: no cover - exercised only without Flask in
     ) from exc
 
 try:  # pragma: no cover - optional dependency branch
-    from flask_cors import CORS
+    from flask_cors import CORS as _CORS
 
+    CORS: Any = _CORS
     HAS_CORS = True
 except ImportError:  # pragma: no cover - optional dependency branch
-    CORS = None  # type: ignore[assignment]
+    CORS = None
     HAS_CORS = False
 
 from .config import (

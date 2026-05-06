@@ -95,7 +95,7 @@ def summarise(
 
     if "learned_honesty" not in rows[0]:
         # might still exist in later rows, but we will check all keys
-        all_keys = set()
+        all_keys: set[str] = set()
         for r in rows[:50]:
             all_keys.update(r.keys())
         raise SystemExit(

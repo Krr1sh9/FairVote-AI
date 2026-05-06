@@ -8,6 +8,7 @@ a scenario, not a mathematical guarantee of fairness.
 # fairvote/metrics/group_metrics.py
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 import numpy as np
@@ -39,10 +40,10 @@ class GroupError:
 
 
 def group_l1_errors(
-    est_by_group: dict[str, np.ndarray],
-    truth_by_group: dict[str, np.ndarray],
+    est_by_group: Mapping[str, np.ndarray],
+    truth_by_group: Mapping[str, np.ndarray],
     *,
-    group_masses: dict[str, float] | None = None,
+    group_masses: Mapping[str, float] | None = None,
     normalise_masses: bool = True,
 ) -> list[GroupError]:
     """
@@ -84,10 +85,10 @@ def group_l1_errors(
 
 
 def worst_group_l1(
-    est_by_group: dict[str, np.ndarray],
-    truth_by_group: dict[str, np.ndarray],
+    est_by_group: Mapping[str, np.ndarray],
+    truth_by_group: Mapping[str, np.ndarray],
     *,
-    group_masses: dict[str, float] | None = None,
+    group_masses: Mapping[str, float] | None = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
 ) -> float:
@@ -110,10 +111,10 @@ def worst_group_l1(
 
 
 def weighted_group_l1(
-    est_by_group: dict[str, np.ndarray],
-    truth_by_group: dict[str, np.ndarray],
+    est_by_group: Mapping[str, np.ndarray],
+    truth_by_group: Mapping[str, np.ndarray],
     *,
-    group_masses: dict[str, float] | None = None,
+    group_masses: Mapping[str, float] | None = None,
     normalise_masses: bool = True,
 ) -> float:
     """
@@ -128,11 +129,11 @@ def weighted_group_l1(
 
 
 def quantile_group_l1(
-    est_by_group: dict[str, np.ndarray],
-    truth_by_group: dict[str, np.ndarray],
+    est_by_group: Mapping[str, np.ndarray],
+    truth_by_group: Mapping[str, np.ndarray],
     *,
     q: float = 0.9,
-    group_masses: dict[str, float] | None = None,
+    group_masses: Mapping[str, float] | None = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
     weighted_by_mass: bool = True,
@@ -179,10 +180,10 @@ def quantile_group_l1(
 
 
 def p90_group_l1(
-    est_by_group: dict[str, np.ndarray],
-    truth_by_group: dict[str, np.ndarray],
+    est_by_group: Mapping[str, np.ndarray],
+    truth_by_group: Mapping[str, np.ndarray],
     *,
-    group_masses: dict[str, float] | None = None,
+    group_masses: Mapping[str, float] | None = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
     weighted_by_mass: bool = True,
@@ -282,10 +283,10 @@ def overall_rmse(
 
 
 def error_ratio(
-    est_by_group: dict[str, np.ndarray],
-    truth_by_group: dict[str, np.ndarray],
+    est_by_group: Mapping[str, np.ndarray],
+    truth_by_group: Mapping[str, np.ndarray],
     *,
-    group_masses: dict[str, float] | None = None,
+    group_masses: Mapping[str, float] | None = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
 ) -> float:

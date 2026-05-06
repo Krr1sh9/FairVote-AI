@@ -330,7 +330,12 @@ class RRNeuralMRPModel:
 
         if (X_val is None) != (y_val_reported is None):
             raise ValueError("X_val and y_val_reported must be provided together")
+        X_train: np.ndarray
+        y_train: np.ndarray
+        X_val_arr: np.ndarray | None
+        y_val_arr: np.ndarray | None
         if X_val is not None:
+            assert y_val_reported is not None
             if validation_fraction > 0.0:
                 raise ValueError("Use either explicit validation data or validation_fraction, not both")
             X_train = X_arr
@@ -416,10 +421,10 @@ class RRNeuralMRPModel:
         if best_state is not None and keep_best:
             network.load_state_dict({k: v.to(self.device) for k, v in best_state.items()})
 
-        final_loss = self.loss(X_train, y_train)
+        final_loss = self.loss(X_train, y_train.astype(int).tolist())
         final_val_loss = None
         if X_val_arr is not None and y_val_arr is not None:
-            final_val_loss = self.reported_label_nll(X_val_arr, y_val_arr)
+            final_val_loss = self.reported_label_nll(X_val_arr, y_val_arr.astype(int).tolist())
         runtime_sec = time.perf_counter() - start_time
 
         checkpoint_str: str | None = None

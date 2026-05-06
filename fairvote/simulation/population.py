@@ -310,7 +310,7 @@ def _sample_categorical_rows(probs: np.ndarray, rng: np.random.Generator) -> np.
     n, k = probs.shape
     # Inverse CDF trick: draw a single U(0,1) per row and compare against
     # the cumulative probability vector to select a category in O(n*k) time.
-    u = rng.random(n)
+    u = np.asarray(rng.random(n), dtype=float)
     cdf = np.cumsum(probs, axis=1)
     return np.sum(cdf < u[:, None], axis=1).astype(int)
 

@@ -11,6 +11,13 @@ from .config import ExperimentConfig
 from .metrics import SUMMARY_METRICS
 
 
+def _as_float(value: Any, default: float = float("nan")) -> float:
+    try:
+        return float(value)
+    except TypeError, ValueError:
+        return default
+
+
 def _finite_values(rows: Iterable[dict[str, Any]], key: str) -> np.ndarray:
     vals = np.array([r.get(key, float("nan")) for r in rows], dtype=float)
     return vals[np.isfinite(vals)]
@@ -52,7 +59,7 @@ def aggregate_summary(rows: list[dict[str, Any]], config: ExperimentConfig) -> l
                         for r in rows
                         if int(r.get("sample_size", config.n_sample)) == int(sample_size)
                         and r.get("scenario") == scenario
-                        and float(r.get("epsilon")) == float(eps)
+                        and _as_float(r.get("epsilon")) == float(eps)
                         and r.get("method") == method
                         and int(r.get("skipped", 0) or 0) == 0
                     ]
@@ -61,7 +68,7 @@ def aggregate_summary(rows: list[dict[str, Any]], config: ExperimentConfig) -> l
                         for r in rows
                         if int(r.get("sample_size", config.n_sample)) == int(sample_size)
                         and r.get("scenario") == scenario
-                        and float(r.get("epsilon")) == float(eps)
+                        and _as_float(r.get("epsilon")) == float(eps)
                         and r.get("method") == method
                         and int(r.get("skipped", 0) or 0) == 1
                     ]
@@ -155,7 +162,7 @@ def aggregate_paired_comparisons(
                         continue
                     if int(row.get("sample_size", sample_size)) != int(sample_size):
                         continue
-                    if row.get("scenario") != scenario or float(row.get("epsilon")) != float(eps):
+                    if row.get("scenario") != scenario or _as_float(row.get("epsilon")) != float(eps):
                         continue
                     method = row.get("method")
                     trial = int(row.get("trial", -1))
@@ -264,7 +271,7 @@ def aggregate_runtime_profile(rows: list[dict[str, Any]], config: ExperimentConf
                         for r in rows
                         if int(r.get("sample_size", config.n_sample)) == int(sample_size)
                         and r.get("scenario") == scenario
-                        and float(r.get("epsilon")) == float(eps)
+                        and _as_float(r.get("epsilon")) == float(eps)
                         and r.get("method") == method
                     ]
                     vals = _finite_values(sub, "runtime_sec")
@@ -299,7 +306,7 @@ def _rows_by_trial(
             continue
         if int(row.get("sample_size", sample_size)) != int(sample_size):
             continue
-        if row.get("scenario") != scenario or float(row.get("epsilon")) != float(eps):
+        if row.get("scenario") != scenario or _as_float(row.get("epsilon")) != float(eps):
             continue
         if row.get("method") == method:
             out[int(row.get("trial", -1))] = row
