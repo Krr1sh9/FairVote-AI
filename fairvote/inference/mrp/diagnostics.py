@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Optional
 
 import numpy as np
 
@@ -15,7 +14,7 @@ class FitDiagnostics:
     steps: int
     final_loss: float
     runtime_sec: float
-    history: Optional[np.ndarray] = None
+    history: np.ndarray | None = None
 
     def to_jsonable(self) -> dict:
         data = asdict(self)

@@ -2,22 +2,33 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Test / lint / type-check caches
 .pytest_cache/
-.mypy_cache/
 .ruff_cache/
+.mypy_cache/
 .coverage
+coverage.xml
 htmlcov/
 
 # Packaging / build outputs
 *.egg-info/
+.eggs/
 build/
 dist/
 *.whl
+pip-wheel-metadata/
 
 # Virtual environments
 .venv/
 venv/
 env/
+ENV/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
 
 # Local/editor files
 Thumbs.db
@@ -25,17 +36,15 @@ desktop.ini
 .DS_Store
 .idea/
 .vscode/
+*.swp
+*.swo
 
-# Generated experiment artefacts
-# Keep only the intentional checked-in final evidence packs.
-experiments/outputs/*
-!experiments/outputs/.gitkeep
-!experiments/outputs/final_neural_evidence/
-!experiments/outputs/final_neural_evidence/**
-!experiments/outputs/final_neural_evidence_repeated_trials_local/
-!experiments/outputs/final_neural_evidence_repeated_trials_local/**
+# Jupyter
+.ipynb_checkpoints/
 
-# Temporary local output folders/files
+# Logs / temporary files
+*.log
+logs/
 tmp/
 temp/
 .tmp/
@@ -44,11 +53,42 @@ local_outputs/
 *.tmp
 bad_payload.json
 
+# Streamlit local state
+.streamlit/cache/
+
+# Local uploads
+uploads/
+
 # Local respondent/demo data that may contain submissions
 respondent/data/*.jsonl
+respondent/responses.jsonl
+respondent/*.jsonl
 !respondent/data/.gitkeep
+
+# Generated experiment artefacts
+# Keep official final evidence used in the report.
+experiments/outputs/*
+!experiments/outputs/.gitkeep
+
+# Ignore throwaway evidence, keep final/privacy/ci evidence
+evidence/smoke/
+evidence/tmp/
+evidence/local/
+evidence/debug/
+
+# Large generated model/data artefacts
+*.pkl
+*.pickle
+*.joblib
+
 # Local archives / submission bundles
 *.zip
 *.tar
 *.tar.gz
 *.tgz
+
+# Office temporary files
+~$*.xlsx
+~$*.xls
+~$*.docx
+~$*.pptx

@@ -1,8 +1,9 @@
 """Evidence-run presets for reproducible final project experiments."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict
+from typing import Any
 
 
 @dataclass(frozen=True)
@@ -11,7 +12,7 @@ class EvidencePreset:
 
     name: str
     description: str
-    overrides: Dict[str, Any]
+    overrides: dict[str, Any]
 
 
 ROBUST_SCENARIOS = (
@@ -20,7 +21,7 @@ ROBUST_SCENARIOS = (
     "education_urbanicity_interaction,privacy_tradeoff,privacy_helps,shy_privacy_helps"
 )
 
-PRESETS: Dict[str, EvidencePreset] = {
+PRESETS: dict[str, EvidencePreset] = {
     "smoke_test": EvidencePreset(
         name="smoke_test",
         description="Fast sanity check only. Uses minimal training settings and is not evidence for final claims.",

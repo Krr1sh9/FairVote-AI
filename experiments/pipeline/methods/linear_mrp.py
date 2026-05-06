@@ -1,9 +1,9 @@
 """Linear RR-aware MRP estimator runners."""
+
 from __future__ import annotations
 
 import time
 import warnings
-from typing import Dict
 
 import numpy as np
 
@@ -11,6 +11,7 @@ from ..config import ExperimentConfig, MethodResult, TrialConfig
 from ..context import ExperimentContext
 from ..metrics import poststrat_from_cell_theta
 from .common import TrialData, _fit_linear_model, _near_identity_epsilon, estimate_subgroup_mean_proba
+
 
 def linear_rr_no_poststrat(
     config: ExperimentConfig,
@@ -49,7 +50,7 @@ def _poststratify_model_predictions(
     *,
     context: ExperimentContext,
     cell_theta: np.ndarray,
-) -> tuple[np.ndarray, Dict[str, Dict[str, np.ndarray]]]:
+) -> tuple[np.ndarray, dict[str, dict[str, np.ndarray]]]:
     return poststrat_from_cell_theta(
         cell_theta,
         context.cells,
@@ -76,7 +77,9 @@ def mrp_rr_poststrat(
         epsilon=trial.epsilon,
         seed_offset=999,
     )
-    overall, by_feature = _poststratify_model_predictions(context=context, cell_theta=model.predict_theta(context.X_cells))
+    overall, by_feature = _poststratify_model_predictions(
+        context=context, cell_theta=model.predict_theta(context.X_cells)
+    )
     return MethodResult(
         "mrp_rr_poststrat",
         overall,
@@ -84,6 +87,7 @@ def mrp_rr_poststrat(
         time.perf_counter() - start,
         {"poststratified": 1, "linear_final_loss": model.fit_diagnostics.final_loss if model.fit_diagnostics else None},
     )
+
 
 def oracle_true_linear_mrp_poststrat(
     config: ExperimentConfig,
@@ -103,7 +107,9 @@ def oracle_true_linear_mrp_poststrat(
             epsilon=_near_identity_epsilon(),
             seed_offset=1499,
         )
-    overall, by_feature = _poststratify_model_predictions(context=context, cell_theta=model.predict_theta(context.X_cells))
+    overall, by_feature = _poststratify_model_predictions(
+        context=context, cell_theta=model.predict_theta(context.X_cells)
+    )
     return MethodResult(
         "oracle_true_linear_mrp_poststrat",
         overall,

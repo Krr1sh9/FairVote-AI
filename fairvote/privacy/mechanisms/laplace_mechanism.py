@@ -18,15 +18,14 @@ Contrast with LDP (k-ary RR):
   better utility at the same epsilon because noise is injected once (on the aggregate)
   rather than per-person.
 """
+
 from __future__ import annotations
 
 import math
-from typing import Optional, Union
 
 import numpy as np
 
-
-ArrayLike = Union[np.ndarray, list]
+ArrayLike = np.ndarray | list
 
 
 def laplace_mechanism(
@@ -35,7 +34,7 @@ def laplace_mechanism(
     k: int,
     *,
     sensitivity: float = 2.0,
-    rng: Optional[np.random.Generator] = None,
+    rng: np.random.Generator | None = None,
     clip: bool = True,
     renormalize: bool = True,
 ) -> np.ndarray:
@@ -89,11 +88,8 @@ def laplace_mechanism(
 
     if renormalize:
         s = float(np.sum(theta_hat))
-        if s <= 0:
-            # Extreme noise: fall back to uniform
-            theta_hat = np.full(k, 1.0 / k, dtype=float)
-        else:
-            theta_hat = theta_hat / s
+        # Extreme noise: fall back to uniform
+        theta_hat = np.full(k, 1.0 / k, dtype=float) if s <= 0 else theta_hat / s
 
     # The cast ensures a consistent float dtype for downstream comparisons.
     return theta_hat.astype(float)
@@ -105,7 +101,7 @@ def estimate_distribution_central_dp(
     k: int,
     *,
     sensitivity: float = 2.0,
-    rng: Optional[np.random.Generator] = None,
+    rng: np.random.Generator | None = None,
     clip: bool = True,
     renormalize: bool = True,
 ) -> np.ndarray:
@@ -140,8 +136,13 @@ def estimate_distribution_central_dp(
     # exact counts, unlike LDP which randomises per respondent.
     counts = np.bincount(cats, minlength=k).astype(float)
     return laplace_mechanism(
-        counts, epsilon, k,
-        sensitivity=sensitivity, rng=rng, clip=clip, renormalize=renormalize,
+        counts,
+        epsilon,
+        k,
+        sensitivity=sensitivity,
+        rng=rng,
+        clip=clip,
+        renormalize=renormalize,
     )
 
 

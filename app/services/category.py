@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Optional, Sequence
+from typing import Any
 
 import numpy as np
 
@@ -106,7 +107,7 @@ def format_group_key(
     return " | ".join(parts)
 
 
-def answer_like_columns(response_col: str, truth_col: Optional[str]) -> set[str]:
+def answer_like_columns(response_col: str, truth_col: str | None) -> set[str]:
     """Column names that should not be offered as learned-MRP features."""
 
     names = {
@@ -121,7 +122,7 @@ def answer_like_columns(response_col: str, truth_col: Optional[str]) -> set[str]
     return {name for name in names if name}
 
 
-def build_category_map(values: Sequence[str], *, k_override: Optional[int] = None) -> CategoryMap:
+def build_category_map(values: Sequence[str], *, k_override: int | None = None) -> CategoryMap:
     uniq = sorted({str(v).strip() for v in values if str(v).strip() != ""})
     labels = uniq.copy()
 
@@ -145,14 +146,16 @@ def group_keys(row: dict[str, str], cols: Sequence[str]) -> tuple[str, ...]:
     return tuple(str(row.get(c, "")).strip() for c in cols)
 
 
-def filter_valid(reported: np.ndarray, truth: Optional[np.ndarray]) -> tuple[np.ndarray, Optional[np.ndarray], np.ndarray]:
+def filter_valid(reported: np.ndarray, truth: np.ndarray | None) -> tuple[np.ndarray, np.ndarray | None, np.ndarray]:
     mask = reported >= 0
     rep = reported[mask]
     tru = truth[mask] if truth is not None else None
     return rep, tru, mask
 
 
-def read_population_weights(rows: list[dict[str, str]], key_cols: Sequence[str], count_col: str) -> dict[tuple[str, ...], float]:
+def read_population_weights(
+    rows: list[dict[str, str]], key_cols: Sequence[str], count_col: str
+) -> dict[tuple[str, ...], float]:
     weights: dict[tuple[str, ...], float] = {}
     total = 0.0
     for r in rows:

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from pathlib import Path
 import csv
 import importlib
 import importlib.util
 import types
+from pathlib import Path
+
 import pytest
 
 
@@ -17,20 +18,35 @@ def test_mrp_vs_baselines_smoke_run(tmp_path: Path, project_root: Path):
     out_dir = tmp_path / "outputs"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    import subprocess, sys
+    import subprocess
+    import sys
+
     cmd = [
-        sys.executable, "-m", "experiments.mrp_vs_baselines",
-        "--trials", "1",
-        "--eps", "1.0",
-        "--scenarios", "no_bias",
-        "--population_n", "800",
-        "--n_sample", "120",
-        "--mrp_steps", "5",
-        "--mrp_batch_size", "128",
-        "--neural_steps", "3",
-        "--neural_batch_size", "128",
-        "--neural_hidden_layers", "8",
-        "--out_dir", str(out_dir),
+        sys.executable,
+        "-m",
+        "experiments.mrp_vs_baselines",
+        "--trials",
+        "1",
+        "--eps",
+        "1.0",
+        "--scenarios",
+        "no_bias",
+        "--population_n",
+        "800",
+        "--n_sample",
+        "120",
+        "--mrp_steps",
+        "5",
+        "--mrp_batch_size",
+        "128",
+        "--neural_steps",
+        "3",
+        "--neural_batch_size",
+        "128",
+        "--neural_hidden_layers",
+        "8",
+        "--out_dir",
+        str(out_dir),
     ]
     proc = subprocess.run(cmd, cwd=str(project_root), text=True, capture_output=True)
     assert proc.returncode == 0, proc.stderr
@@ -69,6 +85,7 @@ def test_ts_run_dir_unique(monkeypatch, tmp_path: Path, project_root: Path):
         @classmethod
         def now(cls):
             from datetime import datetime
+
             return datetime(2026, 1, 27, 17, 16, 40)
 
         @staticmethod

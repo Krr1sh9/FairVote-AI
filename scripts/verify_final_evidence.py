@@ -6,6 +6,7 @@ Use after running `make final-evidence` or `make examiner-reproduce`:
 The verifier deliberately refuses smoke evidence, one-trial evidence, non-empty
 failures, absent provenance, and unsupported neural claims.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -74,7 +75,9 @@ def main(argv: list[str] | None = None) -> int:
         trial_counts = [as_int(r.get("n_rows", r.get("trials", "0"))) for r in summary]
         min_trials = min(trial_counts) if trial_counts else 0
         if min_trials < args.min_trials:
-            errors.append(f"Minimum repeated trials per summary cell is {min_trials}, below required {args.min_trials}.")
+            errors.append(
+                f"Minimum repeated trials per summary cell is {min_trials}, below required {args.min_trials}."
+            )
         max_skipped = max((as_int(r.get("n_skipped", "0")) for r in summary), default=0)
         if max_skipped:
             errors.append(f"summary_with_ci.csv reports skipped rows; max n_skipped={max_skipped}.")
@@ -83,9 +86,8 @@ def main(argv: list[str] | None = None) -> int:
     raw = read_csv(run_dir / "raw_trials.csv")
     methods = {r.get("method", "") for r in raw}
     neural_present = any("neural" in m for m in methods)
-    if args.require_paired or neural_present:
-        if not paired:
-            errors.append("paired_comparisons.csv is empty while neural methods are present or required.")
+    if (args.require_paired or neural_present) and not paired:
+        errors.append("paired_comparisons.csv is empty while neural methods are present or required.")
 
     for name in ("manifest.json", "environment.json", "config.json"):
         p = run_dir / name

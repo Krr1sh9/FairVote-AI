@@ -9,9 +9,10 @@ from __future__ import annotations
 import csv
 import io
 import json
-from pathlib import Path
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Optional, Sequence
+from pathlib import Path
+from typing import Any
 
 
 @dataclass(frozen=True)
@@ -151,7 +152,7 @@ def load_poll_option_labels(root: Path) -> list[str]:
     return [lab for lab in labels if lab]
 
 
-def category_index_from_value(value: Any) -> Optional[int]:
+def category_index_from_value(value: Any) -> int | None:
     """Parse a dashboard category value as a non-negative integer index, if safe."""
 
     if value is None or isinstance(value, bool):

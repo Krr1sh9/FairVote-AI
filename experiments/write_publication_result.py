@@ -5,14 +5,15 @@ never invents results. If the evidence directory is a smoke run, has failures,
 has only one trial per cell, or lacks paired comparisons, the generated report
 says so explicitly.
 """
+
 from __future__ import annotations
 
 import argparse
 import csv
 import json
 import math
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, Mapping
 
 METRICS = [
     "overall_l1",
@@ -63,7 +64,9 @@ def md_table(headers: list[str], rows: Iterable[Iterable[str]]) -> str:
     return "\n".join(out)
 
 
-def status_checks(run_dir: Path, summary: list[dict[str, str]], paired: list[dict[str, str]], failures: list[dict[str, str]]) -> list[tuple[str, str, str]]:
+def status_checks(
+    run_dir: Path, summary: list[dict[str, str]], paired: list[dict[str, str]], failures: list[dict[str, str]]
+) -> list[tuple[str, str, str]]:
     readme = (run_dir / "README.md").read_text(encoding="utf-8") if (run_dir / "README.md").exists() else ""
     text = readme.lower()
     min_non_skipped = min((as_int(r.get("n_rows", "0")) for r in summary), default=0)
@@ -73,9 +76,17 @@ def status_checks(run_dir: Path, summary: list[dict[str, str]], paired: list[dic
     checks = [
         ("Run is not labelled smoke/non-final", "PASS" if not labelled_smoke else "FAIL", "README wording"),
         ("No recorded failures", "PASS" if len(failures) == 0 else "FAIL", f"{len(failures)} failure rows"),
-        ("At least 20 non-skipped trials per summary cell", "PASS" if min_non_skipped >= 20 else "FAIL", f"minimum n_rows={min_non_skipped}; configured trials={min_configured_trials}"),
+        (
+            "At least 20 non-skipped trials per summary cell",
+            "PASS" if min_non_skipped >= 20 else "FAIL",
+            f"minimum n_rows={min_non_skipped}; configured trials={min_configured_trials}",
+        ),
         ("No skipped result cells", "PASS" if max_skipped == 0 else "WARN", f"max n_skipped={max_skipped}"),
-        ("Neural-vs-linear paired comparisons are available", "PASS" if len(paired) > 0 else "WARN", f"{len(paired)} paired rows"),
+        (
+            "Neural-vs-linear paired comparisons are available",
+            "PASS" if len(paired) > 0 else "WARN",
+            f"{len(paired)} paired rows",
+        ),
     ]
     return checks
 
@@ -93,16 +104,18 @@ def best_rows(summary: list[dict[str, str]], metric: str = "overall_l1") -> list
         if not valid:
             continue
         best = min(valid, key=lambda r: (as_float(r.get(key)), as_float(r.get("epsilon"))))
-        table.append([
-            scenario,
-            method,
-            str(best.get("epsilon", "")),
-            str(best.get("sample_size", "")),
-            fmt(as_float(best.get(key))),
-            fmt(as_float(best.get(f"ci95_low_{metric}"))),
-            fmt(as_float(best.get(f"ci95_high_{metric}"))),
-            str(best.get("n_rows", best.get("trials", ""))),
-        ])
+        table.append(
+            [
+                scenario,
+                method,
+                str(best.get("epsilon", "")),
+                str(best.get("sample_size", "")),
+                fmt(as_float(best.get(key))),
+                fmt(as_float(best.get(f"ci95_low_{metric}"))),
+                fmt(as_float(best.get(f"ci95_high_{metric}"))),
+                str(best.get("n_rows", best.get("trials", ""))),
+            ]
+        )
     return table
 
 
@@ -110,30 +123,40 @@ def claim_rows(summary: list[dict[str, str]], paired: list[dict[str, str]]) -> l
     scenarios = {r.get("scenario", "") for r in summary}
     methods = {r.get("method", "") for r in summary}
     rows: list[list[str]] = []
-    rows.append([
-        "RR-aware MRP improves over direct RR debiasing",
-        "summary_with_ci.csv / ablations.csv",
-        "SUPPORTED TO ANALYSE" if {"baseline_rr_debias", "mrp_rr_poststrat"} <= methods else "MISSING METHOD",
-        "Compare mean_overall_l1 and CI by scenario; do not claim improvement unless deltas are negative and stable.",
-    ])
-    rows.append([
-        "Hierarchical partial pooling improves sparse subgroup error",
-        "summary_with_ci.csv",
-        "SUPPORTED TO ANALYSE" if "hierarchical_rr_mrp_poststrat" in methods and any("sparse" in s for s in scenarios) else "MISSING EVIDENCE",
-        "Use worst_group_l1_major in sparse scenarios; report failures as mixed results.",
-    ])
-    rows.append([
-        "Neural RR-MRP beats simpler baselines in nonlinear settings",
-        "paired_comparisons.csv",
-        "SUPPORTED TO ANALYSE" if paired else "MISSING PAIRED COMPARISONS",
-        "Only claim this if paired deltas have enough trials and confidence intervals exclude zero where relevant.",
-    ])
-    rows.append([
-        "Privacy can help under strategic misreporting",
-        "summary_with_ci.csv",
-        "SUPPORTED TO ANALYSE" if any("privacy" in s or "shy" in s for s in scenarios) else "MISSING SCENARIO",
-        "Look for intermediate-epsilon minima; do not overgeneralise to pure privacy noise scenarios.",
-    ])
+    rows.append(
+        [
+            "RR-aware MRP improves over direct RR debiasing",
+            "summary_with_ci.csv / ablations.csv",
+            "SUPPORTED TO ANALYSE" if {"baseline_rr_debias", "mrp_rr_poststrat"} <= methods else "MISSING METHOD",
+            "Compare mean_overall_l1 and CI by scenario; do not claim improvement unless deltas are negative and stable.",
+        ]
+    )
+    rows.append(
+        [
+            "Hierarchical partial pooling improves sparse subgroup error",
+            "summary_with_ci.csv",
+            "SUPPORTED TO ANALYSE"
+            if "hierarchical_rr_mrp_poststrat" in methods and any("sparse" in s for s in scenarios)
+            else "MISSING EVIDENCE",
+            "Use worst_group_l1_major in sparse scenarios; report failures as mixed results.",
+        ]
+    )
+    rows.append(
+        [
+            "Neural RR-MRP beats simpler baselines in nonlinear settings",
+            "paired_comparisons.csv",
+            "SUPPORTED TO ANALYSE" if paired else "MISSING PAIRED COMPARISONS",
+            "Only claim this if paired deltas have enough trials and confidence intervals exclude zero where relevant.",
+        ]
+    )
+    rows.append(
+        [
+            "Privacy can help under strategic misreporting",
+            "summary_with_ci.csv",
+            "SUPPORTED TO ANALYSE" if any("privacy" in s or "shy" in s for s in scenarios) else "MISSING SCENARIO",
+            "Look for intermediate-epsilon minima; do not overgeneralise to pure privacy noise scenarios.",
+        ]
+    )
     return rows
 
 
@@ -151,7 +174,9 @@ def write_outputs(run_dir: Path, out_dir: Path) -> None:
         ["scenario", "method", "best_epsilon", "sample_size", "mean_overall_l1", "ci95_low", "ci95_high", "n_rows"],
         best_rows(summary, "overall_l1")[:80],
     )
-    claims_md = md_table(["Claim", "Evidence file", "Status", "Required interpretation rule"], claim_rows(summary, paired))
+    claims_md = md_table(
+        ["Claim", "Evidence file", "Status", "Required interpretation rule"], claim_rows(summary, paired)
+    )
 
     run_name = run_dir.name
     preset = config.get("preset") or manifest.get("preset") or "unknown"

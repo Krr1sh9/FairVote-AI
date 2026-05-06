@@ -6,10 +6,11 @@ observation channel and optimised by the marginal likelihood of the reported
 labels.  Centralising this code reduces duplicated gradient logic and makes the
 privacy/noise likelihood auditable.
 """
+
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
 import numpy as np
 
@@ -98,4 +99,6 @@ def reported_label_likelihood(
     grad_theta = grad_reported @ C.T
     row_dot = np.sum(grad_theta * theta_arr, axis=1, keepdims=True)
     grad_logits = theta_arr * (grad_theta - row_dot)
-    return ObservationLikelihood(nll=nll, grad_logits=grad_logits, reported_probs=reported_probs, observed_probs=observed)
+    return ObservationLikelihood(
+        nll=nll, grad_logits=grad_logits, reported_probs=reported_probs, observed_probs=observed
+    )

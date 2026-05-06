@@ -4,6 +4,7 @@ The implementation lives in :mod:`app.controllers.upload_controller`; this file
 is intentionally small so the UI package exposes page entry points rather than a
 large controller/service monolith.
 """
+
 from __future__ import annotations
 
 from pathlib import Path
