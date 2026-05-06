@@ -1,0 +1,213 @@
+{
+  "config": {
+    "allocation": "proportional",
+    "biased_feature": "region",
+    "biased_multipliers": {},
+    "continue_on_error": false,
+    "enable_neural": true,
+    "eps": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "eps_list": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "feature_order": [
+      "region",
+      "age_group",
+      "education",
+      "gender",
+      "urbanicity"
+    ],
+    "features": [
+      "region",
+      "age_group",
+      "education",
+      "gender",
+      "urbanicity"
+    ],
+    "hierarchical_effect_l2": 1.0,
+    "hierarchical_global_l2": 0.01,
+    "k": 5,
+    "major_mass": 0.02,
+    "methods": [
+      "baseline_rr_debias",
+      "mrp_rr_poststrat",
+      "hierarchical_rr_mrp_poststrat",
+      "neural_rr_mrp"
+    ],
+    "min_per_stratum": 0,
+    "mrp_batch_size": 2048,
+    "mrp_l2": 1.0,
+    "mrp_lr": 0.05,
+    "mrp_steps": 800,
+    "multipliers": {},
+    "n_sample": 500,
+    "neural_batch_size": 512,
+    "neural_dropout": 0.0,
+    "neural_hidden_layers": [
+      32,
+      16
+    ],
+    "neural_lr": 0.01,
+    "neural_patience": 30,
+    "neural_seed": 321,
+    "neural_steps": 200,
+    "neural_validation_fraction": 0.2,
+    "neural_weight_decay": 0.0001,
+    "population_n": 10000,
+    "preset": "custom",
+    "sample_sizes": [
+      500,
+      1000
+    ],
+    "sampling": "srs",
+    "scenarios": [
+      "nonlinear_interaction",
+      "sparse_minority_curve",
+      "privacy_noise_sparse",
+      "simple_linear"
+    ],
+    "seed": 123,
+    "shy_category": 0,
+    "shy_honesty": 0.8,
+    "strata": [
+      "region"
+    ],
+    "trials": 20,
+    "verbose_every": 100
+  },
+  "epsilons": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "experiment": "mrp_vs_baselines",
+  "methods": [
+    "baseline_rr_debias",
+    "mrp_rr_poststrat",
+    "hierarchical_rr_mrp_poststrat",
+    "neural_rr_mrp"
+  ],
+  "n_ablation_rows": 24,
+  "n_failures": 0,
+  "n_paired_comparison_rows": 24,
+  "n_result_rows": 1920,
+  "n_runtime_profile_rows": 96,
+  "n_summary_rows": 96,
+  "outputs": {
+    "ablations": "ablations.csv",
+    "config": "config.json",
+    "environment": "environment.json",
+    "failures": "failures.csv",
+    "manifest": "manifest.json",
+    "paired_comparisons": "paired_comparisons.csv",
+    "plots": "plots/",
+    "raw_trials": "raw_trials.csv",
+    "readme": "README.md",
+    "results_trials_legacy_alias": "results_trials.csv",
+    "runtime_profile": "runtime_profile.csv",
+    "sha256sums": "sha256sums.txt",
+    "summary_legacy_alias": "summary.csv",
+    "summary_with_ci": "summary_with_ci.csv"
+  },
+  "population_n": 10000,
+  "preset": "custom",
+  "provenance": {
+    "argv": [
+      "C:\\Users\\krris\\Downloads\\FairVote-AI_final_submission_hygiene_fixed\\FairVote-AI\\experiments\\mrp_vs_baselines.py",
+      "--trials",
+      "20",
+      "--population_n",
+      "10000",
+      "--n_sample",
+      "500",
+      "--sample_sizes",
+      "500,1000",
+      "--eps",
+      "0.5,1,2",
+      "--scenarios",
+      "nonlinear_interaction,sparse_minority_curve,privacy_noise_sparse,simple_linear",
+      "--methods",
+      "baseline_rr_debias,mrp_rr_poststrat,hierarchical_rr_mrp_poststrat,neural_rr_mrp",
+      "--mrp_steps",
+      "800",
+      "--neural_steps",
+      "200",
+      "--neural_hidden_layers",
+      "32,16",
+      "--neural_lr",
+      "0.01",
+      "--neural_patience",
+      "30",
+      "--neural_validation_fraction",
+      "0.2",
+      "--neural_weight_decay",
+      "1e-4",
+      "--mrp_l2",
+      "1.0",
+      "--out_dir",
+      "evidence/final",
+      "--fail_fast",
+      "--verbose_every",
+      "100"
+    ],
+    "cwd": "C:\\Users\\krris\\Downloads\\FairVote-AI_final_submission_hygiene_fixed\\FairVote-AI",
+    "executable": "C:\\Users\\krris\\Downloads\\FairVote-AI_final_submission_hygiene_fixed\\FairVote-AI\\.venv\\Scripts\\python.exe",
+    "git_sha": null,
+    "packages": {
+      "flask": "3.1.3",
+      "matplotlib": "3.10.9",
+      "numpy": "2.4.4",
+      "pandas": "2.3.3",
+      "streamlit": "1.57.0",
+      "torch": "2.11.0"
+    },
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "runtime_sec": 488.924414000001,
+  "sample_size": 500,
+  "sample_sizes": [
+    500,
+    1000
+  ],
+  "scenario_metadata": {
+    "nonlinear_interaction": {
+      "collection_bias": "none",
+      "expected_neural_advantage": "medium_high",
+      "name": "nonlinear_interaction",
+      "truth_model": "region_age_and_education_urbanicity_interactions"
+    },
+    "privacy_noise_sparse": {
+      "collection_bias": "none",
+      "expected_neural_advantage": "conditional_on_epsilon_and_sparsity",
+      "name": "privacy_noise_sparse",
+      "truth_model": "sparse_subgroup_with_privacy_noise"
+    },
+    "simple_linear": {
+      "collection_bias": "none",
+      "expected_neural_advantage": "low",
+      "name": "simple_linear",
+      "truth_model": "additive_linear"
+    },
+    "sparse_minority_curve": {
+      "collection_bias": "none",
+      "expected_neural_advantage": "conditional_on_sample_size",
+      "name": "sparse_minority_curve",
+      "truth_model": "sparse_minority_preference_curve"
+    }
+  },
+  "scenarios": [
+    "nonlinear_interaction",
+    "sparse_minority_curve",
+    "privacy_noise_sparse",
+    "simple_linear"
+  ],
+  "seed": 123,
+  "trials": 20
+}

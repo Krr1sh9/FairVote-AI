@@ -231,3 +231,95 @@ def test_predict_rejects_feature_dimension_mismatch_after_fit():
 
     with pytest.raises(ValueError, match="columns"):
         model.predict_true_proba(np.ones((4, X.shape[1] + 1)))
+
+
+def test_validation_history_and_early_stopping_are_recorded():
+    X, _true, y_reported = _simple_data(n=120, seed=21, epsilon=1.2)
+    model = RRNeuralMRPModel(k=3, epsilon=1.2, hidden_layers=(5,), dropout=0.0, seed=21)
+
+    info = model.fit(
+        X,
+        y_reported,
+        steps=30,
+        batch_size=64,
+        lr=0.01,
+        validation_fraction=0.25,
+        patience=1,
+        min_delta=1e9,
+    )
+
+    assert info.early_stopped
+    assert 1 <= info.steps < 30
+    assert info.validation_loss is not None
+    assert info.best_validation_loss is not None
+    assert info.best_step is not None
+    assert info.validation_history is not None
+    assert len(info.validation_history) == info.steps
+    assert info.runtime_sec >= 0.0
+
+
+def test_explicit_validation_reported_label_nll_uses_reported_labels_only():
+    X, _true, y_reported = _simple_data(n=100, seed=22, epsilon=1.4)
+    model = RRNeuralMRPModel(k=3, epsilon=1.4, hidden_layers=(6,), seed=22)
+
+    info = model.fit(
+        X[:70],
+        y_reported[:70],
+        X_val=X[70:],
+        y_val_reported=y_reported[70:],
+        steps=5,
+        batch_size=32,
+        lr=0.01,
+    )
+
+    assert info.validation_loss == pytest.approx(model.reported_label_nll(X[70:], y_reported[70:]), abs=1e-7)
+    assert info.validation_history is not None
+    assert len(info.validation_history) == 5
+
+
+def test_calibration_helpers_and_metadata_export(tmp_path):
+    X, true, y_reported = _simple_data(n=120, seed=23, epsilon=1.6)
+    checkpoint = tmp_path / "neural_mrp.pt"
+    metadata = tmp_path / "neural_mrp.json"
+    model = RRNeuralMRPModel(k=3, epsilon=1.6, hidden_layers=(6,), seed=23)
+    info = model.fit(X, y_reported, steps=4, batch_size=64, lr=0.01, keep_history=True, checkpoint_path=checkpoint)
+
+    summary = model.evaluation_summary(X, y_reported=y_reported, true_labels=true)
+    assert summary["reported_label_nll"] == pytest.approx(model.reported_label_nll(X, y_reported), abs=1e-7)
+    assert summary["brier_score"] == pytest.approx(model.brier_score(X, true), abs=1e-7)
+    assert 0.0 <= summary["mean_normalized_entropy"] <= 1.0
+    assert info.history is not None and len(info.history) == 4
+    assert checkpoint.exists()
+
+    exported = model.export_metadata(include_history=True)
+    assert exported["observation_model"] == "reported_label_nll_through_kary_randomized_response"
+    assert exported["fit_info"]["history"] is not None
+    model.save_metadata(metadata, include_history=True)
+    assert metadata.exists()
+    assert "reported_label_nll" in exported["observation_model"]
+
+    loaded = RRNeuralMRPModel.load_checkpoint(checkpoint)
+    _assert_probability_rows(loaded.predict_true_proba(X[:5]), n=5, k=3)
+
+
+def test_ensemble_multi_seed_predictions_are_valid():
+    from fairvote.inference.mrp.rr_neural_mrp import fit_rr_neural_mrp_ensemble
+
+    X, _true, y_reported = _simple_data(n=90, seed=24, epsilon=1.3)
+    ensemble = fit_rr_neural_mrp_ensemble(
+        X,
+        y_reported,
+        k=3,
+        epsilon=1.3,
+        seeds=[101, 102],
+        model_kwargs={"hidden_layers": (4,)},
+        fit_kwargs={"steps": 3, "batch_size": 32, "lr": 0.01},
+    )
+
+    p = ensemble.predict_true_proba(X[:7])
+    _assert_probability_rows(p, n=7, k=3)
+    std = ensemble.predict_true_proba_std(X[:7])
+    assert std.shape == (7, 3)
+    assert np.all(std >= 0.0)
+    uncertainty = ensemble.uncertainty_summary(X[:7])
+    assert uncertainty["max_seed_std"] >= uncertainty["mean_seed_std"] >= 0.0

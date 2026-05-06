@@ -1,5 +1,7 @@
 # Ethics, Privacy, and Sustainability
 
+> Canonical privacy-boundary note: the detailed implementation-level privacy boundary is documented in [`privacy_boundary.md`](privacy_boundary.md). This file keeps the broader ethics/privacy discussion.
+
 This document explains the privacy, ethical, and sustainability considerations of FairVote-AI. It deliberately separates the privacy mechanism from the AI inference model.
 
 ## 1. Privacy and data protection
@@ -14,8 +16,8 @@ Important design properties:
 
 - The respondent browser applies RR before submission.
 - The Flask server receives `perturbed_answer`, not the true answer.
-- Requests containing `true_answer` or other true/raw answer fields such as `true_choice`, `selected_answer`, or `raw_vote` are rejected.
-- Stored records contain privatized reports and demographics.
+- Requests containing raw-answer fields such as `true_answer`, `true_choice`, `selected_answer`, `selectedOption`, `raw_vote`, or `raw_answer` are rejected recursively, including nested objects/lists.
+- Stored records contain privatized reports, validated demographics, and at most a reduced-precision timestamp. Individual-level exports require an analyst bearer token; aggregate `/api/results` remains aggregate-only.
 
 ### 1.2 AI and privacy compatibility
 
@@ -40,7 +42,7 @@ In synthetic experiments, true labels exist because the simulator generated them
 
 ### 1.3 GDPR and data-minimisation considerations
 
-- **Data minimisation**: The respondent server stores only the privatized answer and optional demographic labels. It does not intentionally store names, emails, or account identifiers.
+- **Data minimisation**: The respondent server stores only the privatized answer, configured demographic labels, and a reduced-precision timestamp by default. It does not intentionally store names, emails, or account identifiers.
 - **Purpose limitation**: The collected data is intended for aggregate statistical estimation and method evaluation.
 - **Deletion**: The JSONL format supports deletion of individual records where a record can be identified.
 - **Transparency**: The respondent client exposes the randomization mechanism and privacy parameter to the user.
@@ -54,7 +56,7 @@ LDP is useful but limited:
 - **LDP is not anonymity**: It protects the submitted answer value. It does not hide the respondent's identity, IP address, timing, browser metadata, or demographic uniqueness.
 - **Demographics are not randomized**: Age group, region, education, and similar fields are transmitted as entered unless the deployment adds extra protection. Small demographic cells can still create disclosure and reliability risks even when the answer value is locally randomized.
 - **Epsilon matters**: Very large epsilon values provide weak privacy. Very small epsilon values can destroy too much signal for reliable estimation.
-- **Side channels remain**: Deployment logs, hosting infrastructure, and network metadata can undermine privacy if handled badly.
+- **Side channels remain**: Deployment logs, hosting infrastructure, timestamps, IP addresses, and network metadata can undermine privacy if handled badly. The demo reduces timestamp precision and protects individual-level exports, but a real deployment still needs operational controls.
 
 ## 2. Fairness and social impact
 
@@ -82,9 +84,9 @@ Synthetic validation is not proof of real election accuracy. It tests behaviour 
 
 ### Misleading AI claims
 
-The neural model may help when nonlinear demographic structure exists, but it can also overfit, underperform, or be slower than linear MRP. It should be described as an evaluated inference method, not as automatically superior.
+The neural model may help when nonlinear demographic structure exists, but it can also overfit, underperform, or be slower than RR-aware linear poststratification/MRP. It should be described as an evaluated inference method, not as automatically superior.
 
-The included final evidence pack reinforces this point. In `experiments/outputs/final_neural_evidence/`, neural RR-MRP does not generally outperform linear RR-aware MRP: linear MRP has lower mean overall L1 (`0.176` versus `0.204`), while neural MRP is slower and has lower winner correctness in this constrained run. It would be misleading to present the AI component as a guaranteed improvement.
+The final-evidence protocol reinforces this point by comparing RR-aware Neural MRP against simpler baselines rather than assuming it is superior. It would be misleading to present the AI component as a guaranteed improvement; claims should be based on the current generated `summary_with_ci.csv`, `paired_comparisons.csv`, `ablations.csv` and `runtime_profile.csv`.
 
 ### Misleading privacy claims
 

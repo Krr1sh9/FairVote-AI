@@ -59,6 +59,64 @@ def _ensure_exists(path: Path, what: str) -> None:
         raise SystemExit(f"{what} not found: {path}")
 
 
+def _validate_positive_int(value: int, name: str, minimum: int = 1) -> int:
+    """Validate that a value is a positive integer >= minimum."""
+    if not isinstance(value, int) or value < minimum:
+        raise SystemExit(
+            f"--{name} must be an integer >= {minimum}, got: {value}"
+        )
+    return value
+
+
+def _validate_positive_float(value: float, name: str, minimum: float = 0.0) -> float:
+    """Validate that a value is a positive float >= minimum."""
+    try:
+        val = float(value)
+    except (TypeError, ValueError):
+        raise SystemExit(f"--{name} must be a float, got: {value}")
+    
+    if val < minimum:
+        raise SystemExit(
+            f"--{name} must be >= {minimum}, got: {val}"
+        )
+    return val
+
+
+def _validate_probability(value: float, name: str) -> float:
+    """Validate that a value is a valid probability (0.0 to 1.0)."""
+    try:
+        val = float(value)
+    except (TypeError, ValueError):
+        raise SystemExit(f"--{name} must be a float, got: {value}")
+    
+    if val < 0.0 or val > 1.0:
+        raise SystemExit(
+            f"--{name} must be in [0.0, 1.0], got: {val}"
+        )
+    return val
+
+
+def _validate_epsilon_list(eps_str: str) -> list:
+    """Parse and validate comma-separated epsilon values."""
+    try:
+        epsilons = [float(e.strip()) for e in eps_str.split(",")]
+    except ValueError:
+        raise SystemExit(
+            f"--eps must be comma-separated floats, got: {eps_str}"
+        )
+    
+    if not epsilons:
+        raise SystemExit("--eps must specify at least one epsilon value")
+    
+    for eps in epsilons:
+        if eps <= 0.0:
+            raise SystemExit(
+                f"All epsilon values must be > 0, got: {eps}"
+            )
+    
+    return epsilons
+
+
 def _summary_csv_from_run_dir(run_dir: Path) -> Path:
     p = run_dir / "summary.csv"
     _ensure_exists(p, "summary.csv")
@@ -179,6 +237,19 @@ def main() -> int:
     # run mrp-vs-baselines
     # ----------------------------
     if args.cmd == "run" and args.run_cmd == "mrp-vs-baselines":
+        # Validate required arguments
+        _validate_positive_int(args.trials, "trials", minimum=1)
+        _validate_positive_float(args.major_mass, "major_mass", minimum=0.0)
+        epsilons = _validate_epsilon_list(args.eps)
+        
+        # Validate optional arguments if provided
+        if args.k is not None:
+            _validate_positive_int(args.k, "k", minimum=2)
+        if args.n_sample is not None:
+            _validate_positive_int(args.n_sample, "n", minimum=1)
+        if args.shy_category is not None:
+            _validate_positive_int(args.shy_category, "shy_category", minimum=0)
+        
         argv: List[str] = [
             "--trials",
             str(args.trials),
@@ -232,6 +303,11 @@ def main() -> int:
     if args.cmd == "report" and args.rep_cmd == "honesty":
         run_dir = Path(args.run_dir)
         _results_trials_csv_from_run_dir(run_dir)  # ensure exists
+        
+        # Validate numeric parameters
+        _validate_positive_int(args.n_boot, "n_boot", minimum=1)
+        _validate_probability(args.alpha, "alpha")
+        _validate_positive_int(args.ndp, "ndp", minimum=1)
 
         argv = [
             "--run_dir",
@@ -255,6 +331,18 @@ def main() -> int:
     if args.cmd == "report" and args.rep_cmd == "recommend":
         run_dir = Path(args.run_dir)
         summary_csv = Path(args.summary_csv) if args.summary_csv else _summary_csv_from_run_dir(run_dir)
+        
+        # Validate optional numeric parameters if provided
+        if args.epsilon_max is not None:
+            _validate_positive_float(args.epsilon_max, "epsilon_max")
+        if args.worst_region_l1_major_max is not None:
+            _validate_positive_float(args.worst_region_l1_major_max, "worst_region_l1_major_max")
+        if args.worst_age_l1_major_max is not None:
+            _validate_positive_float(args.worst_age_l1_major_max, "worst_age_l1_major_max")
+        if args.overall_l1_max is not None:
+            _validate_positive_float(args.overall_l1_max, "overall_l1_max")
+        if args.overall_mae_max is not None:
+            _validate_positive_float(args.overall_mae_max, "overall_mae_max")
 
         argv = ["--summary_csv", str(summary_csv)]
         if args.write_pareto:

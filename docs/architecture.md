@@ -20,7 +20,7 @@ The project should be described as **AI-assisted**, not as an entirely AI-based 
 │  fairvote/privacy/estimators.py, fairvote/inference/mrp/            │
 ├─────────────────────────────────────────────────────────────────────┤
 │                         PRIVACY MECHANISM                           │
-│  Local DP: k-ary Randomized Response                                │
+│  Local Differential Privacy: k-ary Randomized Response                                │
 │  Central DP baseline: Laplace mechanism on aggregate counts         │
 │  fairvote/privacy/mechanisms/                                       │
 ├─────────────────────────────────────────────────────────────────────┤
@@ -76,18 +76,24 @@ The simulator contains true labels because it creates the population. Those labe
 | `mechanisms/laplace_mechanism.py` | Central-DP aggregate-count baseline |
 | `estimators.py` | RR debiasing estimator and bootstrap confidence intervals |
 
-Randomized Response is not AI. It is the local privacy mechanism and the observation channel used by the inference models.
+Randomized Response is not AI. It is the Local Differential Privacy mechanism and the observation channel used by the inference models.
 
 ### `fairvote/inference/mrp/`
 
 | File | Purpose |
 |---|---|
-| `model.py` | Linear multinomial MRP model used by experiments |
-| `rr_mrp_fit.py` | Linear RR-aware MRP fitting used by the dashboard |
-| `rr_neural_mrp.py` | PyTorch RR-aware Neural MRP model |
-| `poststratify.py` | Post-stratification utilities |
-| `misreport_rr.py` | Misreport-aware RR-MRP model for simulated shy-voter settings |
+| `design.py` | Categorical design-matrix builders and design metadata |
+| `linear.py` | **Canonical** RR-aware linear poststratification/MRP-style estimator: regularised multinomial regression through the RR observation channel |
+| `poststratify.py` | Population-cell weighting, subgroup estimates, and post-stratification validation |
+| `diagnostics.py` | Fit diagnostics such as final loss, runtime, steps, and optional loss history |
+| `model.py` | Thin compatibility wrapper for old experiment imports; no separate linear model logic |
+| `rr_mrp_fit.py` | Thin compatibility wrapper for old dashboard imports; no separate linear model logic |
+| `fairvote/inference/mrp/neural/` | Optional PyTorch RR-aware Neural MRP package; `rr_neural_mrp.py` is a compatibility facade |
+| `neural.py` | Thin aliases for RR-aware Neural MRP classes |
+| `misreport_rr.py` | Misreport-aware RR-MRP extension for simulated shy-voter settings |
 | `learned_misreport_rr.py` | Learned honesty/misreport extension for MRP experiments |
+
+The canonical linear model is documented in `docs/mrp_canonical.md`. It is MRP-style regularised regression plus post-stratification, not a full hierarchical Bayesian MRP sampler.
 
 ### `fairvote/simulation/`
 
@@ -107,10 +113,11 @@ Randomized Response is not AI. It is the local privacy mechanism and the observa
 
 | File | Purpose |
 |---|---|
-| `sweep_eps.py` | LDP vs central-DP epsilon/sample-size sweeps |
-| `mrp_vs_baselines.py` | Main estimator comparison including neural RR-MRP |
-| `evaluate_neural_mrp.py` | Dedicated experiment for deciding whether neural RR-MRP is justified |
-| `sensitivity_analysis.py` | Sensitivity checks under different population/bias assumptions |
+| `experiments/legacy/sweep_eps.py` | Local Differential Privacy vs central-DP epsilon/sample-size sweeps |
+| `mrp_vs_baselines.py` | Thin CLI wrapper for the main estimator comparison |
+| `pipeline/` | Modular experiment engine: typed config, sampling, perturbation, method registry, metrics, summaries, manifests and plotting |
+| `experiments/legacy/evaluate_neural_mrp.py` | Legacy compatibility helper for older neural-only checks; not the canonical final-evidence path |
+| `experiments/legacy/sensitivity_analysis.py` | Sensitivity checks under different population/bias assumptions |
 
 ## RR-aware Neural MRP
 
@@ -133,13 +140,13 @@ The model is post-stratified by applying `predict_true_proba()` to population ce
 
 ## Why baselines remain necessary
 
-The neural model is compared to RR debiasing and linear RR-aware MRP because the extra complexity is not automatically justified. Neural MRP may help when demographic effects are nonlinear, but it can also overfit or underperform when sample size is small, epsilon is low, or the demographic signal is weak.
+The neural model is compared to RR debiasing and RR-aware linear poststratification/MRP because the extra complexity is not automatically justified. RR-aware Neural MRP may help when demographic effects are nonlinear, but it can also overfit or underperform when sample size is small, epsilon is low, or the demographic signal is weak.
 
-The included final evidence pack shows exactly why this comparison matters. In `experiments/outputs/final_neural_evidence/`, linear RR-aware MRP has lower mean overall L1 than neural RR-MRP (`0.176` versus `0.204`), while neural RR-MRP has lower averaged worst-group L1 but worse weighted group L1, p90 group L1, winner correctness, and runtime. The architecture therefore treats neural MRP as one estimator in a comparison pipeline, not as the default answer.
+The architecture treats RR-aware Neural MRP as one estimator in a comparison pipeline, not as the default answer. Final claims should come from a current `experiments.mrp_vs_baselines --preset final_evidence` run and should be interpreted through `summary_with_ci.csv`, `paired_comparisons.csv`, `ablations.csv` and `runtime_profile.csv`.
 
 ## Main limitations reflected in the architecture
 
-- Local DP protects answer values but does not provide anonymity by itself.
+- Local Differential Privacy protects answer values but does not provide anonymity by itself.
 - Demographic fields are not randomized by the current respondent client.
 - Fairness metrics audit subgroup error; they do not guarantee fair estimates.
 - Synthetic experiments test behaviour under chosen assumptions; they do not prove real election accuracy.

@@ -1,6 +1,6 @@
 # Respondent Web App Manual Verification Checklist
 
-This checklist is for manually verifying the FairVote-AI respondent web app before a demo, viva, or submission. It is beginner-safe and examiner-safe.
+This checklist is for manually verifying the FairVote-AI respondent web app before a demo, viva, or submission. It is beginner-safe and suitable for the report.
 
 The respondent app is a **privacy-preserving polling demo**, not production election software. The localStorage duplicate-submission guard is only casual duplicate prevention. It is **not** secure voter authentication and must not be described as one-person-one-vote protection.
 
@@ -9,7 +9,7 @@ The respondent app is a **privacy-preserving polling demo**, not production elec
 - The respondent server starts.
 - The browser applies Randomized Response before submission.
 - The server stores only the perturbed/randomized answer.
-- The server rejects any request that includes `true_answer` or other true/raw answer fields such as `true_choice`, `selected_answer`, or `raw_vote`.
+- The server rejects any request that includes `true_answer` or other true/raw answer fields such as `true_choice`, `selected_answer`, `selectedOption`, `raw_vote`, or `raw_answer`.
 - Refreshing the page after a successful submission shows the already-submitted message.
 - Audit mode can be used locally to check whether Randomized Response flipped an answer.
 - Low epsilon produces frequent flips.
@@ -54,7 +54,7 @@ pip install -e ".[respondent]"
 For the full project environment:
 
 ```powershell
-pip install -e ".[dev,ai,streamlit,respondent]"
+pip install -e ".[dev]"
 ```
 
 ## 1. Start the respondent server
@@ -165,19 +165,20 @@ true_choice
 selected_answer
 selectedOption
 raw_vote
+raw_answer
 ```
 
 You can search for forbidden fields with PowerShell:
 
 ```powershell
-Select-String -Path respondent\data\responses.jsonl -Pattern "true_answer|true_choice|selected_answer|selectedOption|raw_vote"
+Select-String -Path respondent\data\responses.jsonl -Pattern "true_answer|true_choice|selected_answer|selectedOption|raw_vote|raw_answer"
 ```
 
 Expected result:
 
 - No matches.
 
-## 6. Test server rejection of `true_answer`
+## 6. Test server rejection of raw-answer fields
 
 Keep the respondent server running.
 
@@ -194,11 +195,48 @@ Remove-Item bad_payload.json
 Expected result:
 
 - HTTP status `400 Bad Request`.
-- JSON error saying `true_answer` must not be sent to the server.
+- JSON error saying the raw answer must not be sent to the server.
 
-This confirms the server-side safeguard is still active.
+Also test a nested malicious payload:
 
-## 7. Open audit mode
+```powershell
+'{"perturbed_answer":2,"metadata":{"raw_answer":1}}' | Set-Content bad_payload.json
+curl.exe -i -X POST "http://127.0.0.1:5001/api/respond" -H "Content-Type: application/json" --data-binary "@bad_payload.json"
+Remove-Item bad_payload.json
+```
+
+Expected result: another `400 Bad Request`. This confirms the recursive server-side safeguard is still active.
+
+## 7. Test protected individual-level export
+
+`/api/results` is aggregate-only and does not need a token. `/api/responses` exposes one row per respondent, so it is protected.
+
+To test it locally, restart the server with an analyst token:
+
+```powershell
+$env:FAIRVOTE_ANALYST_TOKEN = "dev-secret"
+python respondent/server.py --port 5001
+```
+
+Then, from another terminal:
+
+```powershell
+curl.exe -i "http://127.0.0.1:5001/api/responses"
+curl.exe -i "http://127.0.0.1:5001/api/responses" -H "Authorization: Bearer dev-secret"
+```
+
+Expected result:
+
+- without the header: `401 Unauthorized`;
+- with the correct bearer token: JSON individual-level perturbed records.
+
+Clear the environment variable after testing if you do not need export:
+
+```powershell
+Remove-Item Env:FAIRVOTE_ANALYST_TOKEN
+```
+
+## 8. Open audit mode
 
 Audit mode is disabled by default. To enable it for local testing, open:
 
@@ -223,7 +261,7 @@ Important privacy note:
 - It does **not** store the true answer in `responses.jsonl`.
 - Do not use audit mode as evidence of production election readiness.
 
-## 8. Clear localStorage correctly for repeated manual tests
+## 9. Clear localStorage correctly for repeated manual tests
 
 Because the duplicate guard blocks repeat submissions from the same browser, clear the localStorage marker before repeated manual tests.
 
@@ -259,7 +297,7 @@ Then refresh the page.
 
 Do this only for testing. In the real demo, the duplicate-submission message is expected after one submission.
 
-## 9. Temporarily set epsilon to `0.01` and verify frequent flips
+## 10. Temporarily set epsilon to `0.01` and verify frequent flips
 
 This is the clearest manual test that Randomized Response is genuinely applied.
 
@@ -290,7 +328,7 @@ http://127.0.0.1:5001/?audit=1
 ```
 
 7. Submit a response.
-8. Clear localStorage between repeated attempts using the command in Section 8.
+8. Clear localStorage between repeated attempts using the command in Section 9.
 9. Repeat several times.
 
 Expected result:
@@ -300,7 +338,7 @@ Expected result:
 
 Do not expect every single attempt to flip. Randomness means occasional kept answers are normal.
 
-## 10. Restore epsilon
+## 11. Restore epsilon
 
 After testing, restore `respondent/poll_config.json` to its normal epsilon value.
 
@@ -312,7 +350,7 @@ Then restart the server:
 python respondent/server.py --port 5001
 ```
 
-## 11. Test same-Wi-Fi access with `--host 0.0.0.0` if needed
+## 12. Test same-Wi-Fi access with `--host 0.0.0.0` if needed
 
 For a phone or another laptop on the same Wi-Fi, run:
 

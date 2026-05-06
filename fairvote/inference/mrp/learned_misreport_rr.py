@@ -14,15 +14,10 @@ from typing import Optional, Tuple
 
 import numpy as np
 
-from fairvote.inference.mrp.misreport_rr import rr_transition_matrix, shy_misreport_matrix
+from fairvote.inference.mrp.likelihood import reported_label_likelihood, softmax_rows
+from fairvote.inference.mrp.misreport_rr import shy_misreport_matrix
+from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
 
-
-def _softmax_rows(Z: np.ndarray) -> np.ndarray:
-    """Numerically stable row-wise softmax for logits."""
-    Z = np.asarray(Z, dtype=float)
-    Z = Z - np.max(Z, axis=1, keepdims=True)
-    E = np.exp(Z)
-    return E / np.sum(E, axis=1, keepdims=True)
 
 
 @dataclass
@@ -128,19 +123,12 @@ class LearnedShyMisreportRRMultinomialModel:
             C, dC_row = self._composite_channel_and_gradrow(eps)
 
             logits = Xb @ self.W
-            theta = _softmax_rows(logits)
+            theta = softmax_rows(logits)
 
-            c_y = C[:, yb].T  # (b,k)
-            p = np.sum(theta * c_y, axis=1)
-            p = np.clip(p, 1e-12, None)
-
-            # Gradient of the marginal NLL with respect to theta, then
-            # backpropagate through softmax to get gradients for logits.
-            g_theta = -(c_y / p[:, None])
-            ssum = np.sum(theta * g_theta, axis=1)
-            g_logits = theta * (g_theta - ssum[:, None])
+            likelihood = reported_label_likelihood(theta, C, yb)
+            p = likelihood.observed_probs
             # Update W via gradient descent through the marginal likelihood.
-            gradW = (Xb.T @ g_logits) / b
+            gradW = Xb.T @ likelihood.grad_logits
             gradW += self.l2 * self.W
             self.W -= lr * gradW
 
@@ -164,7 +152,7 @@ class LearnedShyMisreportRRMultinomialModel:
         if self.W is None:
             raise RuntimeError("Model is not fit yet.")
         X = np.asarray(X, dtype=float)
-        return _softmax_rows(X @ self.W)
+        return softmax_rows(X @ self.W)
 
     def learned_honesty(self) -> float:
         return float(self.honesty_)

@@ -6,8 +6,12 @@ Copies the key artefacts into:
   <run_dir>/BUNDLE/
 
 Includes (if present):
-  - summary.csv
-  - results_trials.csv
+  - summary_with_ci.csv (and legacy summary.csv if present)
+  - raw_trials.csv (and legacy results_trials.csv if present)
+  - paired_comparisons.csv
+  - ablations.csv
+  - runtime_profile.csv
+  - manifest.json
   - learned_honesty_summary.csv/.md
   - table_*.md
   - pareto_*.csv
@@ -63,11 +67,20 @@ def _copy_tree_filtered(src_dir: Path, dst_dir: Path, exts: List[str]) -> List[P
 def main() -> int:
     """Collect selected existing outputs into a shareable results bundle."""
     ap = argparse.ArgumentParser(description="Build a clean bundle folder containing the key result artefacts.")
-    ap.add_argument("--run_dir", required=True, type=str, help="Experiment run directory (experiments/outputs/..._mrp_vs_baselines)")
+    group = ap.add_mutually_exclusive_group(required=True)
+    group.add_argument("--run_dir", type=str, help="Experiment run directory (experiments/outputs/..._mrp_vs_baselines)")
+    group.add_argument("--root", type=str, help="Root directory containing timestamped *_mrp_vs_baselines runs; latest run is bundled.")
     ap.add_argument("--bundle_name", default="BUNDLE", type=str, help="Name of bundle folder inside run_dir.")
     args = ap.parse_args()
 
-    run_dir = Path(args.run_dir)
+    if args.root:
+        root = Path(args.root)
+        runs = sorted([p for p in root.glob("*_mrp_vs_baselines") if p.is_dir()])
+        if not runs:
+            raise SystemExit(f"No *_mrp_vs_baselines runs found under: {root}")
+        run_dir = runs[-1]
+    else:
+        run_dir = Path(args.run_dir)
     if not run_dir.exists():
         raise SystemExit(f"Run directory not found: {run_dir}")
 
@@ -80,7 +93,7 @@ def main() -> int:
     copied = []
 
     # Core CSVs
-    for name in ("summary.csv", "results_trials.csv"):
+    for name in ("summary_with_ci.csv", "summary.csv", "raw_trials.csv", "results_trials.csv", "paired_comparisons.csv", "ablations.csv", "runtime_profile.csv", "manifest.json", "environment.json", "sha256sums.txt", "failures.csv", "README.md"):
         if _copy_if_exists(run_dir / name, bundle_dir / name):
             copied.append(name)
 
@@ -129,11 +142,11 @@ def main() -> int:
     lines.append("1) Run the experiment:\n")
     lines.append("   - `python -m experiments.mrp_vs_baselines ...`\n\n")
     lines.append("2) Build tables:\n")
-    lines.append("   - `python -m experiments.make_report_tables --summary_csv <run_dir>/summary.csv --include_all ...`\n\n")
+    lines.append("   - `python -m experiments.make_report_tables --summary_csv <run_dir>/summary_with_ci.csv --include_all ...`\n\n")
     lines.append("3) Learned honesty:\n")
     lines.append("   - `python -m experiments.summarise_learned_honesty --run_dir <run_dir>`\n\n")
     lines.append("4) Recommendation / Pareto:\n")
-    lines.append("   - `python -m experiments.recommend_from_summary --summary_csv <run_dir>/summary.csv --write_pareto`\n")
+    lines.append("   - `python -m experiments.recommend_from_summary --summary_csv <run_dir>/summary_with_ci.csv --write_pareto`\n")
 
     readme.write_text("".join(lines), encoding="utf-8")
 

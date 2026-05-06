@@ -1,6 +1,6 @@
 # FairVote-AI Dashboard Manual Test Checklist
 
-This checklist verifies the Streamlit analyst dashboard path for a fresh examiner/demo run. It is intentionally manual because the dashboard is interactive.
+This checklist verifies the Streamlit analyst dashboard path for a fresh review/demo run. It is intentionally manual because the dashboard is interactive.
 
 The dashboard is for **analysis of privatized reports**. It is not production election software, and it does not prove real-world election accuracy.
 
@@ -21,13 +21,13 @@ Expected result:
 If Streamlit is missing, install the dashboard dependencies:
 
 ```bash
-pip install -e ".[streamlit,ai]"
+pip install -e ".[dashboard,neural]"
 ```
 
 For the full development environment:
 
 ```bash
-pip install -e ".[dev,ai,streamlit,respondent]"
+pip install -e ".[dev]"
 ```
 
 ## 2. Test synthetic CSV upload
@@ -38,15 +38,15 @@ In the `Upload & Estimate` tab:
 2. Upload one of the synthetic CSV files from:
 
 ```text
-app/data/
+fixtures/synthetic_with_truth/
 ```
 
-Example files include names like:
+Example files include:
 
 ```text
-poll_no_bias_...
-poll_nonresponse_...
-poll_shy_privacy_helps_...
+poll_no_bias_eps1_n200_20260126T222552.csv
+poll_nonresponse_eps1_n200_20260126T222832.csv
+poll_shy_privacy_helps_eps0.5_n200_20260126T222748.csv
 ```
 
 Expected result:
@@ -54,7 +54,7 @@ Expected result:
 - The dashboard reports that the poll CSV loaded successfully.
 - The sidebar shows column-selection controls.
 
-Important: these CSV files are **synthetic demonstration data**. Columns such as `true_choice` are included only for evaluation. Real respondent exports should not contain true votes.
+Important: these fixture CSV files are **synthetic truth-labelled demonstration data**. Columns such as `true_choice` are included only for evaluation. Real respondent exports should not contain true votes.
 
 ## 3. Test population CSV upload
 
@@ -122,7 +122,7 @@ Expected result:
 - If synthetic truth is selected, it may display true-error metrics.
 - If no truth is selected, it should not require true labels.
 
-## 7. Test linear RR-aware MRP
+## 7. Test RR-aware linear poststratification/MRP
 
 In the sidebar:
 
@@ -143,11 +143,11 @@ Expected result:
 - The dashboard displays a sample-averaged MRP estimate.
 - If population data and matching post-stratification keys are supplied, it displays a post-stratified estimate.
 
-## 8. Test neural RR-aware MRP
+## 8. Test RR-aware Neural MRP
 
 In the sidebar:
 
-1. Select `Neural RR-aware MRP`.
+1. Select `RR-aware Neural MRP`.
 2. Select demographic feature columns.
 3. Use recommended demo settings:
 
@@ -163,11 +163,11 @@ weight decay = default
 
 Expected result:
 
-- The dashboard warns that neural MRP is a learned model and should be compared against baselines.
+- The dashboard warns that RR-aware Neural MRP is a learned model and should be compared against baselines.
 - The model fits without requiring true votes.
-- The dashboard displays the neural MRP estimate.
+- The dashboard displays the RR-aware Neural MRP estimate.
 
-Do not claim that neural MRP is automatically better. In the included constrained evidence pack, neural MRP was valid and privacy-compatible but did not consistently outperform linear RR-aware MRP.
+Do not claim that RR-aware Neural MRP is automatically better. Smoke-test output only confirms that the pipeline runs. Final claims must come from a current final-evidence run and may show that RR-aware Neural MRP underperforms the simpler baseline.
 
 ## 9. Test misreport-aware MRP, if available
 
@@ -207,7 +207,7 @@ Expected result:
 - The dashboard loads the JSONL file.
 - The available reported-answer column is `perturbed_answer`.
 - Demographic fields appear as flattened columns.
-- There should be no `true_answer`, `true_choice`, `selected_answer`, or `raw_vote` column.
+- There should be no `true_answer`, `true_choice`, `selected_answer`, `selectedOption`, `raw_vote`, or `raw_answer` column.
 
 If the file is empty, submit a test response in the respondent app first.
 
@@ -248,7 +248,7 @@ Expected result:
 For a fast examiner demo:
 
 ```text
-Synthetic poll CSV: app/data/poll_no_bias_*.csv
+Synthetic poll CSV: fixtures/synthetic_with_truth/poll_no_bias_*.csv
 Population CSV: app/data/population.csv
 Reported column: reported_choice
 True column: true_choice only for synthetic evaluation
@@ -256,7 +256,7 @@ Feature columns: region, age_band if available
 Group columns: region, age_band if available
 RR debiasing: default settings
 Linear MRP: training steps = 50, batch size = 512
-Neural MRP: Small: 16, training steps = 50, batch size = 512
+RR-aware Neural MRP: Small: 16, training steps = 50, batch size = 512
 Misreport-aware MRP: training steps = 50, batch size = 512
 ```
 
@@ -267,24 +267,24 @@ Recommended screenshots:
 1. Dashboard home with `Upload & Estimate` tab visible.
 2. Successful synthetic CSV upload.
 3. Population CSV upload and post-stratification controls.
-4. Sidebar method selector showing RR debiasing, linear MRP, neural MRP, and misreport-aware MRP if available.
-5. Neural MRP settings showing `Small: 16`, `training steps = 50`, and `batch size = 512`.
-6. Neural MRP warning explaining it should be compared against baselines.
+4. Sidebar method selector showing RR debiasing, RR-aware linear poststratification/MRP, RR-aware Neural MRP, and misreport-aware MRP if available.
+5. RR-aware Neural MRP settings showing `Small: 16`, `training steps = 50`, and `batch size = 512`.
+6. RR-aware Neural MRP warning explaining it should be compared against baselines.
 7. Estimate table for RR debiasing.
-8. Estimate table for linear RR-aware MRP.
-9. Estimate table for neural RR-aware MRP.
+8. Estimate table for RR-aware linear poststratification/MRP.
+9. Estimate table for RR-aware Neural MRP.
 10. Fairness/subgroup metric section.
-11. Final evidence folder or plots from `experiments/outputs/final_neural_evidence/`.
+11. A generated final-evidence run folder from `experiments/outputs/<timestamp>/`, especially `summary_with_ci.csv`, `paired_comparisons.csv`, `ablations.csv` and plots if generated.
 
 ## Known limitations
 
 - The dashboard is an analyst tool, not a production election system.
 - True labels are allowed only for synthetic evaluation.
 - Real respondent JSONL exports should contain privatized answers only.
-- Neural MRP can overfit, underfit, or perform worse than linear MRP.
+- RR-aware Neural MRP can overfit, underfit, or perform worse than RR-aware linear poststratification/MRP.
 - Fairness metrics audit subgroup error; they do not guarantee fairness.
 - Local Differential Privacy protects answer values, not full anonymity.
-- The included final evidence pack is computationally constrained and should not be described as exhaustive full-preset evidence.
+- Smoke-test outputs are sanity checks only and should not be described as final evidence.
 
 ## Troubleshooting
 
@@ -293,21 +293,21 @@ Recommended screenshots:
 Install the dashboard dependencies:
 
 ```bash
-pip install -e ".[streamlit,ai]"
+pip install -e ".[dashboard,neural]"
 ```
 
 or the full development environment:
 
 ```bash
-pip install -e ".[dev,ai,streamlit,respondent]"
+pip install -e ".[dev]"
 ```
 
-### Neural MRP is unavailable
+### RR-aware Neural MRP is unavailable
 
 Install the AI dependency:
 
 ```bash
-pip install -e ".[ai,streamlit]"
+pip install -e ".[neural,dashboard]"
 ```
 
 ### Uploaded JSONL has no rows
@@ -320,7 +320,7 @@ respondent/data/responses.jsonl
 
 ### Post-stratification does not appear
 
-Upload `app/data/population.csv` and select matching post-stratification key columns.
+For the poll CSV, upload a file from `fixtures/synthetic_with_truth/`. If the dashboard asks for a population CSV, upload `app/data/population.csv` and select matching post-stratification key columns.
 
 ### Model fitting is slow
 

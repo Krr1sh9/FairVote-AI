@@ -13,28 +13,8 @@ from typing import Optional
 
 import numpy as np
 
-
-def rr_transition_matrix(eps: float, k: int) -> np.ndarray:
-    """
-    k-ary randomized response transition matrix A where:
-      A[s, r] = P(reported=r | stated=s, eps)
-
-    Standard k-ary RR:
-      P(keep)   = exp(eps) / (exp(eps) + k - 1)
-      P(other)  = 1 / (exp(eps) + k - 1), uniformly among the other k-1 categories
-    """
-    if k <= 1:
-        raise ValueError("k must be >= 2")
-    if eps <= 0:
-        raise ValueError("eps must be > 0")
-
-    ee = float(np.exp(eps))
-    p_keep = ee / (ee + (k - 1))
-    p_other = 1.0 / (ee + (k - 1))
-
-    A = np.full((k, k), p_other, dtype=float)
-    np.fill_diagonal(A, p_keep)
-    return A
+from fairvote.inference.mrp.likelihood import reported_label_likelihood, softmax_rows
+from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
 
 
 def validate_row_stochastic(M: np.ndarray, *, atol: float = 1e-6) -> None:
@@ -78,13 +58,6 @@ def shy_misreport_matrix(k: int, shy_category: int, honesty: float) -> np.ndarra
     validate_row_stochastic(M)
     return M
 
-
-def softmax_rows(Z: np.ndarray) -> np.ndarray:
-    """Numerically stable row-wise softmax for multinomial logits."""
-    Z = np.asarray(Z, dtype=float)
-    Z = Z - np.max(Z, axis=1, keepdims=True)
-    E = np.exp(Z)
-    return E / np.sum(E, axis=1, keepdims=True)
 
 
 @dataclass
@@ -168,23 +141,11 @@ class MisreportRRMultinomialModel:
             logits = Xb @ self.W            # (b, k)
             theta = softmax_rows(logits)    # (b, k)
 
-            # Gather composite channel column for each observed y:
-            # c_y[b, t] = C[t, y_b]
-            c_y = C[:, yb].T                # (b, k)
+            likelihood = reported_label_likelihood(theta, C, yb)
+            p = likelihood.observed_probs
 
-            # p_i = sum_t theta_it * C[t, y_i]
-            p = np.sum(theta * c_y, axis=1)  # (b,)
-            p = np.clip(p, 1e-12, None)
-
-            # dL/dtheta = -(c_y / p)
-            g_theta = -(c_y / p[:, None])   # (b, k)
-
-            # softmax backprop: g_logits = theta * (g_theta - sum(theta*g_theta))
-            s = np.sum(theta * g_theta, axis=1)           # (b,)
-            g_logits = theta * (g_theta - s[:, None])     # (b, k)
-
-            # Gradient for W
-            grad = (Xb.T @ g_logits) / Xb.shape[0]        # (d, k)
+            # Gradient for W; likelihood.grad_logits is already averaged over the batch.
+            grad = Xb.T @ likelihood.grad_logits          # (d, k)
             grad += self.l2 * self.W
 
             self.W -= lr * grad

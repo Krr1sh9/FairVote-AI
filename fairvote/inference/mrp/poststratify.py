@@ -1,66 +1,101 @@
-"""Post-stratification helpers for fitted RR-aware MRP models.
+"""Post-stratification helpers for fitted linear/neural MRP-style models."""
 
-Post-stratification applies model-predicted latent true-category probabilities
-to known or synthetic population cell counts. The fitted model remains
-responsible for the RR-aware observation model; this module only performs the
-population weighting step.
-"""
-
-# fairvote/inference/mrp/poststratify.py
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Dict, Optional, Protocol, Sequence
 
 import numpy as np
 
-from fairvote.inference.mrp.model import DesignInfo, RRMultinomialModel, build_design_matrix
+from fairvote.inference.mrp.design import DesignInfo, build_design_matrix
+
+
+class ThetaPredictor(Protocol):
+    """Protocol for fitted models that can predict latent probabilities."""
+
+    W: np.ndarray | None
+
+    def predict_theta(self, X: np.ndarray) -> np.ndarray: ...
 
 
 @dataclass(frozen=True)
 class PostStratResult:
-    """
-    Post-stratification outputs.
+    """Post-stratification outputs."""
 
-    - overall: np.ndarray shape (K,)
-    - by_feature: dict feature -> dict level_name -> np.ndarray shape (K,)
-    - cell_theta: np.ndarray shape (C, K) predicted theta for each poststrat cell
-    - cell_counts: np.ndarray shape (C,) counts for each cell
-    """
     overall: np.ndarray
     by_feature: Dict[str, Dict[str, np.ndarray]]
     cell_theta: np.ndarray
     cell_counts: np.ndarray
+    weights: np.ndarray
 
 
-def build_features_from_cells(
-    cells: np.ndarray,
-    by: Sequence[str],
-) -> Dict[str, np.ndarray]:
-    """
-    Convert poststrat cell matrix to a features dict.
-
-    Args:
-      cells: np.ndarray shape (C, d), integer-coded feature levels
-      by: list of feature names in the same order as columns of cells
-
-    Returns:
-      dict feature -> np.ndarray shape (C,)
-    """
-    cells = np.asarray(cells, dtype=int)
+def build_features_from_cells(cells: np.ndarray, by: Sequence[str]) -> Dict[str, np.ndarray]:
+    """Convert integer-coded poststratification cells to feature arrays."""
+    cells = np.asarray(cells)
     if cells.ndim != 2:
-        raise ValueError("cells must be a 2D array of shape (C, d).")
+        raise ValueError("cells must be a 2D array of shape (C, d)")
+    if cells.shape[0] == 0:
+        raise ValueError("cells cannot be empty")
     if cells.shape[1] != len(by):
-        raise ValueError("cells.shape[1] must equal len(by).")
+        raise ValueError("cells.shape[1] must equal len(by)")
+    if not np.all(np.isfinite(cells.astype(float))):
+        raise ValueError("cells contains NaN or infinite values")
+    if np.issubdtype(cells.dtype, np.floating) and not np.all(np.equal(cells, np.floor(cells))):
+        raise ValueError("cells must contain integer-coded categories")
+    cells_int = cells.astype(int, copy=False)
+    return {feature: cells_int[:, j].astype(int) for j, feature in enumerate(by)}
 
-    out: Dict[str, np.ndarray] = {}
-    for j, f in enumerate(by):
-        out[f] = cells[:, j].astype(int)
-    return out
+
+def _validate_cells_against_design(cells: np.ndarray, by: Sequence[str], design_info: DesignInfo) -> None:
+    by_list = list(by)
+    if len(by_list) != cells.shape[1]:
+        raise ValueError("len(by) must match cells.shape[1]")
+    missing = [feature for feature in design_info.feature_names if feature not in by_list]
+    if missing:
+        raise ValueError(
+            "Poststrat table does not contain all features used in training. "
+            f"Missing: {missing}. Available columns: {by_list}"
+        )
+    for feature in design_info.feature_names:
+        column = by_list.index(feature)
+        level_count = len(design_info.feature_levels[feature])
+        values = cells[:, column]
+        if np.any((values < 0) | (values >= level_count)):
+            raise ValueError(
+                f"Poststrat cells for feature '{feature}' contain values outside [0, {level_count - 1}]"
+            )
+
+
+def normalise_poststrat_weights(counts: np.ndarray, *, expected_n: int | None = None) -> np.ndarray:
+    """Validate counts and return weights that sum to one."""
+    weights = np.asarray(counts, dtype=float).reshape(-1)
+    if expected_n is not None and weights.size != int(expected_n):
+        raise ValueError("counts must have one entry per poststratification cell")
+    if weights.size == 0:
+        raise ValueError("counts cannot be empty")
+    if not np.all(np.isfinite(weights)):
+        raise ValueError("counts contains NaN or infinite values")
+    if np.any(weights < 0):
+        raise ValueError("counts must be non-negative")
+    total = float(np.sum(weights))
+    if total <= 0.0:
+        raise ValueError("counts must sum to > 0")
+    return weights / total
+
+
+def _normalise_distribution(p: np.ndarray, *, name: str) -> np.ndarray:
+    out = np.asarray(p, dtype=float).reshape(-1)
+    if not np.all(np.isfinite(out)):
+        raise ValueError(f"{name} contains NaN or infinite values")
+    out = np.clip(out, 0.0, 1.0)
+    total = float(np.sum(out))
+    if total <= 0.0:
+        raise ValueError(f"{name} sums to zero")
+    return out / total
 
 
 def poststratify(
-    model: RRMultinomialModel,
+    model: ThetaPredictor,
     *,
     cells: np.ndarray,
     counts: np.ndarray,
@@ -68,134 +103,79 @@ def poststratify(
     design_info: DesignInfo,
     include_features: Optional[Sequence[str]] = None,
 ) -> PostStratResult:
-    """
-    Post-stratify a fitted RRMultinomialModel using a poststratification table.
+    """Post-stratify a fitted model using integer-coded population cells."""
+    if getattr(model, "W", None) is None:
+        raise RuntimeError("Model must be fitted before poststratify()")
 
-    Inputs:
-      model: fitted RRMultinomialModel
-      cells: np.ndarray (C, d) integer-coded strata cells (d=len(by))
-      counts: np.ndarray (C,) population counts in each cell
-      by: the feature names corresponding to columns in `cells`
-      design_info: DesignInfo used for encoding (must match model training)
-      include_features: which single features to produce subgroup breakdowns for
-                        (default: all features in design_info.feature_names)
+    cells_arr = np.asarray(cells)
+    cell_features = build_features_from_cells(cells_arr, by)
+    cells_int = cells_arr.astype(int, copy=False)
+    _validate_cells_against_design(cells_int, by, design_info)
+    weights = normalise_poststrat_weights(counts, expected_n=cells_int.shape[0])
 
-    Outputs:
-      - overall distribution over true categories: sum_c count_c * theta(cell_c) / total
-      - subgroup distribution for each level of each selected feature:
-          sum_{c in subgroup} count_c * theta(cell_c) / sum_{c in subgroup} count_c
-
-    This is the classic MRP "P" step (Poststratification) after the "MR" modelling step.
-    """
-    if model.W is None:
-        raise RuntimeError("Model must be fitted before poststratify().")
-
-    cells = np.asarray(cells, dtype=int)
-    counts = np.asarray(counts, dtype=float)
-
-    if cells.ndim != 2:
-        raise ValueError("cells must be 2D (C, d).")
-    if counts.ndim != 1 or counts.size != cells.shape[0]:
-        raise ValueError("counts must be 1D with length equal to number of cells.")
-    if np.any(counts < 0):
-        raise ValueError("counts must be non-negative.")
-    total = float(np.sum(counts))
-    if total <= 0:
-        raise ValueError("counts must sum to > 0.")
-
-    if len(by) != cells.shape[1]:
-        raise ValueError("len(by) must match cells.shape[1].")
-
-    # Build cell features from the post-stratification table. These are
-    # population cells, not individual respondent records.
-    cell_features = build_features_from_cells(cells, by)
-
-    # Encode using the SAME feature ordering/levels as training
-    # We do this by creating a features dict containing all features in design_info.feature_names.
-    # If a training feature isn't in `by`, we cannot poststratify properly.
-    missing = [f for f in design_info.feature_names if f not in cell_features]
-    if missing:
-        raise ValueError(
-            "Poststrat table does not contain all features used in training.\n"
-            f"Missing: {missing}\n"
-            f"Available columns: {list(cell_features.keys())}\n"
-            "Fix: build poststrat_table(pop, by=[...]) including ALL training features."
-        )
-
-    # Ensure correct feature order + levels. Reusing the training encoding is
-    # essential: a different one-hot column order would silently change model
-    # interpretation even though the matrix shape might still look plausible.
-    X_cells, _info = build_design_matrix(
-        {f: cell_features[f] for f in design_info.feature_names},
+    X_cells, info = build_design_matrix(
+        {feature: cell_features[feature] for feature in design_info.feature_names},
         design_info.feature_levels,
         feature_order=design_info.feature_names,
         intercept=design_info.has_intercept,
     )
-    if _info.n_cols != design_info.n_cols:
-        raise RuntimeError("Design matrix columns mismatch (encoding inconsistency).")
+    if info.n_cols != design_info.n_cols:
+        raise RuntimeError("Design matrix columns mismatch (encoding inconsistency)")
 
-    cell_theta = model.predict_theta(X_cells)  # (C, K)
-    K = cell_theta.shape[1]
+    cell_theta = np.asarray(model.predict_theta(X_cells), dtype=float)
+    if cell_theta.ndim != 2 or cell_theta.shape[0] != cells_int.shape[0]:
+        raise ValueError("model.predict_theta returned an invalid matrix for population cells")
 
-    # Overall estimate: population-weighted average of cell-level latent
-    # probabilities.  This is the standard MRP "P" calculation.
-    overall = (counts[:, None] * cell_theta).sum(axis=0) / total
+    overall = _normalise_distribution((weights[:, None] * cell_theta).sum(axis=0), name="overall")
 
-    # Subgroup estimates: marginalise over all other features to obtain per-
-    # level distributions for each requested feature dimension.
     if include_features is None:
-        include_features = list(design_info.feature_names)
+        selected_features = list(design_info.feature_names)
     else:
-        include_features = list(include_features)
+        selected_features = list(include_features)
 
     by_feature: Dict[str, Dict[str, np.ndarray]] = {}
-    for feat in include_features:
-        if feat not in design_info.feature_levels:
+    by_list = list(by)
+    for feature in selected_features:
+        if feature not in design_info.feature_levels or feature not in by_list:
             continue
-        # Find which column in `cells` corresponds to this feature in `by`
-        if feat not in by:
-            continue
-        j = list(by).index(feat)
-        levels = design_info.feature_levels[feat]
-
-        sub_out: Dict[str, np.ndarray] = {}
-        for lvl_idx, lvl_name in enumerate(levels):
-            mask = (cells[:, j] == lvl_idx)
-            w = counts[mask]
-            tot = float(np.sum(w))
-            if tot <= 0:
+        column = by_list.index(feature)
+        levels = design_info.feature_levels[feature]
+        feature_out: Dict[str, np.ndarray] = {}
+        for level_idx, level_name in enumerate(levels):
+            mask = cells_int[:, column] == level_idx
+            if not np.any(mask):
                 continue
-            # Marginalise: weight only the cells belonging to this level,
-            # then renormalise by the level's total population mass.
-            est = (w[:, None] * cell_theta[mask]).sum(axis=0) / tot
-            sub_out[lvl_name] = est
-        by_feature[feat] = sub_out
+            level_weights = weights[mask]
+            level_total = float(np.sum(level_weights))
+            if level_total <= 0.0:
+                continue
+            estimate = (level_weights[:, None] * cell_theta[mask]).sum(axis=0) / level_total
+            feature_out[level_name] = _normalise_distribution(estimate, name=f"{feature}={level_name}")
+        by_feature[feature] = feature_out
 
     return PostStratResult(
         overall=overall.astype(float),
         by_feature=by_feature,
         cell_theta=cell_theta.astype(float),
-        cell_counts=counts.astype(float),
+        cell_counts=np.asarray(counts, dtype=float).reshape(-1),
+        weights=weights.astype(float),
     )
 
 
 def poststratify_overall_only(
-    model: RRMultinomialModel,
+    model: ThetaPredictor,
     *,
     cells: np.ndarray,
     counts: np.ndarray,
     by: Sequence[str],
     design_info: DesignInfo,
 ) -> np.ndarray:
-    """
-    Convenience wrapper: return only the overall post-stratified estimate.
-    """
-    res = poststratify(
+    """Return only the overall post-stratified distribution."""
+    return poststratify(
         model,
         cells=cells,
         counts=counts,
         by=by,
         design_info=design_info,
         include_features=[],
-    )
-    return res.overall
+    ).overall

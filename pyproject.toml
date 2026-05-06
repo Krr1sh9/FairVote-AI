@@ -6,17 +6,221 @@ build-backend = "setuptools.build_meta"
 name = "fairvote-ai"
 version = "1.0.0"
 description = "FairVote-AI: AI-assisted privacy-preserving polling with RR-aware MRP"
-requires-python = ">=3.14,<3.15"
-dependencies = ["numpy"]
-
-[tool.setuptools.packages.find]
-include = ["fairvote*", "experiments*", "respondent*"]
+readme = "README.md"
+requires-python = "==3.14.*"
+license = "MIT"
+authors = [{ name = "FairVote-AI Project" }]
+keywords = [
+    "local-differential-privacy",
+    "randomized-response",
+    "mrp",
+    "polling",
+    "privacy-preserving-analytics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.24,<3",
+]
 
 [project.scripts]
 fairvote = "fairvote.cli:main"
 
 [project.optional-dependencies]
-ai = ["torch"]
-dev = ["pytest"]
-respondent = ["flask", "gunicorn"]
-streamlit = ["streamlit", "matplotlib"]
+# Development/test environment. This intentionally includes all optional runtime
+# dependencies needed by the current test suite so `pip install -e .[dev]` is
+# sufficient for full local verification without missing imports.
+dev = [
+    "pytest>=8,<10",
+    "pytest-cov>=5,<8",
+    "hypothesis>=6.100,<7",
+    "ruff>=0.5,<1",
+    "mypy>=1.10,<2",
+    "pandas>=2.0,<3",
+    "matplotlib>=3.7,<4",
+    "flask>=3,<4",
+    "flask-cors>=4,<7",
+    "gunicorn>=21,<24; platform_system != 'Windows'",
+    "streamlit>=1.30,<2",
+    "torch>=2.2,<3",
+]
+
+# Respondent collection server / browser prototype.
+respondent = [
+    "flask>=3,<4",
+    "flask-cors>=4,<7",
+    "gunicorn>=21,<24; platform_system != 'Windows'",
+]
+server = [
+    "flask>=3,<4",
+    "flask-cors>=4,<7",
+    "gunicorn>=21,<24; platform_system != 'Windows'",
+]
+
+# Streamlit analyst dashboard.
+dashboard = [
+    "streamlit>=1.30,<2",
+    "matplotlib>=3.7,<4",
+]
+streamlit = [
+    "streamlit>=1.30,<2",
+    "matplotlib>=3.7,<4",
+]
+
+# Neural RR-aware MRP / PyTorch component.
+neural = [
+    "torch>=2.2,<3",
+]
+ai = [
+    "torch>=2.2,<3",
+]
+
+# Experiment scripts and evidence summarisation. Add `neural` when running the
+# PyTorch neural-MRP experiment path.
+experiments = [
+    "pandas>=2.0,<3",
+    "matplotlib>=3.7,<4",
+]
+
+
+# Optional browser-level respondent privacy tests. Install browsers separately with:
+#   python -m playwright install chromium
+browser = [
+    "playwright>=1.45,<2",
+    "pytest-playwright>=0.5,<1",
+]
+
+# Full runtime environment for reviewers who want every command to work.
+all = [
+    "pandas>=2.0,<3",
+    "matplotlib>=3.7,<4",
+    "flask>=3,<4",
+    "flask-cors>=4,<7",
+    "gunicorn>=21,<24; platform_system != 'Windows'",
+    "streamlit>=1.30,<2",
+    "torch>=2.2,<3",
+]
+
+[tool.setuptools.packages.find]
+include = ["fairvote*", "experiments*", "respondent*", "app*"]
+
+[tool.setuptools.package-data]
+respondent = ["index.html", "poll_config.json", "static/*"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+]
+markers = [
+    "slow: slow integration tests (set FV_RUN_SLOW=1 to enable)",
+    "integration: end-to-end tests over multiple project layers",
+    "browser: optional Playwright browser tests (set FV_RUN_BROWSER=1 and install browsers)",
+    "property: Hypothesis/property-based invariant tests",
+    "statistical: tests of stochastic/statistical invariants",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["fairvote", "experiments", "respondent", "app"]
+omit = [
+    # Generated/test artefacts.
+    "*/__pycache__/*",
+    "*/tests/*",
+    "experiments/outputs/*",
+
+    # Legacy wrappers and generated-report/plot/CLI surfaces are verified by
+    # smoke/evidence jobs rather than counted against the fast unit-test
+    # coverage gate.  Core privacy, MRP, respondent, experiment-pipeline and
+    # dashboard parsing/service logic remain in coverage.
+    "experiments/legacy/*",
+    "experiments/build_results_bundle.py",
+    "experiments/generate_poll_csv.py",
+    "experiments/make_report_tables.py",
+    "experiments/recommend_from_summary.py",
+    "experiments/sanity_run.py",
+    "experiments/sensitivity_analysis.py",
+    "experiments/summarise_learned_honesty.py",
+    "experiments/sweep_eps.py",
+    "experiments/write_publication_result.py",
+    "experiments/write_results_summary_md.py",
+    "experiments/pipeline/plotting.py",
+
+    # UI/entrypoint layers are covered by syntax/import/manual/browser checks;
+    # pure dashboard parsing/service modules remain measured.
+    "app/data/*",
+    "app/ui/*",
+    "app/controllers/*",
+    "app/plotting/*",
+    "app/streamlit_app.py",
+    "app/services/runs.py",
+    "app/services/scenario.py",
+
+    # Entrypoint/compatibility wrappers.
+    "fairvote/__main__.py",
+    "fairvote/main.py",
+    "fairvote/cli.py",
+    "fairvote/inference/mrp/rr_mrp_fit.py",
+    "respondent/server.py",
+    "respondent/static/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+precision = 2
+fail_under = 60
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 120
+extend-exclude = [
+    "experiments/outputs",
+    "app/data",
+    "respondent/data",
+    "**/__pycache__",
+]
+
+[tool.ruff.lint]
+# Professional CI lint: syntax/undefined names plus import hygiene and common correctness rules.
+select = ["E9", "F", "I", "UP", "B", "C4", "SIM"]
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/streamlit_app.py" = ["F401", "F841"]
+"experiments/mrp_vs_baselines.py" = ["F841"]
+"tests/*.py" = ["F401", "F811"]
+
+[tool.mypy]
+python_version = "3.14"
+warn_unused_configs = true
+ignore_missing_imports = true
+show_error_codes = true
+pretty = true
+# Strict-ish typing gate: check function bodies even where legacy modules are
+# only partially annotated, while avoiding a disruptive full-strict migration.
+check_untyped_defs = true
+disallow_untyped_defs = false
+no_implicit_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+exclude = [
+    "experiments/outputs/",
+    "app/data/",
+    "respondent/data/",
+]

@@ -1,0 +1,4 @@
+# Reproducible review/development environment entry point.
+# This delegates dependency versions and extras to pyproject.toml so the install
+# surface is defined in one place.
+-e .[dev]

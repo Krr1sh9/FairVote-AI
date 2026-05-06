@@ -1,95 +1,93 @@
-# fairvote/inference/mrp/__init__.py
-"""
-MRP (Multilevel Regression and Poststratification) components for FairVote-AI.
+"""MRP-style estimators and post-stratification utilities for FairVote-AI.
 
-This module provides:
-- One-hot design matrix building for categorical demographics
-- Privacy-aware multinomial model trained directly on k-ary RR reports
-- Poststratification utilities to convert model predictions + population cell counts
-  into overall and subgroup estimates
+Canonical linear path
+---------------------
+The repository's authoritative linear RR-aware MRP implementation is
+:class:`LinearRRMRPModel` in :mod:`fairvote.inference.mrp.linear`.  It is a
+regularised multinomial regression fitted through the k-ary Randomized Response
+observation channel, followed by post-stratification.  It is intentionally named
+and documented as MRP-style rather than a full hierarchical Bayesian MRP model.
 """
 
-from fairvote.inference.mrp.model import (
-    DesignInfo,
+from fairvote.inference.mrp.design import DesignInfo, DesignMatrix, FeatureSpec, build_design_matrix
+from fairvote.inference.mrp.diagnostics import FitDiagnostics, FitInfo
+from fairvote.inference.mrp.hierarchical import HierarchicalFeatureInfo, HierarchicalRRMRPModel
+from fairvote.inference.mrp.linear import (
+    LinearRRMRPModel,
+    MRPRRMultinomialModel,
     RRMultinomialModel,
-    build_design_matrix,
+    softmax_rows,
 )
 from fairvote.inference.mrp.poststratify import (
     PostStratResult,
     build_features_from_cells,
+    normalise_poststrat_weights,
     poststratify,
     poststratify_overall_only,
 )
+from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
 
 __all__ = [
     "DesignInfo",
-    "RRMultinomialModel",
+    "DesignMatrix",
+    "FeatureSpec",
     "build_design_matrix",
+    "FitDiagnostics",
+    "FitInfo",
+    "HierarchicalFeatureInfo",
+    "HierarchicalRRMRPModel",
+    "LinearRRMRPModel",
+    "MRPRRMultinomialModel",
+    "RRMultinomialModel",
+    "softmax_rows",
     "PostStratResult",
     "build_features_from_cells",
+    "normalise_poststrat_weights",
     "poststratify",
     "poststratify_overall_only",
+    "rr_transition_matrix",
 ]
 
-from fairvote.inference.mrp.misreport_rr import (
+from fairvote.inference.mrp.misreport_rr import (  # noqa: E402
     MisreportRRMultinomialModel,
     identity_misreport,
     shy_misreport_matrix,
-    rr_transition_matrix,
 )
 
 __all__ += [
     "MisreportRRMultinomialModel",
     "identity_misreport",
     "shy_misreport_matrix",
-    "rr_transition_matrix",
 ]
 
-from fairvote.inference.mrp.learned_misreport_rr import LearnedShyMisreportRRMultinomialModel
+from fairvote.inference.mrp.learned_misreport_rr import LearnedShyMisreportRRMultinomialModel  # noqa: E402
 
-__all__ += [
-    "LearnedShyMisreportRRMultinomialModel",
-]
+__all__ += ["LearnedShyMisreportRRMultinomialModel"]
 
-from .rr_mrp_fit import (
-    MRPRRMultinomialModel,
-    DesignMatrix,
-    fit_rr_mrp_from_rows,
-)
+from fairvote.inference.mrp.rr_mrp_fit import fit_rr_mrp_from_rows  # noqa: E402
 
-__all__ += [
-    "MRPRRMultinomialModel",
-    "DesignMatrix",
-    "fit_rr_mrp_from_rows",
-]
+__all__ += ["fit_rr_mrp_from_rows"]
 
-
-# Neural model names that are resolved lazily via __getattr__.  This set is
-# kept separate from __all__ because importing PyTorch is expensive and
-# optional; callers who only need the linear models should not pay that cost.
 _NEURAL_EXPORTS = {
     "RRNeuralMRPFitInfo",
     "RRNeuralMRPModel",
     "NeuralRRMRPFitInfo",
     "NeuralRRMRPModel",
+    "RRNeuralMRPEnsemble",
+    "fit_rr_neural_mrp_ensemble",
 }
 
 
 def __getattr__(name: str):
-    """Lazily import the PyTorch neural MRP model only when requested.
-
-    Importing the base MRP package should not eagerly import PyTorch. The neural
-    model remains available as ``fairvote.inference.mrp.RRNeuralMRPModel`` and
-    through the explicit module ``fairvote.inference.mrp.rr_neural_mrp``. It is
-    intentionally not included in ``__all__`` so ``from fairvote.inference.mrp
-    import *`` does not force an optional PyTorch import.
-    """
+    """Lazily import the optional PyTorch neural MRP implementation."""
     if name in _NEURAL_EXPORTS:
         from fairvote.inference.mrp.rr_neural_mrp import (
-            RRNeuralMRPFitInfo,
-            RRNeuralMRPModel,
             NeuralRRMRPFitInfo,
             NeuralRRMRPModel,
+            RRNeuralMRPFitInfo,
+            RRNeuralMRPModel,
+            RRNeuralMRPEnsemble,
+            fit_rr_neural_mrp_ensemble,
         )
 
         mapping = {
@@ -97,6 +95,8 @@ def __getattr__(name: str):
             "RRNeuralMRPModel": RRNeuralMRPModel,
             "NeuralRRMRPFitInfo": NeuralRRMRPFitInfo,
             "NeuralRRMRPModel": NeuralRRMRPModel,
+            "RRNeuralMRPEnsemble": RRNeuralMRPEnsemble,
+            "fit_rr_neural_mrp_ensemble": fit_rr_neural_mrp_ensemble,
         }
         globals().update(mapping)
         return mapping[name]

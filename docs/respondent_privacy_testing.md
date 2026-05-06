@@ -15,8 +15,7 @@ The server should receive only:
 ```
 
 The browser must not send `true_answer` or other true/raw answer fields such as
-`true_choice`, `selected_answer`, or `raw_vote`, and the server rejects any
-request that contains them.
+`true_choice`, `selected_answer`, `selectedOption`, `raw_vote`, or `raw_answer`, and the server rejects any request that contains them anywhere in the JSON payload, including nested objects/lists.
 
 ## Duplicate-submission guard
 
@@ -87,7 +86,7 @@ To repeat the manual test in the same browser, clear site data/localStorage or
 use a private browsing window. This is expected because the app blocks accidental
 repeat submission using a localStorage guard.
 
-## Manual test: server rejects true_answer
+## Manual test: server rejects raw-answer fields
 
 Run this while the server is running.
 
@@ -109,12 +108,23 @@ curl -i -X POST "http://127.0.0.1:5001/api/respond" \
   --data-binary '{"true_answer":1,"perturbed_answer":2,"demographics":{"age_group":"18-29"}}'
 ```
 
-Expected result: HTTP 400 with an error message saying the true answer must not
-be sent to the server.
+Expected result: HTTP 400 with an error message saying the true/raw answer must not be sent to the server. Repeat the same check with a nested payload such as `{"perturbed_answer":2,"metadata":{"raw_answer":1}}`; this should also be rejected before storage.
+
+## Manual test: analyst export requires a bearer token
+
+By default, `/api/responses` is disabled because it exposes one record per respondent. To test authorised export locally:
+
+```bash
+export FAIRVOTE_ANALYST_TOKEN="dev-secret"
+python respondent/server.py --port 5001
+curl -i http://127.0.0.1:5001/api/responses
+curl -i -H "Authorization: Bearer dev-secret" http://127.0.0.1:5001/api/responses
+```
+
+The first request should return `401`; the second should return stored perturbed records. Use `/api/results` for aggregate-only output when you do not need individual-level exports.
 
 ## Service worker cache note
 
-The service worker intentionally avoids caching `index.html`, `/api/config`, and
-`/static/rr.js` with a cache-first strategy. This prevents stale JavaScript from
+The service worker intentionally avoids caching `index.html`, `/api/config`, `/static/rr.js`, `/static/app.js`, and `/static/styles.css` with a cache-first strategy. This prevents stale JavaScript from
 hiding changes to the Randomized Response implementation during development and
 assessment.

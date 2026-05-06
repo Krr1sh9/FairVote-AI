@@ -1,0 +1,152 @@
+{
+  "privacy_ratio": 2.718281828459045,
+  "exp_epsilon": 2.718281828459045,
+  "privacy_ratio_matches_exp_epsilon": true,
+  "expected_report_distribution": [
+    0.25626766067771467,
+    0.21278810469948062,
+    0.19488475812020772,
+    0.1744237906010388,
+    0.16163568590155816
+  ],
+  "unbiasedness": {
+    "theta": [
+      0.42,
+      0.25,
+      0.18,
+      0.1,
+      0.05
+    ],
+    "epsilon": 1.0,
+    "n": 900,
+    "reps": 40,
+    "clip": false,
+    "renormalize": false,
+    "mean_estimate": [
+      0.41917069367531956,
+      0.24344315038162923,
+      0.18099362170803718,
+      0.10952963933025714,
+      0.04686289490475691
+    ],
+    "bias": [
+      -0.0008293063246804233,
+      -0.006556849618370775,
+      0.0009936217080371845,
+      0.009529639330257134,
+      -0.0031371050952430923
+    ],
+    "max_abs_bias": 0.009529639330257134,
+    "empirical_variance": [
+      0.002472808115213244,
+      0.0021031378439336883,
+      0.0018008662204253888,
+      0.0021098039101555446,
+      0.001965461194923304
+    ],
+    "analytic_variance": [
+      0.0032373943409761572,
+      0.002845274207083539,
+      0.002665146308814029,
+      0.0024459525203155423,
+      0.002301734180281765
+    ]
+  },
+  "coverage": {
+    "theta": [
+      0.42,
+      0.25,
+      0.18,
+      0.1,
+      0.05
+    ],
+    "epsilon": 1.0,
+    "n": 450,
+    "reps": 8,
+    "n_boot": 250,
+    "marginal_coverage": [
+      0.875,
+      1.0,
+      1.0,
+      1.0,
+      0.875
+    ],
+    "min_marginal_coverage": 0.875
+  },
+  "epsilon_k_grid": [
+    {
+      "k": 2,
+      "epsilon": 0.2,
+      "privacy_ratio": 1.2214027581601699,
+      "exp_epsilon": 1.2214027581601699,
+      "privacy_ratio_abs_error": 0.0,
+      "inverse_recovery_l1": 2.220446049250313e-16
+    },
+    {
+      "k": 2,
+      "epsilon": 0.5,
+      "privacy_ratio": 1.6487212707001282,
+      "exp_epsilon": 1.6487212707001282,
+      "privacy_ratio_abs_error": 0.0,
+      "inverse_recovery_l1": 1.6653345369377348e-16
+    },
+    {
+      "k": 2,
+      "epsilon": 1.0,
+      "privacy_ratio": 2.7182818284590455,
+      "exp_epsilon": 2.718281828459045,
+      "privacy_ratio_abs_error": 4.440892098500626e-16,
+      "inverse_recovery_l1": 1.6653345369377348e-16
+    },
+    {
+      "k": 2,
+      "epsilon": 2.0,
+      "privacy_ratio": 7.3890560989306495,
+      "exp_epsilon": 7.38905609893065,
+      "privacy_ratio_abs_error": 8.881784197001252e-16,
+      "inverse_recovery_l1": 0.0
+    },
+    {
+      "k": 5,
+      "epsilon": 0.2,
+      "privacy_ratio": 1.2214027581601699,
+      "exp_epsilon": 1.2214027581601699,
+      "privacy_ratio_abs_error": 0.0,
+      "inverse_recovery_l1": 6.38378239159465e-16
+    },
+    {
+      "k": 5,
+      "epsilon": 0.5,
+      "privacy_ratio": 1.648721270700128,
+      "exp_epsilon": 1.6487212707001282,
+      "privacy_ratio_abs_error": 2.220446049250313e-16,
+      "inverse_recovery_l1": 5.551115123125783e-16
+    },
+    {
+      "k": 5,
+      "epsilon": 1.0,
+      "privacy_ratio": 2.718281828459045,
+      "exp_epsilon": 2.718281828459045,
+      "privacy_ratio_abs_error": 0.0,
+      "inverse_recovery_l1": 1.6653345369377348e-16
+    },
+    {
+      "k": 5,
+      "epsilon": 2.0,
+      "privacy_ratio": 7.389056098930649,
+      "exp_epsilon": 7.38905609893065,
+      "privacy_ratio_abs_error": 1.7763568394002505e-15,
+      "inverse_recovery_l1": 1.1102230246251565e-16
+    }
+  ],
+  "max_grid_privacy_ratio_abs_error": 1.7763568394002505e-15,
+  "max_grid_inverse_recovery_l1": 6.38378239159465e-16,
+  "clipping_bias": {
+    "epsilon": 0.5,
+    "n": 450,
+    "reps": 20,
+    "unclipped_max_abs_bias": 0.034210223548609836,
+    "clipped_renormalized_max_abs_bias": 0.05303978279970656,
+    "bias_increase_from_clipping": 0.018829559251096722
+  }
+}

@@ -3,9 +3,9 @@
 // Cache policy is deliberately conservative. During development and marking,
 // stale index.html or rr.js could hide changes to the Randomized Response code,
 // which is exactly the boundary an examiner is likely to inspect carefully.
-// so navigations, /static/rr.js, and API requests use the network first.
+// so navigations, /static/rr.js, /static/app.js, /static/styles.css, and API requests use the network first.
 // Cache version is bumped whenever the RR logic or poll UI changes.
-const CACHE_NAME = 'fairvote-cache-v3-no-stale-rr';
+const CACHE_NAME = 'fairvote-cache-v4-no-stale-client-assets';
 const STATIC_CACHE_URLS = [
   '/static/manifest.json',
   '/static/fairvote_icon.png'
@@ -47,10 +47,12 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Avoid stale poll UI/config/RR JavaScript during development and assessment.
+  // Avoid stale poll UI/config/client JavaScript/CSS during development and assessment.
   if (url.pathname === '/' ||
       url.pathname === '/index.html' ||
       url.pathname === '/static/rr.js' ||
+      url.pathname === '/static/app.js' ||
+      url.pathname === '/static/styles.css' ||
       url.pathname === '/api/config') {
     event.respondWith(networkFirst(event.request));
     return;

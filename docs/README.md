@@ -1,128 +1,101 @@
 # FairVote-AI Documentation
 
-FairVote-AI is an AI-assisted privacy-preserving polling framework for studying privacy, utility, and subgroup fairness under Local Differential Privacy.
-
-The privacy mechanism is k-ary Randomized Response. Randomized Response is not AI; it is the local privacy layer that perturbs each respondent's answer before collection. The AI component is the RR-aware Neural MRP model, which learns a nonlinear relationship between demographic features and latent vote intention while training only on privatized reported answers.
+FairVote-AI is a final-year research prototype for privacy-preserving polling under Local Differential Privacy. The documentation is organised so an examiner can inspect the problem, design, privacy boundary, test evidence, experiment protocol, and result interpretation without relying on repeated explanations across multiple files.
 
 ## Quick start
 
-### Prerequisites
-
-- Python 3.14.4
-- pip
-- PyTorch only for neural MRP experiments or neural dashboard inference
-
 ### Installation
 
-The supported final-submission setup is Python 3.14.4 with the full development, AI, dashboard, and respondent extras.
-
-Windows PowerShell from the project root:
-
-```powershell
-py -3.14 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -e ".[dev,ai,streamlit,respondent]"
-```
-
-macOS/Linux from the project root:
+FairVote-AI supports Python 3.14. From the project root:
 
 ```bash
 python3.14 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-pip install -e ".[dev,ai,streamlit,respondent]"
+pip install -e ".[dev]"
 ```
 
-Optional narrower installs are available for specific tasks, but the command above is the supported all-in-one setup for final verification.
+Windows PowerShell:
 
-### Running the analyst dashboard
+```powershell
+py -3.14 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -e ".[dev]"
+```
+
+Narrower installs:
 
 ```bash
+pip install -e .                         # core library only
+pip install -e ".[dashboard]"            # Streamlit dashboard
+pip install -e ".[respondent]"           # Flask respondent app
+pip install -e ".[neural]"               # PyTorch RR-aware Neural MRP
+pip install -e ".[experiments]"          # experiment tooling
+pip install -e ".[experiments,neural]"   # neural experiments
+pip install -e ".[all]"                  # all runtime extras, no dev tools
+```
+
+Legacy aliases are preserved: `streamlit` for `dashboard`, `server` for `respondent`, and `ai` for `neural`.
+
+### Common commands
+
+```bash
+python -m pytest -q
 streamlit run app/streamlit_app.py
-```
-
-### Running the respondent server
-
-```bash
 python respondent/server.py --port 5001
+python -m experiments.mrp_vs_baselines --preset smoke_test
+python -m experiments.mrp_vs_baselines --preset final_evidence
 ```
 
-Open `http://localhost:5001`. Edit `respondent/poll_config.json` to configure the question, options, demographic fields, and privacy parameter epsilon.
+For the Streamlit dashboard **Upload & Estimate** tab, use a poll CSV from `fixtures/synthetic_with_truth/`. Those fixtures contain `reported_choice` plus evaluation-only `true_choice`. If the dashboard asks for a population CSV, use `app/data/population.csv`.
 
-### Running experiments
+`smoke_test` is a fast sanity check only. `final_evidence` is the preferred repeated-trial evidence preset.
 
-```bash
-# LDP / central-DP epsilon sweep
-python -m experiments.sweep_eps --trials 20 --eps "0.1,0.5,1.0,2.0,4.0"
-
-# MRP and baseline comparison; neural MRP requires the ai extra/PyTorch
-python -m experiments.mrp_vs_baselines
-
-# Dedicated neural-justification experiment: fast smoke preset
-python -m experiments.evaluate_neural_mrp --preset small
-
-# Dedicated neural-justification experiment: preferred full preset
-python -m experiments.evaluate_neural_mrp --preset full
-```
-
-Results are saved to `experiments/outputs/<timestamp>/`.
-
-### Running tests
-
-```bash
-python -m pytest tests/ -q
-```
-
-## Documentation map
+## Canonical documentation map
 
 | File | Purpose |
 |---|---|
-| `architecture.md` | System architecture and module map |
-| `ai_component.md` | Precise explanation of the RR-aware Neural MRP model |
-| `ethics_and_privacy.md` | Privacy, ethics, limitations, and sustainability |
-| `reproducing_experiments.md` | Commands and outputs for experiments |
-| `api_reference.md` | Respondent server API |
-| `dashboard_manual_test.md` | Beginner-safe manual verification checklist for dashboard uploads, inference methods, evidence checks, and demo screenshots |
-| `respondent_manual_test.md` | Beginner-safe manual verification checklist for the respondent web app |
+| `problem_definition_and_background.md` | Canonical problem definition, academic background, aims, objectives, research questions, scope and references. |
+| `requirements.md` | Formal functional, non-functional, privacy, evaluation, usability and reproducibility requirements. |
+| `requirements_traceability.md` | Maps requirements to code, tests, evidence outputs, and marking-scheme relevance. |
+| `project_plan.md` | Milestones, deliverables, dependencies, current status and remaining work. |
+| `risk_register.md` | Five-column risk register with likelihood, severity and mitigation actions. |
+| `experiment_protocol.md` | Canonical protocol for research questions, hypotheses, scenarios, baselines, metrics, seeds, success criteria and failure rules. |
+| `test_plan.md` | Canonical unit/property/statistical/integration/browser/experiment-regression test plan and coverage gaps. |
+| `privacy_boundary.md` | Canonical explanation of client-side privatisation, server storage/rejection rules, endpoint boundaries and limitations. |
+| `reproducibility_status.md` | Current Python compatibility, evidence provenance and local verification limitations. |
+| `design_decisions.md` | Decision records covering major engineering and research choices. |
+| `evidence_interpretation.md` | How to interpret L1 error, subgroup error, calibration, runtime, neural-vs-linear deltas and synthetic-data limitations. |
+| `research_contribution.md` | Research framing for when RR-aware Neural MRP should or should not improve over linear baselines. |
+| `mrp_canonical.md` | Canonical RR-aware linear poststratification/MRP-style implementation, naming, validation and diagnostics. |
+| `neural_rr_mrp_diagnostics.md` | RR-aware Neural MRP objective, validation NLL, early stopping, calibration and metadata. |
+| `ai_component.md` | High-level explanation of what the AI component is and is not. |
+| `architecture.md` | Whole-system architecture and module map. |
+| `experiment_pipeline_architecture.md` | Modular experiment pipeline and method registry. |
+| `dashboard_architecture.md` | Refactored dashboard module structure. |
+| `api_reference.md` | Respondent server API and environment variables. |
+| `reproducing_experiments.md` | Practical commands for regenerating evidence. |
+| `ethics_and_privacy.md` | Broader ethics, privacy and sustainability discussion; links to `privacy_boundary.md`. |
+| `dashboard_manual_test.md` | Manual dashboard verification checklist. |
+| `respondent_manual_test.md` | Manual respondent app verification checklist. |
+| `respondent_privacy_testing.md` | Additional manual respondent privacy checks. |
+| `consistency_audit.md` | Final terminology, stale-reference and claim-support audit. |
 
-## Key components
+## Canonical explanations to avoid repetition
 
-- **Local Differential Privacy**: k-ary Randomized Response with unbiased RR debiasing estimator.
-- **AI inference**: RR-aware Neural MRP trained on privatized reported labels through the RR observation model.
-- **Statistical baselines**: RR debiasing and linear RR-aware MRP.
-- **Bias scenarios**: nonresponse, shy-voter misreporting, and privacy-helps-honesty simulations.
-- **Fairness metrics**: worst-group, weighted, p90, error ratio, and correct-winner metrics.
-- **Dashboard**: Streamlit interface for uploaded real or synthetic polling data.
+Use these files as the source of truth:
 
-## Final neural-MRP evidence interpretation
+- Problem definition and academic background: `problem_definition_and_background.md`
+- Privacy boundary: `privacy_boundary.md`
+- Experiment design: `experiment_protocol.md`
+- Test strategy: `test_plan.md`
+- Evidence interpretation: `evidence_interpretation.md`
+- Formal requirements: `requirements.md`
+- Requirements-to-evidence mapping: `requirements_traceability.md`
+- Project plan: `project_plan.md`
+- Risk register: `risk_register.md`
+- Major design decisions: `design_decisions.md`
+- Final consistency audit: `consistency_audit.md`
 
-The included evidence pack is located at:
-
-```text
-experiments/outputs/final_neural_evidence/
-```
-
-It contains `config.json`, raw trial results, summary tables, neural-vs-baseline comparisons, method rankings, verdict files, and plots. This is **computationally constrained final-style evidence**, not the exhaustive full preset. It uses all four epsilon values and all four bias scenarios, but only one trial per condition and reduced model training steps.
-
-The generated evidence shows that neural RR-MRP is a real privacy-compatible AI estimator, but it is not generally superior to the simpler linear RR-aware MRP baseline in this run; note that the raw reported distribution is an uncorrected descriptive baseline over privatized reports:
-
-| Method | Mean overall L1 ↓ | Winner correctness ↑ | Mean runtime sec ↓ |
-|---|---:|---:|---:|
-| Raw reported distribution | **0.163** | 0.250 | 0.000 |
-| RR debiasing | 0.430 | 0.250 | 0.001 |
-| Linear RR-aware MRP | 0.176 | 0.344 | 0.005 |
-| Neural RR-aware MRP | 0.204 | 0.125 | 0.030 |
-| Misreport-aware RR-MRP | 0.211 | **0.906** | 0.768 |
-| Learned misreport RR-MRP | 0.229 | 0.094 | 0.006 |
-
-The correct conclusion is conditional: neural RR-MRP is a valid AI-assisted extension, but added neural complexity is not automatically justified. In the included evidence pack, among RR-aware corrected/model-based estimators, linear RR-aware MRP is stronger overall, while neural RR-MRP is useful mainly as an evaluated privacy-compatible alternative.
-
-## Important limitations
-
-The neural model is not assumed to be better. It is evaluated against simpler baselines because added model complexity must be justified empirically. Synthetic results are not proof of real election accuracy, and fairness metrics audit disparities rather than guaranteeing fairness. The included evidence pack is computationally constrained, so it should be described as final-style evidence for this submission rather than as an exhaustive full-preset result.
-
-
-## Respondent app privacy testing
-
-See [`dashboard_manual_test.md`](dashboard_manual_test.md) for a beginner-safe dashboard verification checklist. See [`respondent_manual_test.md`](respondent_manual_test.md) for a beginner-safe respondent app verification checklist. See [`respondent_privacy_testing.md`](respondent_privacy_testing.md) for additional manual checks covering browser-side Randomized Response, the localStorage duplicate-submission guard, debug/audit mode, and server rejection of `true_answer` / true raw-answer fields.
+Other documents should link to these rather than re-stating the same material.

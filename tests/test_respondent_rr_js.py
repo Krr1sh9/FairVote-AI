@@ -5,12 +5,15 @@ that implementation directly with Node when Node is available.
 """
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
 import textwrap
 from pathlib import Path
 
 import pytest
+
+from fairvote.privacy.mechanisms.kary_rr import rr_params
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,21 +60,31 @@ def _run_node(script: str) -> str:
     return result.stdout.strip()
 
 
-def test_rr_params_match_kary_rr_formula() -> None:
-    # Verify that the JavaScript pKeep and pFlip match the analytic k-ary RR
-    # formula: pKeep = e^eps / (e^eps + k - 1).  Any discrepancy would mean
-    # the browser and server use different privacy channels.
+def test_rr_params_match_python_canonical_channel() -> None:
+    # Shared fixture: Python is the canonical RR channel for analysis, while
+    # browser-side JavaScript is preserved for local client randomisation.
+    # The two implementations must agree on probabilities for every tested
+    # epsilon/k pair.
+    cases = []
+    for eps, k in [(0.05, 3), (0.2, 4), (1.0, 6), (2.5, 8), (10.0, 5)]:
+        params = rr_params(eps, k)
+        cases.append({"epsilon": eps, "k": k, "pKeep": params.p_keep, "pFlip": params.p_flip})
+    payload = json.dumps(cases)
+
     script = textwrap.dedent(
         f"""
         global.crypto = require('crypto').webcrypto;
         const {{ rrParams }} = require({str(RR_JS)!r});
-        const eps = 1.0;
-        const k = 6;
-        const params = rrParams(eps, k);
-        const expectedKeep = Math.exp(eps) / (Math.exp(eps) + k - 1);
-        const expectedFlip = 1 / (Math.exp(eps) + k - 1);
-        if (Math.abs(params.pKeep - expectedKeep) > 1e-12) throw new Error('bad pKeep');
-        if (Math.abs(params.pFlip - expectedFlip) > 1e-12) throw new Error('bad pFlip');
+        const cases = {payload};
+        for (const c of cases) {{
+          const actual = rrParams(c.epsilon, c.k);
+          if (Math.abs(actual.pKeep - c.pKeep) > 1e-12) {{
+            throw new Error(`bad pKeep for eps=${{c.epsilon}}, k=${{c.k}}`);
+          }}
+          if (Math.abs(actual.pFlip - c.pFlip) > 1e-12) {{
+            throw new Error(`bad pFlip for eps=${{c.epsilon}}, k=${{c.k}}`);
+          }}
+        }}
         console.log('ok');
         """
     )

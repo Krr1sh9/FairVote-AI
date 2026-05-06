@@ -1,0 +1,201 @@
+respondent_id,region,age_band,true_choice,stated_choice,reported_choice,epsilon,k,scenario,shy_category,honesty
+1,Midlands,55-64,2,2,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+2,Scotland,18-24,0,0,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+3,Scotland,55-64,3,3,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+4,Wales,35-44,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+5,South East,25-34,2,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+6,London,65+,0,0,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+7,North West,55-64,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+8,South East,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+9,London,35-44,0,0,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+10,North West,45-54,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+11,Wales,45-54,1,1,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+12,London,55-64,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+13,Midlands,25-34,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+14,Midlands,45-54,0,0,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+15,London,65+,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+16,London,65+,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+17,London,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+18,North West,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+19,Scotland,65+,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+20,North West,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+21,Midlands,25-34,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+22,Scotland,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+23,Midlands,25-34,3,3,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+24,Midlands,55-64,3,3,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+25,Midlands,25-34,3,3,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+26,Midlands,55-64,3,3,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+27,North West,65+,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+28,North West,45-54,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+29,Wales,25-34,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+30,South East,55-64,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+31,London,25-34,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+32,Wales,18-24,3,3,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+33,Midlands,65+,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+34,London,35-44,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+35,North West,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+36,Midlands,45-54,0,0,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+37,Scotland,25-34,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+38,South East,55-64,3,3,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+39,London,55-64,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+40,North West,45-54,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+41,Midlands,65+,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+42,Wales,25-34,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+43,Scotland,65+,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+44,Wales,55-64,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+45,London,45-54,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+46,South East,18-24,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+47,South East,25-34,0,0,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+48,Midlands,35-44,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+49,Midlands,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+50,South East,55-64,0,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+51,South East,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+52,North West,55-64,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+53,South East,65+,0,0,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+54,North West,45-54,0,0,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+55,South East,65+,3,3,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+56,North West,55-64,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+57,South East,45-54,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+58,London,65+,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+59,South East,35-44,3,3,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+60,Scotland,65+,0,0,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+61,Scotland,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+62,North West,25-34,2,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+63,North West,18-24,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+64,London,45-54,0,0,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+65,South East,55-64,0,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+66,London,65+,2,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+67,Midlands,25-34,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+68,South East,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+69,Midlands,55-64,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+70,Scotland,45-54,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+71,South East,65+,1,1,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+72,Midlands,18-24,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+73,North West,65+,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+74,Scotland,45-54,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+75,Scotland,65+,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+76,Wales,35-44,3,3,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+77,London,45-54,3,3,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+78,Wales,35-44,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+79,North West,18-24,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+80,Midlands,18-24,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+81,South East,55-64,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+82,Midlands,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+83,South East,65+,0,0,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+84,Midlands,18-24,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+85,South East,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+86,Midlands,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+87,Midlands,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+88,North West,45-54,0,0,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+89,London,55-64,3,3,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+90,Scotland,65+,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+91,North West,45-54,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+92,Scotland,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+93,North West,25-34,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+94,Scotland,55-64,1,1,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+95,Scotland,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+96,London,18-24,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+97,North West,65+,1,1,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+98,Scotland,35-44,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+99,Wales,65+,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+100,London,45-54,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+101,North West,35-44,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+102,Midlands,45-54,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+103,South East,65+,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+104,Midlands,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+105,Scotland,65+,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+106,London,45-54,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+107,South East,55-64,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+108,Scotland,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+109,North West,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+110,Scotland,35-44,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+111,Midlands,45-54,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+112,South East,65+,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+113,South East,45-54,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+114,North West,35-44,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+115,Wales,25-34,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+116,Wales,55-64,0,0,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+117,Wales,65+,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+118,Midlands,65+,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+119,South East,25-34,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+120,South East,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+121,London,35-44,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+122,Scotland,45-54,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+123,Wales,55-64,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+124,London,65+,2,2,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+125,Wales,55-64,0,0,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+126,North West,35-44,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+127,North West,35-44,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+128,Wales,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+129,Wales,65+,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+130,Midlands,18-24,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+131,South East,55-64,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+132,South East,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+133,Midlands,25-34,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+134,Wales,25-34,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+135,Midlands,25-34,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+136,North West,45-54,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+137,South East,25-34,3,3,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+138,London,65+,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+139,North West,25-34,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+140,South East,65+,2,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+141,South East,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+142,North West,45-54,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+143,Wales,55-64,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+144,Midlands,25-34,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+145,North West,25-34,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+146,London,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+147,South East,25-34,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+148,North West,55-64,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+149,London,45-54,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+150,North West,65+,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+151,South East,45-54,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+152,North West,45-54,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+153,North West,18-24,3,3,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+154,Scotland,18-24,3,3,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+155,Scotland,18-24,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+156,North West,35-44,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+157,Midlands,65+,3,3,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+158,Midlands,18-24,0,0,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+159,London,25-34,2,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+160,Scotland,18-24,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+161,Midlands,18-24,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+162,Scotland,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+163,North West,18-24,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+164,Wales,55-64,2,2,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+165,Wales,45-54,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+166,North West,65+,0,0,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+167,South East,25-34,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+168,London,55-64,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+169,South East,65+,1,1,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+170,South East,25-34,0,0,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+171,Wales,45-54,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+172,South East,35-44,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+173,London,25-34,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+174,North West,35-44,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+175,South East,55-64,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+176,London,65+,0,0,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+177,Midlands,25-34,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+178,South East,45-54,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+179,London,25-34,2,2,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+180,North West,18-24,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+181,Wales,65+,2,2,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+182,Wales,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+183,London,55-64,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+184,South East,25-34,4,4,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+185,North West,55-64,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+186,London,35-44,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+187,South East,65+,3,3,3,0.5,5,shy_privacy_helps,0,0.6990694189657792
+188,Midlands,55-64,4,4,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+189,London,55-64,4,4,1,0.5,5,shy_privacy_helps,0,0.6990694189657792
+190,South East,55-64,1,1,2,0.5,5,shy_privacy_helps,0,0.6990694189657792
+191,South East,25-34,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+192,South East,65+,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+193,Midlands,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+194,Scotland,35-44,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+195,Midlands,55-64,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+196,Midlands,45-54,0,0,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+197,London,45-54,1,1,0,0.5,5,shy_privacy_helps,0,0.6990694189657792
+198,London,35-44,1,1,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+199,North West,25-34,4,4,4,0.5,5,shy_privacy_helps,0,0.6990694189657792
+200,London,25-34,4,4,0,0.5,5,shy_privacy_helps,0,0.6990694189657792

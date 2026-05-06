@@ -120,7 +120,7 @@ class TestPostRespond:
     # individually verified to trigger a hard 400 rejection before storage.
     @pytest.mark.parametrize(
         "forbidden_field",
-        ["true_answer", "true_choice", "selected_answer", "selectedOption", "raw_vote"],
+        ["true_answer", "true_choice", "selected_answer", "selectedOption", "raw_vote", "raw_answer"],
     )
     def test_rejects_true_or_raw_answer_fields(self, client, data_path, forbidden_field):
         """The respondent API rejects true/raw answer fields before storage."""
@@ -211,36 +211,163 @@ class TestGetResults:
 
 
 class TestGetResponses:
-    def test_returns_all_records(self, client):
-        for ans in [0, 1]:
-            client.post(
-                "/api/respond",
-                data=json.dumps({"perturbed_answer": ans}),
-                content_type="application/json",
-            )
-
-        resp = client.get("/api/responses")
-        assert resp.status_code == 200
-        records = resp.get_json()
-        assert len(records) == 2
-        assert records[0]["perturbed_answer"] == 0
-        assert records[1]["perturbed_answer"] == 1
-
-    def test_no_true_answer_in_stored_records(self, client):
-        # End-to-end check: even after a successful submission, the stored
-        # JSONL records should contain only perturbed_answer, demographics,
-        # and timestamp.  No field that could be confused with a true answer
-        # should appear.
+    def test_responses_export_disabled_without_token(self, client):
         client.post(
             "/api/respond",
-            data=json.dumps({"perturbed_answer": 2}),
+            data=json.dumps({"perturbed_answer": 0}),
             content_type="application/json",
         )
 
         resp = client.get("/api/responses")
-        records = resp.get_json()
-        for rec in records:
-            assert "true_answer" not in rec
+        assert resp.status_code == 503
+        assert "FAIRVOTE_ANALYST_TOKEN" in resp.get_json()["error"]
+
+    def test_responses_export_requires_authorization(self, tmp_config, tmp_data, monkeypatch):
+        monkeypatch.setenv("FAIRVOTE_ANALYST_TOKEN", "secret-token")
+        app = create_app(config_path=tmp_config, data_path=tmp_data)
+        app.config["TESTING"] = True
+        with app.test_client() as c:
+            c.post(
+                "/api/respond",
+                data=json.dumps({"perturbed_answer": 0}),
+                content_type="application/json",
+            )
+
+            missing = c.get("/api/responses")
+            assert missing.status_code == 401
+
+            wrong = c.get("/api/responses", headers={"Authorization": "Bearer wrong"})
+            assert wrong.status_code == 401
+
+            blocked = c.get("/api/responses", headers={"Authorization": "Bearer secret-token"})
+            assert blocked.status_code == 409
+            body = blocked.get_json()
+            assert "k-anonymity" in body["error"]
+            assert body["privacy_report"]["rare_cell_count"] == 1
+
+
+    def test_responses_export_succeeds_when_demographic_cells_are_not_rare(self, tmp_config, tmp_data, monkeypatch):
+        monkeypatch.setenv("FAIRVOTE_ANALYST_TOKEN", "secret-token")
+        app = create_app(config_path=tmp_config, data_path=tmp_data)
+        app.config["TESTING"] = True
+        with app.test_client() as c:
+            for _ in range(5):
+                c.post(
+                    "/api/respond",
+                    data=json.dumps({"perturbed_answer": 0, "demographics": {"age": "18-24"}}),
+                    content_type="application/json",
+                )
+
+            ok = c.get("/api/responses", headers={"Authorization": "Bearer secret-token"})
+            assert ok.status_code == 200
+            body = ok.get_json()
+            assert len(body["records"]) == 5
+            assert body["privacy_report"]["rare_cell_count"] == 0
+            assert body["records"][0]["perturbed_answer"] == 0
+
+    def test_no_true_answer_in_stored_records(self, client, data_path):
+        # End-to-end check: after a successful submission, the stored JSONL
+        # record should contain only perturbed_answer, validated demographics,
+        # and an optional reduced-precision timestamp.
+        client.post(
+            "/api/respond",
+            data=json.dumps({"perturbed_answer": 2, "demographics": {"age": "25+"}}),
+            content_type="application/json",
+        )
+
+        raw = data_path.read_text(encoding="utf-8")
+        record = json.loads(raw)
+        assert record["perturbed_answer"] == 2
+        assert record["demographics"] == {"age": "25+"}
+        for forbidden in ["true_answer", "true_choice", "selected_answer", "selectedOption", "raw_vote", "raw_answer"]:
+            assert forbidden not in raw
+
+
+class TestPrivacyBoundaryHardening:
+    def test_rejects_nested_true_or_raw_answer_fields(self, client, data_path):
+        payload = {
+            "perturbed_answer": 1,
+            "metadata": {"nested": [{"raw_answer": 2}]},
+        }
+        resp = client.post("/api/respond", data=json.dumps(payload), content_type="application/json")
+
+        assert resp.status_code == 400
+        assert "$.metadata.nested[0].raw_answer" in resp.get_json()["error"]
+        assert not data_path.exists() or data_path.read_text(encoding="utf-8").strip() == ""
+
+    def test_rejects_unknown_demographics(self, client, data_path):
+        payload = {"perturbed_answer": 1, "demographics": {"age": "18-24", "postcode": "E1"}}
+        resp = client.post("/api/respond", data=json.dumps(payload), content_type="application/json")
+
+        assert resp.status_code == 400
+        assert "unknown demographic field" in resp.get_json()["error"]
+        assert not data_path.exists() or data_path.read_text(encoding="utf-8").strip() == ""
+
+    def test_rejects_invalid_demographic_values(self, client, data_path):
+        payload = {"perturbed_answer": 1, "demographics": {"age": "13-17"}}
+        resp = client.post("/api/respond", data=json.dumps(payload), content_type="application/json")
+
+        assert resp.status_code == 400
+        assert "invalid demographic value" in resp.get_json()["error"]
+        assert not data_path.exists() or data_path.read_text(encoding="utf-8").strip() == ""
+
+    def test_rejects_too_many_demographic_fields(self, tmp_path):
+        cfg = {
+            "question": "Q",
+            "options": ["A", "B"],
+            "epsilon": 1.0,
+            "demographic_fields": [
+                {"name": f"d{i}", "label": f"D{i}", "options": ["x"], "required": False}
+                for i in range(9)
+            ],
+        }
+        path = tmp_path / "poll_config.json"
+        path.write_text(json.dumps(cfg), encoding="utf-8")
+        with pytest.raises(ValueError, match="more than"):
+            create_app(config_path=path, data_path=tmp_path / "responses.jsonl")
+
+    def test_valid_perturbed_only_submission_accepted(self, client, data_path):
+        payload = {"perturbed_answer": 2, "demographics": {"age": "18-24"}}
+        resp = client.post("/api/respond", data=json.dumps(payload), content_type="application/json")
+
+        assert resp.status_code == 201
+        record = json.loads(data_path.read_text(encoding="utf-8"))
+        assert record["perturbed_answer"] == 2
+        assert record["demographics"] == {"age": "18-24"}
+
+    def test_request_size_limit_rejects_large_payload(self, client):
+        payload = {"perturbed_answer": 0, "padding": "x" * 10000}
+        resp = client.post("/api/respond", data=json.dumps(payload), content_type="application/json")
+
+        assert resp.status_code == 413
+
+    def test_wildcard_cors_origin_is_rejected(self, tmp_config, tmp_data, monkeypatch):
+        monkeypatch.setenv("FAIRVOTE_ALLOWED_ORIGINS", "*")
+        with pytest.raises(ValueError, match="wildcard"):
+            create_app(config_path=tmp_config, data_path=tmp_data)
+
+    def test_timestamp_precision_defaults_to_minute(self, client, data_path):
+        client.post(
+            "/api/respond",
+            data=json.dumps({"perturbed_answer": 1}),
+            content_type="application/json",
+        )
+        record = json.loads(data_path.read_text(encoding="utf-8"))
+        assert record["timestamp"].endswith(":00Z")
+
+    def test_timestamp_storage_can_be_disabled(self, tmp_config, tmp_data, monkeypatch):
+        monkeypatch.setenv("FAIRVOTE_TIMESTAMP_PRECISION", "none")
+        app = create_app(config_path=tmp_config, data_path=tmp_data)
+        app.config["TESTING"] = True
+        with app.test_client() as c:
+            resp = c.post(
+                "/api/respond",
+                data=json.dumps({"perturbed_answer": 1}),
+                content_type="application/json",
+            )
+            assert resp.status_code == 201
+        record = json.loads(tmp_data.read_text(encoding="utf-8"))
+        assert "timestamp" not in record
 
 
 class TestServeIndex:
@@ -248,6 +375,14 @@ class TestServeIndex:
         resp = client.get("/")
         assert resp.status_code == 200
         assert b"FairVote" in resp.data
+
+    def test_security_headers_use_strict_csp_without_inline_allowances(self, client):
+        resp = client.get("/")
+        csp = resp.headers["Content-Security-Policy"]
+        assert "script-src 'self'" in csp
+        assert "style-src 'self'" in csp
+        assert "unsafe-inline" not in csp
+        assert resp.headers["X-Frame-Options"] == "DENY"
 
 
 # =============================================================================

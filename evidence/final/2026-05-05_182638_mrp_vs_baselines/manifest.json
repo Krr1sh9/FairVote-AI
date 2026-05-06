@@ -1,0 +1,172 @@
+{
+  "config": {
+    "allocation": "proportional",
+    "biased_feature": "region",
+    "biased_multipliers": {},
+    "continue_on_error": false,
+    "enable_neural": true,
+    "eps": [
+      0.2,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "eps_list": [
+      0.2,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "feature_order": [
+      "region",
+      "age_group",
+      "education",
+      "gender",
+      "urbanicity"
+    ],
+    "features": [
+      "region",
+      "age_group",
+      "education",
+      "gender",
+      "urbanicity"
+    ],
+    "hierarchical_effect_l2": 1.0,
+    "hierarchical_global_l2": 0.01,
+    "k": 5,
+    "major_mass": 0.02,
+    "methods": [
+      "baseline_rr_debias",
+      "mrp_rr_poststrat",
+      "hierarchical_rr_mrp_poststrat"
+    ],
+    "min_per_stratum": 0,
+    "mrp_batch_size": 64,
+    "mrp_l2": 1.0,
+    "mrp_lr": 0.05,
+    "mrp_steps": 3,
+    "multipliers": {},
+    "n_sample": 120,
+    "neural_batch_size": 512,
+    "neural_dropout": 0.0,
+    "neural_hidden_layers": [
+      16
+    ],
+    "neural_lr": 0.01,
+    "neural_patience": 20,
+    "neural_seed": 321,
+    "neural_steps": 200,
+    "neural_validation_fraction": 0.2,
+    "neural_weight_decay": 0.0001,
+    "population_n": 500,
+    "preset": "custom",
+    "sample_sizes": [
+      120
+    ],
+    "sampling": "srs",
+    "scenarios": [
+      "privacy_helps"
+    ],
+    "seed": 123,
+    "shy_category": 0,
+    "shy_honesty": 0.8,
+    "strata": [
+      "region"
+    ],
+    "trials": 20,
+    "verbose_every": 0
+  },
+  "epsilons": [
+    0.2,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "experiment": "mrp_vs_baselines",
+  "methods": [
+    "baseline_rr_debias",
+    "mrp_rr_poststrat",
+    "hierarchical_rr_mrp_poststrat"
+  ],
+  "n_ablation_rows": 4,
+  "n_failures": 0,
+  "n_paired_comparison_rows": 0,
+  "n_result_rows": 240,
+  "n_runtime_profile_rows": 12,
+  "n_summary_rows": 12,
+  "outputs": {
+    "ablations": "ablations.csv",
+    "config": "config.json",
+    "environment": "environment.json",
+    "failures": "failures.csv",
+    "manifest": "manifest.json",
+    "paired_comparisons": "paired_comparisons.csv",
+    "plots": "plots/",
+    "raw_trials": "raw_trials.csv",
+    "readme": "README.md",
+    "results_trials_legacy_alias": "results_trials.csv",
+    "runtime_profile": "runtime_profile.csv",
+    "sha256sums": "sha256sums.txt",
+    "summary_legacy_alias": "summary.csv",
+    "summary_with_ci": "summary_with_ci.csv"
+  },
+  "population_n": 500,
+  "preset": "custom",
+  "provenance": {
+    "argv": [
+      "/mnt/data/fairvote_work/FairVote-AI/experiments/mrp_vs_baselines.py",
+      "--eps",
+      "0.2,0.5,1.0,2.0",
+      "--sample_sizes",
+      "120",
+      "--scenarios",
+      "privacy_helps",
+      "--population_n",
+      "500",
+      "--trials",
+      "20",
+      "--methods",
+      "baseline_rr_debias,mrp_rr_poststrat,hierarchical_rr_mrp_poststrat",
+      "--mrp_steps",
+      "3",
+      "--mrp_batch_size",
+      "64",
+      "--out_dir",
+      "evidence/final",
+      "--fail_fast",
+      "--skip_plots"
+    ],
+    "cwd": "/mnt/data/fairvote_work/FairVote-AI",
+    "executable": "/opt/pyvenv/bin/python",
+    "git_sha": null,
+    "packages": {
+      "flask": null,
+      "matplotlib": "3.10.8",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "streamlit": null,
+      "torch": "2.10.0+cpu"
+    },
+    "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.14"
+  },
+  "runtime_sec": 14.5015849360002,
+  "sample_size": 120,
+  "sample_sizes": [
+    120
+  ],
+  "scenario_metadata": {
+    "privacy_helps": {
+      "collection_bias": "epsilon_dependent_nonresponse_and_misreport",
+      "expected_neural_advantage": "low_medium",
+      "name": "privacy_helps",
+      "truth_model": "default_synthetic_population"
+    }
+  },
+  "scenarios": [
+    "privacy_helps"
+  ],
+  "seed": 123,
+  "trials": 20
+}

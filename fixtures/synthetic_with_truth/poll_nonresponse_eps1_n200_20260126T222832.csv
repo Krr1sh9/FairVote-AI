@@ -1,0 +1,201 @@
+respondent_id,region,age_band,true_choice,reported_choice,epsilon,k,scenario
+1,Midlands,55-64,4,3,1.0,5,nonresponse
+2,South East,25-34,2,0,1.0,5,nonresponse
+3,London,65+,1,1,1.0,5,nonresponse
+4,London,35-44,4,3,1.0,5,nonresponse
+5,South East,45-54,3,4,1.0,5,nonresponse
+6,Midlands,45-54,1,1,1.0,5,nonresponse
+7,London,45-54,1,1,1.0,5,nonresponse
+8,North West,35-44,4,0,1.0,5,nonresponse
+9,North West,45-54,1,1,1.0,5,nonresponse
+10,Scotland,55-64,1,3,1.0,5,nonresponse
+11,South East,45-54,1,4,1.0,5,nonresponse
+12,Midlands,25-34,4,0,1.0,5,nonresponse
+13,Midlands,18-24,4,4,1.0,5,nonresponse
+14,Midlands,65+,1,1,1.0,5,nonresponse
+15,Wales,35-44,0,0,1.0,5,nonresponse
+16,South East,55-64,1,0,1.0,5,nonresponse
+17,Midlands,45-54,3,3,1.0,5,nonresponse
+18,Scotland,65+,4,1,1.0,5,nonresponse
+19,Scotland,25-34,0,0,1.0,5,nonresponse
+20,South East,18-24,1,1,1.0,5,nonresponse
+21,London,35-44,1,0,1.0,5,nonresponse
+22,South East,55-64,4,0,1.0,5,nonresponse
+23,Midlands,45-54,4,4,1.0,5,nonresponse
+24,North West,55-64,1,1,1.0,5,nonresponse
+25,London,35-44,4,4,1.0,5,nonresponse
+26,London,35-44,4,4,1.0,5,nonresponse
+27,North West,55-64,1,3,1.0,5,nonresponse
+28,South East,55-64,3,3,1.0,5,nonresponse
+29,South East,35-44,4,4,1.0,5,nonresponse
+30,North West,55-64,1,3,1.0,5,nonresponse
+31,London,45-54,1,1,1.0,5,nonresponse
+32,North West,65+,2,2,1.0,5,nonresponse
+33,South East,55-64,1,1,1.0,5,nonresponse
+34,North West,35-44,1,3,1.0,5,nonresponse
+35,Wales,35-44,0,1,1.0,5,nonresponse
+36,South East,55-64,4,4,1.0,5,nonresponse
+37,South East,55-64,1,1,1.0,5,nonresponse
+38,Wales,18-24,0,1,1.0,5,nonresponse
+39,Midlands,25-34,4,4,1.0,5,nonresponse
+40,South East,55-64,1,2,1.0,5,nonresponse
+41,North West,35-44,4,4,1.0,5,nonresponse
+42,North West,45-54,0,1,1.0,5,nonresponse
+43,Scotland,45-54,4,4,1.0,5,nonresponse
+44,Scotland,35-44,4,4,1.0,5,nonresponse
+45,Midlands,65+,2,1,1.0,5,nonresponse
+46,North West,65+,4,2,1.0,5,nonresponse
+47,North West,65+,4,2,1.0,5,nonresponse
+48,North West,35-44,4,3,1.0,5,nonresponse
+49,London,65+,4,3,1.0,5,nonresponse
+50,Midlands,35-44,4,3,1.0,5,nonresponse
+51,North West,35-44,4,4,1.0,5,nonresponse
+52,South East,55-64,4,3,1.0,5,nonresponse
+53,South East,35-44,4,4,1.0,5,nonresponse
+54,North West,35-44,4,3,1.0,5,nonresponse
+55,North West,45-54,1,1,1.0,5,nonresponse
+56,Scotland,45-54,4,3,1.0,5,nonresponse
+57,South East,65+,2,2,1.0,5,nonresponse
+58,Wales,55-64,3,3,1.0,5,nonresponse
+59,London,55-64,1,4,1.0,5,nonresponse
+60,Midlands,18-24,3,3,1.0,5,nonresponse
+61,Midlands,45-54,4,4,1.0,5,nonresponse
+62,Midlands,25-34,4,0,1.0,5,nonresponse
+63,South East,65+,3,3,1.0,5,nonresponse
+64,North West,45-54,1,1,1.0,5,nonresponse
+65,North West,18-24,4,1,1.0,5,nonresponse
+66,North West,25-34,1,2,1.0,5,nonresponse
+67,Midlands,18-24,4,4,1.0,5,nonresponse
+68,North West,45-54,4,3,1.0,5,nonresponse
+69,Scotland,55-64,4,4,1.0,5,nonresponse
+70,North West,25-34,1,1,1.0,5,nonresponse
+71,Midlands,45-54,4,4,1.0,5,nonresponse
+72,North West,55-64,0,2,1.0,5,nonresponse
+73,Wales,25-34,1,0,1.0,5,nonresponse
+74,North West,45-54,2,3,1.0,5,nonresponse
+75,North West,55-64,1,0,1.0,5,nonresponse
+76,Midlands,18-24,0,0,1.0,5,nonresponse
+77,North West,45-54,1,4,1.0,5,nonresponse
+78,Wales,55-64,4,4,1.0,5,nonresponse
+79,London,45-54,1,3,1.0,5,nonresponse
+80,South East,65+,1,1,1.0,5,nonresponse
+81,Wales,35-44,4,0,1.0,5,nonresponse
+82,London,25-34,4,0,1.0,5,nonresponse
+83,South East,25-34,1,2,1.0,5,nonresponse
+84,London,65+,1,1,1.0,5,nonresponse
+85,Midlands,25-34,3,3,1.0,5,nonresponse
+86,Midlands,55-64,3,3,1.0,5,nonresponse
+87,Wales,65+,4,3,1.0,5,nonresponse
+88,Scotland,65+,3,4,1.0,5,nonresponse
+89,London,35-44,3,3,1.0,5,nonresponse
+90,North West,25-34,4,0,1.0,5,nonresponse
+91,South East,55-64,1,4,1.0,5,nonresponse
+92,South East,55-64,1,4,1.0,5,nonresponse
+93,Scotland,35-44,4,4,1.0,5,nonresponse
+94,North West,18-24,0,0,1.0,5,nonresponse
+95,London,45-54,0,1,1.0,5,nonresponse
+96,London,55-64,4,2,1.0,5,nonresponse
+97,London,25-34,2,0,1.0,5,nonresponse
+98,North West,35-44,4,4,1.0,5,nonresponse
+99,London,45-54,1,1,1.0,5,nonresponse
+100,North West,18-24,1,1,1.0,5,nonresponse
+101,South East,55-64,1,1,1.0,5,nonresponse
+102,Midlands,18-24,4,3,1.0,5,nonresponse
+103,Midlands,35-44,4,4,1.0,5,nonresponse
+104,South East,45-54,3,4,1.0,5,nonresponse
+105,Midlands,55-64,3,3,1.0,5,nonresponse
+106,North West,25-34,1,3,1.0,5,nonresponse
+107,Wales,65+,1,2,1.0,5,nonresponse
+108,South East,45-54,0,2,1.0,5,nonresponse
+109,North West,65+,0,0,1.0,5,nonresponse
+110,Wales,18-24,1,2,1.0,5,nonresponse
+111,Midlands,65+,4,4,1.0,5,nonresponse
+112,London,18-24,2,2,1.0,5,nonresponse
+113,North West,45-54,4,1,1.0,5,nonresponse
+114,Midlands,65+,3,0,1.0,5,nonresponse
+115,Scotland,45-54,1,3,1.0,5,nonresponse
+116,South East,55-64,0,3,1.0,5,nonresponse
+117,Scotland,35-44,4,1,1.0,5,nonresponse
+118,Midlands,65+,4,4,1.0,5,nonresponse
+119,Midlands,25-34,4,4,1.0,5,nonresponse
+120,Scotland,65+,2,2,1.0,5,nonresponse
+121,South East,65+,3,1,1.0,5,nonresponse
+122,Midlands,25-34,3,3,1.0,5,nonresponse
+123,South East,55-64,0,1,1.0,5,nonresponse
+124,London,45-54,2,1,1.0,5,nonresponse
+125,North West,65+,4,4,1.0,5,nonresponse
+126,South East,65+,3,4,1.0,5,nonresponse
+127,Midlands,45-54,4,3,1.0,5,nonresponse
+128,South East,35-44,3,0,1.0,5,nonresponse
+129,Midlands,65+,3,2,1.0,5,nonresponse
+130,London,25-34,4,0,1.0,5,nonresponse
+131,London,35-44,1,0,1.0,5,nonresponse
+132,Midlands,45-54,3,3,1.0,5,nonresponse
+133,Wales,35-44,0,4,1.0,5,nonresponse
+134,North West,45-54,1,1,1.0,5,nonresponse
+135,London,65+,2,4,1.0,5,nonresponse
+136,Wales,55-64,2,4,1.0,5,nonresponse
+137,Midlands,65+,4,4,1.0,5,nonresponse
+138,London,55-64,1,2,1.0,5,nonresponse
+139,Midlands,55-64,3,3,1.0,5,nonresponse
+140,London,25-34,4,3,1.0,5,nonresponse
+141,Midlands,45-54,4,3,1.0,5,nonresponse
+142,Midlands,55-64,4,2,1.0,5,nonresponse
+143,South East,55-64,1,0,1.0,5,nonresponse
+144,Midlands,25-34,4,4,1.0,5,nonresponse
+145,Wales,35-44,1,2,1.0,5,nonresponse
+146,London,35-44,4,3,1.0,5,nonresponse
+147,North West,25-34,1,1,1.0,5,nonresponse
+148,London,25-34,1,3,1.0,5,nonresponse
+149,Wales,55-64,1,1,1.0,5,nonresponse
+150,Scotland,35-44,3,4,1.0,5,nonresponse
+151,South East,55-64,1,4,1.0,5,nonresponse
+152,Midlands,55-64,3,3,1.0,5,nonresponse
+153,Scotland,45-54,3,4,1.0,5,nonresponse
+154,Scotland,65+,0,2,1.0,5,nonresponse
+155,London,25-34,4,2,1.0,5,nonresponse
+156,Midlands,45-54,4,3,1.0,5,nonresponse
+157,Midlands,55-64,0,0,1.0,5,nonresponse
+158,North West,25-34,4,4,1.0,5,nonresponse
+159,North West,25-34,2,3,1.0,5,nonresponse
+160,Midlands,35-44,3,3,1.0,5,nonresponse
+161,Scotland,55-64,4,4,1.0,5,nonresponse
+162,Wales,65+,3,3,1.0,5,nonresponse
+163,North West,25-34,0,0,1.0,5,nonresponse
+164,Scotland,25-34,4,3,1.0,5,nonresponse
+165,Scotland,45-54,4,3,1.0,5,nonresponse
+166,South East,55-64,1,1,1.0,5,nonresponse
+167,Midlands,55-64,0,0,1.0,5,nonresponse
+168,Scotland,25-34,2,4,1.0,5,nonresponse
+169,London,18-24,4,3,1.0,5,nonresponse
+170,North West,65+,4,4,1.0,5,nonresponse
+171,North West,45-54,0,4,1.0,5,nonresponse
+172,North West,65+,2,2,1.0,5,nonresponse
+173,Wales,35-44,4,0,1.0,5,nonresponse
+174,London,65+,4,4,1.0,5,nonresponse
+175,London,35-44,0,0,1.0,5,nonresponse
+176,Scotland,65+,3,3,1.0,5,nonresponse
+177,North West,35-44,4,3,1.0,5,nonresponse
+178,Wales,25-34,2,1,1.0,5,nonresponse
+179,London,35-44,1,1,1.0,5,nonresponse
+180,North West,25-34,4,3,1.0,5,nonresponse
+181,Midlands,25-34,4,4,1.0,5,nonresponse
+182,Midlands,45-54,3,3,1.0,5,nonresponse
+183,Wales,65+,4,4,1.0,5,nonresponse
+184,South East,25-34,4,4,1.0,5,nonresponse
+185,Wales,18-24,3,0,1.0,5,nonresponse
+186,South East,65+,4,4,1.0,5,nonresponse
+187,Midlands,65+,3,0,1.0,5,nonresponse
+188,South East,45-54,3,3,1.0,5,nonresponse
+189,Wales,25-34,4,1,1.0,5,nonresponse
+190,Midlands,55-64,4,3,1.0,5,nonresponse
+191,South East,55-64,2,2,1.0,5,nonresponse
+192,South East,45-54,1,2,1.0,5,nonresponse
+193,London,55-64,1,2,1.0,5,nonresponse
+194,North West,55-64,1,0,1.0,5,nonresponse
+195,North West,45-54,2,1,1.0,5,nonresponse
+196,Midlands,35-44,3,3,1.0,5,nonresponse
+197,South East,35-44,2,2,1.0,5,nonresponse
+198,Midlands,35-44,4,2,1.0,5,nonresponse
+199,London,65+,1,1,1.0,5,nonresponse
+200,Wales,45-54,2,4,1.0,5,nonresponse

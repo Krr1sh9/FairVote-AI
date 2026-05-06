@@ -27,11 +27,13 @@ desktop.ini
 .vscode/
 
 # Generated experiment artefacts
-# Keep only the intentional checked-in final evidence pack.
+# Keep only the intentional checked-in final evidence packs.
 experiments/outputs/*
 !experiments/outputs/.gitkeep
 !experiments/outputs/final_neural_evidence/
 !experiments/outputs/final_neural_evidence/**
+!experiments/outputs/final_neural_evidence_repeated_trials_local/
+!experiments/outputs/final_neural_evidence_repeated_trials_local/**
 
 # Temporary local output folders/files
 tmp/

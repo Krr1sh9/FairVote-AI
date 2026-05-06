@@ -22,8 +22,8 @@ Then in Streamlit:
   - Set response column = reported_choice, group columns = region + age_band, epsilon = the same epsilon used here
 
 Notes:
-- If your project provides fairvote.privacy.privatize_many (recommended), we'll use it.
-  Otherwise we use a correct fallback RR implementation.
+- Randomized Response is applied through the canonical Python RR channel in
+  fairvote.privacy; this script does not reimplement the RR formula.
 """
 
 from __future__ import annotations
@@ -35,19 +35,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
 
+import sys
+
 import numpy as np
 
+if __package__ in {None, ""}:  # Allow direct `python experiments/generate_poll_csv.py` execution.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-# ----------------------------
-# Optional integration with your library
-# ----------------------------
-
-def _try_import_privatize_many():
-    try:
-        from fairvote.privacy import privatize_many  # type: ignore
-        return privatize_many
-    except Exception:
-        return None
+from fairvote.privacy import privatize_many as canonical_privatize_many
 
 
 # ----------------------------
@@ -242,37 +237,6 @@ def _apply_shy_misreport(
 # Randomized Response (k-ary RR)
 # ----------------------------
 
-def _rr_privatize_fallback(
-    stated: np.ndarray,
-    *,
-    epsilon: float,
-    k: int,
-    rng: np.random.Generator,
-) -> np.ndarray:
-    """
-    k-ary RR fallback:
-      with prob p_keep, report stated
-      else report uniformly among other k-1 categories
-    """
-    eps = float(epsilon)
-    k = int(k)
-    p_keep = math.exp(eps) / (math.exp(eps) + (k - 1))
-    stated = np.asarray(stated, dtype=int)
-
-    n = int(stated.size)
-    out = stated.copy()
-
-    flip = rng.random(n) > p_keep
-    if np.any(flip):
-        # For each flipped, pick a random category != stated
-        for i in np.where(flip)[0]:
-            t = int(stated[i])
-            # sample from {0..k-1} \ {t}
-            r = int(rng.integers(0, k - 1))
-            out[i] = r if r < t else r + 1
-    return out
-
-
 def privatize_many(
     stated: np.ndarray,
     *,
@@ -280,15 +244,8 @@ def privatize_many(
     k: int,
     rng: np.random.Generator,
 ) -> np.ndarray:
-    """
-    Prefer fairvote.privacy.privatize_many if present; otherwise use fallback.
-    Your codebase uses epsilon= (not eps=), per your tests.
-    """
-    fn = _try_import_privatize_many()
-    if fn is not None:
-        # Your project likely uses numpy's global RNG; set it for determinism if caller desires.
-        return np.asarray(fn(stated, epsilon=epsilon, k=k), dtype=int)
-    return _rr_privatize_fallback(stated, epsilon=epsilon, k=k, rng=rng)
+    """Apply the canonical Python k-ary RR channel to stated choices."""
+    return np.asarray(canonical_privatize_many(stated, epsilon=epsilon, k=k, rng=rng), dtype=int)
 
 
 # ----------------------------

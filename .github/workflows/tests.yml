@@ -3,16 +3,80 @@ name: tests
 on: [push, pull_request]
 
 jobs:
-  pytest:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.14"]
+    env:
+      PYTHONUNBUFFERED: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install development environment
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          pip check
+
+      - name: Compile Python modules
+        run: python -m compileall -q fairvote app respondent experiments tests
+
+      - name: Ruff format check
+        run: ruff format --check .
+
+      - name: Ruff correctness and maintainability lint
+        run: ruff check .
+
+      - name: Mypy type check
+        run: mypy fairvote app respondent experiments
+
+      - name: Unit and integration tests with coverage gate
+        run: python -m pytest -q --cov=fairvote --cov=experiments --cov=respondent --cov=app --cov-report=term-missing:skip-covered --cov-report=xml --cov-report=html --cov-fail-under=60
+
+      - name: Upload coverage artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.python-version }}
+          path: |
+            coverage.xml
+            htmlcov/
+
+      - name: Evidence smoke run must be reproducible
+        run: python -m experiments.mrp_vs_baselines --preset smoke_test --disable_neural --out_dir /tmp/fairvote-ci-evidence --fail_fast --skip_plots
+
+      - name: Theory validation smoke run
+        run: python -m experiments.theory_validation --quick --out_dir /tmp/fairvote-ci-theory
+
+      - name: Upload CI evidence artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-evidence-${{ matrix.python-version }}
+          path: |
+            /tmp/fairvote-ci-evidence/
+            /tmp/fairvote-ci-theory/
+
+  browser_privacy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       PYTHONUNBUFFERED: "1"
-      # Pin all numerical libraries to a single thread so CI timing is
-      # deterministic and does not vary with runner core count.
-      OMP_NUM_THREADS: "1"
-      MKL_NUM_THREADS: "1"
-      NUMEXPR_NUM_THREADS: "1"
+      FV_RUN_BROWSER: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -24,44 +88,20 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install full development dependencies
+      - name: Install respondent and browser test environment
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev,ai,streamlit,respondent]"
-          pip check
+          pip install -e ".[respondent,browser]"
+          python -m playwright install chromium
 
-      - name: Verify Python, optional AI, and JavaScript test dependencies
-        run: |
-          python --version
-          python - <<'PY'
-          import torch
-          print(f"torch {torch.__version__}")
-          from fairvote.inference.mrp.rr_neural_mrp import RRNeuralMRPModel
-          print(RRNeuralMRPModel.__name__)
-          PY
-          node --version
+      - name: Browser-level privacy boundary test
+        run: python -m pytest tests/test_browser_respondent_privacy.py -q
 
-      # Run the full test suite first, then re-run targeted subsets to surface
-      # any import or ordering regressions in isolation.
-      - name: Run full test suite
-        run: pytest -q
-
-      - name: Run neural MRP tests explicitly
-        run: pytest tests/test_rr_neural_mrp.py -q
-
-      - name: Run respondent privacy and JavaScript RR tests explicitly
-        run: |
-          pytest tests/test_respondent_server.py -q
-          pytest tests/test_respondent_client_privacy.py -q
-          pytest tests/test_respondent_rr_js.py -q
-
-      - name: Run experiment and dashboard checks explicitly
-        run: |
-          pytest tests/test_evaluate_neural_mrp.py -q
-          pytest tests/test_mrp_vs_baselines.py -q
-          pytest tests/test_streamlit_app_syntax.py -q
-
-      - name: Note slow experiment checks are local-only
-        run: |
-          echo "Slow integration tests are intentionally not run in CI."
-          echo "Run locally with: FV_RUN_SLOW=1 pytest tests/test_mrp_vs_baselines.py -q"
+      - name: Upload browser privacy artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-privacy-artifacts
+          path: |
+            test-results/
+            playwright-report/

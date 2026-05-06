@@ -1,0 +1,10 @@
+{
+  "total_records": 8,
+  "demographic_cells": 5,
+  "k_anonymity_threshold": 5,
+  "rare_cell_count": 5,
+  "minimum_cell_size": 1,
+  "individual_export_enabled": false,
+  "timestamp_precision": "minute",
+  "interpretation": "Example /api/privacy-report output. It demonstrates that individual-level export risk is reported separately from answer-value Local Differential Privacy. Rare demographic cells remain a privacy concern even when answers are randomized response protected."
+}
