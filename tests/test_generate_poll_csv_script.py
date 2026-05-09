@@ -2,23 +2,19 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
-
 import pytest
 
 try:
-    from ._helpers import read_csv_dicts, run_py
+    from ._helpers import run_py, read_csv_dicts
 except ModuleNotFoundError:
-    from ._helpers import read_csv_dicts, run_py
+    from ._helpers import run_py, read_csv_dicts
 
 
-@pytest.mark.parametrize(
-    "scenario,eps",
-    [
-        ("no_bias", "1.0"),
-        ("nonresponse", "1.0"),
-        ("shy_privacy_helps", "0.5"),
-    ],
-)
+@pytest.mark.parametrize("scenario,eps", [
+    ("no_bias", "1.0"),
+    ("nonresponse", "1.0"),
+    ("shy_privacy_helps", "0.5"),
+])
 def test_generate_poll_csv_script(tmp_path: Path, scenario: str, eps: str, project_root: Path):
     candidates = [
         project_root / "experiments" / "generate_poll_csv.py",
@@ -34,20 +30,7 @@ def test_generate_poll_csv_script(tmp_path: Path, scenario: str, eps: str, proje
     out_dir.mkdir(parents=True, exist_ok=True)
 
     proc = run_py(
-        [
-            str(script),
-            "--out_dir",
-            str(out_dir),
-            "--n",
-            "200",
-            "--k",
-            "5",
-            "--epsilon",
-            eps,
-            "--scenario",
-            scenario,
-            "--include_truth",
-        ],
+        [str(script), "--out_dir", str(out_dir), "--n", "200", "--k", "5", "--epsilon", eps, "--scenario", scenario, "--include_truth"],
         cwd=project_root,
         timeout_s=120,
     )

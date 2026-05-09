@@ -4,17 +4,32 @@ The repository now uses one Python compatibility story: Python 3.14 is supported
 
 ## Evidence provenance
 
-The primary final evidence run is `evidence/final/2026-05-05_182242_mrp_vs_baselines/`. Final evidence runs are under `evidence/final/` and include:
+The primary final report evidence run for this submitted archive is:
 
-- `config.json`
-- `manifest.json`
-- `environment.json`
-- `sha256sums.txt`
-- raw and summarised CSVs
-- generated plots
-- clean `BUNDLE/` directories
+```text
+evidence/final/2026-05-06_004647_mrp_vs_baselines/
+```
 
-Old smoke and superseded intermediate outputs were removed from the submission evidence folder and should not be cited as final evidence.
+This is a CPU-sized final-style run, not the full `final_evidence` preset. It is the canonical committed evidence because it is complete, repeated, includes paired neural-vs-linear comparisons, and has zero recorded failures. It contains:
+
+- 20 trials per condition;
+- sample sizes `500` and `1000`;
+- epsilons `0.5`, `1.0` and `2.0`;
+- scenarios `nonlinear_interaction`, `sparse_minority_curve`, `privacy_noise_sparse` and `simple_linear`;
+- methods `baseline_rr_debias`, `mrp_rr_poststrat`, `hierarchical_rr_mrp_poststrat` and `neural_rr_mrp`;
+- `raw_trials.csv`, `summary_with_ci.csv`, `paired_comparisons.csv`, `ablations.csv`, `runtime_profile.csv`, `failures.csv`, `config.json`, `manifest.json`, `environment.json`, `sha256sums.txt` and plots.
+
+The older `2026-05-05_*` evidence directories are retained only as superseded/supporting traceability artefacts and should not be treated as the primary final evidence.
+
+## Generated report artefacts
+
+Report-ready generated artefacts are included under:
+
+```text
+paper/generated/
+```
+
+They were generated from the canonical `2026-05-06_004647_mrp_vs_baselines` run. Regenerate them if the canonical evidence run changes.
 
 ## Known local verification limitation
 
@@ -22,7 +37,9 @@ This execution environment did not include every optional dependency used by CI,
 
 ## Source-tree provenance
 
-This uploaded archive is not a Git checkout, so generated evidence manifests record `git_sha: null`. To replace that missing Git provenance, the remediated archive includes:
+This uploaded archive is not a Git checkout, so generated evidence manifests record `git_sha: null`. To replace that missing Git provenance, the archive includes:
 
-- `SOURCE_TREE_SHA256SUMS.txt`: per-file SHA-256 hashes for source, tests, docs and workflow files.
+- `SOURCE_TREE_SHA256SUMS.txt`: per-file SHA-256 hashes for the submitted source tree.
 - `SOURCE_TREE_SHA256.txt`: SHA-256 digest of the source-tree hash manifest.
+
+These manifest files must be regenerated after any final source/documentation edit.

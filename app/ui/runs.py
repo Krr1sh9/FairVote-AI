@@ -19,9 +19,7 @@ def render_runs_tab(root: Path, outputs_dir: Path) -> None:
         st.header("Simulation configuration")
         sim_trials = st.number_input("Trials", min_value=1, max_value=200, value=10, step=1, key="sim_trials")
         sim_eps = st.text_input("Eps list", value="0.2,0.5,1.0,2.0", key="sim_eps")
-        sim_major_mass = st.number_input(
-            "Major mass", min_value=0.0, max_value=1.0, value=0.02, step=0.01, key="sim_major_mass"
-        )
+        sim_major_mass = st.number_input("Major mass", min_value=0.0, max_value=1.0, value=0.02, step=0.01, key="sim_major_mass")
 
     colA, colB = st.columns([1, 1])
 
@@ -30,14 +28,7 @@ def render_runs_tab(root: Path, outputs_dir: Path) -> None:
             with st.spinner("Running mrp_vs_baselines..."):
                 rc, out = _run_module(
                     "experiments.mrp_vs_baselines",
-                    [
-                        "--trials",
-                        str(int(sim_trials)),
-                        "--eps",
-                        str(sim_eps),
-                        "--major_mass",
-                        str(float(sim_major_mass)),
-                    ],
+                    ["--trials", str(int(sim_trials)), "--eps", str(sim_eps), "--major_mass", str(float(sim_major_mass))],
                     cwd=root,
                 )
             st.text_area("Output", out, height=280)

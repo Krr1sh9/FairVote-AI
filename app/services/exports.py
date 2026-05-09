@@ -10,7 +10,7 @@ import io
 import json
 import zipfile
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 import numpy as np
 
@@ -30,12 +30,12 @@ def build_overall_estimates_csv(
     *,
     display_labels: list[str],
     p_baseline: np.ndarray,
-    p_lo: np.ndarray | None = None,
-    p_hi: np.ndarray | None = None,
-    p_post_direct: np.ndarray | None = None,
-    p_mrp_post: np.ndarray | None = None,
-    p_mrp_sample: np.ndarray | None = None,
-    p_true: np.ndarray | None = None,
+    p_lo: Optional[np.ndarray] = None,
+    p_hi: Optional[np.ndarray] = None,
+    p_post_direct: Optional[np.ndarray] = None,
+    p_mrp_post: Optional[np.ndarray] = None,
+    p_mrp_sample: Optional[np.ndarray] = None,
+    p_true: Optional[np.ndarray] = None,
     learned_post_col: str = "learned_poststrat_p",
     learned_sample_col: str = "learned_sample_p",
 ) -> bytes:
@@ -72,7 +72,7 @@ def build_overall_estimates_csv(
 def build_group_audit_csv(
     group_rows: list[dict[str, Any]],
     *,
-    group_rows_mrp: list[dict[str, Any]] | None = None,
+    group_rows_mrp: Optional[list[dict[str, Any]]] = None,
     learned_l1_key: str = "learned_l1",
 ) -> bytes:
     if not group_rows:
@@ -107,14 +107,14 @@ def build_results_summary_markdown(
     method: str,
     group_cols: list[str],
     group_rows: list[dict[str, Any]],
-    group_rows_mrp: list[dict[str, Any]] | None,
+    group_rows_mrp: Optional[list[dict[str, Any]]],
     learned_l1_key: str,
     learned_method_label: str,
     major_mass: float,
     p_baseline: np.ndarray,
-    p_true: np.ndarray | None,
-    p_post_direct: np.ndarray | None,
-    p_mrp_post: np.ndarray | None,
+    p_true: Optional[np.ndarray],
+    p_post_direct: Optional[np.ndarray],
+    p_mrp_post: Optional[np.ndarray],
     plot_names: list[str],
 ) -> bytes:
     has_truth = p_true is not None
@@ -136,19 +136,11 @@ def build_results_summary_markdown(
         f"- Metric shown: {metric_label}",
     ]
     if group_rows:
-        base_s = group_metric_summary(
-            group_rows, metric_key="baseline_l1", major_only=True, major_mass=float(major_mass)
-        )
-        md_lines.append(
-            f"- RR debiasing worst-major: {base_s['worst']:.6f}, p90-major: {base_s['p90']:.6f}, weighted-major: {base_s['weighted']:.6f}"
-        )
+        base_s = group_metric_summary(group_rows, metric_key="baseline_l1", major_only=True, major_mass=float(major_mass))
+        md_lines.append(f"- RR debiasing worst-major: {base_s['worst']:.6f}, p90-major: {base_s['p90']:.6f}, weighted-major: {base_s['weighted']:.6f}")
         if group_rows_mrp is not None:
-            mrp_s = group_metric_summary(
-                group_rows_mrp, metric_key=learned_l1_key, major_only=True, major_mass=float(major_mass)
-            )
-            md_lines.append(
-                f"- {learned_method_label} worst-major: {mrp_s['worst']:.6f}, p90-major: {mrp_s['p90']:.6f}, weighted-major: {mrp_s['weighted']:.6f}"
-            )
+            mrp_s = group_metric_summary(group_rows_mrp, metric_key=learned_l1_key, major_only=True, major_mass=float(major_mass))
+            md_lines.append(f"- {learned_method_label} worst-major: {mrp_s['worst']:.6f}, p90-major: {mrp_s['p90']:.6f}, weighted-major: {mrp_s['weighted']:.6f}")
     if has_truth:
         om = overall_metrics(p_baseline, p_true)
         md_lines.append("")
@@ -156,14 +148,10 @@ def build_results_summary_markdown(
         md_lines.append(f"- RR debiasing: overall_l1={om['overall_l1']:.6f}, overall_mae={om['overall_mae']:.6f}")
         if p_post_direct is not None:
             om2 = overall_metrics(p_post_direct, p_true)
-            md_lines.append(
-                f"- Direct post-strat: overall_l1={om2['overall_l1']:.6f}, overall_mae={om2['overall_mae']:.6f}"
-            )
+            md_lines.append(f"- Direct post-strat: overall_l1={om2['overall_l1']:.6f}, overall_mae={om2['overall_mae']:.6f}")
         if p_mrp_post is not None:
             om3 = overall_metrics(p_mrp_post, p_true)
-            md_lines.append(
-                f"- {learned_method_label} post-strat: overall_l1={om3['overall_l1']:.6f}, overall_mae={om3['overall_mae']:.6f}"
-            )
+            md_lines.append(f"- {learned_method_label} post-strat: overall_l1={om3['overall_l1']:.6f}, overall_mae={om3['overall_mae']:.6f}")
     md_lines.append("")
     md_lines.append("## Plots")
     if plot_names:
@@ -183,12 +171,12 @@ def build_metadata_json(
     k: int,
     method: str,
     response_col: str,
-    truth_col: str | None,
+    truth_col: Optional[str],
     group_cols: list[str],
     major_mass: float,
     has_truth: bool,
     has_population: bool,
-    extra: dict[str, Any] | None = None,
+    extra: Optional[dict[str, Any]] = None,
 ) -> bytes:
     meta: dict[str, Any] = {
         "generated_at": generated_at,

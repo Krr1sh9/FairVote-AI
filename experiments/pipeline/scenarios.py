@@ -14,15 +14,15 @@ Scenario names deliberately separate two concepts:
 The respondent app never receives these true labels.  They exist only in the
 synthetic offline benchmark so methods can be scored against known truth.
 """
-
 from __future__ import annotations
 
-from collections.abc import Iterable
 from dataclasses import dataclass
+from typing import Iterable
 
 import numpy as np
 
 from fairvote.simulation.population import Population
+
 
 SIMPLE_LINEAR_SCENARIOS = {"simple_linear"}
 NONLINEAR_SCENARIOS = {
@@ -68,9 +68,7 @@ def scenario_info(name: str) -> ScenarioInfo:
     if name == "shy_fixed":
         return ScenarioInfo(name, "default_synthetic_population", "fixed_pre_ldp_misreport", "low_medium")
     if name in {"shy_privacy_helps", "privacy_tradeoff", "privacy_helps"}:
-        return ScenarioInfo(
-            name, "default_synthetic_population", "epsilon_dependent_nonresponse_and_misreport", "low_medium"
-        )
+        return ScenarioInfo(name, "default_synthetic_population", "epsilon_dependent_nonresponse_and_misreport", "low_medium")
     if name == "no_bias":
         return ScenarioInfo(name, "default_synthetic_population", "none", "low_medium")
     raise ValueError(f"Unknown scenario: {name}")
@@ -252,6 +250,6 @@ def _softmax(logits: np.ndarray) -> np.ndarray:
 
 
 def _sample_categorical_rows(probs: np.ndarray, rng: np.random.Generator) -> np.ndarray:
-    u = np.asarray(rng.random(probs.shape[0]), dtype=float)
+    u = rng.random(probs.shape[0])
     cdf = np.cumsum(probs, axis=1)
     return np.sum(cdf < u[:, None], axis=1).astype(int)

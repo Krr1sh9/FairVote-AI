@@ -5,7 +5,6 @@ while still documenting the mathematical properties used in the report:
 privacy ratio, unbiased inverse before clipping, variance of reported counts,
 and Monte Carlo confidence-interval coverage.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -120,6 +119,7 @@ def bootstrap_coverage(
     }
 
 
+
 def epsilon_k_grid_checks(*, quick: bool = False) -> list[dict[str, Any]]:
     """Validate RR privacy ratio and unbiased inverse over epsilon/k grid."""
     eps_grid = [0.2, 0.5, 1.0, 2.0] if quick else [0.1, 0.2, 0.5, 1.0, 2.0, 4.0]
@@ -148,9 +148,7 @@ def epsilon_k_grid_checks(*, quick: bool = False) -> list[dict[str, Any]]:
 
 def clipping_bias_check(theta: np.ndarray, *, epsilon: float, n: int, reps: int, seed: int = 789) -> dict[str, Any]:
     """Compare unclipped inverse to clipped/renormalised estimator bias."""
-    unclipped = monte_carlo_unbiasedness(
-        theta, epsilon=epsilon, n=n, reps=reps, seed=seed, clip=False, renormalize=False
-    )
+    unclipped = monte_carlo_unbiasedness(theta, epsilon=epsilon, n=n, reps=reps, seed=seed, clip=False, renormalize=False)
     clipped = monte_carlo_unbiasedness(theta, epsilon=epsilon, n=n, reps=reps, seed=seed, clip=True, renormalize=True)
     return {
         "epsilon": float(epsilon),
@@ -160,7 +158,6 @@ def clipping_bias_check(theta: np.ndarray, *, epsilon: float, n: int, reps: int,
         "clipped_renormalized_max_abs_bias": float(clipped["max_abs_bias"]),
         "bias_increase_from_clipping": float(clipped["max_abs_bias"] - unclipped["max_abs_bias"]),
     }
-
 
 def run_theory_validation(*, out_dir: Path, quick: bool = False) -> dict[str, Any]:
     """Run deterministic theory checks and write JSON/Markdown artefacts."""
@@ -178,9 +175,7 @@ def run_theory_validation(*, out_dir: Path, quick: bool = False) -> dict[str, An
         "privacy_ratio_matches_exp_epsilon": bool(np.isclose(ratio, np.exp(epsilon), rtol=1e-12)),
         "expected_report_distribution": expected_report_distribution(theta, epsilon, theta.size).tolist(),
         "unbiasedness": monte_carlo_unbiasedness(theta, epsilon=epsilon, n=n, reps=reps, seed=111),
-        "coverage": bootstrap_coverage(
-            theta, epsilon=epsilon, n=max(300, n // 2), reps=max(8, reps // 8), n_boot=n_boot, seed=222
-        ),
+        "coverage": bootstrap_coverage(theta, epsilon=epsilon, n=max(300, n // 2), reps=max(8, reps // 8), n_boot=n_boot, seed=222),
         "epsilon_k_grid": grid_checks,
         "max_grid_privacy_ratio_abs_error": float(max(row["privacy_ratio_abs_error"] for row in grid_checks)),
         "max_grid_inverse_recovery_l1": float(max(row["inverse_recovery_l1"] for row in grid_checks)),

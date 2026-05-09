@@ -10,12 +10,14 @@ training targets.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Optional, Tuple
 
 import numpy as np
 
 from fairvote.inference.mrp.likelihood import reported_label_likelihood, softmax_rows
 from fairvote.inference.mrp.misreport_rr import shy_misreport_matrix
 from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
+
 
 
 @dataclass
@@ -39,14 +41,13 @@ class LearnedShyMisreportRRMultinomialModel:
       For true != shy_category:
         stated == true (identity)
     """
-
     k: int
     shy_category: int
     l2: float = 1.0
     seed: int = 0
     honesty_init: float = 0.80
     honesty_lr: float = 0.02
-    honesty_clip: tuple[float, float] = (1e-3, 1.0 - 1e-3)
+    honesty_clip: Tuple[float, float] = (1e-3, 1.0 - 1e-3)
 
     def __post_init__(self) -> None:
         if self.k <= 1:
@@ -56,10 +57,10 @@ class LearnedShyMisreportRRMultinomialModel:
         if not (0.0 < self.honesty_init < 1.0):
             raise ValueError("honesty_init must be in (0,1)")
         self.rng = np.random.default_rng(self.seed)
-        self.W: np.ndarray | None = None
+        self.W: Optional[np.ndarray] = None
         self.honesty_: float = float(self.honesty_init)
 
-    def _composite_channel_and_gradrow(self, eps: float) -> tuple[np.ndarray, np.ndarray]:
+    def _composite_channel_and_gradrow(self, eps: float) -> Tuple[np.ndarray, np.ndarray]:
         """
         Returns:
           C: (k,k) composite channel TRUE -> REPORTED

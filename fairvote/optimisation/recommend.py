@@ -8,16 +8,17 @@ claim that a chosen method is universally best outside the evaluated scenarios.
 # fairvote/optimisation/recommend.py
 from __future__ import annotations
 
-import csv
-import math
-from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import Dict, List, Optional, Sequence, Tuple
+
+import math
+import csv
 from pathlib import Path
+
 
 # =============================================================================
 # Data structures
 # =============================================================================
-
 
 @dataclass(frozen=True)
 class Candidate:
@@ -86,26 +87,25 @@ class Constraints:
     Sample size:
       min_n_effective: enforce mean_n_effective >= min_n_effective
     """
+    epsilon_max: Optional[float] = None
+    epsilon_min: Optional[float] = None
 
-    epsilon_max: float | None = None
-    epsilon_min: float | None = None
+    overall_l1_max: Optional[float] = None
+    overall_mae_max: Optional[float] = None
 
-    overall_l1_max: float | None = None
-    overall_mae_max: float | None = None
+    worst_region_l1_max: Optional[float] = None
+    worst_age_l1_max: Optional[float] = None
 
-    worst_region_l1_max: float | None = None
-    worst_age_l1_max: float | None = None
+    worst_region_l1_major_max: Optional[float] = None
+    worst_age_l1_major_max: Optional[float] = None
 
-    worst_region_l1_major_max: float | None = None
-    worst_age_l1_major_max: float | None = None
+    weighted_region_l1_max: Optional[float] = None
+    weighted_age_l1_max: Optional[float] = None
 
-    weighted_region_l1_max: float | None = None
-    weighted_age_l1_max: float | None = None
+    p90_region_l1_major_max: Optional[float] = None
+    p90_age_l1_major_max: Optional[float] = None
 
-    p90_region_l1_major_max: float | None = None
-    p90_age_l1_major_max: float | None = None
-
-    min_n_effective: float | None = None
+    min_n_effective: Optional[float] = None
 
 
 @dataclass(frozen=True)
@@ -117,9 +117,8 @@ class Objective:
     tie_breakers: additional metrics to minimise (in order).
     prefer_lower_epsilon: if True, prefer smaller epsilon after metric comparisons.
     """
-
     primary: str = "mean_overall_l1"
-    tie_breakers: tuple[str, ...] = (
+    tie_breakers: Tuple[str, ...] = (
         "mean_worst_region_l1_major",
         "mean_p90_region_l1_major",
         "mean_worst_age_l1_major",
@@ -136,18 +135,17 @@ class Recommendation:
     """Chosen candidate, or an explanation when constraints leave none."""
 
     scenario: str
-    chosen: Candidate | None
+    chosen: Optional[Candidate]
     feasible_count: int
     total_count: int
-    reason_if_none: str | None = None
+    reason_if_none: Optional[str] = None
 
 
 # =============================================================================
 # CSV parsing
 # =============================================================================
 
-
-def read_summary_csv(path: Path) -> list[Candidate]:
+def read_summary_csv(path: Path) -> List[Candidate]:
     """
     Read the summary.csv produced by experiments/mrp_vs_baselines.py
 
@@ -157,9 +155,9 @@ def read_summary_csv(path: Path) -> list[Candidate]:
     path = Path(path)
     with path.open("r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        rows = list(reader)
+        rows = [r for r in reader]
 
-    cands: list[Candidate] = []
+    cands: List[Candidate] = []
     for r in rows:
         n_rows = _as_int(r.get("n_rows", "0"))
         if n_rows <= 0:
@@ -170,26 +168,32 @@ def read_summary_csv(path: Path) -> list[Candidate]:
             method=str(r.get("method", "")),
             epsilon=_as_float(r.get("epsilon", "nan")),
             n_rows=n_rows,
+
             mean_overall_l1=_as_float(r.get("mean_overall_l1", "nan")),
             std_overall_l1=_as_float(r.get("std_overall_l1", "nan")),
             mean_overall_mae=_as_float(r.get("mean_overall_mae", "nan")),
             std_overall_mae=_as_float(r.get("std_overall_mae", "nan")),
+
             mean_worst_region_l1=_as_float(r.get("mean_worst_region_l1", "nan")),
             std_worst_region_l1=_as_float(r.get("std_worst_region_l1", "nan")),
             mean_worst_age_l1=_as_float(r.get("mean_worst_age_l1", "nan")),
             std_worst_age_l1=_as_float(r.get("std_worst_age_l1", "nan")),
+
             mean_worst_region_l1_major=_as_float(r.get("mean_worst_region_l1_major", "nan")),
             std_worst_region_l1_major=_as_float(r.get("std_worst_region_l1_major", "nan")),
             mean_worst_age_l1_major=_as_float(r.get("mean_worst_age_l1_major", "nan")),
             std_worst_age_l1_major=_as_float(r.get("std_worst_age_l1_major", "nan")),
+
             mean_weighted_region_l1=_as_float(r.get("mean_weighted_region_l1", "nan")),
             std_weighted_region_l1=_as_float(r.get("std_weighted_region_l1", "nan")),
             mean_weighted_age_l1=_as_float(r.get("mean_weighted_age_l1", "nan")),
             std_weighted_age_l1=_as_float(r.get("std_weighted_age_l1", "nan")),
+
             mean_p90_region_l1_major=_as_float(r.get("mean_p90_region_l1_major", "nan")),
             std_p90_region_l1_major=_as_float(r.get("std_p90_region_l1_major", "nan")),
             mean_p90_age_l1_major=_as_float(r.get("mean_p90_age_l1_major", "nan")),
             std_p90_age_l1_major=_as_float(r.get("std_p90_age_l1_major", "nan")),
+
             mean_n_effective=_as_float(r.get("mean_n_effective", "nan")),
         )
 
@@ -221,17 +225,16 @@ def _finite(x: float) -> bool:
 # Filtering + objective ranking
 # =============================================================================
 
-
 def filter_candidates(
     cands: Sequence[Candidate],
     *,
     constraints: Constraints,
-    allowed_methods: Sequence[str] | None = None,
-) -> list[Candidate]:
+    allowed_methods: Optional[Sequence[str]] = None,
+) -> List[Candidate]:
     """Return candidates satisfying all explicit user constraints."""
 
     allowed = set(allowed_methods) if allowed_methods else None
-    out: list[Candidate] = []
+    out: List[Candidate] = []
     for c in cands:
         if allowed is not None and c.method not in allowed:
             continue
@@ -246,14 +249,17 @@ def recommend_per_scenario(
     *,
     constraints: Constraints,
     objective: Objective = Objective(),
-    allowed_methods: Sequence[str] | None = None,
-    scenarios: Sequence[str] | None = None,
-) -> list[Recommendation]:
+    allowed_methods: Optional[Sequence[str]] = None,
+    scenarios: Optional[Sequence[str]] = None,
+) -> List[Recommendation]:
     """Select the lowest-objective feasible candidate within each scenario."""
 
-    scenarios = sorted({c.scenario for c in cands}) if scenarios is None else list(scenarios)
+    if scenarios is None:
+        scenarios = sorted({c.scenario for c in cands})
+    else:
+        scenarios = list(scenarios)
 
-    recs: list[Recommendation] = []
+    recs: List[Recommendation] = []
     for s in scenarios:
         pool = [c for c in cands if c.scenario == s]
         total = len(pool)
@@ -288,11 +294,11 @@ def pareto_frontier(
     cands: Sequence[Candidate],
     *,
     scenario: str,
-    method: str | None = None,
+    method: Optional[str] = None,
     x: str = "epsilon",
     y: str = "mean_overall_l1",
     z: str = "mean_worst_region_l1_major",
-) -> list[Candidate]:
+) -> List[Candidate]:
     """
     Simple 2D+1 Pareto frontier:
       - minimise y (utility loss)
@@ -304,7 +310,7 @@ def pareto_frontier(
     """
     pool = [c for c in cands if c.scenario == scenario and (method is None or c.method == method)]
     pool = [c for c in pool if _finite(_get(c, y)) and _finite(_get(c, z)) and _finite(c.epsilon)]
-    front: list[Candidate] = []
+    front: List[Candidate] = []
 
     for c in pool:
         dominated = False
@@ -313,13 +319,10 @@ def pareto_frontier(
                 continue
             # Weak dominance with tolerance: d dominates c if d is no worse
             # on both objectives and strictly better on at least one.
-            if (
-                (_get(d, y) <= _get(c, y) + 1e-12)
-                and (_get(d, z) <= _get(c, z) + 1e-12)
-                and ((_get(d, y) < _get(c, y) - 1e-12) or (_get(d, z) < _get(c, z) - 1e-12))
-            ):
-                dominated = True
-                break
+            if (_get(d, y) <= _get(c, y) + 1e-12) and (_get(d, z) <= _get(c, z) + 1e-12):
+                if (_get(d, y) < _get(c, y) - 1e-12) or (_get(d, z) < _get(c, z) - 1e-12):
+                    dominated = True
+                    break
         if not dominated:
             front.append(c)
 
@@ -331,71 +334,63 @@ def write_pareto_csv(path: Path, candidates: Sequence[Candidate]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     keys = [
-        "scenario",
-        "method",
-        "epsilon",
-        "n_rows",
-        "mean_n_effective",
-        "mean_overall_l1",
-        "std_overall_l1",
-        "mean_overall_mae",
-        "std_overall_mae",
-        "mean_worst_region_l1",
-        "std_worst_region_l1",
-        "mean_worst_age_l1",
-        "std_worst_age_l1",
-        "mean_worst_region_l1_major",
-        "std_worst_region_l1_major",
-        "mean_worst_age_l1_major",
-        "std_worst_age_l1_major",
-        "mean_weighted_region_l1",
-        "std_weighted_region_l1",
-        "mean_weighted_age_l1",
-        "std_weighted_age_l1",
-        "mean_p90_region_l1_major",
-        "std_p90_region_l1_major",
-        "mean_p90_age_l1_major",
-        "std_p90_age_l1_major",
+        "scenario", "method", "epsilon", "n_rows", "mean_n_effective",
+        "mean_overall_l1", "std_overall_l1",
+        "mean_overall_mae", "std_overall_mae",
+
+        "mean_worst_region_l1", "std_worst_region_l1",
+        "mean_worst_age_l1", "std_worst_age_l1",
+
+        "mean_worst_region_l1_major", "std_worst_region_l1_major",
+        "mean_worst_age_l1_major", "std_worst_age_l1_major",
+
+        "mean_weighted_region_l1", "std_weighted_region_l1",
+        "mean_weighted_age_l1", "std_weighted_age_l1",
+
+        "mean_p90_region_l1_major", "std_p90_region_l1_major",
+        "mean_p90_age_l1_major", "std_p90_age_l1_major",
     ]
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=keys)
         w.writeheader()
         for c in candidates:
-            w.writerow(
-                {
-                    "scenario": c.scenario,
-                    "method": c.method,
-                    "epsilon": c.epsilon,
-                    "n_rows": c.n_rows,
-                    "mean_n_effective": c.mean_n_effective,
-                    "mean_overall_l1": c.mean_overall_l1,
-                    "std_overall_l1": c.std_overall_l1,
-                    "mean_overall_mae": c.mean_overall_mae,
-                    "std_overall_mae": c.std_overall_mae,
-                    "mean_worst_region_l1": c.mean_worst_region_l1,
-                    "std_worst_region_l1": c.std_worst_region_l1,
-                    "mean_worst_age_l1": c.mean_worst_age_l1,
-                    "std_worst_age_l1": c.std_worst_age_l1,
-                    "mean_worst_region_l1_major": c.mean_worst_region_l1_major,
-                    "std_worst_region_l1_major": c.std_worst_region_l1_major,
-                    "mean_worst_age_l1_major": c.mean_worst_age_l1_major,
-                    "std_worst_age_l1_major": c.std_worst_age_l1_major,
-                    "mean_weighted_region_l1": c.mean_weighted_region_l1,
-                    "std_weighted_region_l1": c.std_weighted_region_l1,
-                    "mean_weighted_age_l1": c.mean_weighted_age_l1,
-                    "std_weighted_age_l1": c.std_weighted_age_l1,
-                    "mean_p90_region_l1_major": c.mean_p90_region_l1_major,
-                    "std_p90_region_l1_major": c.std_p90_region_l1_major,
-                    "mean_p90_age_l1_major": c.mean_p90_age_l1_major,
-                    "std_p90_age_l1_major": c.std_p90_age_l1_major,
-                }
-            )
+            w.writerow({
+                "scenario": c.scenario,
+                "method": c.method,
+                "epsilon": c.epsilon,
+                "n_rows": c.n_rows,
+                "mean_n_effective": c.mean_n_effective,
+
+                "mean_overall_l1": c.mean_overall_l1,
+                "std_overall_l1": c.std_overall_l1,
+                "mean_overall_mae": c.mean_overall_mae,
+                "std_overall_mae": c.std_overall_mae,
+
+                "mean_worst_region_l1": c.mean_worst_region_l1,
+                "std_worst_region_l1": c.std_worst_region_l1,
+                "mean_worst_age_l1": c.mean_worst_age_l1,
+                "std_worst_age_l1": c.std_worst_age_l1,
+
+                "mean_worst_region_l1_major": c.mean_worst_region_l1_major,
+                "std_worst_region_l1_major": c.std_worst_region_l1_major,
+                "mean_worst_age_l1_major": c.mean_worst_age_l1_major,
+                "std_worst_age_l1_major": c.std_worst_age_l1_major,
+
+                "mean_weighted_region_l1": c.mean_weighted_region_l1,
+                "std_weighted_region_l1": c.std_weighted_region_l1,
+                "mean_weighted_age_l1": c.mean_weighted_age_l1,
+                "std_weighted_age_l1": c.std_weighted_age_l1,
+
+                "mean_p90_region_l1_major": c.mean_p90_region_l1_major,
+                "std_p90_region_l1_major": c.std_p90_region_l1_major,
+                "mean_p90_age_l1_major": c.mean_p90_age_l1_major,
+                "std_p90_age_l1_major": c.std_p90_age_l1_major,
+            })
 
 
 # =============================================================================
 # Internal helpers
 # =============================================================================
-
 
 def _get(c: Candidate, field: str) -> float:
     if field == "epsilon":
@@ -415,85 +410,44 @@ def _satisfies(c: Candidate, cons: Constraints) -> bool:
         return False
 
     # utility
-    if (
-        cons.overall_l1_max is not None
-        and _finite(c.mean_overall_l1)
-        and c.mean_overall_l1 > cons.overall_l1_max + 1e-12
-    ):
+    if cons.overall_l1_max is not None and _finite(c.mean_overall_l1) and c.mean_overall_l1 > cons.overall_l1_max + 1e-12:
         return False
-    if (
-        cons.overall_mae_max is not None
-        and _finite(c.mean_overall_mae)
-        and c.mean_overall_mae > cons.overall_mae_max + 1e-12
-    ):
+    if cons.overall_mae_max is not None and _finite(c.mean_overall_mae) and c.mean_overall_mae > cons.overall_mae_max + 1e-12:
         return False
 
     # fairness (legacy)
-    if (
-        cons.worst_region_l1_max is not None
-        and _finite(c.mean_worst_region_l1)
-        and c.mean_worst_region_l1 > cons.worst_region_l1_max + 1e-12
-    ):
+    if cons.worst_region_l1_max is not None and _finite(c.mean_worst_region_l1) and c.mean_worst_region_l1 > cons.worst_region_l1_max + 1e-12:
         return False
-    if (
-        cons.worst_age_l1_max is not None
-        and _finite(c.mean_worst_age_l1)
-        and c.mean_worst_age_l1 > cons.worst_age_l1_max + 1e-12
-    ):
+    if cons.worst_age_l1_max is not None and _finite(c.mean_worst_age_l1) and c.mean_worst_age_l1 > cons.worst_age_l1_max + 1e-12:
         return False
 
     # fairness (major/robust)
-    if (
-        cons.worst_region_l1_major_max is not None
-        and _finite(c.mean_worst_region_l1_major)
-        and c.mean_worst_region_l1_major > cons.worst_region_l1_major_max + 1e-12
-    ):
+    if cons.worst_region_l1_major_max is not None and _finite(c.mean_worst_region_l1_major) and c.mean_worst_region_l1_major > cons.worst_region_l1_major_max + 1e-12:
         return False
-    if (
-        cons.worst_age_l1_major_max is not None
-        and _finite(c.mean_worst_age_l1_major)
-        and c.mean_worst_age_l1_major > cons.worst_age_l1_major_max + 1e-12
-    ):
+    if cons.worst_age_l1_major_max is not None and _finite(c.mean_worst_age_l1_major) and c.mean_worst_age_l1_major > cons.worst_age_l1_major_max + 1e-12:
         return False
 
-    if (
-        cons.weighted_region_l1_max is not None
-        and _finite(c.mean_weighted_region_l1)
-        and c.mean_weighted_region_l1 > cons.weighted_region_l1_max + 1e-12
-    ):
+    if cons.weighted_region_l1_max is not None and _finite(c.mean_weighted_region_l1) and c.mean_weighted_region_l1 > cons.weighted_region_l1_max + 1e-12:
         return False
-    if (
-        cons.weighted_age_l1_max is not None
-        and _finite(c.mean_weighted_age_l1)
-        and c.mean_weighted_age_l1 > cons.weighted_age_l1_max + 1e-12
-    ):
+    if cons.weighted_age_l1_max is not None and _finite(c.mean_weighted_age_l1) and c.mean_weighted_age_l1 > cons.weighted_age_l1_max + 1e-12:
         return False
 
-    if (
-        cons.p90_region_l1_major_max is not None
-        and _finite(c.mean_p90_region_l1_major)
-        and c.mean_p90_region_l1_major > cons.p90_region_l1_major_max + 1e-12
-    ):
+    if cons.p90_region_l1_major_max is not None and _finite(c.mean_p90_region_l1_major) and c.mean_p90_region_l1_major > cons.p90_region_l1_major_max + 1e-12:
         return False
-    if (
-        cons.p90_age_l1_major_max is not None
-        and _finite(c.mean_p90_age_l1_major)
-        and c.mean_p90_age_l1_major > cons.p90_age_l1_major_max + 1e-12
-    ):
+    if cons.p90_age_l1_major_max is not None and _finite(c.mean_p90_age_l1_major) and c.mean_p90_age_l1_major > cons.p90_age_l1_major_max + 1e-12:
         return False
 
     # sample size
-    return not (
-        cons.min_n_effective is not None
-        and _finite(c.mean_n_effective)
-        and c.mean_n_effective < cons.min_n_effective - 1e-12
-    )
+    if cons.min_n_effective is not None and _finite(c.mean_n_effective) and c.mean_n_effective < cons.min_n_effective - 1e-12:
+        return False
+
+    return True
 
 
 def _argmin(cands: Sequence[Candidate], obj: Objective) -> Candidate:
     # Lexicographic sort key: primary metric first, then tie-breakers, then
     # optionally epsilon to prefer stronger privacy when metrics are equal.
-    def key(c: Candidate) -> tuple:
+    def key(c: Candidate) -> Tuple:
         primary = _get(c, obj.primary)
         ties = tuple(_get(c, t) for t in obj.tie_breakers)
         if obj.prefer_lower_epsilon:
@@ -523,50 +477,24 @@ def _explain_infeasible(pool: Sequence[Candidate], cons: Constraints) -> str:
         checks.append(("overall_mae_max", any_ok(lambda c: c.mean_overall_mae <= cons.overall_mae_max + 1e-12)))
 
     if cons.worst_region_l1_max is not None:
-        checks.append(
-            ("worst_region_l1_max", any_ok(lambda c: c.mean_worst_region_l1 <= cons.worst_region_l1_max + 1e-12))
-        )
+        checks.append(("worst_region_l1_max", any_ok(lambda c: c.mean_worst_region_l1 <= cons.worst_region_l1_max + 1e-12)))
     if cons.worst_age_l1_max is not None:
         checks.append(("worst_age_l1_max", any_ok(lambda c: c.mean_worst_age_l1 <= cons.worst_age_l1_max + 1e-12)))
 
     if cons.worst_region_l1_major_max is not None:
-        checks.append(
-            (
-                "worst_region_l1_major_max",
-                any_ok(lambda c: c.mean_worst_region_l1_major <= cons.worst_region_l1_major_max + 1e-12),
-            )
-        )
+        checks.append(("worst_region_l1_major_max", any_ok(lambda c: c.mean_worst_region_l1_major <= cons.worst_region_l1_major_max + 1e-12)))
     if cons.worst_age_l1_major_max is not None:
-        checks.append(
-            (
-                "worst_age_l1_major_max",
-                any_ok(lambda c: c.mean_worst_age_l1_major <= cons.worst_age_l1_major_max + 1e-12),
-            )
-        )
+        checks.append(("worst_age_l1_major_max", any_ok(lambda c: c.mean_worst_age_l1_major <= cons.worst_age_l1_major_max + 1e-12)))
 
     if cons.weighted_region_l1_max is not None:
-        checks.append(
-            (
-                "weighted_region_l1_max",
-                any_ok(lambda c: c.mean_weighted_region_l1 <= cons.weighted_region_l1_max + 1e-12),
-            )
-        )
+        checks.append(("weighted_region_l1_max", any_ok(lambda c: c.mean_weighted_region_l1 <= cons.weighted_region_l1_max + 1e-12)))
     if cons.weighted_age_l1_max is not None:
-        checks.append(
-            ("weighted_age_l1_max", any_ok(lambda c: c.mean_weighted_age_l1 <= cons.weighted_age_l1_max + 1e-12))
-        )
+        checks.append(("weighted_age_l1_max", any_ok(lambda c: c.mean_weighted_age_l1 <= cons.weighted_age_l1_max + 1e-12)))
 
     if cons.p90_region_l1_major_max is not None:
-        checks.append(
-            (
-                "p90_region_l1_major_max",
-                any_ok(lambda c: c.mean_p90_region_l1_major <= cons.p90_region_l1_major_max + 1e-12),
-            )
-        )
+        checks.append(("p90_region_l1_major_max", any_ok(lambda c: c.mean_p90_region_l1_major <= cons.p90_region_l1_major_max + 1e-12)))
     if cons.p90_age_l1_major_max is not None:
-        checks.append(
-            ("p90_age_l1_major_max", any_ok(lambda c: c.mean_p90_age_l1_major <= cons.p90_age_l1_major_max + 1e-12))
-        )
+        checks.append(("p90_age_l1_major_max", any_ok(lambda c: c.mean_p90_age_l1_major <= cons.p90_age_l1_major_max + 1e-12)))
 
     if cons.min_n_effective is not None:
         checks.append(("min_n_effective", any_ok(lambda c: c.mean_n_effective >= cons.min_n_effective - 1e-12)))

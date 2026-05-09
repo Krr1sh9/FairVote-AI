@@ -42,15 +42,17 @@ Use this for final report evidence:
 python -m experiments.mrp_vs_baselines --preset final_evidence
 ```
 
-The final preset uses:
+The full final preset uses the wider robustness grid defined in `experiments/pipeline/presets.py`:
 
 ```text
-epsilons:     0.2, 0.5, 1.0, 2.0
-sample sizes: 500, 1000, 2500
-scenarios:    simple_linear, nonresponse, nonlinear_interaction, shy_fixed
+epsilons:     0.2, 0.5, 1.0, 2.0, 4.0
+sample sizes: 500, 1000, 2500, 5000
+scenarios:    full robustness set, including simple, nonlinear, sparse, privacy-noise and misreport scenarios
 trials:       30 by default
 methods:      research method set
 ```
+
+The submitted canonical evidence run is a smaller CPU-sized final-style custom run at `evidence/final/2026-05-06_004647_mrp_vs_baselines/`. It should be cited as custom/reduced evidence, not as the full preset.
 
 Increase trial count if runtime allows:
 
@@ -96,7 +98,7 @@ For compatibility, the pipeline may also write `results_trials.csv` and `summary
 - Seeds are stored in `config.json`, `manifest.json`, and each raw trial row.
 - Method runtime is stored per row and summarised in `runtime_profile.csv`.
 - If a method fails and `continue_on_error` is true, the failure is logged in `failures.csv` and the rest of the run continues.
-- Use `--fail_fast` when debugging a failing estimator.
+- Use `--fail_fast` when debugging a failing estimator, or for final evidence when you want strict failure handling so hidden partial failures cannot pass as complete evidence.
 
 Example:
 

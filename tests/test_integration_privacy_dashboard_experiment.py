@@ -5,7 +5,6 @@ and property tests by proving that privacy-preserving submissions can be stored,
 read as dashboard input, aggregated, and that a tiny experiment run emits the
 expected reproducible evidence tables.
 """
-
 from __future__ import annotations
 
 import csv

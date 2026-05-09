@@ -1,16 +1,13 @@
 """Seed ensembles for neural RR-MRP uncertainty checks."""
-
 from __future__ import annotations
 
-from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional, Sequence
 
 import numpy as np
 
 from .api import RRNeuralMRPModel
 from .types import ArrayLike, RRNeuralMRPFitInfo
-
 
 @dataclass(frozen=True)
 class RRNeuralMRPEnsemble:
@@ -46,8 +43,8 @@ def fit_rr_neural_mrp_ensemble(
     k: int,
     epsilon: float,
     seeds: Sequence[int],
-    model_kwargs: dict[str, Any] | None = None,
-    fit_kwargs: dict[str, Any] | None = None,
+    model_kwargs: Optional[dict[str, Any]] = None,
+    fit_kwargs: Optional[dict[str, Any]] = None,
 ) -> RRNeuralMRPEnsemble:
     """Fit a small multi-seed ensemble for uncertainty sensitivity checks."""
     if not seeds:

@@ -1,21 +1,17 @@
 """Main RR-aware neural MRP model API."""
-
 from __future__ import annotations
 
 import json
 import time
-from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Sequence, Tuple, Union
 
 import numpy as np
 
 from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
-
 from .dependencies import torch
 from .network import _MLP
 from .types import ArrayLike, RRNeuralMRPFitInfo
-
 
 class RRNeuralMRPModel:
     """RR-aware neural MRP model trained on privatized reported answers.
@@ -40,7 +36,7 @@ class RRNeuralMRPModel:
         dropout: float = 0.0,
         weight_decay: float = 0.0,
         seed: int = 0,
-        device: str | torch.device = "cpu",
+        device: Union[str, torch.device] = "cpu",
         dtype: torch.dtype = torch.float32,
         deterministic: bool = True,
     ):
@@ -55,10 +51,10 @@ class RRNeuralMRPModel:
         self.deterministic = bool(deterministic)
 
         self.A_np = rr_transition_matrix(self.epsilon, self.k)
-        self._A_tensor: torch.Tensor | None = None
-        self._network: _MLP | None = None
-        self._input_dim: int | None = None
-        self._last_fit_info: RRNeuralMRPFitInfo | None = None
+        self._A_tensor: Optional[torch.Tensor] = None
+        self._network: Optional[_MLP] = None
+        self._input_dim: Optional[int] = None
+        self._last_fit_info: Optional[RRNeuralMRPFitInfo] = None
 
     @staticmethod
     def _validate_k(k: int) -> int:
@@ -99,7 +95,7 @@ class RRNeuralMRPModel:
         return out
 
     @staticmethod
-    def _validate_hidden_layers(hidden_layers: Sequence[int]) -> tuple[int, ...]:
+    def _validate_hidden_layers(hidden_layers: Sequence[int]) -> Tuple[int, ...]:
         if isinstance(hidden_layers, (int, np.integer)):
             hidden_layers = (int(hidden_layers),)
         if hidden_layers is None:
@@ -129,7 +125,7 @@ class RRNeuralMRPModel:
         return batch_size
 
     @staticmethod
-    def _resolve_device(device: str | torch.device) -> torch.device:
+    def _resolve_device(device: Union[str, torch.device]) -> torch.device:
         if str(device) == "auto":
             return torch.device("cuda" if torch.cuda.is_available() else "cpu")
         resolved = torch.device(device)
@@ -150,7 +146,7 @@ class RRNeuralMRPModel:
             raise ValueError(f"{name} must contain only finite values")
         return arr
 
-    def _as_y_reported(self, y_reported: Sequence[int], *, expected_n: int | None = None) -> np.ndarray:
+    def _as_y_reported(self, y_reported: Sequence[int], *, expected_n: Optional[int] = None) -> np.ndarray:
         raw = np.asarray(y_reported)
         if raw.ndim != 1:
             raise ValueError("y_reported must be a 1D array")
@@ -250,7 +246,7 @@ class RRNeuralMRPModel:
         return frac
 
     @staticmethod
-    def _validate_patience(patience: int | None) -> int | None:
+    def _validate_patience(patience: Optional[int]) -> Optional[int]:
         if patience is None:
             return None
         if not isinstance(patience, (int, np.integer)):
@@ -265,7 +261,7 @@ class RRNeuralMRPModel:
         X: np.ndarray,
         y: np.ndarray,
         validation_fraction: float,
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray | None, np.ndarray | None]:
+    ) -> tuple[np.ndarray, np.ndarray, Optional[np.ndarray], Optional[np.ndarray]]:
         if validation_fraction <= 0.0:
             return X, y, None, None
         n = X.shape[0]
@@ -285,7 +281,7 @@ class RRNeuralMRPModel:
         return self._network is not None
 
     @property
-    def last_fit_info(self) -> RRNeuralMRPFitInfo | None:
+    def last_fit_info(self) -> Optional[RRNeuralMRPFitInfo]:
         """Most recent fit summary, or ``None`` if the model has not been fitted."""
         return self._last_fit_info
 
@@ -299,13 +295,13 @@ class RRNeuralMRPModel:
         batch_size: int = 512,
         keep_history: bool = False,
         verbose_every: int = 0,
-        X_val: ArrayLike | None = None,
-        y_val_reported: Sequence[int] | None = None,
+        X_val: Optional[ArrayLike] = None,
+        y_val_reported: Optional[Sequence[int]] = None,
         validation_fraction: float = 0.0,
-        patience: int | None = None,
+        patience: Optional[int] = None,
         min_delta: float = 0.0,
         keep_best: bool = True,
-        checkpoint_path: str | Path | None = None,
+        checkpoint_path: Optional[Union[str, Path]] = None,
     ) -> RRNeuralMRPFitInfo:
         """Fit using privatized RR reports only.
 
@@ -330,12 +326,7 @@ class RRNeuralMRPModel:
 
         if (X_val is None) != (y_val_reported is None):
             raise ValueError("X_val and y_val_reported must be provided together")
-        X_train: np.ndarray
-        y_train: np.ndarray
-        X_val_arr: np.ndarray | None
-        y_val_arr: np.ndarray | None
         if X_val is not None:
-            assert y_val_reported is not None
             if validation_fraction > 0.0:
                 raise ValueError("Use either explicit validation data or validation_fraction, not both")
             X_train = X_arr
@@ -367,8 +358,8 @@ class RRNeuralMRPModel:
         train_hist: list[float] = []
         val_hist: list[float] = []
         best_val = float("inf")
-        best_step: int | None = None
-        best_state: dict[str, torch.Tensor] | None = None
+        best_step: Optional[int] = None
+        best_state: Optional[dict[str, torch.Tensor]] = None
         bad_steps = 0
         completed_steps = 0
         early_stopped = False
@@ -421,13 +412,13 @@ class RRNeuralMRPModel:
         if best_state is not None and keep_best:
             network.load_state_dict({k: v.to(self.device) for k, v in best_state.items()})
 
-        final_loss = self.loss(X_train, y_train.astype(int).tolist())
+        final_loss = self.loss(X_train, y_train)
         final_val_loss = None
         if X_val_arr is not None and y_val_arr is not None:
-            final_val_loss = self.reported_label_nll(X_val_arr, y_val_arr.astype(int).tolist())
+            final_val_loss = self.reported_label_nll(X_val_arr, y_val_arr)
         runtime_sec = time.perf_counter() - start_time
 
-        checkpoint_str: str | None = None
+        checkpoint_str: Optional[str] = None
         if checkpoint_path is not None:
             checkpoint_str = str(checkpoint_path)
             self.save_checkpoint(checkpoint_str)
@@ -473,9 +464,7 @@ class RRNeuralMRPModel:
         X_arr = self._as_2d_float_array(X)
         self._check_input_dim(X_arr)
         y_arr = self._as_y_reported(y_reported, expected_n=X_arr.shape[0])
-        return self._loss_from_tensors(
-            self._to_tensor(X_arr), torch.as_tensor(y_arr, dtype=torch.long, device=self.device)
-        )
+        return self._loss_from_tensors(self._to_tensor(X_arr), torch.as_tensor(y_arr, dtype=torch.long, device=self.device))
 
     def reported_label_nll(self, X: ArrayLike, y_reported: Sequence[int]) -> float:
         """Return unregularised NLL of privatized reported labels.
@@ -548,8 +537,8 @@ class RRNeuralMRPModel:
         self,
         X: ArrayLike,
         *,
-        y_reported: Sequence[int] | None = None,
-        true_labels: Sequence[int] | None = None,
+        y_reported: Optional[Sequence[int]] = None,
+        true_labels: Optional[Sequence[int]] = None,
     ) -> dict[str, float]:
         """Return report-ready neural diagnostics for available labels."""
         out = self.entropy_summary(X)
@@ -602,13 +591,13 @@ class RRNeuralMRPModel:
             metadata["fit_info"] = self._last_fit_info.to_dict(include_history=include_history)
         return metadata
 
-    def save_metadata(self, path: str | Path, *, include_history: bool = False) -> None:
+    def save_metadata(self, path: Union[str, Path], *, include_history: bool = False) -> None:
         """Write fitted model metadata as JSON."""
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(self.export_metadata(include_history=include_history), indent=2), encoding="utf-8")
 
-    def save_checkpoint(self, path: str | Path) -> None:
+    def save_checkpoint(self, path: Union[str, Path]) -> None:
         """Save model state dict and metadata for reproducibility."""
         network = self._require_network()
         path = Path(path)
@@ -622,7 +611,7 @@ class RRNeuralMRPModel:
         )
 
     @classmethod
-    def load_checkpoint(cls, path: str | Path, *, device: str | torch.device = "cpu") -> RRNeuralMRPModel:
+    def load_checkpoint(cls, path: Union[str, Path], *, device: Union[str, torch.device] = "cpu") -> "RRNeuralMRPModel":
         """Load a checkpoint produced by :meth:`save_checkpoint`."""
         payload = torch.load(Path(path), map_location=device)
         metadata = dict(payload["metadata"])
@@ -675,6 +664,8 @@ class RRNeuralMRPModel:
         if not np.isclose(float(p.sum()), 1.0, atol=1e-6):
             raise RuntimeError(f"{name} probabilities are not normalised")
         return p
+
+
 
 
 # Backwards-compatible aliases so older imports continue to work.

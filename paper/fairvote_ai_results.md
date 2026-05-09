@@ -8,26 +8,26 @@ This is the report-ready result artefact template. It is intentionally conservat
 - non-empty `paired_comparisons.csv` for any neural-vs-linear claim,
 - committed `manifest.json`, `environment.json`, `sha256sums.txt`, plots and tables.
 
-After running final evidence, regenerate the final paper draft and claim index with:
+The submitted archive includes generated report-ready artefacts under `paper/generated/`. Regenerate the final paper draft and claim index after any new evidence run with:
 
 ```bash
 python -m experiments.write_publication_result \
-  --run_dir evidence/final/<RUN_DIR> \
+  --run_dir evidence/final/2026-05-06_004647_mrp_vs_baselines \
   --out_dir paper/generated
 ```
 
-Do not replace this template with prose copied from a smoke run.
+Do not replace this template with prose copied from a smoke run. The current generated files are based on `evidence/final/2026-05-06_004647_mrp_vs_baselines/`.
 
 ## Abstract
 
-FairVote-AI evaluates locally private polling estimators under k-ary Randomized Response, sampling bias, sparse subgroup structure, nonlinear response patterns and strategic misreporting. The implementation includes a browser-side LDP respondent prototype, raw-answer rejection on the server, strict analyst upload validation, analytical RR debiasing, linear RR-aware MRP, hierarchical partial-pooling RR-aware MRP, optional neural RR-MRP, and a reproducible evidence pipeline.
+FairVote-AI evaluates locally private polling estimators under k-ary Randomized Response, sampling bias, sparse subgroup structure, nonlinear response patterns and privacy-noise stress tests. The wider pipeline also supports strategic-misreporting scenarios, but the current generated results are based on the canonical CPU-sized evidence run unless a separate supplementary run is cited. The implementation includes a browser-side LDP respondent prototype, raw-answer rejection on the server, strict analyst upload validation, analytical RR debiasing, linear RR-aware MRP, hierarchical partial-pooling RR-aware MRP, optional neural RR-MRP, and a reproducible evidence pipeline.
 
 ## Research questions
 
 1. Can RR-aware MRP reduce aggregate and subgroup error compared with direct randomized-response debiasing?
 2. Does true hierarchical partial pooling improve sparse-cell robustness without observing raw answers?
 3. Do high-capacity neural RR-MRP models justify their complexity under nonlinear response surfaces?
-4. Can privacy help under strategic misreporting enough to offset randomized-response variance?
+4. Where a misreporting-specific run is cited, can privacy-related honesty assumptions offset randomized-response variance?
 5. Are the privacy, unbiasedness and uncertainty claims supported by derivation and Monte Carlo checks?
 
 ## Method summary
@@ -42,7 +42,7 @@ The final report-ready result must be generated from committed evidence files by
 - `CLAIM_TO_EVIDENCE_INDEX.md`,
 - a generated `fairvote_ai_results.md` containing only evidence-backed status checks and tables.
 
-The generated report explicitly marks claims as unsupported when the evidence is smoke-only, under-repeated, failed, skipped, or missing paired comparisons.
+The generated report explicitly marks claims as unsupported when the evidence is smoke-only, under-repeated, failed, skipped, or missing paired comparisons. Misreporting claims should only be made from evidence runs that actually include a misreporting scenario.
 
 ## Limitations to keep in the final generated version
 

@@ -1,6 +1,0 @@
-config_seed,scenario,epsilon,sample_size,method,n_rows,n_failures,n_skipped,mean_runtime_sec,std_runtime_sec,total_runtime_sec
-123,simple_linear,1.0,120,raw_reported_distribution,1,0,0,0.0002445999998599291,0.0,0.0002445999998599291
-123,simple_linear,1.0,120,baseline_rr_debias,1,0,0,0.0006093000120017678,0.0,0.0006093000120017678
-123,simple_linear,1.0,120,mrp_rr_poststrat,1,0,0,0.0013899999903514981,0.0,0.0013899999903514981
-123,simple_linear,1.0,120,mrp_misreport_rr_poststrat,1,0,0,0.0010793000110425055,0.0,0.0010793000110425055
-123,simple_linear,1.0,120,mrp_learned_misreport_rr_poststrat,1,0,0,0.0013704000011784956,0.0,0.0013704000011784956

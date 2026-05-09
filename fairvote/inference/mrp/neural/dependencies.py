@@ -1,5 +1,4 @@
 """Optional PyTorch dependency loader for neural MRP."""
-
 from __future__ import annotations
 
 try:  # Keep the import error explicit for installations missing the ML dependency.

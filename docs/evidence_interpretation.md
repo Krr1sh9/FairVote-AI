@@ -2,6 +2,24 @@
 
 This document explains how to read the experiment outputs without overclaiming. It is the canonical interpretation guide for `raw_trials.csv`, `summary_with_ci.csv`, `paired_comparisons.csv`, `ablations.csv`, and `runtime_profile.csv`.
 
+## Submitted canonical evidence run
+
+The canonical final report evidence run for this submitted archive is:
+
+```text
+evidence/final/2026-05-06_004647_mrp_vs_baselines/
+```
+
+This is a custom CPU-sized final-style run. It should be described as such, not as the full `final_evidence` preset. It contains 20 trials per condition, sample sizes 500 and 1000, epsilons 0.5, 1.0 and 2.0, four scenarios, four deployable methods, 1920 raw rows, 96 summary rows, 24 paired neural-vs-linear comparison rows and zero recorded failures.
+
+The evidence supports a conditional conclusion rather than a universal neural-superiority claim:
+
+- Neural RR-MRP often improves over the linear `mrp_rr_poststrat` baseline in paired comparisons. For overall L1, 22 of 24 paired cells have negative mean neural-minus-linear deltas and 18 of 24 have confidence intervals wholly below zero.
+- Neural RR-MRP is not generally the best method when compared with every method in the run. For best mean overall L1 by scenario/epsilon/sample-size condition, `baseline_rr_debias` is best in 13 of 24 cells, `hierarchical_rr_mrp_poststrat` in 10 of 24, and `neural_rr_mrp` in 1 of 24.
+- Hierarchical partial pooling is strongest for subgroup error in this evidence. For major worst-group L1, `hierarchical_rr_mrp_poststrat` is best in 23 of 24 cells.
+
+Report wording should therefore be: **neural modelling is privacy-compatible and often improves over the linear MRP baseline in paired tests, but the best method depends on the metric and scenario.**
+
 ## Core principle
 
 The experiments do not try to prove that AI is always better. They test a conditional question:

@@ -8,8 +8,8 @@ a scenario, not a mathematical guarantee of fairness.
 # fairvote/metrics/group_metrics.py
 from __future__ import annotations
 
-from collections.abc import Mapping
 from dataclasses import dataclass
+from typing import Dict, Iterable, List, Tuple, Union, Optional
 
 import numpy as np
 
@@ -40,12 +40,12 @@ class GroupError:
 
 
 def group_l1_errors(
-    est_by_group: Mapping[str, np.ndarray],
-    truth_by_group: Mapping[str, np.ndarray],
+    est_by_group: Dict[str, np.ndarray],
+    truth_by_group: Dict[str, np.ndarray],
     *,
-    group_masses: Mapping[str, float] | None = None,
+    group_masses: Optional[Dict[str, float]] = None,
     normalise_masses: bool = True,
-) -> list[GroupError]:
+) -> List[GroupError]:
     """
     Compute L1 errors per group.
 
@@ -77,18 +77,18 @@ def group_l1_errors(
         # group sets, including major-group-only dashboard views.
         masses = _normalise(masses)
 
-    out: list[GroupError] = []
-    for g, m in zip(groups, masses, strict=False):
+    out: List[GroupError] = []
+    for g, m in zip(groups, masses):
         e = l1(est_by_group[g], truth_by_group[g])
         out.append(GroupError(name=g, mass=float(m), err_l1=float(e)))
     return out
 
 
 def worst_group_l1(
-    est_by_group: Mapping[str, np.ndarray],
-    truth_by_group: Mapping[str, np.ndarray],
+    est_by_group: Dict[str, np.ndarray],
+    truth_by_group: Dict[str, np.ndarray],
     *,
-    group_masses: Mapping[str, float] | None = None,
+    group_masses: Optional[Dict[str, float]] = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
 ) -> float:
@@ -97,7 +97,9 @@ def worst_group_l1(
 
     This is the "major-group worst error" metric used to avoid tiny groups dominating.
     """
-    errs = group_l1_errors(est_by_group, truth_by_group, group_masses=group_masses, normalise_masses=normalise_masses)
+    errs = group_l1_errors(
+        est_by_group, truth_by_group, group_masses=group_masses, normalise_masses=normalise_masses
+    )
     if not errs:
         return float("nan")
     # Filter to groups whose normalised mass exceeds the minimum.  The small
@@ -111,10 +113,10 @@ def worst_group_l1(
 
 
 def weighted_group_l1(
-    est_by_group: Mapping[str, np.ndarray],
-    truth_by_group: Mapping[str, np.ndarray],
+    est_by_group: Dict[str, np.ndarray],
+    truth_by_group: Dict[str, np.ndarray],
     *,
-    group_masses: Mapping[str, float] | None = None,
+    group_masses: Optional[Dict[str, float]] = None,
     normalise_masses: bool = True,
 ) -> float:
     """
@@ -122,18 +124,20 @@ def weighted_group_l1(
 
     This is a more stable "fairness" metric than pure worst-case.
     """
-    errs = group_l1_errors(est_by_group, truth_by_group, group_masses=group_masses, normalise_masses=normalise_masses)
+    errs = group_l1_errors(
+        est_by_group, truth_by_group, group_masses=group_masses, normalise_masses=normalise_masses
+    )
     if not errs:
         return float("nan")
     return float(sum(ge.mass * ge.err_l1 for ge in errs))
 
 
 def quantile_group_l1(
-    est_by_group: Mapping[str, np.ndarray],
-    truth_by_group: Mapping[str, np.ndarray],
+    est_by_group: Dict[str, np.ndarray],
+    truth_by_group: Dict[str, np.ndarray],
     *,
     q: float = 0.9,
-    group_masses: Mapping[str, float] | None = None,
+    group_masses: Optional[Dict[str, float]] = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
     weighted_by_mass: bool = True,
@@ -153,7 +157,9 @@ def quantile_group_l1(
     if not (0.0 <= q <= 1.0):
         raise ValueError("q must be in [0, 1].")
 
-    errs = group_l1_errors(est_by_group, truth_by_group, group_masses=group_masses, normalise_masses=normalise_masses)
+    errs = group_l1_errors(
+        est_by_group, truth_by_group, group_masses=group_masses, normalise_masses=normalise_masses
+    )
     if not errs:
         return float("nan")
 
@@ -180,10 +186,10 @@ def quantile_group_l1(
 
 
 def p90_group_l1(
-    est_by_group: Mapping[str, np.ndarray],
-    truth_by_group: Mapping[str, np.ndarray],
+    est_by_group: Dict[str, np.ndarray],
+    truth_by_group: Dict[str, np.ndarray],
     *,
-    group_masses: Mapping[str, float] | None = None,
+    group_masses: Optional[Dict[str, float]] = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
     weighted_by_mass: bool = True,
@@ -205,7 +211,6 @@ def p90_group_l1(
 # =============================================================================
 # Winner prediction
 # =============================================================================
-
 
 def correct_winner(
     estimate: np.ndarray,
@@ -231,9 +236,8 @@ def correct_winner(
 # RMSE per candidate
 # =============================================================================
 
-
 def rmse_per_candidate(
-    trial_estimates: list[np.ndarray],
+    trial_estimates: List[np.ndarray],
     truth: np.ndarray,
 ) -> np.ndarray:
     """
@@ -264,7 +268,7 @@ def rmse_per_candidate(
 
 
 def overall_rmse(
-    trial_estimates: list[np.ndarray],
+    trial_estimates: List[np.ndarray],
     truth: np.ndarray,
 ) -> float:
     """
@@ -281,12 +285,11 @@ def overall_rmse(
 # Error ratio (fairness)
 # =============================================================================
 
-
 def error_ratio(
-    est_by_group: Mapping[str, np.ndarray],
-    truth_by_group: Mapping[str, np.ndarray],
+    est_by_group: Dict[str, np.ndarray],
+    truth_by_group: Dict[str, np.ndarray],
     *,
-    group_masses: Mapping[str, float] | None = None,
+    group_masses: Optional[Dict[str, float]] = None,
     min_mass: float = 0.0,
     normalise_masses: bool = True,
 ) -> float:
@@ -304,10 +307,8 @@ def error_ratio(
     distorted".
     """
     errs = group_l1_errors(
-        est_by_group,
-        truth_by_group,
-        group_masses=group_masses,
-        normalise_masses=normalise_masses,
+        est_by_group, truth_by_group,
+        group_masses=group_masses, normalise_masses=normalise_masses,
     )
     if not errs:
         return float("nan")

@@ -16,50 +16,10 @@ from experiments.add_uncertainty_summaries import (
 def _minimal_results() -> pd.DataFrame:
     return pd.DataFrame(
         [
-            {
-                "scenario": "no_bias",
-                "scenario_label": "no_bias",
-                "method": "neural_rr_mrp",
-                "epsilon": 1.0,
-                "n_sample": 100,
-                "trial": 0,
-                "overall_l1": 0.10,
-                "winner_correct": 1,
-                "runtime_sec": 2.0,
-            },
-            {
-                "scenario": "no_bias",
-                "scenario_label": "no_bias",
-                "method": "neural_rr_mrp",
-                "epsilon": 1.0,
-                "n_sample": 100,
-                "trial": 1,
-                "overall_l1": 0.20,
-                "winner_correct": 1,
-                "runtime_sec": 2.2,
-            },
-            {
-                "scenario": "no_bias",
-                "scenario_label": "no_bias",
-                "method": "mrp_rr_poststrat",
-                "epsilon": 1.0,
-                "n_sample": 100,
-                "trial": 0,
-                "overall_l1": 0.30,
-                "winner_correct": 0,
-                "runtime_sec": 0.5,
-            },
-            {
-                "scenario": "no_bias",
-                "scenario_label": "no_bias",
-                "method": "mrp_rr_poststrat",
-                "epsilon": 1.0,
-                "n_sample": 100,
-                "trial": 1,
-                "overall_l1": 0.40,
-                "winner_correct": 1,
-                "runtime_sec": 0.6,
-            },
+            {"scenario": "no_bias", "scenario_label": "no_bias", "method": "neural_rr_mrp", "epsilon": 1.0, "n_sample": 100, "trial": 0, "overall_l1": 0.10, "winner_correct": 1, "runtime_sec": 2.0},
+            {"scenario": "no_bias", "scenario_label": "no_bias", "method": "neural_rr_mrp", "epsilon": 1.0, "n_sample": 100, "trial": 1, "overall_l1": 0.20, "winner_correct": 1, "runtime_sec": 2.2},
+            {"scenario": "no_bias", "scenario_label": "no_bias", "method": "mrp_rr_poststrat", "epsilon": 1.0, "n_sample": 100, "trial": 0, "overall_l1": 0.30, "winner_correct": 0, "runtime_sec": 0.5},
+            {"scenario": "no_bias", "scenario_label": "no_bias", "method": "mrp_rr_poststrat", "epsilon": 1.0, "n_sample": 100, "trial": 1, "overall_l1": 0.40, "winner_correct": 1, "runtime_sec": 0.6},
         ]
     )
 

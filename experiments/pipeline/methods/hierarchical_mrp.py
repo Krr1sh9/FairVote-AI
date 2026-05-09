@@ -1,18 +1,14 @@
 """Hierarchical/partial-pooling RR-aware MRP estimator runner."""
-
 from __future__ import annotations
 
 import time
-
 import numpy as np
 
 from fairvote.inference.mrp import HierarchicalRRMRPModel
-
 from ..config import ExperimentConfig, MethodResult, TrialConfig
 from ..context import ExperimentContext
 from .common import TrialData
 from .linear_mrp import _poststratify_model_predictions
-
 
 def _cell_feature_values(context: ExperimentContext, feature_order: list[str]) -> dict[str, np.ndarray]:
     """Return post-stratification cell columns keyed by feature name."""

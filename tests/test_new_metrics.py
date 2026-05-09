@@ -5,21 +5,20 @@ Tests for newly added metrics:
   - rmse_per_candidate / overall_rmse
   - error_ratio
 """
-
 import numpy as np
 import pytest
 
 from fairvote.metrics.group_metrics import (
     correct_winner,
-    error_ratio,
-    overall_rmse,
     rmse_per_candidate,
+    overall_rmse,
+    error_ratio,
 )
+
 
 # ============================================================================
 # correct_winner
 # ============================================================================
-
 
 class TestCorrectWinner:
     def test_same_winner(self):
@@ -50,7 +49,6 @@ class TestCorrectWinner:
 # ============================================================================
 # rmse_per_candidate / overall_rmse
 # ============================================================================
-
 
 class TestRMSE:
     def test_perfect_estimates(self):
@@ -93,7 +91,6 @@ class TestRMSE:
 # error_ratio
 # ============================================================================
 
-
 class TestErrorRatio:
     def test_equal_errors_ratio_one(self):
         est = {"A": np.array([0.6, 0.4]), "B": np.array([0.55, 0.45])}
@@ -125,11 +122,7 @@ class TestErrorRatio:
         masses = {"A": 0.9, "B": 0.01}
         # B is below min_mass threshold → only one group → NaN
         ratio = error_ratio(
-            est,
-            truth,
-            group_masses=masses,
-            min_mass=0.05,
-            normalise_masses=False,
+            est, truth, group_masses=masses, min_mass=0.05, normalise_masses=False,
         )
         assert np.isnan(ratio)
 

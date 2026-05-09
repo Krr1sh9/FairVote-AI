@@ -1,5 +1,4 @@
 """Configuration validation for the respondent collection server."""
-
 from __future__ import annotations
 
 import json
@@ -84,7 +83,7 @@ def normalise_demographic_fields(raw_fields: Any) -> list[dict[str, Any]]:
 
 def load_config(path: Path) -> dict[str, Any]:
     """Load and validate the public poll configuration."""
-    with open(path, encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8") as f:
         cfg = json.load(f)
 
     if not isinstance(cfg, dict):

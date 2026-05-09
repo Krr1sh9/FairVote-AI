@@ -10,7 +10,7 @@ def test_rr_estimate_distribution_recovers_truth_reasonably():
     should recover the true distribution reasonably well (large n).
     """
     try:
-        from fairvote.privacy import estimate_distribution, privatize_many
+        from fairvote.privacy import privatize_many, estimate_distribution
     except Exception:
         pytest.skip("fairvote.privacy.privatize_many / estimate_distribution not available")
 

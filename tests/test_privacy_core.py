@@ -10,10 +10,10 @@ except ModuleNotFoundError:
 
 
 def test_estimate_distribution_shapes_and_basic_properties():
-    pytest.importorskip("fairvote")
+    fv = pytest.importorskip("fairvote")
     privacy = pytest.importorskip("fairvote.privacy")
-    estimate_distribution = privacy.estimate_distribution
-    privatize_many = privacy.privatize_many
+    estimate_distribution = getattr(privacy, "estimate_distribution")
+    privatize_many = getattr(privacy, "privatize_many")
 
     rng = np.random.default_rng(123)
     k = 5
@@ -26,9 +26,7 @@ def test_estimate_distribution_shapes_and_basic_properties():
     if reported is None:
         reported = privatize_many(truth, epsilon=epsilon, k=k, seed=123)
 
-    p_hat = call_with_supported_kwargs(
-        estimate_distribution, reported=reported, reported_categories=reported, epsilon=epsilon, k=k
-    )
+    p_hat = call_with_supported_kwargs(estimate_distribution, reported=reported, reported_categories=reported, epsilon=epsilon, k=k)
     if p_hat is None:
         p_hat = estimate_distribution(reported, epsilon=epsilon, k=k)
 
@@ -43,7 +41,7 @@ def test_estimate_distribution_shapes_and_basic_properties():
 
 def test_invalid_k_raises():
     privacy = pytest.importorskip("fairvote.privacy")
-    estimate_distribution = privacy.estimate_distribution
+    estimate_distribution = getattr(privacy, "estimate_distribution")
 
     with pytest.raises(ValueError):
         estimate_distribution([0, 1, 1], epsilon=1.0, k=1)
@@ -51,7 +49,7 @@ def test_invalid_k_raises():
 
 def test_rr_mechanism_counts_from_reports_round_trip():
     kary_rr = pytest.importorskip("fairvote.privacy.mechanisms.kary_rr")
-    counts_from_reports = kary_rr.counts_from_reports
+    counts_from_reports = getattr(kary_rr, "counts_from_reports")
 
     reports = [0, 1, 1, 2, 2, 2]
     k = 5

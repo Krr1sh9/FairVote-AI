@@ -6,10 +6,10 @@ the JSON payload or removing the local duplicate-submission guard. The selected
 raw answer may exist locally in the browser while RR is applied, but it must not
 be included in the submitted payload.
 """
-
 from __future__ import annotations
 
 from pathlib import Path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "respondent" / "index.html"

@@ -1,5 +1,4 @@
 """Tests for the canonical Python k-ary Randomized Response channel."""
-
 from __future__ import annotations
 
 import numpy as np

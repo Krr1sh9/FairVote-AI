@@ -1,5 +1,4 @@
 """Small reusable view helpers for the upload page."""
-
 from __future__ import annotations
 
 from collections.abc import Sequence

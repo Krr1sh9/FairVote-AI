@@ -3,7 +3,6 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
-
 import pytest
 
 
@@ -19,7 +18,5 @@ def test_fairvote_main_help(project_root: Path):
     except Exception:
         pytest.skip("fairvote.main not importable (ok if not used)")
 
-    proc = subprocess.run(
-        [sys.executable, "-m", "fairvote.main", "--help"], cwd=str(project_root), text=True, capture_output=True
-    )
+    proc = subprocess.run([sys.executable, "-m", "fairvote.main", "--help"], cwd=str(project_root), text=True, capture_output=True)
     assert proc.returncode == 0

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Optional
 
 import numpy as np
 
@@ -46,14 +46,17 @@ def group_metric_summary(
     weighted = float(np.sum(masses * vals) / wsum) if wsum > 0 else float("nan")
 
     min_err = float(np.min(vals))
-    error_ratio = (float("inf") if worst > 1e-12 else 1.0) if min_err <= 1e-12 else float(worst / min_err)
+    if min_err <= 1e-12:
+        error_ratio = float("inf") if worst > 1e-12 else 1.0
+    else:
+        error_ratio = float(worst / min_err)
     if len(vals) < 2:
         error_ratio = float("nan")
 
     return {"worst": worst, "p90": p90, "weighted": weighted, "error_ratio": error_ratio}
 
 
-def overall_metrics(p_hat: np.ndarray, p_true: np.ndarray | None) -> dict[str, float]:
+def overall_metrics(p_hat: np.ndarray, p_true: Optional[np.ndarray]) -> dict[str, float]:
     if p_true is None:
         return {"overall_l1": float("nan"), "overall_mae": float("nan"), "correct_winner": 0.0}
     p_hat = np.asarray(p_hat, dtype=float)
@@ -69,9 +72,9 @@ def overall_estimate_rows(
     labels: list[str],
     p_baseline: np.ndarray,
     *,
-    p_lo: np.ndarray | None = None,
-    p_hi: np.ndarray | None = None,
-    p_true: np.ndarray | None = None,
+    p_lo: Optional[np.ndarray] = None,
+    p_hi: Optional[np.ndarray] = None,
+    p_true: Optional[np.ndarray] = None,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for i, lab in enumerate(labels):

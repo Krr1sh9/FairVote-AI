@@ -67,9 +67,10 @@ Oracle baselines are not available in real respondent mode. They are used only t
 |---|---|---|---|
 | `smoke_test` | Fast sanity check during development. | Few trials, small sample sizes, reduced training. | Not final evidence. |
 | `medium_evidence` | Draft-report or development evidence. | Moderate trial count and sample sizes. | Useful for debugging and preliminary analysis. |
-| `final_evidence` | Submission-quality repeated-trial evidence. | Epsilons `0.2,0.5,1.0,2.0`; sample sizes `500,1000,2500`; scenarios `simple_linear,nonresponse,nonlinear_interaction,shy_fixed`; at least 30 trials. | Preferred report evidence. |
+| `final_evidence` | Full submission-quality repeated-trial evidence preset. | Epsilons `0.2,0.5,1.0,2.0,4.0`; sample sizes `500,1000,2500,5000`; the full robustness scenario set in `experiments/pipeline/presets.py`; at least 30 trials. | Preferred full-grid report evidence when runtime allows. |
+| Custom CPU-sized final-style run | Examiner-review evidence when the full preset is too slow for available hardware. | Must use meaningful training settings, repeated trials, no failures, paired comparisons for neural claims, and a clear run-level README. | Acceptable report evidence if explicitly described as reduced/custom. |
 
-Final evidence should not use minimal settings such as `--mrp_steps 5` or `--neural_steps 5` unless the run is clearly labelled as a smoke test.
+Final evidence should not use minimal settings such as `--mrp_steps 5` or `--neural_steps 5` unless the run is clearly labelled as a smoke test. The submitted canonical evidence run is `evidence/final/2026-05-06_004647_mrp_vs_baselines/`, a custom CPU-sized final-style run with 20 trials per condition, sample sizes 500/1000, epsilons 0.5/1.0/2.0, four scenarios and zero recorded failures. It should not be described as the full `final_evidence` preset.
 
 ## Random seeds and reproducibility
 
@@ -119,7 +120,8 @@ A defensible conclusion may be negative or mixed. A finding that RR-aware linear
 ## Exclusion and failure rules
 
 - A failed method invocation should be recorded in `failures.csv` rather than silently removed.
-- If `--fail_fast` is used, the run is for debugging and should not be treated as final evidence.
+- `--fail_fast` may be used for final evidence when the intention is strict failure handling: a hidden partial run must not pass as complete evidence. In that case, `continue_on_error` is false and a successful run with `failures.csv` empty is valid evidence.
+- If `--fail_fast` is not used, any method failure must be recorded in `failures.csv`, and affected conditions must be labelled incomplete or excluded from claims.
 - Conditions with too few successful trials should be excluded from final claims or clearly labelled incomplete.
 - Oracle baselines must be labelled synthetic-only.
 - Smoke-test outputs must not be presented as final evidence.
@@ -131,4 +133,4 @@ Final evidence is computationally heavier because it multiplies scenarios, epsil
 1. run the full grid without neural methods to verify schema, baselines and runtime;
 2. run the neural comparison on the most relevant scenarios and state the reduced grid explicitly.
 
-Do not hide runtime limits. State them in the run-level `README.md` and in the final report.
+Do not hide runtime limits. State them in the run-level `README.md` and in the final report. When a CPU-sized run is used instead of the full preset, describe the reduced scenario/epsilon/sample-size grid explicitly and avoid implying that untested settings were evaluated.

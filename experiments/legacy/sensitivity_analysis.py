@@ -16,7 +16,6 @@ Outputs:
 This experiment checks whether the main findings are sensitive to
   assumptions about demographic-vote correlation and non-response.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -24,25 +23,26 @@ import csv
 import json
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, List, Tuple
 
 import numpy as np
 
 from fairvote.privacy import estimate_distribution, estimate_distribution_central_dp, privatize_many
-from fairvote.simulation.bias_models import (
-    FeatureNonresponseProfile,
-    apply_nonresponse,
-)
 from fairvote.simulation.population import (
     Population,
     make_realistic_uk_like_population,
     subgroup_true_distribution,
 )
 from fairvote.simulation.sampling import simple_random_sample
+from fairvote.simulation.bias_models import (
+    FeatureNonresponseProfile,
+    apply_nonresponse,
+)
+
 
 # =============================================================================
 # Population variants
 # =============================================================================
-
 
 def _make_weak_correlation_population(n: int, k: int, seed: int) -> Population:
     """
@@ -52,26 +52,14 @@ def _make_weak_correlation_population(n: int, k: int, seed: int) -> Population:
     rng = np.random.default_rng(seed)
 
     from fairvote.simulation.population import (
-        _effect_table,
-        _make_region_boost,
-        _sample_categorical_rows,
-        _sigmoid,
-        _softmax,
+        _sigmoid, _softmax, _sample_categorical_rows,
+        _make_region_boost, _effect_table, _interaction_region_education,
     )
 
     region_levels = [
-        "London",
-        "South East",
-        "South West",
-        "East of England",
-        "West Midlands",
-        "East Midlands",
-        "North West",
-        "North East",
-        "Yorkshire & Humber",
-        "Scotland",
-        "Wales",
-        "Northern Ireland",
+        "London", "South East", "South West", "East of England",
+        "West Midlands", "East Midlands", "North West", "North East",
+        "Yorkshire & Humber", "Scotland", "Wales", "Northern Ireland",
     ]
     age_levels = ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"]
     edu_levels = ["No degree", "Some college/A-level", "Degree+"]
@@ -81,10 +69,8 @@ def _make_weak_correlation_population(n: int, k: int, seed: int) -> Population:
     urban_levels = ["Urban", "Suburban", "Rural"]
 
     feature_levels = {
-        "region": region_levels,
-        "age_group": age_levels,
-        "education": edu_levels,
-        "gender": gender_levels,
+        "region": region_levels, "age_group": age_levels,
+        "education": edu_levels, "gender": gender_levels,
         "urbanicity": urban_levels,
     }
 
@@ -103,19 +89,12 @@ def _make_weak_correlation_population(n: int, k: int, seed: int) -> Population:
     region_degree_boost = _make_region_boost(len(region_levels), rng, high_regions={0, 1, 3}, low_regions={7, 10, 11})
     age_degree_boost = np.array([0.35, 0.30, 0.20, 0.05, -0.10, -0.25])
     urban_degree_boost = np.array([0.20, 0.05, -0.15])
-    degree_score = (
-        region_degree_boost[region]
-        + age_degree_boost[age_group]
-        + urban_degree_boost[urbanicity]
-        + rng.normal(0, 0.35, n)
-    )
+    degree_score = region_degree_boost[region] + age_degree_boost[age_group] + urban_degree_boost[urbanicity] + rng.normal(0, 0.35, n)
     p_dp = _sigmoid(degree_score - 0.35)
     p_nd = _sigmoid(-(degree_score + 0.15))
     p_sm = np.clip(1.0 - p_dp - p_nd, 0.05, 0.90)
     denom = p_dp + p_sm + p_nd
-    p_dp /= denom
-    p_sm /= denom
-    p_nd /= denom
+    p_dp /= denom; p_sm /= denom; p_nd /= denom
     education = np.empty(n, dtype=int)
     u = rng.random(n)
     education[u < p_nd] = 0
@@ -140,19 +119,12 @@ def _make_weak_correlation_population(n: int, k: int, seed: int) -> Population:
     true_categories = _sample_categorical_rows(true_probs, rng)
 
     features = {
-        "region": region,
-        "age_group": age_group,
-        "education": education,
-        "gender": gender,
-        "urbanicity": urbanicity,
+        "region": region, "age_group": age_group, "education": education,
+        "gender": gender, "urbanicity": urbanicity,
     }
-    return Population(
-        features=features,
-        feature_levels=feature_levels,
-        true_probs=true_probs,
-        true_categories=true_categories,
-        category_names=category_names,
-    )
+    return Population(features=features, feature_levels=feature_levels,
+                      true_probs=true_probs, true_categories=true_categories,
+                      category_names=category_names)
 
 
 def _make_severe_nonresponse_profile() -> FeatureNonresponseProfile:
@@ -161,15 +133,15 @@ def _make_severe_nonresponse_profile() -> FeatureNonresponseProfile:
         base_rate=0.75,
         feature_response_rates={
             "age_group": {
-                "18-24": 0.35,  # very low (vs default 0.70)
-                "25-34": 0.55,  # low    (vs default 0.78)
+                "18-24": 0.35,   # very low (vs default 0.70)
+                "25-34": 0.55,   # low    (vs default 0.78)
                 "35-44": 0.72,
                 "45-54": 0.82,
                 "55-64": 0.88,
                 "65+": 0.92,
             },
             "urbanicity": {
-                "Urban": 0.65,  # lower (vs default 0.82)
+                "Urban": 0.65,   # lower (vs default 0.82)
                 "Suburban": 0.80,
                 "Rural": 0.88,
             },
@@ -181,7 +153,6 @@ def _make_severe_nonresponse_profile() -> FeatureNonresponseProfile:
 # Sweep runner (simplified version of sweep_eps.run_sweep for sensitivity)
 # =============================================================================
 
-
 def _l1(a, b):
     return float(np.sum(np.abs(np.asarray(a) - np.asarray(b))))
 
@@ -190,12 +161,12 @@ def _run_config(
     config_name: str,
     pop: Population,
     k: int,
-    eps_list: list[float],
+    eps_list: List[float],
     n_sample: int,
     trials: int,
     seed: int,
     nr_profile=None,
-) -> list[dict]:
+) -> List[dict]:
     """Run a simplified sweep for one configuration."""
     theta_true = np.bincount(pop.true_categories, minlength=k).astype(float)
     theta_true /= theta_true.sum()
@@ -203,7 +174,7 @@ def _run_config(
     truth_region = subgroup_true_distribution(pop, "region")
     region_levels = pop.feature_levels["region"]
 
-    results: list[dict] = []
+    results: List[dict] = []
 
     for t in range(trials):
         rng = np.random.default_rng(seed + 10_000 * t)
@@ -232,7 +203,7 @@ def _run_config(
             for idx, name in enumerate(region_levels):
                 if name not in truth_region:
                     continue
-                mask = region_vals == idx
+                mask = (region_vals == idx)
                 if not np.any(mask):
                     continue
                 est = estimate_distribution(reported[mask], eps, k)
@@ -246,35 +217,31 @@ def _run_config(
             cdp_l1 = _l1(theta_cdp, theta_true)
             cdp_cw = int(np.argmax(theta_cdp) == np.argmax(theta_true))
 
-            results.append(
-                {
-                    "config": config_name,
-                    "trial": t,
-                    "epsilon": float(eps),
-                    "method": "ldp_rr_debias",
-                    "n_effective": int(sample.idx.size),
-                    "overall_l1": ldp_l1,
-                    "correct_winner": ldp_cw,
-                    "worst_region_l1": worst_reg,
-                }
-            )
-            results.append(
-                {
-                    "config": config_name,
-                    "trial": t,
-                    "epsilon": float(eps),
-                    "method": "central_dp_laplace",
-                    "n_effective": int(sample.idx.size),
-                    "overall_l1": cdp_l1,
-                    "correct_winner": cdp_cw,
-                    "worst_region_l1": float("nan"),
-                }
-            )
+            results.append({
+                "config": config_name,
+                "trial": t,
+                "epsilon": float(eps),
+                "method": "ldp_rr_debias",
+                "n_effective": int(sample.idx.size),
+                "overall_l1": ldp_l1,
+                "correct_winner": ldp_cw,
+                "worst_region_l1": worst_reg,
+            })
+            results.append({
+                "config": config_name,
+                "trial": t,
+                "epsilon": float(eps),
+                "method": "central_dp_laplace",
+                "n_effective": int(sample.idx.size),
+                "overall_l1": cdp_l1,
+                "correct_winner": cdp_cw,
+                "worst_region_l1": float("nan"),
+            })
 
     return results
 
 
-def _aggregate(rows: list[dict]) -> list[dict]:
+def _aggregate(rows: List[dict]) -> List[dict]:
     """Aggregate per (config, method, epsilon)."""
     keys = set()
     for r in rows:
@@ -287,19 +254,17 @@ def _aggregate(rows: list[dict]) -> list[dict]:
         cws = np.array([r["correct_winner"] for r in sub])
         n_eff = np.array([r["n_effective"] for r in sub])
 
-        summary.append(
-            {
-                "config": config,
-                "method": method,
-                "epsilon": eps,
-                "n_trials": len(sub),
-                "mean_overall_l1": float(np.mean(l1s)),
-                "std_overall_l1": float(np.std(l1s, ddof=1)) if len(l1s) > 1 else 0.0,
-                "rmse_overall": float(np.sqrt(np.mean(l1s**2))),
-                "correct_winner_prob": float(np.mean(cws)),
-                "mean_n_effective": float(np.mean(n_eff)),
-            }
-        )
+        summary.append({
+            "config": config,
+            "method": method,
+            "epsilon": eps,
+            "n_trials": len(sub),
+            "mean_overall_l1": float(np.mean(l1s)),
+            "std_overall_l1": float(np.std(l1s, ddof=1)) if len(l1s) > 1 else 0.0,
+            "rmse_overall": float(np.sqrt(np.mean(l1s ** 2))),
+            "correct_winner_prob": float(np.mean(cws)),
+            "mean_n_effective": float(np.mean(n_eff)),
+        })
     return summary
 
 
@@ -314,7 +279,7 @@ def _write_csv(path, rows):
             w.writerow(r)
 
 
-def _plot_comparison(run_dir: Path, summary: list[dict]) -> None:
+def _plot_comparison(run_dir: Path, summary: List[dict]) -> None:
     try:
         import matplotlib.pyplot as plt
     except ImportError:
@@ -374,7 +339,6 @@ def _plot_comparison(run_dir: Path, summary: list[dict]) -> None:
 # CLI
 # =============================================================================
 
-
 def main() -> int:
     """Run a small sensitivity grid over privacy/noise settings."""
     p = argparse.ArgumentParser(description="Sensitivity analysis: test robustness to population assumptions.")
@@ -406,9 +370,7 @@ def main() -> int:
     # Config 3: Severe non-response
     print("Config 3/3: strong_nr (severe non-response bias)...")
     nr_profile = _make_severe_nonresponse_profile()
-    rows_strong = _run_config(
-        "strong_nr", pop_baseline, args.k, eps_list, args.n_sample, args.trials, args.seed, nr_profile=nr_profile
-    )
+    rows_strong = _run_config("strong_nr", pop_baseline, args.k, eps_list, args.n_sample, args.trials, args.seed, nr_profile=nr_profile)
 
     all_rows = rows_baseline + rows_weak + rows_strong
     summary = _aggregate(all_rows)
@@ -418,12 +380,8 @@ def main() -> int:
     _write_csv(run_dir / "sensitivity_comparison.csv", summary)
 
     config_snapshot = {
-        "k": args.k,
-        "eps": eps_list,
-        "population_n": args.population_n,
-        "n_sample": args.n_sample,
-        "trials": args.trials,
-        "seed": args.seed,
+        "k": args.k, "eps": eps_list, "population_n": args.population_n,
+        "n_sample": args.n_sample, "trials": args.trials, "seed": args.seed,
         "configs": ["baseline", "weak_corr", "strong_nr"],
     }
     (run_dir / "config.json").write_text(json.dumps(config_snapshot, indent=2), encoding="utf-8")

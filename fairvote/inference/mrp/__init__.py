@@ -84,9 +84,9 @@ def __getattr__(name: str):
         from fairvote.inference.mrp.rr_neural_mrp import (
             NeuralRRMRPFitInfo,
             NeuralRRMRPModel,
-            RRNeuralMRPEnsemble,
             RRNeuralMRPFitInfo,
             RRNeuralMRPModel,
+            RRNeuralMRPEnsemble,
             fit_rr_neural_mrp_ensemble,
         )
 

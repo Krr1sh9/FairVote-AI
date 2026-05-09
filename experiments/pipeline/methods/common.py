@@ -1,19 +1,15 @@
 """Common data structures and helpers for experiment estimator runners."""
-
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Callable, Dict
 
 import numpy as np
 
 from fairvote.inference.mrp import RRMultinomialModel, build_design_matrix
-
 from ..config import ExperimentConfig, TrialConfig
 from ..context import ExperimentContext
 from ..perturbation import PerturbedLabels
-
 
 @dataclass(frozen=True)
 class TrialData:
@@ -65,9 +61,9 @@ def estimate_subgroup_distribution(
     levels: list[str],
     k: int,
     estimator: Callable[[np.ndarray], np.ndarray],
-) -> dict[str, np.ndarray]:
+) -> Dict[str, np.ndarray]:
     """Apply an estimator to each observed level of a demographic feature."""
-    out: dict[str, np.ndarray] = {}
+    out: Dict[str, np.ndarray] = {}
     for level_idx, level_name in enumerate(levels):
         mask = values == level_idx
         out[level_name] = estimator(labels[mask]) if np.any(mask) else np.full(k, 1.0 / k, dtype=float)
@@ -80,9 +76,9 @@ def estimate_subgroup_mean_proba(
     values: np.ndarray,
     levels: list[str],
     k: int,
-) -> dict[str, np.ndarray]:
+) -> Dict[str, np.ndarray]:
     """Average row-level probability predictions within observed sample subgroups."""
-    out: dict[str, np.ndarray] = {}
+    out: Dict[str, np.ndarray] = {}
     for level_idx, level_name in enumerate(levels):
         mask = values == level_idx
         if np.any(mask):

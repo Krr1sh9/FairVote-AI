@@ -7,66 +7,53 @@ helpers are imported from testable modules.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 import streamlit as st
 
 from app.parsing.upload import (
     columns as _columns,
-)
-from app.parsing.upload import (
     find_best_col as _find_best_col,
-)
-from app.parsing.upload import (
     load_poll_option_labels as _load_poll_option_labels,
-)
-from app.parsing.upload import (
     read_uploaded_csv as _read_uploaded_csv,
-)
-from app.parsing.upload import (
     read_uploaded_jsonl as _read_uploaded_jsonl,
-)
-from app.parsing.upload import (
     valid_multiselect_defaults as _valid_multiselect_defaults,
 )
 from app.plotting.charts import (
     HAS_MPL as _HAS_MPL,
-)
-from app.plotting.charts import (
     plot_group_bars as _plot_group_bars,
-)
-from app.plotting.charts import (
     plot_overall_distributions as _plot_overall_distributions,
 )
 from app.services.category import (
     answer_like_columns as _answer_like_columns,
-)
-from app.services.category import (
     build_category_map,
+    category_display_map as _category_display_map,
+    display_labels_for_categories as _display_labels_for_categories,
     encode_categories,
     filter_valid,
+    format_group_key as _format_group_key,
     group_keys,
+    normalised_mean_probability as _normalised_mean_probability,
+    parse_hidden_layers as _parse_hidden_layers,
     poststratify_from_groups,
+    poststratify_probabilities as _poststratify_probabilities,
     read_population_weights,
 )
-from app.services.category import (
-    category_display_map as _category_display_map,
-)
-from app.services.category import (
-    display_labels_for_categories as _display_labels_for_categories,
-)
-from app.services.category import (
-    format_group_key as _format_group_key,
-)
-from app.services.category import (
-    normalised_mean_probability as _normalised_mean_probability,
-)
-from app.services.category import (
-    parse_hidden_layers as _parse_hidden_layers,
-)
-from app.services.category import (
-    poststratify_probabilities as _poststratify_probabilities,
+from app.services.inference import (
+    DesignMatrix,
+    MRPRRMultinomialModel,
+    MisreportRRMultinomialModel,
+    _HAS_RR_MRP,
+    available_method_options,
+    bootstrap_ci,
+    estimate_distribution,
+    is_learned_mrp_method as _is_learned_mrp_method,
+    load_neural_mrp_model as _load_neural_mrp_model,
+    method_prefix as _method_prefix,
+    method_short_label as _method_short_label,
+    resolve_estimation_method,
+    shy_misreport_matrix,
 )
 from app.services.exports import (
     build_group_audit_csv,
@@ -76,29 +63,6 @@ from app.services.exports import (
     build_results_bundle,
     build_results_summary_markdown,
     now_string,
-)
-from app.services.inference import (
-    _HAS_RR_MRP,
-    DesignMatrix,
-    MisreportRRMultinomialModel,
-    MRPRRMultinomialModel,
-    available_method_options,
-    bootstrap_ci,
-    estimate_distribution,
-    resolve_estimation_method,
-    shy_misreport_matrix,
-)
-from app.services.inference import (
-    is_learned_mrp_method as _is_learned_mrp_method,
-)
-from app.services.inference import (
-    load_neural_mrp_model as _load_neural_mrp_model,
-)
-from app.services.inference import (
-    method_prefix as _method_prefix,
-)
-from app.services.inference import (
-    method_short_label as _method_short_label,
 )
 from app.services.metrics import fmt as _fmt
 from app.services.metrics import group_metric_summary as _group_metric_summary
@@ -118,8 +82,8 @@ def render_upload_tab(root: Path) -> None:
     with col2:
         pop_file = st.file_uploader("Population CSV (optional, for post-stratification)", type=["csv"], key="pop_csv")
 
-    poll_rows: list[dict[str, str]] = []
-    pop_rows: list[dict[str, str]] = []
+    poll_rows: List[Dict[str, str]] = []
+    pop_rows: List[Dict[str, str]] = []
 
     is_jsonl_upload = False
     if poll_file is not None:
@@ -153,9 +117,7 @@ def render_upload_tab(root: Path) -> None:
             response_col = st.selectbox(
                 "Reported choice column (privatised)",
                 options=cols,
-                index=_find_best_col(
-                    cols, ["perturbed_answer", "reported_choice", "reported", "response", "vote", "choice"]
-                ),
+                index=_find_best_col(cols, ["perturbed_answer", "reported_choice", "reported", "response", "vote", "choice"]),
             )
 
             truth_like_cols = candidate_truth_columns(cols)
@@ -233,9 +195,7 @@ def render_upload_tab(root: Path) -> None:
             uniq_labels = sorted({str(v).strip() for v in raw_labels if str(v).strip() != ""})
             st.caption(f"Unique labels in reported column: {len(uniq_labels)}")
             if len(uniq_labels) > 50 and len(uniq_labels) > 0.2 * len(poll_rows):
-                st.warning(
-                    "Selected response column has very high cardinality. This often means you picked an ID column."
-                )
+                st.warning("Selected response column has very high cardinality. This often means you picked an ID column.")
             k_override_val = st.number_input("Override k (optional)", min_value=0, max_value=200, value=0, step=1)
             k_override = None if int(k_override_val) <= 0 else int(k_override_val)
             sidebar_cmap = build_category_map(raw_labels, k_override=k_override)
@@ -255,12 +215,8 @@ def render_upload_tab(root: Path) -> None:
                 options=group_options,
                 default=_valid_multiselect_defaults(default_groups, group_options),
             )
-            major_mass = st.number_input(
-                "Major group mass threshold", min_value=0.0, max_value=1.0, value=0.02, step=0.01
-            )
-            n_boot = st.number_input(
-                "Bootstrap resamples (baseline only; 0 disables)", min_value=0, max_value=5000, value=300, step=50
-            )
+            major_mass = st.number_input("Major group mass threshold", min_value=0.0, max_value=1.0, value=0.02, step=0.01)
+            n_boot = st.number_input("Bootstrap resamples (baseline only; 0 disables)", min_value=0, max_value=5000, value=300, step=50)
             boot_seed = st.number_input("Bootstrap seed", min_value=0, max_value=10_000_000, value=123, step=1)
 
             st.divider()
@@ -275,11 +231,7 @@ def render_upload_tab(root: Path) -> None:
                     options=post_options,
                     default=_valid_multiselect_defaults(default_post, post_options),
                 )
-                count_col = st.selectbox(
-                    "Population count column",
-                    options=pop_cols,
-                    index=_find_best_col(pop_cols, ["count", "n", "pop", "population"]),
-                )
+                count_col = st.selectbox("Population count column", options=pop_cols, index=_find_best_col(pop_cols, ["count", "n", "pop", "population"]))
             else:
                 post_cols = []
                 count_col = None
@@ -299,20 +251,8 @@ def render_upload_tab(root: Path) -> None:
                         "the randomized-response observation model using only reported labels."
                     ),
                 )
-                mrp_lr = st.number_input(
-                    "Learning rate",
-                    min_value=0.0001,
-                    max_value=1.0,
-                    value=0.02 if method == "Neural RR-aware MRP" else 0.05,
-                    step=0.005,
-                )
-                mrp_steps = st.number_input(
-                    "Training steps",
-                    min_value=25,
-                    max_value=20000,
-                    value=500 if method == "Neural RR-aware MRP" else 2000,
-                    step=25,
-                )
+                mrp_lr = st.number_input("Learning rate", min_value=0.0001, max_value=1.0, value=0.02 if method == "Neural RR-aware MRP" else 0.05, step=0.005)
+                mrp_steps = st.number_input("Training steps", min_value=25, max_value=20000, value=500 if method == "Neural RR-aware MRP" else 2000, step=25)
                 mrp_batch = st.number_input("Batch size", min_value=16, max_value=8192, value=512, step=64)
                 mrp_seed = st.number_input("Model seed", min_value=0, max_value=10_000_000, value=0, step=1)
 
@@ -355,13 +295,9 @@ def render_upload_tab(root: Path) -> None:
                     elif neural_size == "Medium: 32,16":
                         neural_hidden_layers_text = "32,16"
                     else:
-                        neural_hidden_layers_text = st.text_input(
-                            "Hidden layer sizes", value="32,16", help="Comma-separated widths, e.g. 64,32"
-                        )
+                        neural_hidden_layers_text = st.text_input("Hidden layer sizes", value="32,16", help="Comma-separated widths, e.g. 64,32")
                     neural_dropout = st.slider("Dropout", min_value=0.0, max_value=0.8, value=0.0, step=0.05)
-                    neural_weight_decay = st.number_input(
-                        "Weight decay", min_value=0.0, max_value=10.0, value=0.0001, step=0.0001, format="%.5f"
-                    )
+                    neural_weight_decay = st.number_input("Weight decay", min_value=0.0, max_value=10.0, value=0.0001, step=0.0001, format="%.5f")
 
         # ---------- Build category map ----------
         raw_labels = [r.get(response_col, "") for r in poll_rows]
@@ -426,9 +362,7 @@ def render_upload_tab(root: Path) -> None:
             # Bootstrap CI (baseline only)
             p_lo, p_hi = (None, None)
             if int(n_boot) > 0:
-                p_lo, p_hi = bootstrap_ci(
-                    reported, epsilon=float(epsilon), k=int(k), n_boot=int(n_boot), seed=int(boot_seed)
-                )
+                p_lo, p_hi = bootstrap_ci(reported, epsilon=float(epsilon), k=int(k), n_boot=int(n_boot), seed=int(boot_seed))
 
             st.subheader("Overall estimate")
             if using_poll_option_labels and is_jsonl_upload:
@@ -449,14 +383,14 @@ def render_upload_tab(root: Path) -> None:
             st.dataframe(table_rows, use_container_width=True)
 
             # ---------- Group audit (baseline) ----------
-            group_rows: list[dict[str, Any]] = []
-            group_estimates: dict[tuple[str, ...], np.ndarray] = {}
-            group_true: dict[tuple[str, ...], np.ndarray] = {}
+            group_rows: List[Dict[str, Any]] = []
+            group_estimates: Dict[Tuple[str, ...], np.ndarray] = {}
+            group_true: Dict[Tuple[str, ...], np.ndarray] = {}
 
             if group_cols:
                 st.subheader("Group audit (baseline)")
 
-                group_to_idx: dict[tuple[str, ...], list[int]] = {}
+                group_to_idx: Dict[Tuple[str, ...], List[int]] = {}
                 for pos, original_i in enumerate(valid_indices):
                     key = group_keys(poll_rows[int(original_i)], group_cols)
                     group_to_idx.setdefault(key, []).append(pos)
@@ -502,12 +436,12 @@ def render_upload_tab(root: Path) -> None:
                     if list(post_cols) == list(group_cols) and group_estimates:
                         post_est = group_estimates
                     else:
-                        post_to_idx: dict[tuple[str, ...], list[int]] = {}
+                        post_to_idx: Dict[Tuple[str, ...], List[int]] = {}
                         for pos, original_i in enumerate(valid_indices):
                             key = group_keys(poll_rows[int(original_i)], post_cols)
                             post_to_idx.setdefault(key, []).append(pos)
 
-                        post_est: dict[tuple[str, ...], np.ndarray] = {}
+                        post_est: Dict[Tuple[str, ...], np.ndarray] = {}
                         for g, idxs in post_to_idx.items():
                             rep_g = reported[np.asarray(idxs, dtype=int)]
                             post_est[g] = estimate_distribution(rep_g, epsilon=float(epsilon), k=int(k))
@@ -515,16 +449,13 @@ def render_upload_tab(root: Path) -> None:
                     p_post_direct = poststratify_from_groups(post_est, pop_weights, fallback=p_baseline)
 
                     st.subheader("Post-stratified estimate (direct baseline)")
-                    post_rows = [
-                        {"category_id": i, "label": lab, "poststrat_p": float(p_post_direct[i])}
-                        for i, lab in enumerate(display_labels)
-                    ]
+                    post_rows = [{"category_id": i, "label": lab, "poststrat_p": float(p_post_direct[i])} for i, lab in enumerate(display_labels)]
                     st.dataframe(post_rows, use_container_width=True)
 
             # ---------- Learned RR-aware MRP methods (optional) ----------
             p_mrp_post = None
             p_mrp_sample = None
-            group_rows_mrp: list[dict[str, Any]] | None = None  # learned-model fairness comparisons
+            group_rows_mrp: Optional[List[Dict[str, Any]]] = None  # learned-model fairness comparisons
             learned_method_label = _method_short_label(method)
             learned_prefix = _method_prefix(method)
             learned_l1_key = f"{learned_prefix}_l1"
@@ -544,9 +475,7 @@ def render_upload_tab(root: Path) -> None:
 
                     try:
                         if method == "Linear RR-aware MRP":
-                            model = MRPRRMultinomialModel(
-                                k=int(k), epsilon=float(epsilon), l2=float(mrp_l2), seed=int(mrp_seed)
-                            )
+                            model = MRPRRMultinomialModel(k=int(k), epsilon=float(epsilon), l2=float(mrp_l2), seed=int(mrp_seed))
                             with st.spinner("Fitting linear RR-aware MRP model..."):
                                 info = model.fit(
                                     X,
@@ -557,9 +486,7 @@ def render_upload_tab(root: Path) -> None:
                                     verbose_every=0,
                                     keep_history=False,
                                 )
-                            st.write(
-                                f"Fitted linear RR-aware MRP: steps={info.steps}, final_loss={_fmt(info.final_loss, 6)}"
-                            )
+                            st.write(f"Fitted linear RR-aware MRP: steps={info.steps}, final_loss={_fmt(info.final_loss, 6)}")
                             P_true = model.predict_true_proba(X)
 
                         elif method == "Neural RR-aware MRP":
@@ -591,12 +518,8 @@ def render_upload_tab(root: Path) -> None:
 
                         elif method == "Misreport-aware RR-MRP":
                             shy_category = int(misreport_shy_category)
-                            M = shy_misreport_matrix(
-                                int(k), shy_category=shy_category, honesty=float(misreport_honesty)
-                            )
-                            model = MisreportRRMultinomialModel(
-                                k=int(k), l2=float(mrp_l2), seed=int(mrp_seed), misreport=M
-                            )
+                            M = shy_misreport_matrix(int(k), shy_category=shy_category, honesty=float(misreport_honesty))
+                            model = MisreportRRMultinomialModel(k=int(k), l2=float(mrp_l2), seed=int(mrp_seed), misreport=M)
                             with st.spinner("Fitting misreport-aware RR-MRP model..."):
                                 model.fit(
                                     X,
@@ -623,10 +546,7 @@ def render_upload_tab(root: Path) -> None:
 
                         st.caption(f"{learned_method_label} sample-averaged estimate (not post-stratified):")
                         st.dataframe(
-                            [
-                                {"category_id": i, "label": lab, learned_sample_col: float(p_mrp_sample[i])}
-                                for i, lab in enumerate(display_labels)
-                            ],
+                            [{"category_id": i, "label": lab, learned_sample_col: float(p_mrp_sample[i])} for i, lab in enumerate(display_labels)],
                             use_container_width=True,
                         )
 
@@ -638,8 +558,8 @@ def render_upload_tab(root: Path) -> None:
                                     f"MRP features: {mrp_feature_cols}\nPost-strat keys: {post_cols}"
                                 )
                             else:
-                                pop_cells: list[dict[str, str]] = []
-                                pop_counts: list[float] = []
+                                pop_cells: List[Dict[str, str]] = []
+                                pop_counts: List[float] = []
                                 for r in pop_rows:
                                     try:
                                         cval = float(r.get(str(count_col), "nan"))
@@ -661,10 +581,7 @@ def render_upload_tab(root: Path) -> None:
                                         raise RuntimeError("learned model does not support poststratification")
                                     st.subheader(f"{learned_method_label} post-stratified estimate")
                                     st.dataframe(
-                                        [
-                                            {"category_id": i, "label": lab, learned_post_col: float(p_mrp_post[i])}
-                                            for i, lab in enumerate(display_labels)
-                                        ],
+                                        [{"category_id": i, "label": lab, learned_post_col: float(p_mrp_post[i])} for i, lab in enumerate(display_labels)],
                                         use_container_width=True,
                                     )
                                 else:
@@ -673,7 +590,7 @@ def render_upload_tab(root: Path) -> None:
                         # Group-level learned-model predictions for the fairness dashboard.
                         if group_cols:
                             group_rows_mrp = []
-                            group_to_idx: dict[tuple[str, ...], list[int]] = {}
+                            group_to_idx: Dict[Tuple[str, ...], List[int]] = {}
                             for pos, original_i in enumerate(valid_indices):
                                 key = group_keys(poll_rows[int(original_i)], group_cols)
                                 group_to_idx.setdefault(key, []).append(pos)
@@ -687,16 +604,12 @@ def render_upload_tab(root: Path) -> None:
                                 # In real polling mode, do not require true labels. Use divergence from model overall as a proxy.
                                 if p_true is not None and truth is not None:
                                     tru_g = truth[idx_arr]
-                                    p_true_g = np.bincount(tru_g, minlength=k).astype(float) / max(
-                                        1.0, float(tru_g.size)
-                                    )
+                                    p_true_g = np.bincount(tru_g, minlength=k).astype(float) / max(1.0, float(tru_g.size))
                                     learned_l1 = float(np.sum(np.abs(p_g_mrp - p_true_g)))
                                 else:
                                     learned_l1 = float(np.sum(np.abs(p_g_mrp - p_mrp_sample)))
 
-                                key_str = _format_group_key(
-                                    g, group_cols, category_display_map, display_answer_like_cols
-                                )
+                                key_str = _format_group_key(g, group_cols, category_display_map, display_answer_like_cols)
                                 group_rows_mrp.append(
                                     {
                                         "group": key_str,
@@ -734,7 +647,7 @@ def render_upload_tab(root: Path) -> None:
                         # Here we approximate using baseline_l1 already set nan; recompute by matching on group string
                         # by rebuilding from group_estimates dict (safe and small).
                     # Rebuild a map from display group string -> l1 proxy
-                    disp_to_proxy: dict[str, float] = {}
+                    disp_to_proxy: Dict[str, float] = {}
                     for g, p_g in group_estimates.items():
                         key_str = _format_group_key(g, group_cols, category_display_map, display_answer_like_cols)
                         disp_to_proxy[key_str] = float(np.sum(np.abs(p_g - p_ref)))
@@ -744,13 +657,9 @@ def render_upload_tab(root: Path) -> None:
                 # Controls
                 colA, colB, colC = st.columns([1, 1, 1])
                 with colA:
-                    major_only = st.checkbox(
-                        "Major groups only", value=True, help="Only include groups with mass >= major_mass."
-                    )
+                    major_only = st.checkbox("Major groups only", value=True, help="Only include groups with mass >= major_mass.")
                 with colB:
-                    show_top = st.number_input(
-                        "Show top N groups (by mass)", min_value=5, max_value=100, value=20, step=5
-                    )
+                    show_top = st.number_input("Show top N groups (by mass)", min_value=5, max_value=100, value=20, step=5)
                 with colC:
                     compare_options = ["RR debiasing"]
                     if group_rows_mrp is not None:
@@ -774,9 +683,7 @@ def render_upload_tab(root: Path) -> None:
                     if major_only and float(r.get("mass", 0.0)) < float(major_mass):
                         continue
                     g_rows_show.append(r)
-                g_rows_show = sorted(g_rows_show, key=lambda r: float(r.get("mass", 0.0)), reverse=True)[
-                    : int(show_top)
-                ]
+                g_rows_show = sorted(g_rows_show, key=lambda r: float(r.get("mass", 0.0)), reverse=True)[: int(show_top)]
 
                 if not g_rows_show:
                     # Do not attempt to render unavailable subgroup metrics as
@@ -790,9 +697,7 @@ def render_upload_tab(root: Path) -> None:
                     st.dataframe(g_rows_show, use_container_width=True)
 
                 # Summary metrics
-                summ = _group_metric_summary(
-                    g_rows, metric_key=key, major_only=major_only, major_mass=float(major_mass)
-                )
+                summ = _group_metric_summary(g_rows, metric_key=key, major_only=major_only, major_mass=float(major_mass))
                 if all(not np.isfinite(float(summ.get(m, float("nan")))) for m in ("worst", "p90", "weighted")):
                     st.info("Group summary metrics are unavailable for the current filter settings.")
                 else:
@@ -806,24 +711,18 @@ def render_upload_tab(root: Path) -> None:
                 # Overall metrics (if truth)
                 if has_truth:
                     overall_base = _overall_metrics(p_baseline, p_true)
-                    st.write(
-                        f"RR debiasing overall: L1={_fmt(overall_base['overall_l1'], 6)}, MAE={_fmt(overall_base['overall_mae'], 6)}, Correct winner: {bool(overall_base['correct_winner'])}"
-                    )
+                    st.write(f"RR debiasing overall: L1={_fmt(overall_base['overall_l1'], 6)}, MAE={_fmt(overall_base['overall_mae'], 6)}, Correct winner: {bool(overall_base['correct_winner'])}")
                     if p_post_direct is not None:
                         overall_post = _overall_metrics(p_post_direct, p_true)
-                        st.write(
-                            f"Direct post-strat overall: L1={_fmt(overall_post['overall_l1'], 6)}, MAE={_fmt(overall_post['overall_mae'], 6)}, Correct winner: {bool(overall_post['correct_winner'])}"
-                        )
+                        st.write(f"Direct post-strat overall: L1={_fmt(overall_post['overall_l1'], 6)}, MAE={_fmt(overall_post['overall_mae'], 6)}, Correct winner: {bool(overall_post['correct_winner'])}")
                     if p_mrp_post is not None:
                         overall_mrp = _overall_metrics(p_mrp_post, p_true)
-                        st.write(
-                            f"{learned_method_label} post-strat overall: L1={_fmt(overall_mrp['overall_l1'], 6)}, MAE={_fmt(overall_mrp['overall_mae'], 6)}, Correct winner: {bool(overall_mrp['correct_winner'])}"
-                        )
+                        st.write(f"{learned_method_label} post-strat overall: L1={_fmt(overall_mrp['overall_l1'], 6)}, MAE={_fmt(overall_mrp['overall_mae'], 6)}, Correct winner: {bool(overall_mrp['correct_winner'])}")
 
             # ---------- Plots (for report) ----------
             st.subheader("Plots (for report)")
 
-            plot_bytes: dict[str, bytes] = {}
+            plot_bytes: Dict[str, bytes] = {}
 
             series = [("baseline", p_baseline)]
             if p_post_direct is not None:
@@ -845,12 +744,7 @@ def render_upload_tab(root: Path) -> None:
                     st.warning(f"Could not render overall plot image in the browser. ({e})")
                     st.info("Use the download buttons to view the plot file locally.")
                 plot_bytes["overall_comparison.png"] = overall_png
-                st.download_button(
-                    "Download overall plot (PNG)",
-                    data=overall_png,
-                    file_name="overall_comparison.png",
-                    mime="image/png",
-                )
+                st.download_button("Download overall plot (PNG)", data=overall_png, file_name="overall_comparison.png", mime="image/png")
 
             # Group plot (baseline or mrp)
             if group_cols and group_rows:
@@ -859,28 +753,19 @@ def render_upload_tab(root: Path) -> None:
                 if not has_truth:
                     # ensure proxy exists
                     p_ref = p_baseline
-                    disp_to_proxy: dict[str, float] = {}
+                    disp_to_proxy: Dict[str, float] = {}
                     for g, p_g in group_estimates.items():
                         key_str = _format_group_key(g, group_cols, category_display_map, display_answer_like_cols)
                         disp_to_proxy[key_str] = float(np.sum(np.abs(p_g - p_ref)))
                     for r in group_rows:
                         r["baseline_l1"] = disp_to_proxy.get(str(r["group"]), float("nan"))
 
-                title = (
-                    "Top groups by mass: L1 error (baseline vs truth)"
-                    if has_truth
-                    else "Top groups by mass: L1 divergence vs overall (baseline proxy)"
-                )
+                title = "Top groups by mass: L1 error (baseline vs truth)" if has_truth else "Top groups by mass: L1 divergence vs overall (baseline proxy)"
                 grp_png = _plot_group_bars(group_rows, title=title, metric_key=metric_key, top_n=20)
                 if grp_png is not None:
                     st.image(grp_png, caption="Group metric (baseline)", use_container_width=True)
                     plot_bytes["group_metric_baseline.png"] = grp_png
-                    st.download_button(
-                        "Download group plot (PNG)",
-                        data=grp_png,
-                        file_name="group_metric_baseline.png",
-                        mime="image/png",
-                    )
+                    st.download_button("Download group plot (PNG)", data=grp_png, file_name="group_metric_baseline.png", mime="image/png")
 
             if plot_bytes:
                 st.download_button(
@@ -932,7 +817,7 @@ def render_upload_tab(root: Path) -> None:
                 plot_names=list(plot_bytes.keys()),
             )
 
-            extra_meta: dict[str, Any] = {}
+            extra_meta: Dict[str, Any] = {}
             if _is_learned_mrp_method(method) and "mrp_feature_cols" in locals():
                 extra_meta["learned_method"] = learned_method_label
                 extra_meta["mrp_feature_cols"] = mrp_feature_cols
@@ -948,9 +833,7 @@ def render_upload_tab(root: Path) -> None:
                     extra_meta["neural_weight_decay"] = float(neural_weight_decay)
                 if method == "Misreport-aware RR-MRP":
                     shy_idx = int(misreport_shy_category)
-                    extra_meta["misreport_shy_label"] = (
-                        display_labels[shy_idx] if 0 <= shy_idx < len(display_labels) else str(shy_idx)
-                    )
+                    extra_meta["misreport_shy_label"] = display_labels[shy_idx] if 0 <= shy_idx < len(display_labels) else str(shy_idx)
                     extra_meta["misreport_honesty"] = float(misreport_honesty)
             extra_meta["synthetic_evaluation_mode"] = bool(synthetic_evaluation_mode)
             if pop_rows and post_cols and count_col is not None:
@@ -985,3 +868,5 @@ def render_upload_tab(root: Path) -> None:
                 file_name="fairvote_results_bundle.zip",
                 mime="application/zip",
             )
+
+

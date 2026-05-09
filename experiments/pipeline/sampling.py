@@ -1,5 +1,4 @@
 """Sampling-stage helpers for the MRP-vs-baselines pipeline."""
-
 from __future__ import annotations
 
 from typing import Any
@@ -8,7 +7,6 @@ import numpy as np
 
 from fairvote.simulation.bias_models import apply_nonresponse, make_default_feature_nonresponse_profile
 from fairvote.simulation.sampling import biased_frame_sample, simple_random_sample, stratified_sample
-
 from .config import ExperimentConfig
 from .scenarios import NONRESPONSE_SCENARIOS, VALID_SCENARIOS
 

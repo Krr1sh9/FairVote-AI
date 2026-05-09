@@ -3,45 +3,34 @@
 from __future__ import annotations
 
 import importlib.util
-from typing import Any
+from typing import Optional
 
 import numpy as np
 
 _HAS_FAIRVOTE_PRIVACY = True
 try:
-    from fairvote.privacy import estimate_distribution as _fv_estimate_distribution
-    from fairvote.privacy import rr_transition_matrix as _fv_rr_transition_matrix
-
-    fv_estimate_distribution: Any = _fv_estimate_distribution
-    fv_rr_transition_matrix: Any = _fv_rr_transition_matrix
+    from fairvote.privacy import estimate_distribution as fv_estimate_distribution
+    from fairvote.privacy import rr_transition_matrix as fv_rr_transition_matrix
 except Exception:
     _HAS_FAIRVOTE_PRIVACY = False
-    fv_estimate_distribution = None
-    fv_rr_transition_matrix = None
+    fv_estimate_distribution = None  # type: ignore[assignment]
+    fv_rr_transition_matrix = None  # type: ignore[assignment]
 
 _HAS_RR_MRP = True
 try:
-    from fairvote.inference.mrp import DesignMatrix as _DesignMatrix
-    from fairvote.inference.mrp import MRPRRMultinomialModel as _MRPRRMultinomialModel
-
-    DesignMatrix: Any = _DesignMatrix
-    MRPRRMultinomialModel: Any = _MRPRRMultinomialModel
+    from fairvote.inference.mrp import DesignMatrix, MRPRRMultinomialModel
 except Exception:
     _HAS_RR_MRP = False
-    DesignMatrix = None
-    MRPRRMultinomialModel = None
+    DesignMatrix = None  # type: ignore[assignment]
+    MRPRRMultinomialModel = None  # type: ignore[assignment]
 
 _HAS_MISREPORT_RR_MRP = True
 try:
-    from fairvote.inference.mrp.misreport_rr import MisreportRRMultinomialModel as _MisreportRRMultinomialModel
-    from fairvote.inference.mrp.misreport_rr import shy_misreport_matrix as _shy_misreport_matrix
-
-    MisreportRRMultinomialModel: Any = _MisreportRRMultinomialModel
-    shy_misreport_matrix: Any = _shy_misreport_matrix
+    from fairvote.inference.mrp.misreport_rr import MisreportRRMultinomialModel, shy_misreport_matrix
 except Exception:
     _HAS_MISREPORT_RR_MRP = False
-    MisreportRRMultinomialModel = None
-    shy_misreport_matrix = None
+    MisreportRRMultinomialModel = None  # type: ignore[assignment]
+    shy_misreport_matrix = None  # type: ignore[assignment]
 
 LEARNED_MRP_METHODS = {
     "Linear RR-aware MRP",
@@ -140,7 +129,7 @@ def available_method_options() -> list[str]:
     return options
 
 
-def resolve_estimation_method(requested: str) -> tuple[str, str | None]:
+def resolve_estimation_method(requested: str) -> tuple[str, Optional[str]]:
     """Return the usable method plus a warning message when falling back.
 
     This pure function lets tests verify method selection without Streamlit.

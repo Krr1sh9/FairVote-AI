@@ -8,7 +8,6 @@ import numpy as np
 import pytest
 
 from app.parsing.upload import read_csv_bytes, read_jsonl_bytes, read_jsonl_bytes_with_report
-from app.services import inference
 from app.services.category import (
     CategoryMap,
     build_category_map,
@@ -24,6 +23,7 @@ from app.services.exports import (
     build_results_summary_markdown,
     build_scenario_bundle,
 )
+from app.services import inference
 
 
 def test_dashboard_csv_parsing_string_values() -> None:
@@ -36,7 +36,8 @@ def test_dashboard_csv_parsing_string_values() -> None:
 
 def test_dashboard_jsonl_parsing_flattens_demographics_and_rejects_invalid_by_default() -> None:
     raw = (
-        json.dumps({"perturbed_answer": 1, "demographics": {"region": "London", "age_band": "18-24"}}) + "\nnot-json\n"
+        json.dumps({"perturbed_answer": 1, "demographics": {"region": "London", "age_band": "18-24"}})
+        + "\nnot-json\n"
     ).encode()
     with pytest.raises(ValueError, match="invalid JSONL on line 2"):
         read_jsonl_bytes(raw)
@@ -87,9 +88,9 @@ def test_dashboard_overall_and_group_csv_generation() -> None:
     assert "category_id,label,rr_debias_p,true_p" in overall
     assert "0,A,0.6,0.55" in overall
 
-    group_csv = build_group_audit_csv(
-        [{"group": "London", "n": 10, "mass": 0.5, "major": True, "baseline_l1": 0.1}]
-    ).decode()
+    group_csv = build_group_audit_csv([
+        {"group": "London", "n": 10, "mass": 0.5, "major": True, "baseline_l1": 0.1}
+    ]).decode()
     assert "group,n,mass,major,baseline_l1" in group_csv
     assert "London,10,0.5,True,0.1" in group_csv
 

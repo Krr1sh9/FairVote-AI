@@ -1,5 +1,4 @@
 """Neural RR-aware MRP estimator runners."""
-
 from __future__ import annotations
 
 import time
@@ -9,7 +8,6 @@ from ..config import ExperimentConfig, MethodResult, TrialConfig
 from ..context import ExperimentContext
 from .common import TrialData, _near_identity_epsilon
 from .linear_mrp import _poststratify_model_predictions
-
 
 def require_rr_neural_mrp_model():
     """Import the optional PyTorch neural MRP only when an enabled method needs it."""
@@ -22,8 +20,6 @@ def require_rr_neural_mrp_model():
             '`pip install -e ".[dev]"`, or rerun with --disable_neural.'
         ) from exc
     return RRNeuralMRPModel
-
-
 def neural_rr_mrp(
     config: ExperimentConfig,
     context: ExperimentContext,

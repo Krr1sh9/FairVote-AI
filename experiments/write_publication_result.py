@@ -61,6 +61,31 @@ def fmt(value: float, decimals: int = 4) -> str:
     return f"{value:.{decimals}f}"
 
 
+def recorded_command(manifest: dict[str, Any], config: dict[str, Any]) -> str:
+    """Return a readable command string without inventing provenance.
+
+    Older evidence manifests may not record a command. Newer manifests store
+    the process argv under ``provenance.argv``. When that argv points directly
+    at ``experiments/mrp_vs_baselines.py``, the function normalises only the
+    executable prefix to the equivalent module form used in the documentation.
+    """
+    command = manifest.get("command") or config.get("command")
+    if command:
+        return str(command)
+
+    provenance = manifest.get("provenance")
+    if isinstance(provenance, dict):
+        argv = provenance.get("argv")
+        if isinstance(argv, list) and argv:
+            parts = [str(part) for part in argv]
+            first = parts[0].replace("\\", "/")
+            if first.endswith("experiments/mrp_vs_baselines.py"):
+                parts = ["python", "-m", "experiments.mrp_vs_baselines", *parts[1:]]
+            return " ".join(parts)
+
+    return "not recorded in manifest"
+
+
 def md_table(headers: list[str], rows: Iterable[Iterable[str]]) -> str:
     rows = [list(r) for r in rows]
     out = ["| " + " | ".join(headers) + " |", "| " + " | ".join(["---"] * len(headers)) + " |"]
@@ -123,42 +148,58 @@ def best_rows(summary: list[dict[str, str]], metric: str = "overall_l1") -> list
     return table
 
 
+def method_win_counts(summary: list[dict[str, str]], metric: str) -> list[list[str]]:
+    """Count which method has the lowest mean error in each scenario/epsilon/sample-size cell."""
+    key = f"mean_{metric}"
+    groups: dict[tuple[str, str, str], list[dict[str, str]]] = {}
+    for row in summary:
+        if not math.isfinite(as_float(row.get(key))):
+            continue
+        groups.setdefault((row.get("scenario", ""), row.get("epsilon", ""), row.get("sample_size", "")), []).append(row)
+    counts: dict[str, int] = {}
+    for rows in groups.values():
+        best = min(rows, key=lambda r: as_float(r.get(key)))
+        method = best.get("method", "")
+        counts[method] = counts.get(method, 0) + 1
+    return [[method, str(count)] for method, count in sorted(counts.items(), key=lambda item: (-item[1], item[0]))]
+
+
 def claim_rows(summary: list[dict[str, str]], paired: list[dict[str, str]]) -> list[list[str]]:
     scenarios = {r.get("scenario", "") for r in summary}
     methods = {r.get("method", "") for r in summary}
     rows: list[list[str]] = []
     rows.append(
         [
-            "RR-aware MRP improves over direct RR debiasing",
+            "RR-aware MRP is evaluated against direct RR debiasing",
             "summary_with_ci.csv / ablations.csv",
             "SUPPORTED TO ANALYSE" if {"baseline_rr_debias", "mrp_rr_poststrat"} <= methods else "MISSING METHOD",
-            "Compare mean_overall_l1 and CI by scenario; do not claim improvement unless deltas are negative and stable.",
+            "Compare mean_overall_l1 and CIs by scenario; report the direction honestly rather than assuming MRP improves aggregate accuracy.",
         ]
     )
     rows.append(
         [
-            "Hierarchical partial pooling improves sparse subgroup error",
+            "Hierarchical partial pooling is evaluated for sparse subgroup error",
             "summary_with_ci.csv",
             "SUPPORTED TO ANALYSE"
             if "hierarchical_rr_mrp_poststrat" in methods and any("sparse" in s for s in scenarios)
             else "MISSING EVIDENCE",
-            "Use worst_group_l1_major in sparse scenarios; report failures as mixed results.",
+            "Use worst_group_l1_major in sparse scenarios and state whether hierarchical partial pooling is actually best in the reported cells.",
         ]
     )
     rows.append(
         [
-            "Neural RR-MRP beats simpler baselines in nonlinear settings",
+            "RR-aware Neural MRP is evaluated conditionally against the linear MRP baseline",
             "paired_comparisons.csv",
             "SUPPORTED TO ANALYSE" if paired else "MISSING PAIRED COMPARISONS",
-            "Only claim this if paired deltas have enough trials and confidence intervals exclude zero where relevant.",
+            "Use paired neural-minus-linear deltas, win rates and CIs; do not claim general neural superiority.",
         ]
     )
     rows.append(
         [
-            "Privacy can help under strategic misreporting",
+            "Privacy-noise/sparse robustness is evaluated",
             "summary_with_ci.csv",
-            "SUPPORTED TO ANALYSE" if any("privacy" in s or "shy" in s for s in scenarios) else "MISSING SCENARIO",
-            "Look for intermediate-epsilon minima; do not overgeneralise to pure privacy noise scenarios.",
+            "SUPPORTED TO ANALYSE" if any("privacy_noise" in s or "sparse" in s for s in scenarios) else "MISSING SCENARIO",
+            "Use this for privacy-noise and sparse-cell robustness only; do not claim that privacy improves honesty unless a misreport/privacy-help scenario is present.",
         ]
     )
     return rows
@@ -181,10 +222,12 @@ def write_outputs(run_dir: Path, out_dir: Path) -> None:
     claims_md = md_table(
         ["Claim", "Evidence file", "Status", "Required interpretation rule"], claim_rows(summary, paired)
     )
+    overall_win_md = md_table(["method", "best-cell count"], method_win_counts(summary, "overall_l1"))
+    worst_group_win_md = md_table(["method", "best-cell count"], method_win_counts(summary, "worst_group_l1_major"))
 
     run_name = run_dir.name
     preset = config.get("preset") or manifest.get("preset") or "unknown"
-    command = manifest.get("command") or config.get("command") or "not recorded"
+    command = recorded_command(manifest, config)
     final_results = f"""# Final evidence interpretation: `{run_name}`
 
 This file is generated from committed evidence files. It does not rerun experiments and it does not infer beyond the CSV/JSON contents.
@@ -203,6 +246,18 @@ This file is generated from committed evidence files. It does not rerun experime
 
 {best_md}
 
+## Method win-count summary
+
+These counts identify which method has the lowest mean error within each scenario/epsilon/sample-size cell. They are useful safeguards against overclaiming from paired neural-vs-linear results alone.
+
+### Best mean overall L1 by cell
+
+{overall_win_md}
+
+### Best mean major worst-group L1 by cell
+
+{worst_group_win_md}
+
 ## Claim-to-evidence status
 
 {claims_md}
@@ -210,7 +265,7 @@ This file is generated from committed evidence files. It does not rerun experime
 ## Suggested report wording
 
 - If any acceptance check is `FAIL`, call this run preliminary evidence, not final evidence.
-- If paired comparisons are absent, do not make neural-vs-linear superiority claims.
+- If paired comparisons are absent, do not make neural-vs-linear improvement claims.
 - If a result is mixed across scenarios, state that it is mixed rather than selecting only the favourable rows.
 - Every number above comes from `summary_with_ci.csv` or `summary.csv` in this run directory.
 """
@@ -223,7 +278,7 @@ This file is generated from committed evidence files. It does not rerun experime
 
 ## Abstract
 
-FairVote-AI evaluates locally private polling estimators under k-ary Randomized Response, sampling bias, sparse subgroup structure, nonlinear response patterns and strategic misreporting. The submitted implementation includes a browser-side LDP respondent prototype, raw-answer rejection on the server, strict analyst upload validation, analytical RR debiasing, linear RR-aware MRP, hierarchical partial-pooling RR-aware MRP, optional neural RR-MRP, and a reproducible evidence pipeline.
+FairVote-AI evaluates locally private polling estimators under k-ary Randomized Response, sampling bias, sparse subgroup structure, nonlinear response patterns and privacy-noise stress tests. The wider experiment pipeline also supports strategic-misreporting scenarios, but the canonical evidence run used here should be interpreted as a reduced, CPU-sized final-style benchmark rather than a full robustness sweep. The submitted implementation includes a browser-side LDP respondent prototype, raw-answer rejection on the server, strict analyst upload validation, analytical RR debiasing, linear RR-aware MRP, hierarchical partial-pooling RR-aware MRP, optional neural RR-MRP, and a reproducible evidence pipeline.
 
 ## Method summary
 
@@ -243,18 +298,28 @@ The central modelling assumption is explicit: training observes only randomized-
 
 {best_md}
 
+## Method win-count summary
+
+### Best mean overall L1 by cell
+
+{overall_win_md}
+
+### Best mean major worst-group L1 by cell
+
+{worst_group_win_md}
+
 ## Claims and support status
 
 {claims_md}
 
 ## Limitations
 
-This paper draft is only as strong as the evidence run above. If the run is smoke-labelled, has fewer than 20 repeated trials per cell, has failures, or lacks paired comparisons, the corresponding claims must be reported as preliminary or unsupported. Randomized response protects answer values only; demographic minimisation, rare-cell reporting and export controls are separate privacy boundaries.
+This paper draft is only as strong as the evidence run above. If the run is smoke-labelled, has fewer than 20 repeated trials per cell, has failures, or lacks paired comparisons, the corresponding claims must be reported as preliminary, conditional or unsupported. Randomized response protects answer values only; demographic minimisation, rare-cell reporting and export controls are separate privacy boundaries.
 
 ## Reproducibility checklist
 
 - `summary_with_ci.csv` or `summary.csv` present.
-- `paired_comparisons.csv` present when neural claims are made.
+- `paired_comparisons.csv` present when neural improvement claims are made.
 - `failures.csv` empty for final claims.
 - `manifest.json`, `environment.json` and `sha256sums.txt` present.
 - Acceptance checks above pass before this text is used as a final report-ready result.

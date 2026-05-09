@@ -1,16 +1,14 @@
 """Simple oracle, raw, and analytical RR-debias estimator runners."""
-
 from __future__ import annotations
 
 import time
+import numpy as np
 
 from fairvote.privacy import estimate_distribution
-
 from ..config import ExperimentConfig, MethodResult, TrialConfig
 from ..context import ExperimentContext
 from ..metrics import distribution_from_labels
 from .common import TrialData, estimate_subgroup_distribution
-
 
 def oracle_true_sample_distribution(
     config: ExperimentConfig,
@@ -25,18 +23,10 @@ def oracle_true_sample_distribution(
     overall = distribution_from_labels(y_true, config.k)
     by_feature = {
         "region": estimate_subgroup_distribution(
-            y_true,
-            values=data.region_values,
-            levels=data.region_levels,
-            k=config.k,
-            estimator=lambda y: distribution_from_labels(y, config.k),
+            y_true, values=data.region_values, levels=data.region_levels, k=config.k, estimator=lambda y: distribution_from_labels(y, config.k)
         ),
         "age_group": estimate_subgroup_distribution(
-            y_true,
-            values=data.age_values,
-            levels=data.age_levels,
-            k=config.k,
-            estimator=lambda y: distribution_from_labels(y, config.k),
+            y_true, values=data.age_values, levels=data.age_levels, k=config.k, estimator=lambda y: distribution_from_labels(y, config.k)
         ),
     }
     return MethodResult(

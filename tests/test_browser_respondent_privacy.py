@@ -7,7 +7,6 @@ Install browser support with:
     pip install -e .[browser]
     python -m playwright install chromium
 """
-
 from __future__ import annotations
 
 import json
@@ -24,6 +23,7 @@ if os.environ.get("FV_RUN_BROWSER") != "1":
 pytest.importorskip("playwright.sync_api")
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RESPONDENT_DIR = ROOT / "respondent"

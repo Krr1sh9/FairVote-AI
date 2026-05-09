@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import shutil
 from pathlib import Path
+from typing import List
 
 
 def _copy_if_exists(src: Path, dst: Path) -> bool:
@@ -38,8 +39,8 @@ def _copy_if_exists(src: Path, dst: Path) -> bool:
     return True
 
 
-def _copy_glob(src_dir: Path, pattern: str, dst_dir: Path) -> list[Path]:
-    copied: list[Path] = []
+def _copy_glob(src_dir: Path, pattern: str, dst_dir: Path) -> List[Path]:
+    copied = []
     for p in sorted(src_dir.glob(pattern)):
         if p.is_file():
             out = dst_dir / p.name
@@ -49,8 +50,8 @@ def _copy_glob(src_dir: Path, pattern: str, dst_dir: Path) -> list[Path]:
     return copied
 
 
-def _copy_tree_filtered(src_dir: Path, dst_dir: Path, exts: list[str]) -> list[Path]:
-    copied: list[Path] = []
+def _copy_tree_filtered(src_dir: Path, dst_dir: Path, exts: List[str]) -> List[Path]:
+    copied = []
     if not src_dir.exists():
         return copied
     for p in sorted(src_dir.rglob("*")):
@@ -67,12 +68,8 @@ def main() -> int:
     """Collect selected existing outputs into a shareable results bundle."""
     ap = argparse.ArgumentParser(description="Build a clean bundle folder containing the key result artefacts.")
     group = ap.add_mutually_exclusive_group(required=True)
-    group.add_argument(
-        "--run_dir", type=str, help="Experiment run directory (experiments/outputs/..._mrp_vs_baselines)"
-    )
-    group.add_argument(
-        "--root", type=str, help="Root directory containing timestamped *_mrp_vs_baselines runs; latest run is bundled."
-    )
+    group.add_argument("--run_dir", type=str, help="Experiment run directory (experiments/outputs/..._mrp_vs_baselines)")
+    group.add_argument("--root", type=str, help="Root directory containing timestamped *_mrp_vs_baselines runs; latest run is bundled.")
     ap.add_argument("--bundle_name", default="BUNDLE", type=str, help="Name of bundle folder inside run_dir.")
     args = ap.parse_args()
 
@@ -93,23 +90,10 @@ def main() -> int:
         shutil.rmtree(bundle_dir)
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
-    copied: list[str] = []
+    copied = []
 
     # Core CSVs
-    for name in (
-        "summary_with_ci.csv",
-        "summary.csv",
-        "raw_trials.csv",
-        "results_trials.csv",
-        "paired_comparisons.csv",
-        "ablations.csv",
-        "runtime_profile.csv",
-        "manifest.json",
-        "environment.json",
-        "sha256sums.txt",
-        "failures.csv",
-        "README.md",
-    ):
+    for name in ("summary_with_ci.csv", "summary.csv", "raw_trials.csv", "results_trials.csv", "paired_comparisons.csv", "ablations.csv", "runtime_profile.csv", "manifest.json", "environment.json", "sha256sums.txt", "failures.csv", "README.md"):
         if _copy_if_exists(run_dir / name, bundle_dir / name):
             copied.append(name)
 
@@ -158,15 +142,11 @@ def main() -> int:
     lines.append("1) Run the experiment:\n")
     lines.append("   - `python -m experiments.mrp_vs_baselines ...`\n\n")
     lines.append("2) Build tables:\n")
-    lines.append(
-        "   - `python -m experiments.make_report_tables --summary_csv <run_dir>/summary_with_ci.csv --include_all ...`\n\n"
-    )
+    lines.append("   - `python -m experiments.make_report_tables --summary_csv <run_dir>/summary_with_ci.csv --include_all ...`\n\n")
     lines.append("3) Learned honesty:\n")
     lines.append("   - `python -m experiments.summarise_learned_honesty --run_dir <run_dir>`\n\n")
     lines.append("4) Recommendation / Pareto:\n")
-    lines.append(
-        "   - `python -m experiments.recommend_from_summary --summary_csv <run_dir>/summary_with_ci.csv --write_pareto`\n"
-    )
+    lines.append("   - `python -m experiments.recommend_from_summary --summary_csv <run_dir>/summary_with_ci.csv --write_pareto`\n")
 
     readme.write_text("".join(lines), encoding="utf-8")
 

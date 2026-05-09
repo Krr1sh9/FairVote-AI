@@ -4,7 +4,6 @@ These tests are intentionally invariant-oriented rather than example-oriented:
 randomly generated valid inputs must still produce valid probability objects,
 stable debiasing outputs, and normalised post-stratification weights.
 """
-
 from __future__ import annotations
 
 import warnings
@@ -13,8 +12,7 @@ import numpy as np
 import pytest
 
 pytest.importorskip("hypothesis")
-from hypothesis import HealthCheck, given, settings
-from hypothesis import strategies as st
+from hypothesis import HealthCheck, given, settings, strategies as st
 
 from fairvote.inference.mrp.poststratify import normalise_poststrat_weights
 from fairvote.privacy.mechanisms.kary_rr import invert_rr_counts, privatize_many, rr_params, rr_transition_matrix

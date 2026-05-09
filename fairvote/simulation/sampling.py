@@ -8,8 +8,8 @@ change the privacy mechanism or the respondent storage format.
 # fairvote/simulation/sampling.py
 from __future__ import annotations
 
-from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -31,17 +31,16 @@ class Sample:
     - true_categories: realised ground-truth labels for sampled individuals
     - features: dict feature_name -> feature values for sampled individuals
     """
-
     idx: np.ndarray
     true_categories: np.ndarray
-    features: dict[str, np.ndarray]
+    features: Dict[str, np.ndarray]
 
 
 def simple_random_sample(
     pop: Population,
     n: int,
     *,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
     replace: bool = False,
 ) -> Sample:
     """
@@ -70,7 +69,7 @@ def stratified_sample(
     n: int,
     strata: Sequence[str],
     *,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
     allocation: str = "proportional",
     min_per_stratum: int = 0,
     replace_within: bool = False,
@@ -129,13 +128,15 @@ def stratified_sample(
     if min_per_stratum > 0:
         # Check feasibility: total minimum <= n and each cell has enough people if no replacement
         if min_per_stratum * C > n:
-            raise ValueError(f"min_per_stratum={min_per_stratum} across C={C} strata cells exceeds n={n}")
+            raise ValueError(
+                f"min_per_stratum={min_per_stratum} across C={C} strata cells exceeds n={n}"
+            )
 
         # Enforce min and reallocate remainder
         target = _enforce_minimum(cell_count, target, n, min_per_stratum, replace_within=replace_within)
 
     # Now sample within each cell
-    idx_out: list[int] = []
+    idx_out: List[int] = []
     for cell_id in range(C):
         m = int(target[cell_id])
         if m <= 0:
@@ -165,9 +166,9 @@ def biased_frame_sample(
     pop: Population,
     n: int,
     *,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
     feature: str = "region",
-    level_multipliers: dict[str, float] | None = None,
+    level_multipliers: Optional[Dict[str, float]] = None,
     replace: bool = False,
 ) -> Sample:
     """
@@ -218,8 +219,8 @@ def nonresponse(
     sample: Sample,
     pop: Population,
     *,
-    rng: np.random.Generator | None = None,
-    feature_response_rates: dict[str, dict[str, float]] | None = None,
+    rng: Optional[np.random.Generator] = None,
+    feature_response_rates: Optional[Dict[str, Dict[str, float]]] = None,
     base_rate: float = 0.85,
 ) -> Sample:
     """
@@ -277,7 +278,6 @@ def nonresponse(
 # Internal helpers
 # ---------------------------
 
-
 def _make_sample(pop: Population, idx: np.ndarray) -> Sample:
     idx = np.asarray(idx, dtype=int)
     true_categories = pop.true_categories[idx]
@@ -327,19 +327,21 @@ def _enforce_minimum(
     *,
     replace_within: bool,
 ) -> np.ndarray:
+    C = cell_count.size
     out = target.copy()
 
     # First, set minimums
     out = np.maximum(out, min_per_stratum)
 
     # If sampling without replacement, ensure feasibility for each cell
-    if not replace_within and np.any(out > cell_count):
-        # If any cell doesn't have enough members, impossible
-        bad = np.where(out > cell_count)[0]
-        raise ValueError(
-            f"Minimum/target exceeds available members in some strata cells. "
-            f"Cells: {bad.tolist()} (try reduce min_per_stratum or enable replace_within=True)."
-        )
+    if not replace_within:
+        if np.any(out > cell_count):
+            # If any cell doesn't have enough members, impossible
+            bad = np.where(out > cell_count)[0]
+            raise ValueError(
+                f"Minimum/target exceeds available members in some strata cells. "
+                f"Cells: {bad.tolist()} (try reduce min_per_stratum or enable replace_within=True)."
+            )
 
     # Adjust to sum to n
     total = int(out.sum())

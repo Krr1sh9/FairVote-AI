@@ -5,31 +5,24 @@ pipeline lives in ``experiments.pipeline`` where config parsing, population
 construction, sampling, perturbation, method runners, metrics, output writing,
 and summary generation are separated into auditable modules.
 """
-
 from __future__ import annotations
 
 import argparse
-import csv
-import json
 import sys
+from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, List, Tuple
 
 from experiments.pipeline.config import ExperimentConfig, default_methods, resolve_methods
-from experiments.pipeline.io import write_experiment_outputs
+from experiments.pipeline.io import write_csv as _write_csv
+from experiments.pipeline.io import write_experiment_outputs, write_json as _write_json
+from experiments.pipeline.methods import METHOD_REGISTRY, misreport_to_matrix as _misreport_to_matrix
 from experiments.pipeline.parsing import (
     parse_eps_list as _parse_eps_list,
-)
-from experiments.pipeline.parsing import (
     parse_hidden_layers as _parse_hidden_layers,
-)
-from experiments.pipeline.parsing import (
     parse_int_list as _parse_int_list,
-)
-from experiments.pipeline.parsing import (
     parse_list as _parse_list,
-)
-from experiments.pipeline.parsing import (
     parse_multipliers as _parse_multipliers,
 )
 from experiments.pipeline.plotting import plot_summary as _plot_summary
@@ -61,45 +54,27 @@ def _ts_run_dir(base: Path, name: str) -> Path:
     return run_dir
 
 
-def _experiment_methods(enable_neural: bool) -> list[str]:
+def _experiment_methods(enable_neural: bool) -> List[str]:
     """Backward-compatible wrapper around the canonical method list."""
     return default_methods(enable_neural)
-
-
-def _write_csv(path: Path, rows: list[dict]) -> None:
-    """Backward-compatible CSV writer used by legacy experiment wrappers."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames = sorted({key for row in rows for key in row})
-    with path.open("w", newline="", encoding="utf-8") as fh:
-        writer = csv.DictWriter(fh, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-
-
-def _write_json(path: Path, payload: object) -> None:
-    """Backward-compatible JSON writer used by legacy experiment wrappers."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as fh:
-        json.dump(payload, fh, indent=2, sort_keys=True)
-        fh.write("\n")
 
 
 def run_experiment(
     *,
     k: int,
-    eps_list: list[float],
-    scenarios: list[str],
+    eps_list: List[float],
+    scenarios: List[str],
     population_n: int,
     n_sample: int,
     trials: int,
     seed: int,
     sampling: str,
-    strata: list[str],
+    strata: List[str],
     allocation: str,
     min_per_stratum: int,
     biased_feature: str,
-    biased_multipliers: dict[str, float],
-    feature_order: list[str],
+    biased_multipliers: Dict[str, float],
+    feature_order: List[str],
     shy_category: int,
     shy_honesty: float,
     mrp_steps: int,
@@ -108,7 +83,7 @@ def run_experiment(
     mrp_batch_size: int,
     verbose_every: int,
     enable_neural: bool,
-    neural_hidden_layers: tuple[int, ...],
+    neural_hidden_layers: Tuple[int, ...],
     neural_steps: int,
     neural_lr: float,
     neural_batch_size: int,
@@ -118,9 +93,9 @@ def run_experiment(
     major_mass: float,
     neural_validation_fraction: float = 0.2,
     neural_patience: int = 20,
-    methods: list[str] | None = None,
-    sample_sizes: list[int] | None = None,
-) -> tuple[list[dict], list[dict]]:
+    methods: List[str] | None = None,
+    sample_sizes: List[int] | None = None,
+) -> Tuple[List[dict], List[dict]]:
     """Run an experiment grid and return raw trial rows plus summary rows.
 
     The signature is preserved for ``evaluate_neural_mrp.py`` and older docs.
@@ -238,20 +213,11 @@ def _config_from_args(args: argparse.Namespace) -> ExperimentConfig:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Compare baseline RR debias vs RR-aware MRP + poststratification.")
-    parser.add_argument(
-        "--preset",
-        choices=["custom", *preset_names()],
-        default="custom",
-        help="Run preset: smoke_test, medium_evidence, final_evidence, or custom.",
-    )
+    parser.add_argument("--preset", choices=["custom", *preset_names()], default="custom", help="Run preset: smoke_test, medium_evidence, final_evidence, or custom.")
     parser.add_argument("--k", type=int, default=5)
     parser.add_argument("--eps", type=str, default="0.2,0.5,1.0,2.0")
-    parser.add_argument(
-        "--sample_sizes", type=str, default="", help="Comma-separated respondent sample sizes, e.g. '500,1000,2500'."
-    )
-    parser.add_argument(
-        "--scenarios", type=str, default="simple_linear,nonlinear_interaction,nonresponse,shy_privacy_helps"
-    )
+    parser.add_argument("--sample_sizes", type=str, default="", help="Comma-separated respondent sample sizes, e.g. '500,1000,2500'.")
+    parser.add_argument("--scenarios", type=str, default="simple_linear,nonlinear_interaction,nonresponse,shy_privacy_helps")
     parser.add_argument("--population_n", type=int, default=100_000)
     parser.add_argument("--n_sample", type=int, default=5_000)
     parser.add_argument("--trials", type=int, default=5)
@@ -271,9 +237,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--mrp_l2", type=float, default=1.0)
     parser.add_argument("--mrp_batch_size", type=int, default=2048)
     parser.add_argument("--verbose_every", type=int, default=0, help="Set >0 to print training logs periodically.")
-    parser.add_argument(
-        "--disable_neural", action="store_true", help="Disable the PyTorch RR-aware neural MRP estimator."
-    )
+    parser.add_argument("--disable_neural", action="store_true", help="Disable the PyTorch RR-aware neural MRP estimator.")
     parser.add_argument("--neural_hidden_layers", type=str, default="16")
     parser.add_argument("--neural_steps", type=int, default=200)
     parser.add_argument("--neural_lr", type=float, default=0.01)
@@ -295,14 +259,8 @@ def _build_parser() -> argparse.ArgumentParser:
         default=0.02,
         help="Only treat groups with population share >= major_mass as major groups for worst/p90 metrics.",
     )
-    parser.add_argument(
-        "--fail_fast",
-        action="store_true",
-        help="Stop immediately if one estimator fails instead of writing partial-run failure rows.",
-    )
-    parser.add_argument(
-        "--skip_plots", action="store_true", help="Skip optional matplotlib plots; CSV/JSON evidence is still written."
-    )
+    parser.add_argument("--fail_fast", action="store_true", help="Stop immediately if one estimator fails instead of writing partial-run failure rows.")
+    parser.add_argument("--skip_plots", action="store_true", help="Skip optional matplotlib plots; CSV/JSON evidence is still written.")
     return parser
 
 

@@ -6,7 +6,6 @@ server hard-rejects raw-answer keys recursively before storage.  Individual
 record export is disabled unless an analyst token is configured and, by default,
 rare demographic cells satisfy the k-anonymity guard.
 """
-
 from __future__ import annotations
 
 import argparse

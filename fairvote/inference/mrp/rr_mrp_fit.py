@@ -7,7 +7,7 @@ maintaining a second linear MRP implementation.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from typing import Dict, Sequence, Tuple
 
 import numpy as np
 
@@ -17,7 +17,7 @@ from fairvote.inference.mrp.linear import LinearRRMRPModel, MRPRRMultinomialMode
 
 def fit_rr_mrp_from_rows(
     *,
-    poll_rows: Sequence[dict[str, str]],
+    poll_rows: Sequence[Dict[str, str]],
     response_col: str,
     feature_cols: Sequence[str],
     epsilon: float,
@@ -27,7 +27,7 @@ def fit_rr_mrp_from_rows(
     lr: float = 0.05,
     steps: int = 2000,
     batch_size: int = 512,
-) -> tuple[LinearRRMRPModel, DesignMatrix, np.ndarray, np.ndarray]:
+) -> Tuple[LinearRRMRPModel, DesignMatrix, np.ndarray, np.ndarray]:
     """Build a dashboard-style design matrix and fit canonical linear RR-MRP."""
     rows = list(poll_rows)
     design = DesignMatrix(feature_cols).fit(rows)

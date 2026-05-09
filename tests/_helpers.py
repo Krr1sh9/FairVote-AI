@@ -4,9 +4,8 @@ import csv
 import inspect
 import subprocess
 import sys
-from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, Iterable, Tuple
 
 
 def call_with_supported_kwargs(fn, /, **kwargs):
@@ -17,7 +16,6 @@ def call_with_supported_kwargs(fn, /, **kwargs):
     - rng vs seed (int)
     """
     import inspect
-
     import numpy as np
 
     sig = inspect.signature(fn)

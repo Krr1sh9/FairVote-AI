@@ -8,16 +8,18 @@ rerun experiments, change metrics, or alter the final evidence CSV/JSON files.
 from __future__ import annotations
 
 import argparse
-import csv
 import math
 from pathlib import Path
+from typing import Dict, List, Tuple
+
+import csv
+
 
 # ----------------------------
 # IO helpers
 # ----------------------------
 
-
-def _read_csv(path: Path) -> list[dict]:
+def _read_csv(path: Path) -> List[dict]:
     with path.open("r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         return [dict(r) for r in reader]
@@ -45,19 +47,19 @@ def _fmt(x: float, decimals: int = 4) -> str:
     return f"{x:.{decimals}f}"
 
 
-def _group(rows: list[dict], keys: list[str]) -> dict[tuple[str, ...], list[dict]]:
-    out: dict[tuple[str, ...], list[dict]] = {}
+def _group(rows: List[dict], keys: List[str]) -> Dict[Tuple[str, ...], List[dict]]:
+    out: Dict[Tuple[str, ...], List[dict]] = {}
     for r in rows:
         k = tuple(str(r.get(kk, "")) for kk in keys)
         out.setdefault(k, []).append(r)
     return out
 
 
-def _sort_eps(vals: list[str]) -> list[str]:
-    return sorted(vals, key=lambda v: float(v))
+def _sort_eps(vals: List[str]) -> List[str]:
+    return [x for x in sorted(vals, key=lambda v: float(v))]
 
 
-def _md_table(headers: list[str], rows: list[list[str]]) -> str:
+def _md_table(headers: List[str], rows: List[List[str]]) -> str:
     out = []
     out.append("| " + " | ".join(headers) + " |")
     out.append("| " + " | ".join(["---"] * len(headers)) + " |")
@@ -74,9 +76,8 @@ def _write_text(path: Path, text: str) -> None:
 # Table builders
 # ----------------------------
 
-
 def _scenario_method_table(
-    rows: list[dict],
+    rows: List[dict],
     scenario: str,
     metric: str,
     *,
@@ -93,7 +94,7 @@ def _scenario_method_table(
     std_key = f"std_{metric}"
 
     headers = ["method"] + [f"eps={e}" for e in eps_list]
-    table_rows: list[list[str]] = []
+    table_rows: List[List[str]] = []
 
     for m in methods:
         row = [m]
@@ -114,7 +115,7 @@ def _scenario_method_table(
     return f"### {scenario}\n\n" + _md_table(headers, table_rows) + "\n"
 
 
-def _pick_best(rows: list[dict], mean_metric_key: str) -> dict:
+def _pick_best(rows: List[dict], mean_metric_key: str) -> dict:
     # Pick row with minimal mean metric; tie-breaker: smallest epsilon
     best = None
     for r in rows:
@@ -125,12 +126,15 @@ def _pick_best(rows: list[dict], mean_metric_key: str) -> dict:
             best = r
             continue
         vb = _as_float(best.get(mean_metric_key, "nan"))
-        if v < vb - 1e-12 or abs(v - vb) <= 1e-12 and float(r["epsilon"]) < float(best["epsilon"]):
+        if v < vb - 1e-12:
             best = r
+        elif abs(v - vb) <= 1e-12:
+            if float(r["epsilon"]) < float(best["epsilon"]):
+                best = r
     return best or (rows[0] if rows else {})
 
 
-def _best_epsilon_table(rows: list[dict], metric: str) -> str:
+def _best_epsilon_table(rows: List[dict], metric: str) -> str:
     """
     For each scenario+method, pick epsilon that minimises mean_{metric}.
     """
@@ -143,26 +147,24 @@ def _best_epsilon_table(rows: list[dict], metric: str) -> str:
     std_key = f"std_{metric}"
 
     headers = ["scenario", "method", "best_epsilon", mean_key, std_key, "n_rows", "mean_n_effective"]
-    table_rows: list[list[str]] = []
+    table_rows: List[List[str]] = []
 
     for (scenario, method), rs in sorted(grouped.items()):
         best = _pick_best(rs, mean_key)
-        table_rows.append(
-            [
-                scenario,
-                method,
-                str(best.get("epsilon", "")),
-                _fmt(_as_float(best.get(mean_key, "nan"))),
-                _fmt(_as_float(best.get(std_key, "nan"))),
-                str(_as_int(best.get("n_rows", "0"))),
-                _fmt(_as_float(best.get("mean_n_effective", "nan")), decimals=1),
-            ]
-        )
+        table_rows.append([
+            scenario,
+            method,
+            str(best.get("epsilon", "")),
+            _fmt(_as_float(best.get(mean_key, "nan"))),
+            _fmt(_as_float(best.get(std_key, "nan"))),
+            str(_as_int(best.get("n_rows", "0"))),
+            _fmt(_as_float(best.get("mean_n_effective", "nan")), decimals=1),
+        ])
 
     return _md_table(headers, table_rows) + "\n"
 
 
-def _multi_best_table(rows: list[dict], metrics: list[str]) -> str:
+def _multi_best_table(rows: List[dict], metrics: List[str]) -> str:
     """
     Create a wide table: for each scenario+method, show best epsilon for each metric.
 
@@ -182,7 +184,7 @@ def _multi_best_table(rows: list[dict], metrics: list[str]) -> str:
     for m in metrics:
         headers += [f"best_eps({m})", f"best_mean_{m}"]
 
-    table_rows: list[list[str]] = []
+    table_rows: List[List[str]] = []
     for (scenario, method), rs in sorted(grouped.items()):
         row = [scenario, method]
         for metric in metrics:
@@ -198,9 +200,10 @@ def _multi_best_table(rows: list[dict], metrics: list[str]) -> str:
 # Main
 # ----------------------------
 
-
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Turn mrp_vs_baselines summary.csv into report-ready markdown tables.")
+    ap = argparse.ArgumentParser(
+        description="Turn mrp_vs_baselines summary.csv into report-ready markdown tables."
+    )
     ap.add_argument(
         "--summary_csv",
         type=str,
@@ -257,7 +260,7 @@ def main() -> int:
     metric = args.metric
     include_std = not args.no_std
 
-    parts: list[str] = []
+    parts: List[str] = []
     parts.append(f"# Report Tables — primary metric: {metric}\n")
     parts.append(f"Source: `{summary_path.as_posix()}`\n")
 

@@ -29,7 +29,6 @@ python -m pytest tests/test_respondent_server.py tests/test_browser_respondent_p
 # The CI workflow installs .[dev] and .[respondent,browser] to run these gates.
 ```
 
-
 Additional post-report-generator check:
 
 ```bash
@@ -39,9 +38,13 @@ python -m pytest tests/test_experiment_pipeline.py -q -p no:cacheprovider
 
 ## Final evidence generated
 
-Primary report-ready run: `evidence/final/2026-05-05_182242_mrp_vs_baselines/`
+Primary report-ready run:
 
-Acceptance status from `paper/generated/FINAL_RESULTS.md`:
+```text
+evidence/final/2026-05-06_004647_mrp_vs_baselines/
+```
+
+Acceptance status from the canonical run and regenerated `paper/generated/FINAL_RESULTS.md`:
 
 - non-smoke labelling: PASS
 - no recorded failures: PASS
@@ -49,4 +52,6 @@ Acceptance status from `paper/generated/FINAL_RESULTS.md`:
 - no skipped result cells: PASS
 - paired neural-vs-linear comparisons available: PASS
 
-Supplementary privacy-help curve: `evidence/final/2026-05-05_182638_mrp_vs_baselines/` has epsilons 0.2, 0.5, 1.0 and 2.0, 20 non-skipped trials per summary cell, no skipped result cells, and no recorded failures.
+The run is CPU-sized final-style evidence: 20 trials per condition, sample sizes 500/1000, epsilons 0.5/1.0/2.0, four scenarios, four deployable methods, 1920 raw rows, 96 summary rows and 24 paired comparison rows.
+
+The older `2026-05-05_*` runs are retained as superseded/supporting evidence only and should not be cited as the primary final evidence.

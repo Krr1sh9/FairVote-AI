@@ -18,9 +18,7 @@ def test_hierarchical_rr_mrp_fits_and_poststratifies_sparse_levels():
     reported = privatize_many(true, epsilon=4.0, k=3, rng=rng)
 
     model = HierarchicalRRMRPModel(3, epsilon=4.0, seed=7, effect_l2=0.2)
-    info = model.fit(
-        features, reported, levels, feature_order=["region", "age_group"], steps=80, batch_size=64, lr=0.05
-    )
+    info = model.fit(features, reported, levels, feature_order=["region", "age_group"], steps=80, batch_size=64, lr=0.05)
 
     assert info.steps == 80
     theta = model.predict_theta_from_features(features)

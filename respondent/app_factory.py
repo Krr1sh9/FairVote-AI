@@ -1,5 +1,4 @@
 """Flask app factory for the respondent collection server."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,16 +9,16 @@ try:
     from werkzeug.exceptions import RequestEntityTooLarge
 except ImportError as exc:  # pragma: no cover - exercised only without Flask installed
     raise ImportError(
-        'Flask is required for the respondent server.\nInstall it with:  pip install -e ".[respondent]"'
+        "Flask is required for the respondent server.\n"
+        'Install it with:  pip install -e ".[respondent]"'
     ) from exc
 
 try:  # pragma: no cover - optional dependency branch
-    from flask_cors import CORS as _CORS
+    from flask_cors import CORS
 
-    CORS: Any = _CORS
     HAS_CORS = True
 except ImportError:  # pragma: no cover - optional dependency branch
-    CORS = None
+    CORS = None  # type: ignore[assignment]
     HAS_CORS = False
 
 from .config import (

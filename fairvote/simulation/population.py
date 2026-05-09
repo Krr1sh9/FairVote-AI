@@ -8,8 +8,8 @@ only; they are not part of the respondent collection protocol.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -32,25 +32,23 @@ class Population:
     - true_categories: np.ndarray of shape (N,), sampled from true_probs per person (ground truth labels)
     - category_names: list of K names (e.g., "Party A", ...)
     """
-
-    features: dict[str, np.ndarray]
-    feature_levels: dict[str, list[str]]
+    features: Dict[str, np.ndarray]
+    feature_levels: Dict[str, List[str]]
     true_probs: np.ndarray
     true_categories: np.ndarray
-    category_names: list[str]
+    category_names: List[str]
 
 
 # ---------------------------
 # Public API
 # ---------------------------
 
-
 def make_realistic_uk_like_population(
     n: int,
     k: int,
     *,
     seed: int = 123,
-    category_names: Sequence[str] | None = None,
+    category_names: Optional[Sequence[str]] = None,
 ) -> Population:
     """
     Generate a more realistic synthetic population with correlated demographics.
@@ -233,7 +231,7 @@ def overall_true_distribution(pop: Population) -> np.ndarray:
     return np.bincount(pop.true_categories, minlength=k).astype(float) / pop.true_categories.size
 
 
-def subgroup_true_distribution(pop: Population, feature: str) -> dict[str, np.ndarray]:
+def subgroup_true_distribution(pop: Population, feature: str) -> Dict[str, np.ndarray]:
     """
     Return ground-truth distributions per level of a given feature.
 
@@ -246,9 +244,9 @@ def subgroup_true_distribution(pop: Population, feature: str) -> dict[str, np.nd
     levels = pop.feature_levels[feature]
     k = len(pop.category_names)
 
-    out: dict[str, np.ndarray] = {}
+    out: Dict[str, np.ndarray] = {}
     for idx, name in enumerate(levels):
-        mask = x == idx
+        mask = (x == idx)
         if not np.any(mask):
             continue
         counts = np.bincount(pop.true_categories[mask], minlength=k).astype(float)
@@ -256,7 +254,7 @@ def subgroup_true_distribution(pop: Population, feature: str) -> dict[str, np.nd
     return out
 
 
-def poststrat_table(pop: Population, by: Sequence[str]) -> tuple[np.ndarray, np.ndarray, list[list[str]]]:
+def poststrat_table(pop: Population, by: Sequence[str]) -> Tuple[np.ndarray, np.ndarray, List[List[str]]]:
     """
     Build a post-stratification table: unique cells and their counts.
 
@@ -292,7 +290,6 @@ def poststrat_table(pop: Population, by: Sequence[str]) -> tuple[np.ndarray, np.
 # Internal helpers
 # ---------------------------
 
-
 def _sigmoid(x: np.ndarray) -> np.ndarray:
     return 1.0 / (1.0 + np.exp(-x))
 
@@ -310,14 +307,12 @@ def _sample_categorical_rows(probs: np.ndarray, rng: np.random.Generator) -> np.
     n, k = probs.shape
     # Inverse CDF trick: draw a single U(0,1) per row and compare against
     # the cumulative probability vector to select a category in O(n*k) time.
-    u = np.asarray(rng.random(n), dtype=float)
+    u = rng.random(n)
     cdf = np.cumsum(probs, axis=1)
     return np.sum(cdf < u[:, None], axis=1).astype(int)
 
 
-def _make_region_boost(
-    num_regions: int, rng: np.random.Generator, *, high_regions: set, low_regions: set
-) -> np.ndarray:
+def _make_region_boost(num_regions: int, rng: np.random.Generator, *, high_regions: set, low_regions: set) -> np.ndarray:
     """
     Create a region boost vector for correlated feature generation (education propensity).
     """
@@ -368,8 +363,8 @@ def _interaction_region_education(
 
     # Choose a few region indices to have stronger interaction (e.g., London, South East, North West)
     special_regions = {0, 1, 6}
-    deg = education == 2
-    nodeg = education == 0
+    deg = (education == 2)
+    nodeg = (education == 0)
 
     # Interaction vectors (k,)
     v_deg = rng.normal(0.0, 0.18, size=k)

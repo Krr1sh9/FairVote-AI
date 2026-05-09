@@ -5,14 +5,16 @@ canonical channel module, :mod:`fairvote.privacy.mechanisms.kary_rr`.  These
 wrappers preserve the public API used by older scripts while avoiding duplicate
 RR algebra.
 """
-
 from __future__ import annotations
+
+from typing import Optional, Tuple, Union
 
 import numpy as np
 
 from fairvote.privacy.mechanisms.kary_rr import debias_distribution, invert_rr_counts
 
-ArrayLike = np.ndarray | list
+
+ArrayLike = Union[np.ndarray, list]
 
 
 def estimate_distribution_from_counts(
@@ -54,10 +56,10 @@ def bootstrap_ci(
     *,
     n_boot: int = 2000,
     alpha: float = 0.05,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
     clip: bool = True,
     renormalize: bool = True,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> Tuple[np.ndarray, np.ndarray]:
     """Percentile bootstrap confidence intervals for each category proportion."""
 
     reps = np.asarray(reported_categories, dtype=int)

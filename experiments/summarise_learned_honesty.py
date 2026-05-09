@@ -18,21 +18,22 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
+from typing import Dict, List, Tuple
 
 import numpy as np
 
 
-def _read_csv(path: Path) -> list[dict]:
+def _read_csv(path: Path) -> List[dict]:
     with path.open("r", newline="", encoding="utf-8") as f:
         r = csv.DictReader(f)
         return [dict(row) for row in r]
 
 
-def _write_csv(path: Path, rows: list[dict]) -> None:
+def _write_csv(path: Path, rows: List[dict]) -> None:
     if not rows:
         path.write_text("", encoding="utf-8")
         return
-    keys = sorted({k for row in rows for k in row})
+    keys = sorted({k for row in rows for k in row.keys()})
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=keys)
         w.writeheader()
@@ -46,9 +47,7 @@ def _format_float(x: float, ndp: int = 4) -> str:
     return f"{float(x):.{ndp}f}"
 
 
-def _bootstrap_ci_mean(
-    x: np.ndarray, *, n_boot: int = 2000, alpha: float = 0.05, rng: np.random.Generator
-) -> tuple[float, float]:
+def _bootstrap_ci_mean(x: np.ndarray, *, n_boot: int = 2000, alpha: float = 0.05, rng: np.random.Generator) -> Tuple[float, float]:
     """
     Percentile bootstrap CI for the mean.
     """
@@ -67,7 +66,7 @@ def _bootstrap_ci_mean(
     return lo, hi
 
 
-def _md_table(rows: list[dict], headers: list[tuple[str, str]]) -> str:
+def _md_table(rows: List[dict], headers: List[Tuple[str, str]]) -> str:
     """
     headers: list of (key, title) in desired order
     """
@@ -88,14 +87,14 @@ def summarise(
     seed: int,
     alpha: float,
     ndp: int,
-) -> tuple[Path, Path]:
+) -> Tuple[Path, Path]:
     rows = _read_csv(results_csv)
     if not rows:
         raise SystemExit(f"No rows found in: {results_csv}")
 
     if "learned_honesty" not in rows[0]:
         # might still exist in later rows, but we will check all keys
-        all_keys: set[str] = set()
+        all_keys = set()
         for r in rows[:50]:
             all_keys.update(r.keys())
         raise SystemExit(
@@ -118,11 +117,12 @@ def summarise(
 
     if not filt:
         raise SystemExit(
-            f"No rows for method='{method}' in {results_csv}. Did the run include the learned misreport method?"
+            f"No rows for method='{method}' in {results_csv}. "
+            "Did the run include the learned misreport method?"
         )
 
     # Group by (scenario, epsilon)
-    groups: dict[tuple[str, float], list[float]] = {}
+    groups: Dict[Tuple[str, float], List[float]] = {}
     for r in filt:
         scen = r["scenario"]
         try:
@@ -137,7 +137,7 @@ def summarise(
 
     rng = np.random.default_rng(seed)
 
-    out_rows: list[dict] = []
+    out_rows: List[dict] = []
     for (scen, eps), hs in sorted(groups.items(), key=lambda x: (x[0][0], x[0][1])):
         x = np.asarray(hs, dtype=float)
         x = x[np.isfinite(x)]
@@ -150,18 +150,16 @@ def summarise(
             med = float(np.median(x))
             lo, hi = _bootstrap_ci_mean(x, n_boot=n_boot, alpha=alpha, rng=rng)
 
-        out_rows.append(
-            {
-                "scenario": scen,
-                "epsilon": eps,
-                "n_trials": n,
-                "mean_learned_honesty": mean,
-                "std_learned_honesty": std,
-                f"ci{int((1 - alpha) * 100)}_low": lo,
-                f"ci{int((1 - alpha) * 100)}_high": hi,
-                "median_learned_honesty": med,
-            }
-        )
+        out_rows.append({
+            "scenario": scen,
+            "epsilon": eps,
+            "n_trials": n,
+            "mean_learned_honesty": mean,
+            "std_learned_honesty": std,
+            f"ci{int((1-alpha)*100)}_low": lo,
+            f"ci{int((1-alpha)*100)}_high": hi,
+            "median_learned_honesty": med,
+        })
 
     out_dir.mkdir(parents=True, exist_ok=True)
     out_csv = out_dir / "learned_honesty_summary.csv"
@@ -172,39 +170,35 @@ def summarise(
     # Markdown formatting
     md_rows = []
     for r in out_rows:
-        md_rows.append(
-            {
-                "Scenario": r["scenario"],
-                "Epsilon": _format_float(r["epsilon"], ndp=3),
-                "N": r["n_trials"],
-                "Mean h": _format_float(r["mean_learned_honesty"], ndp=ndp),
-                "Std": _format_float(r["std_learned_honesty"], ndp=ndp),
-                "CI low": _format_float(r[f"ci{int((1 - alpha) * 100)}_low"], ndp=ndp),
-                "CI high": _format_float(r[f"ci{int((1 - alpha) * 100)}_high"], ndp=ndp),
-                "Median": _format_float(r["median_learned_honesty"], ndp=ndp),
-            }
-        )
+        md_rows.append({
+            "Scenario": r["scenario"],
+            "Epsilon": _format_float(r["epsilon"], ndp=3),
+            "N": r["n_trials"],
+            "Mean h": _format_float(r["mean_learned_honesty"], ndp=ndp),
+            "Std": _format_float(r["std_learned_honesty"], ndp=ndp),
+            "CI low": _format_float(r[f"ci{int((1-alpha)*100)}_low"], ndp=ndp),
+            "CI high": _format_float(r[f"ci{int((1-alpha)*100)}_high"], ndp=ndp),
+            "Median": _format_float(r["median_learned_honesty"], ndp=ndp),
+        })
 
     md = []
     md.append("# Learned honesty summary\n")
     md.append(f"- Method: `{method}`\n")
     md.append(f"- Source: `{results_csv.as_posix()}`\n")
-    md.append(f"- Bootstrap: n_boot={n_boot}, CI={(1 - alpha):.0%}, seed={seed}\n\n")
-    md.append(
-        _md_table(
-            md_rows,
-            headers=[
-                ("Scenario", "Scenario"),
-                ("Epsilon", "Epsilon"),
-                ("N", "Trials"),
-                ("Mean h", "Mean h"),
-                ("Std", "Std"),
-                ("CI low", "CI low"),
-                ("CI high", "CI high"),
-                ("Median", "Median"),
-            ],
-        )
-    )
+    md.append(f"- Bootstrap: n_boot={n_boot}, CI={(1-alpha):.0%}, seed={seed}\n\n")
+    md.append(_md_table(
+        md_rows,
+        headers=[
+            ("Scenario", "Scenario"),
+            ("Epsilon", "Epsilon"),
+            ("N", "Trials"),
+            ("Mean h", "Mean h"),
+            ("Std", "Std"),
+            ("CI low", "CI low"),
+            ("CI high", "CI high"),
+            ("Median", "Median"),
+        ],
+    ))
     out_md.write_text("".join(md), encoding="utf-8")
 
     return out_csv, out_md
@@ -213,11 +207,7 @@ def summarise(
 def main() -> int:
     p = argparse.ArgumentParser(description="Summarise learned honesty (shy misreport parameter) from experiment run.")
     g = p.add_mutually_exclusive_group(required=True)
-    g.add_argument(
-        "--run_dir",
-        type=str,
-        help="Run directory containing results_trials.csv (e.g., experiments/outputs/..._mrp_vs_baselines)",
-    )
+    g.add_argument("--run_dir", type=str, help="Run directory containing results_trials.csv (e.g., experiments/outputs/..._mrp_vs_baselines)")
     g.add_argument("--results_csv", type=str, help="Path to results_trials.csv")
 
     p.add_argument("--method", type=str, default="mrp_learned_misreport_rr_poststrat", help="Method name to filter on.")

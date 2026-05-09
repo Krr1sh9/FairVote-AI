@@ -5,11 +5,11 @@ committed lock entries are exact pins and that every direct dependency declared
 in pyproject.toml appears in the lock. A networked environment can regenerate the
 lock with `make lock`.
 """
-
 from __future__ import annotations
 
 import argparse
 import re
+import sys
 import tomllib
 from pathlib import Path
 

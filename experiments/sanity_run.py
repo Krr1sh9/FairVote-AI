@@ -8,6 +8,7 @@ aggregate debiasing, not as evidence for the final experiment conclusions.
 from __future__ import annotations
 
 import argparse
+from typing import List
 
 import numpy as np
 
@@ -35,7 +36,7 @@ def _default_probs(k: int) -> np.ndarray:
     return base
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: List[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Sanity run: true -> LDP (k-ary RR) -> debiased estimate + bootstrap CI"
     )
@@ -73,7 +74,10 @@ def main(argv: list[str] | None = None) -> int:
 
     rng = np.random.default_rng(args.seed)
 
-    theta_true = _parse_probs(args.probs, args.k) if args.probs.strip() else _default_probs(args.k)
+    if args.probs.strip():
+        theta_true = _parse_probs(args.probs, args.k)
+    else:
+        theta_true = _default_probs(args.k)
 
     # 1) Generate true categories according to theta_true.  These simulate
     #    the respondents' actual (unobserved in practice) preferences.
@@ -108,7 +112,9 @@ def main(argv: list[str] | None = None) -> int:
     print("Category |  True p   |  Est p    |  CI Low   |  CI High")
     print("---------+----------+----------+----------+----------")
     for j in range(args.k):
-        print(f"{j:8d} | {theta_true[j]:8.4f} | {theta_hat[j]:8.4f} | {ci_low[j]:8.4f} | {ci_high[j]:8.4f}")
+        print(
+            f"{j:8d} | {theta_true[j]:8.4f} | {theta_hat[j]:8.4f} | {ci_low[j]:8.4f} | {ci_high[j]:8.4f}"
+        )
     print()
 
     l1_err = float(np.sum(np.abs(theta_hat - theta_true)))

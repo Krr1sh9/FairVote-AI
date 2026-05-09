@@ -5,7 +5,6 @@ Tests for the FairVote-AI respondent server.
 Tests the Flask API endpoints and verifies the core LDP security property:
 the server never receives or stores the true answer.
 """
-
 from __future__ import annotations
 
 import json
@@ -17,12 +16,12 @@ import pytest
 # Skip the entire module if Flask is not installed
 flask = pytest.importorskip("flask")
 
-from respondent.server import ResponseStore, create_app, load_config
+from respondent.server import create_app, ResponseStore, load_config
+
 
 # =============================================================================
 # Fixtures
 # =============================================================================
-
 
 @pytest.fixture
 def tmp_config(tmp_path):
@@ -31,7 +30,9 @@ def tmp_config(tmp_path):
         "question": "What is your favourite colour?",
         "options": ["Red", "Blue", "Green"],
         "epsilon": 1.5,
-        "demographic_fields": [{"name": "age", "label": "Age", "options": ["18-24", "25+"], "required": False}],
+        "demographic_fields": [
+            {"name": "age", "label": "Age", "options": ["18-24", "25+"], "required": False}
+        ],
     }
     path = tmp_path / "poll_config.json"
     path.write_text(json.dumps(cfg), encoding="utf-8")
@@ -61,7 +62,6 @@ def data_path(tmp_data):
 # =============================================================================
 # API endpoint tests
 # =============================================================================
-
 
 class TestGetConfig:
     def test_returns_config(self, client):
@@ -245,6 +245,7 @@ class TestGetResponses:
             assert "k-anonymity" in body["error"]
             assert body["privacy_report"]["rare_cell_count"] == 1
 
+
     def test_responses_export_succeeds_when_demographic_cells_are_not_rare(self, tmp_config, tmp_data, monkeypatch):
         monkeypatch.setenv("FAIRVOTE_ANALYST_TOKEN", "secret-token")
         app = create_app(config_path=tmp_config, data_path=tmp_data)
@@ -316,7 +317,8 @@ class TestPrivacyBoundaryHardening:
             "options": ["A", "B"],
             "epsilon": 1.0,
             "demographic_fields": [
-                {"name": f"d{i}", "label": f"D{i}", "options": ["x"], "required": False} for i in range(9)
+                {"name": f"d{i}", "label": f"D{i}", "options": ["x"], "required": False}
+                for i in range(9)
             ],
         }
         path = tmp_path / "poll_config.json"
@@ -387,7 +389,6 @@ class TestServeIndex:
 # ResponseStore unit tests
 # =============================================================================
 
-
 class TestResponseStore:
     def test_append_and_read(self, tmp_path):
         store = ResponseStore(tmp_path / "test.jsonl")
@@ -414,7 +415,6 @@ class TestResponseStore:
 # =============================================================================
 # Config validation tests
 # =============================================================================
-
 
 class TestLoadConfig:
     def test_valid_config(self, tmp_config):

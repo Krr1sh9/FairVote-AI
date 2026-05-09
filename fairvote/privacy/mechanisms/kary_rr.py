@@ -17,18 +17,18 @@ For ``k`` categories and privacy parameter ``epsilon``:
 The implementation computes ``p`` and ``q`` in a stable form using
 ``exp(-epsilon)`` so that large epsilon values do not overflow.
 """
-
 from __future__ import annotations
 
 import math
 import warnings
-from collections.abc import Sequence
 from dataclasses import dataclass
 from numbers import Integral, Real
+from typing import Optional, Sequence, Union
 
 import numpy as np
 
-IntArrayLike = Sequence[int] | np.ndarray
+
+IntArrayLike = Union[Sequence[int], np.ndarray]
 
 
 @dataclass(frozen=True)
@@ -56,7 +56,6 @@ class KaryRRParams:
 # ---------------------------------------------------------------------------
 # Core parameter computation
 # ---------------------------------------------------------------------------
-
 
 def rr_params(epsilon: float, k: int) -> KaryRRParams:
     """Return numerically stable k-ary RR probabilities.
@@ -124,7 +123,7 @@ def privatize_one(
     true_category: int,
     epsilon: float,
     k: int,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
 ) -> int:
     """Apply k-ary RR to one category and return an integer in ``[0, k-1]``."""
 
@@ -144,7 +143,7 @@ def privatize_many(
     true_categories: IntArrayLike,
     epsilon: float,
     k: int,
-    rng: np.random.Generator | None = None,
+    rng: Optional[np.random.Generator] = None,
 ) -> np.ndarray:
     """Vectorised k-ary RR over a 1D array of categories."""
 
@@ -177,7 +176,6 @@ def privatize_many(
 # ---------------------------------------------------------------------------
 # Aggregation and debiasing utilities
 # ---------------------------------------------------------------------------
-
 
 def counts_from_reports(reported_categories: IntArrayLike, k: int) -> np.ndarray:
     """Convert reported category labels into a length-``k`` count vector."""
@@ -258,7 +256,6 @@ def debias_distribution(
 # ---------------------------------------------------------------------------
 # Input validation helpers
 # ---------------------------------------------------------------------------
-
 
 def _validate_epsilon_k(epsilon: float, k: int) -> tuple[float, int]:
     k_i = _validate_k(k)

@@ -31,9 +31,11 @@ from __future__ import annotations
 import argparse
 import csv
 import math
-import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Dict, List, Sequence, Tuple
+
+import sys
 
 import numpy as np
 
@@ -41,6 +43,7 @@ if __package__ in {None, ""}:  # Allow direct `python experiments/generate_poll_
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from fairvote.privacy import privatize_many as canonical_privatize_many
+
 
 # ----------------------------
 # Synthetic population + preferences
@@ -65,7 +68,7 @@ def _make_population_counts(
     *,
     total_pop: int,
     rng: np.random.Generator,
-) -> dict[tuple[str, str], int]:
+) -> Dict[Tuple[str, str], int]:
     """
     Create integer population counts for each (region, age_band) group.
 
@@ -81,7 +84,7 @@ def _make_population_counts(
     rw = REGION_WEIGHTS / REGION_WEIGHTS.sum()
     region_counts = rng.multinomial(total_pop, rw)
 
-    counts: dict[tuple[str, str], int] = {}
+    counts: Dict[Tuple[str, str], int] = {}
     for r_idx, region in enumerate(REGIONS):
         n_r = int(region_counts[r_idx])
 
@@ -114,7 +117,7 @@ def _make_true_preferences(
     *,
     k: int,
     rng: np.random.Generator,
-) -> dict[tuple[str, str], np.ndarray]:
+) -> Dict[Tuple[str, str], np.ndarray]:
     """
     Create per-group true vote distributions p(true_choice | region, age_band).
 
@@ -135,7 +138,7 @@ def _make_true_preferences(
     region_effects = {r: rng.normal(0.0, 0.35, size=k) for r in REGIONS}
     age_effects = {a: rng.normal(0.0, 0.30, size=k) for a in AGE_BANDS}
 
-    prefs: dict[tuple[str, str], np.ndarray] = {}
+    prefs: Dict[Tuple[str, str], np.ndarray] = {}
     for r in REGIONS:
         for a in AGE_BANDS:
             logits = global_logits + region_effects[r] + age_effects[a]
@@ -147,7 +150,6 @@ def _make_true_preferences(
 # ----------------------------
 # Bias models (nonresponse + shy voter)
 # ----------------------------
-
 
 def _response_rate_for_group(region: str, age_band: str) -> float:
     """
@@ -235,7 +237,6 @@ def _apply_shy_misreport(
 # Randomized Response (k-ary RR)
 # ----------------------------
 
-
 def privatize_many(
     stated: np.ndarray,
     *,
@@ -251,11 +252,10 @@ def privatize_many(
 # Main generation
 # ----------------------------
 
-
 @dataclass
 class Generated:
-    poll_rows: list[dict]
-    pop_rows: list[dict]
+    poll_rows: List[dict]
+    pop_rows: List[dict]
 
 
 def generate(
@@ -282,7 +282,7 @@ def generate(
     counts = np.array([pop_counts[g] for g in groups], dtype=float)
     weights = counts / counts.sum()
 
-    poll_rows: list[dict] = []
+    poll_rows: List[dict] = []
 
     # For nonresponse: accept/reject with group response rate
     def accept(region: str, age: str) -> bool:
@@ -351,14 +351,14 @@ def generate(
         for r in poll_rows:
             r.pop("stated_choice", None)
 
-    pop_rows: list[dict] = []
+    pop_rows: List[dict] = []
     for (region, age), c in sorted(pop_counts.items(), key=lambda x: (x[0][0], x[0][1])):
         pop_rows.append({"region": region, "age_band": age, "count": int(c)})
 
     return Generated(poll_rows=poll_rows, pop_rows=pop_rows)
 
 
-def write_csv(path: Path, rows: list[dict]) -> None:
+def write_csv(path: Path, rows: List[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not rows:
         raise ValueError("No rows to write")
@@ -383,14 +383,10 @@ def main() -> int:
         choices=["no_bias", "nonresponse", "shy_privacy_helps"],
         help="Bias scenario to generate.",
     )
-    p.add_argument(
-        "--shy_category", type=int, default=0, help="Which category is 'shy' (only used in shy_privacy_helps)."
-    )
+    p.add_argument("--shy_category", type=int, default=0, help="Which category is 'shy' (only used in shy_privacy_helps).")
     p.add_argument("--seed", type=int, default=123, help="Random seed for reproducibility.")
     p.add_argument("--total_pop", type=int, default=200_000, help="Synthetic population size used for population.csv.")
-    p.add_argument(
-        "--include_truth", action="store_true", help="Include true_choice column (synthetic evaluation only)."
-    )
+    p.add_argument("--include_truth", action="store_true", help="Include true_choice column (synthetic evaluation only).")
     p.add_argument("--include_stated", action="store_true", help="Include stated_choice column (pre-privacy).")
     p.add_argument("--poll_name", type=str, default=None, help="Override poll CSV filename.")
     p.add_argument("--pop_name", type=str, default="population.csv", help="Population CSV filename.")

@@ -2,7 +2,6 @@
 """
 Tests for the central DP (Laplace mechanism) module.
 """
-
 from __future__ import annotations
 
 import numpy as np
@@ -67,7 +66,9 @@ def test_central_dp_unbiased_over_many_trials():
 
     # Mean estimate should be close to true distribution
     # (tolerance accounts for both sampling and DP noise)
-    assert np.allclose(mean_est, true_dist, atol=0.03), f"Mean estimate {mean_est} too far from truth {true_dist}"
+    assert np.allclose(mean_est, true_dist, atol=0.03), (
+        f"Mean estimate {mean_est} too far from truth {true_dist}"
+    )
 
 
 def test_central_dp_beats_ldp_at_same_epsilon():
@@ -111,7 +112,8 @@ def test_central_dp_beats_ldp_at_same_epsilon():
 
     # Central DP should be substantially better (lower error)
     assert mean_cdp < mean_ldp, (
-        f"Central DP (mean L1={mean_cdp:.4f}) should beat LDP (mean L1={mean_ldp:.4f}) at same epsilon"
+        f"Central DP (mean L1={mean_cdp:.4f}) should beat "
+        f"LDP (mean L1={mean_ldp:.4f}) at same epsilon"
     )
 
 
@@ -138,7 +140,8 @@ def test_higher_epsilon_means_less_noise():
 
     # Higher epsilon should give lower error
     assert errors_by_eps[2.0] < errors_by_eps[0.5], (
-        f"eps=2.0 error ({errors_by_eps[2.0]:.4f}) should be < eps=0.5 error ({errors_by_eps[0.5]:.4f})"
+        f"eps=2.0 error ({errors_by_eps[2.0]:.4f}) should be < "
+        f"eps=0.5 error ({errors_by_eps[0.5]:.4f})"
     )
 
 

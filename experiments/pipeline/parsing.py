@@ -1,13 +1,14 @@
 """CLI parsing helpers for experiment scripts."""
-
 from __future__ import annotations
 
+from typing import Dict, List, Tuple
 
-def parse_list(s: str) -> list[str]:
+
+def parse_list(s: str) -> List[str]:
     return [x.strip() for x in str(s).split(",") if x.strip()]
 
 
-def parse_int_list(s: str) -> list[int]:
+def parse_int_list(s: str) -> List[int]:
     vals = [int(x.strip()) for x in str(s).split(",") if x.strip()]
     if not vals:
         raise ValueError("Provide a comma-separated integer list, e.g. '500,1000,2500'.")
@@ -16,7 +17,7 @@ def parse_int_list(s: str) -> list[int]:
     return vals
 
 
-def parse_eps_list(s: str) -> list[float]:
+def parse_eps_list(s: str) -> List[float]:
     vals = [float(x.strip()) for x in str(s).split(",") if x.strip()]
     if not vals:
         raise ValueError("Provide --eps like '0.2,0.5,1.0'.")
@@ -25,11 +26,11 @@ def parse_eps_list(s: str) -> list[float]:
     return vals
 
 
-def parse_hidden_layers(s: str) -> tuple[int, ...]:
+def parse_hidden_layers(s: str) -> Tuple[int, ...]:
     raw = str(s).strip()
     if raw.lower() in {"", "none", "linear"}:
-        return ()
-    out: list[int] = []
+        return tuple()
+    out: List[int] = []
     for item in raw.split(","):
         item = item.strip()
         if not item:
@@ -43,11 +44,11 @@ def parse_hidden_layers(s: str) -> tuple[int, ...]:
     return tuple(out)
 
 
-def parse_multipliers(s: str) -> dict[str, float]:
+def parse_multipliers(s: str) -> Dict[str, float]:
     s = str(s).strip()
     if not s:
         return {}
-    out: dict[str, float] = {}
+    out: Dict[str, float] = {}
     for item in s.split(","):
         item = item.strip()
         if not item:

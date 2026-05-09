@@ -1,5 +1,4 @@
 """Modular, auditable runner for the MRP-vs-baselines experiment."""
-
 from __future__ import annotations
 
 import importlib.metadata
@@ -10,7 +9,7 @@ import sys
 import time
 import traceback
 from dataclasses import replace
-from typing import Any
+from typing import Any, Dict, List
 
 import numpy as np
 
@@ -21,12 +20,7 @@ from .metrics import score_method_result, skipped_row
 from .perturbation import apply_misreport_and_rr
 from .sampling import apply_scenario_nonresponse, draw_sample
 from .scenarios import scenario_info
-from .summary import (
-    aggregate_ablation_comparisons,
-    aggregate_paired_comparisons,
-    aggregate_runtime_profile,
-    aggregate_summary,
-)
+from .summary import aggregate_ablation_comparisons, aggregate_paired_comparisons, aggregate_runtime_profile, aggregate_summary
 
 
 def _git_sha() -> str | None:
@@ -65,8 +59,8 @@ def minimum_effective_sample(config: ExperimentConfig) -> int:
 def execute_experiment(config: ExperimentConfig) -> ExperimentResult:
     """Run the full experiment grid and return raw rows plus summaries."""
     start = time.perf_counter()
-    rows: list[dict[str, Any]] = []
-    failures: list[dict[str, Any]] = []
+    rows: List[Dict[str, Any]] = []
+    failures: List[Dict[str, Any]] = []
 
     for sample_size in config.sample_size_grid:
         cell_config = replace(config, n_sample=int(sample_size), sample_sizes=[int(sample_size)])
@@ -110,13 +104,13 @@ def execute_experiment(config: ExperimentConfig) -> ExperimentResult:
 def _run_eps_cells(
     config: ExperimentConfig,
     context: Any,
-    registry: dict[str, Any],
+    registry: Dict[str, Any],
     scenario: str,
     trial_index: int,
     sample: Any,
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    rows: list[dict[str, Any]] = []
-    failures: list[dict[str, Any]] = []
+) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    rows: List[Dict[str, Any]] = []
+    failures: List[Dict[str, Any]] = []
     n_effective = int(sample.idx.size)
     for epsilon in config.eps_list:
         trial = TrialConfig(
@@ -148,12 +142,12 @@ def _run_eps_cells(
 def _run_methods(
     config: ExperimentConfig,
     context: Any,
-    registry: dict[str, Any],
+    registry: Dict[str, Any],
     trial: TrialConfig,
     trial_data: Any,
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    rows: list[dict[str, Any]] = []
-    failures: list[dict[str, Any]] = []
+) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    rows: List[Dict[str, Any]] = []
+    failures: List[Dict[str, Any]] = []
     for method_name, runner in registry.items():
         method_start = time.perf_counter()
         try:
@@ -195,9 +189,7 @@ def _run_methods(
     return rows, failures
 
 
-def _failure_record(
-    config: ExperimentConfig, trial: TrialConfig, method: str, exc: Exception, runtime_sec: float
-) -> dict[str, Any]:
+def _failure_record(config: ExperimentConfig, trial: TrialConfig, method: str, exc: Exception, runtime_sec: float) -> Dict[str, Any]:
     return {
         "config_seed": int(config.seed),
         "sample_size": int(trial.sample_size),
@@ -214,15 +206,15 @@ def _failure_record(
 
 def build_manifest(
     config: ExperimentConfig,
-    rows: list[dict[str, Any]],
-    summary: list[dict[str, Any]],
-    paired: list[dict[str, Any]],
-    ablations: list[dict[str, Any]],
-    runtime_profile: list[dict[str, Any]],
-    failures: list[dict[str, Any]],
+    rows: List[Dict[str, Any]],
+    summary: List[Dict[str, Any]],
+    paired: List[Dict[str, Any]],
+    ablations: List[Dict[str, Any]],
+    runtime_profile: List[Dict[str, Any]],
+    failures: List[Dict[str, Any]],
     *,
     runtime_sec: float,
-) -> dict[str, Any]:
+) -> Dict[str, Any]:
     """Create a JSON manifest tying output files back to the exact config grid."""
     return {
         "experiment": "mrp_vs_baselines",
