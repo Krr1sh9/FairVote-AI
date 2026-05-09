@@ -15,9 +15,9 @@ from __future__ import annotations
 import argparse
 import json
 import math
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
 
 import numpy as np
 import pandas as pd
@@ -138,16 +138,18 @@ def build_summary_with_ci(
     rows: list[dict[str, object]] = []
 
     for key, group in work.groupby(list(GROUP_COLUMNS), dropna=False, sort=True):
-        base = dict(zip(GROUP_COLUMNS, key))
+        base = dict(zip(GROUP_COLUMNS, key, strict=False))
         for metric in metrics_available:
             stats = _summarise_series(group[metric], settings)
-            rows.append({
-                **base,
-                "metric": metric,
-                **stats,
-                "higher_is_better": int(metric in HIGHER_IS_BETTER),
-                "ci_method": f"normal_approx_z_{settings.z_value:g}_over_repeated_trials",
-            })
+            rows.append(
+                {
+                    **base,
+                    "metric": metric,
+                    **stats,
+                    "higher_is_better": int(metric in HIGHER_IS_BETTER),
+                    "ci_method": f"normal_approx_z_{settings.z_value:g}_over_repeated_trials",
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -192,40 +194,42 @@ def _paired_neural_baseline_rows(
     pivot["delta_neural_minus_baseline"] = pivot[NEURAL_METHOD] - pivot[baseline_method]
 
     for key, group in pivot.groupby(list(condition_cols), dropna=False, sort=True):
-        base = dict(zip(condition_cols, key))
+        base = dict(zip(condition_cols, key, strict=False))
         neural_stats = _summarise_series(group[NEURAL_METHOD], settings)
         baseline_stats = _summarise_series(group[baseline_method], settings)
         delta_stats = _summarise_series(group["delta_neural_minus_baseline"], settings)
         mean_delta = delta_stats["mean"]
         neural_better = (
-            mean_delta > 0 if metric in HIGHER_IS_BETTER else mean_delta < 0
-        ) if np.isfinite(mean_delta) else False
-        rows.append({
-            **base,
-            "baseline_method": baseline_method,
-            "neural_method": NEURAL_METHOD,
-            "metric": metric,
-            "paired_trials": delta_stats["n_trials"],
-            "neural_mean": neural_stats["mean"],
-            "neural_std": neural_stats["std"],
-            "neural_se": neural_stats["se"],
-            "neural_ci95_low": neural_stats["ci95_low"],
-            "neural_ci95_high": neural_stats["ci95_high"],
-            "baseline_mean": baseline_stats["mean"],
-            "baseline_std": baseline_stats["std"],
-            "baseline_se": baseline_stats["se"],
-            "baseline_ci95_low": baseline_stats["ci95_low"],
-            "baseline_ci95_high": baseline_stats["ci95_high"],
-            "delta_mean_neural_minus_baseline": delta_stats["mean"],
-            "delta_std": delta_stats["std"],
-            "delta_se": delta_stats["se"],
-            "delta_ci95_low": delta_stats["ci95_low"],
-            "delta_ci95_high": delta_stats["ci95_high"],
-            "delta_ci95_half_width": delta_stats["ci95_half_width"],
-            "higher_is_better": int(metric in HIGHER_IS_BETTER),
-            "neural_better_by_mean": int(neural_better),
-            "ci_method": f"paired_delta_normal_approx_z_{settings.z_value:g}_over_repeated_trials",
-        })
+            (mean_delta > 0 if metric in HIGHER_IS_BETTER else mean_delta < 0) if np.isfinite(mean_delta) else False
+        )
+        rows.append(
+            {
+                **base,
+                "baseline_method": baseline_method,
+                "neural_method": NEURAL_METHOD,
+                "metric": metric,
+                "paired_trials": delta_stats["n_trials"],
+                "neural_mean": neural_stats["mean"],
+                "neural_std": neural_stats["std"],
+                "neural_se": neural_stats["se"],
+                "neural_ci95_low": neural_stats["ci95_low"],
+                "neural_ci95_high": neural_stats["ci95_high"],
+                "baseline_mean": baseline_stats["mean"],
+                "baseline_std": baseline_stats["std"],
+                "baseline_se": baseline_stats["se"],
+                "baseline_ci95_low": baseline_stats["ci95_low"],
+                "baseline_ci95_high": baseline_stats["ci95_high"],
+                "delta_mean_neural_minus_baseline": delta_stats["mean"],
+                "delta_std": delta_stats["std"],
+                "delta_se": delta_stats["se"],
+                "delta_ci95_low": delta_stats["ci95_low"],
+                "delta_ci95_high": delta_stats["ci95_high"],
+                "delta_ci95_half_width": delta_stats["ci95_half_width"],
+                "higher_is_better": int(metric in HIGHER_IS_BETTER),
+                "neural_better_by_mean": int(neural_better),
+                "ci_method": f"paired_delta_normal_approx_z_{settings.z_value:g}_over_repeated_trials",
+            }
+        )
     return rows
 
 
@@ -380,15 +384,17 @@ def _update_readme(root: Path, combined_df: pd.DataFrame, outputs: dict[str, Pat
         section_lines.append(
             f"| {row['scenario_label']} | {row['epsilon']} | {int(row['n_sample'])} | {int(row['n_trials'])} |"
         )
-    section_lines.extend([
-        "",
-        "Limitations:",
-        "",
-        "- Confidence intervals are based on available repeated runs only; conditions with fewer trials have wider and less stable intervals.",
-        "- The intervals reflect randomness in the synthetic population/sampling/RR/model-training pipeline, not uncertainty from real polling deployment.",
-        "- Neural RR-MRP should only be described as better for a condition when the comparison tables support that condition; these files do not force or assume a neural win.",
-        "",
-    ])
+    section_lines.extend(
+        [
+            "",
+            "Limitations:",
+            "",
+            "- Confidence intervals are based on available repeated runs only; conditions with fewer trials have wider and less stable intervals.",
+            "- The intervals reflect randomness in the synthetic population/sampling/RR/model-training pipeline, not uncertainty from real polling deployment.",
+            "- Neural RR-MRP should only be described as better for a condition when the comparison tables support that condition; these files do not force or assume a neural win.",
+            "",
+        ]
+    )
     marker = "## Repeated-trial uncertainty summaries"
     existing = readme.read_text(encoding="utf-8") if readme.exists() else "# Evidence pack\n"
     if marker in existing:
@@ -413,10 +419,12 @@ def generate_uncertainty_outputs(
 
     per_run_outputs = []
     for result_file in results_files:
-        per_run_outputs.append({
-            "results_trials": result_file,
-            "outputs": write_ci_outputs_for_results_file(result_file, settings=settings, metrics=metrics),
-        })
+        per_run_outputs.append(
+            {
+                "results_trials": result_file,
+                "outputs": write_ci_outputs_for_results_file(result_file, settings=settings, metrics=metrics),
+            }
+        )
 
     combined_outputs: dict[str, Path] = {}
     root = input_dir if input_dir.is_dir() else input_dir.parent

@@ -31,13 +31,15 @@ where A is the k-ary RR transition matrix.  No method in this class accepts
 synthetic true labels, except offline tests that call it with whatever labels
 they explicitly choose as ``y_reported``.
 """
+
 from __future__ import annotations
 
 import json
 import time
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any
 
 import numpy as np
 
@@ -67,7 +69,9 @@ class HierarchicalFeatureInfo:
         }
 
 
-def _validate_feature_levels(feature_levels: Mapping[str, Sequence[str]], feature_order: Sequence[str] | None) -> list[str]:
+def _validate_feature_levels(
+    feature_levels: Mapping[str, Sequence[str]], feature_order: Sequence[str] | None
+) -> list[str]:
     if not feature_levels:
         raise ValueError("feature_levels cannot be empty")
     order = list(feature_order) if feature_order is not None else sorted(feature_levels.keys())
@@ -397,4 +401,6 @@ class HierarchicalRRMRPModel:
         return metadata
 
     def save_metadata(self, path: str | Path, *, include_parameters: bool = False) -> None:
-        Path(path).write_text(json.dumps(self.export_metadata(include_parameters=include_parameters), indent=2), encoding="utf-8")
+        Path(path).write_text(
+            json.dumps(self.export_metadata(include_parameters=include_parameters), indent=2), encoding="utf-8"
+        )

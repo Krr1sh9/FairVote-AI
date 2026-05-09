@@ -3,6 +3,7 @@
 The checks cover the constrained evidence-generation wrapper without changing
 experiment methodology or final result files.
 """
+
 from __future__ import annotations
 
 import csv
@@ -82,8 +83,28 @@ def test_neural_comparison_marks_error_delta_direction():
 
 def test_method_rankings_rank_lower_error_first():
     summary = [
-        {"scenario": "no_bias", "epsilon": 1.0, "n_sample": 250, "method": "neural_rr_mrp", "n_rows": 1, "mean_overall_l1": 0.2, "mean_weighted_region_l1": 0.3, "mean_weighted_age_l1": 0.3, "mean_runtime_sec": 2.0},
-        {"scenario": "no_bias", "epsilon": 1.0, "n_sample": 250, "method": "baseline_rr_debias", "n_rows": 1, "mean_overall_l1": 0.1, "mean_weighted_region_l1": 0.4, "mean_weighted_age_l1": 0.4, "mean_runtime_sec": 0.1},
+        {
+            "scenario": "no_bias",
+            "epsilon": 1.0,
+            "n_sample": 250,
+            "method": "neural_rr_mrp",
+            "n_rows": 1,
+            "mean_overall_l1": 0.2,
+            "mean_weighted_region_l1": 0.3,
+            "mean_weighted_age_l1": 0.3,
+            "mean_runtime_sec": 2.0,
+        },
+        {
+            "scenario": "no_bias",
+            "epsilon": 1.0,
+            "n_sample": 250,
+            "method": "baseline_rr_debias",
+            "n_rows": 1,
+            "mean_overall_l1": 0.1,
+            "mean_weighted_region_l1": 0.4,
+            "mean_weighted_age_l1": 0.4,
+            "mean_runtime_sec": 0.1,
+        },
     ]
     ranks = eval_mod.build_method_rankings(summary)
     overall = [r for r in ranks if r["metric"] == "mean_overall_l1"]

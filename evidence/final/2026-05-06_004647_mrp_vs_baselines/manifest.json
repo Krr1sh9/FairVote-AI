@@ -118,7 +118,7 @@
   "preset": "custom",
   "provenance": {
     "argv": [
-      "C:\\Users\\krris\\Downloads\\FairVote-AI_final_submission_hygiene_fixed\\FairVote-AI\\experiments\\mrp_vs_baselines.py",
+      "experiments/mrp_vs_baselines.py",
       "--trials",
       "20",
       "--population_n",
@@ -155,8 +155,8 @@
       "--verbose_every",
       "100"
     ],
-    "cwd": "C:\\Users\\krris\\Downloads\\FairVote-AI_final_submission_hygiene_fixed\\FairVote-AI",
-    "executable": "C:\\Users\\krris\\Downloads\\FairVote-AI_final_submission_hygiene_fixed\\FairVote-AI\\.venv\\Scripts\\python.exe",
+    "cwd": "<repo-root>",
+    "executable": "python",
     "git_sha": null,
     "packages": {
       "flask": "3.1.3",

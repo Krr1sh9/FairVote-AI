@@ -60,7 +60,9 @@ def prefs_for_cell(party_labels: list[str], region: str, age: str, rng: np.rando
     return rng.dirichlet(alpha)
 
 
-def generate_population(regions: list[str], ages: list[str], total_pop: int, rng: np.random.Generator) -> list[dict[str, str]]:
+def generate_population(
+    regions: list[str], ages: list[str], total_pop: int, rng: np.random.Generator
+) -> list[dict[str, str]]:
     """Generate a small population count table for region x age cells."""
 
     del rng  # kept for API stability and future stochastic population generation
@@ -119,7 +121,9 @@ def apply_misreport(true_idx: int, k: int, honesty: float, rng: np.random.Genera
     return int(rng.choice(other))
 
 
-def apply_shy_effect(true_idx: int, shy_idx: int, k: int, shy_base: float, epsilon: float, rng: np.random.Generator) -> int:
+def apply_shy_effect(
+    true_idx: int, shy_idx: int, k: int, shy_base: float, epsilon: float, rng: np.random.Generator
+) -> int:
     """Simple 'privacy helps' misreport model for one shy category."""
 
     if true_idx != shy_idx:

@@ -29,9 +29,9 @@ def _simulate_true_to_reported(
     theta = np.asarray(theta, dtype=float)
     theta = theta / theta.sum()
 
-    M = shy_misreport_matrix(k, shy_category, honesty)   # TRUE -> STATED
-    A = rr_transition_matrix(eps, k)                    # STATED -> REPORTED
-    C = M @ A                                           # TRUE -> REPORTED
+    M = shy_misreport_matrix(k, shy_category, honesty)  # TRUE -> STATED
+    A = rr_transition_matrix(eps, k)  # STATED -> REPORTED
+    C = M @ A  # TRUE -> REPORTED
 
     true = rng.choice(k, size=n, p=theta)
     reported = np.empty(n, dtype=int)
@@ -60,9 +60,7 @@ def test_learned_honesty_drops_in_shy_scenario():
     X = np.ones((n, 1), dtype=float)
 
     theta = np.array([0.18, 0.12, 0.30, 0.22, 0.18], dtype=float)
-    reported = _simulate_true_to_reported(
-        rng=rng, k=k, eps=eps, theta=theta, shy_category=shy, honesty=0.60, n=n
-    )
+    reported = _simulate_true_to_reported(rng=rng, k=k, eps=eps, theta=theta, shy_category=shy, honesty=0.60, n=n)
 
     model = LearnedShyMisreportRRMultinomialModel(
         k=k,
@@ -99,9 +97,7 @@ def test_learned_honesty_stays_high_when_no_misreport():
     X = np.ones((n, 1), dtype=float)
     theta = np.array([0.18, 0.12, 0.30, 0.22, 0.18], dtype=float)
 
-    reported = _simulate_true_to_reported(
-        rng=rng, k=k, eps=eps, theta=theta, shy_category=shy, honesty=1.00, n=n
-    )
+    reported = _simulate_true_to_reported(rng=rng, k=k, eps=eps, theta=theta, shy_category=shy, honesty=1.00, n=n)
 
     model = LearnedShyMisreportRRMultinomialModel(
         k=k,

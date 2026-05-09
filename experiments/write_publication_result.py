@@ -198,7 +198,9 @@ def claim_rows(summary: list[dict[str, str]], paired: list[dict[str, str]]) -> l
         [
             "Privacy-noise/sparse robustness is evaluated",
             "summary_with_ci.csv",
-            "SUPPORTED TO ANALYSE" if any("privacy_noise" in s or "sparse" in s for s in scenarios) else "MISSING SCENARIO",
+            "SUPPORTED TO ANALYSE"
+            if any("privacy_noise" in s or "sparse" in s for s in scenarios)
+            else "MISSING SCENARIO",
             "Use this for privacy-noise and sparse-cell robustness only; do not claim that privacy improves honesty unless a misreport/privacy-help scenario is present.",
         ]
     )

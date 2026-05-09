@@ -9,20 +9,43 @@ import streamlit as st
 
 from app.plotting.charts import plot_group_bars as _plot_group_bars
 from app.plotting.charts import plot_overall_distributions as _plot_overall_distributions
-from app.services.category import CategoryMap, encode_categories, filter_valid, poststratify_from_groups, read_population_weights
-from app.services.exports import build_scenario_bundle, to_csv_bytes as _to_csv_bytes
-from app.services.inference import DesignMatrix, MRPRRMultinomialModel, _HAS_RR_MRP, estimate_distribution
+from app.services.category import (
+    CategoryMap,
+    encode_categories,
+    filter_valid,
+    poststratify_from_groups,
+    read_population_weights,
+)
+from app.services.exports import build_scenario_bundle
+from app.services.exports import to_csv_bytes as _to_csv_bytes
+from app.services.inference import _HAS_RR_MRP, DesignMatrix, MRPRRMultinomialModel, estimate_distribution
 from app.services.metrics import fmt as _fmt
 from app.services.metrics import group_metric_summary as _group_metric_summary
 from app.services.scenario import (
     age_labels as _age_labels,
+)
+from app.services.scenario import (
     apply_misreport as _apply_misreport,
+)
+from app.services.scenario import (
     apply_nonresponse as _apply_nonresponse,
+)
+from app.services.scenario import (
     apply_shy_effect as _apply_shy_effect,
+)
+from app.services.scenario import (
     generate_population as _generate_population,
+)
+from app.services.scenario import (
     party_labels_for_k as _party_labels_for_k,
+)
+from app.services.scenario import (
     prefs_for_cell as _prefs_for_cell,
+)
+from app.services.scenario import (
     region_labels as _region_labels,
+)
+from app.services.scenario import (
     sample_from_population as _sample_from_population,
 )
 
@@ -49,17 +72,25 @@ def render_scenario_tab(root: Path) -> None:
     with c7:
         age_options = [3, 4, 5, 6]
     default_age = 5
-    n_ages = st.selectbox("age bands", age_options, index=age_options.index(default_age) if default_age in age_options else 0)
+    n_ages = st.selectbox(
+        "age bands", age_options, index=age_options.index(default_age) if default_age in age_options else 0
+    )
     with c8:
-        total_pop = st.number_input("Population total (for post-strat)", min_value=50_000, max_value=10_000_000, value=1_000_000, step=50_000)
+        total_pop = st.number_input(
+            "Population total (for post-strat)", min_value=50_000, max_value=10_000_000, value=1_000_000, step=50_000
+        )
 
     # Scenario params
     st.markdown("#### Bias parameters")
     b1, b2, b3 = st.columns([1, 1, 1])
     with b1:
-        nonresponse_base = st.slider("Base nonresponse rate", 0.0, 0.5, 0.15, 0.01, help="Only used in nonresponse scenario.")
+        nonresponse_base = st.slider(
+            "Base nonresponse rate", 0.0, 0.5, 0.15, 0.01, help="Only used in nonresponse scenario."
+        )
     with b2:
-        shy_base = st.slider("Shy misreport base", 0.0, 0.8, 0.40, 0.02, help="Only used in shy_privacy_helps scenario.")
+        shy_base = st.slider(
+            "Shy misreport base", 0.0, 0.8, 0.40, 0.02, help="Only used in shy_privacy_helps scenario."
+        )
     with b3:
         honesty = st.slider("Misreport honesty", 0.0, 1.0, 0.80, 0.01, help="Only used in misreport scenario.")
 
@@ -80,11 +111,10 @@ def render_scenario_tab(root: Path) -> None:
         shy_idx = 1 if ("Conservative" in parties) else 0  # default: party 1 if possible
 
         poll_rows = []
-        for (reg, age) in demos:
+        for reg, age in demos:
             # response filtering (nonresponse)
-            if scenario == "nonresponse":
-                if not _apply_nonresponse(reg, age, float(nonresponse_base), rng):
-                    continue
+            if scenario == "nonresponse" and not _apply_nonresponse(reg, age, float(nonresponse_base), rng):
+                continue
 
             p = _prefs_for_cell(parties, reg, age, rng)
             true_idx = int(rng.choice(len(parties), p=p))
@@ -96,6 +126,7 @@ def render_scenario_tab(root: Path) -> None:
                 declared_idx = _apply_shy_effect(true_idx, shy_idx, len(parties), float(shy_base), float(eps), rng)
 
             from fairvote.privacy.mechanisms.kary_rr import privatize_one
+
             reported_idx = privatize_one(declared_idx, float(eps), len(parties), rng)
 
             poll_rows.append(
@@ -115,10 +146,16 @@ def render_scenario_tab(root: Path) -> None:
             st.success(f"Generated poll: {len(poll_rows)} respondents (after bias), k={len(parties)}, eps={eps}")
 
             # Downloads
-            poll_csv = _to_csv_bytes(poll_rows, ["region", "age_band", "true_choice", "declared_choice", "reported_choice", "epsilon"])
+            poll_csv = _to_csv_bytes(
+                poll_rows, ["region", "age_band", "true_choice", "declared_choice", "reported_choice", "epsilon"]
+            )
             pop_csv = _to_csv_bytes(pop_rows, ["region", "age_band", "count"])
-            st.download_button("Download synthetic poll CSV", data=poll_csv, file_name="synthetic_poll.csv", mime="text/csv")
-            st.download_button("Download synthetic population CSV", data=pop_csv, file_name="synthetic_population.csv", mime="text/csv")
+            st.download_button(
+                "Download synthetic poll CSV", data=poll_csv, file_name="synthetic_poll.csv", mime="text/csv"
+            )
+            st.download_button(
+                "Download synthetic population CSV", data=pop_csv, file_name="synthetic_population.csv", mime="text/csv"
+            )
 
             # --------------------------------
             # Run the same analysis pipeline as Upload tab
@@ -134,8 +171,9 @@ def render_scenario_tab(root: Path) -> None:
 
             p_baseline = estimate_distribution(reported, epsilon=float(eps), k=k_eff)
             p_true = np.bincount(truth, minlength=k_eff).astype(float) / max(1.0, float(n_eff))
-            
+
             from fairvote.privacy.mechanisms.laplace_mechanism import estimate_distribution_central_dp
+
             p_central_dp = estimate_distribution_central_dp(truth, epsilon=float(eps), k=k_eff, rng=rng)
 
             # Group audit by region|age_band
@@ -168,7 +206,9 @@ def render_scenario_tab(root: Path) -> None:
 
             # Direct post-strat (keys match)
             pop_weights = read_population_weights(pop_rows, ["region", "age_band"], "count")
-            p_post_direct = poststratify_from_groups(group_estimates, pop_weights, fallback=p_baseline) if pop_weights else None
+            p_post_direct = (
+                poststratify_from_groups(group_estimates, pop_weights, fallback=p_baseline) if pop_weights else None
+            )
 
             # RR-aware MRP (optional, if available)
             p_mrp_post = None
@@ -224,7 +264,12 @@ def render_scenario_tab(root: Path) -> None:
             st.subheader("Overall comparison (truth known)")
             rows = []
             for i, lab in enumerate(parties):
-                row = {"label": lab, "true_p": float(p_true[i]), "baseline_p": float(p_baseline[i]), "central_dp_p": float(p_central_dp[i])}
+                row = {
+                    "label": lab,
+                    "true_p": float(p_true[i]),
+                    "baseline_p": float(p_baseline[i]),
+                    "central_dp_p": float(p_central_dp[i]),
+                }
                 if p_post_direct is not None:
                     row["direct_poststrat_p"] = float(p_post_direct[i])
                 if p_mrp_post is not None:
@@ -238,12 +283,14 @@ def render_scenario_tab(root: Path) -> None:
             st.subheader("Worst-group / fairness metrics (truth known)")
             base_s = _group_metric_summary(group_rows, metric_key="baseline_l1", major_only=True, major_mass=major_mass)
             st.write(
-                f"Baseline major-groups: worst={_fmt(base_s['worst'],6)} | p90={_fmt(base_s['p90'],6)} | weighted={_fmt(base_s['weighted'],6)}"
+                f"Baseline major-groups: worst={_fmt(base_s['worst'], 6)} | p90={_fmt(base_s['p90'], 6)} | weighted={_fmt(base_s['weighted'], 6)}"
             )
             if group_rows_mrp is not None:
-                mrp_s = _group_metric_summary(group_rows_mrp, metric_key="mrp_l1", major_only=True, major_mass=major_mass)
+                mrp_s = _group_metric_summary(
+                    group_rows_mrp, metric_key="mrp_l1", major_only=True, major_mass=major_mass
+                )
                 st.write(
-                    f"MRP major-groups: worst={_fmt(mrp_s['worst'],6)} | p90={_fmt(mrp_s['p90'],6)} | weighted={_fmt(mrp_s['weighted'],6)}"
+                    f"MRP major-groups: worst={_fmt(mrp_s['worst'], 6)} | p90={_fmt(mrp_s['p90'], 6)} | weighted={_fmt(mrp_s['weighted'], 6)}"
                 )
             st.caption("Group table below is sorted by mass (largest groups first).")
             st.dataframe(group_rows, use_container_width=True)
@@ -288,8 +335,13 @@ def render_scenario_tab(root: Path) -> None:
                 ]
             )
             if group_rows_mrp is not None:
-                mrp_s = _group_metric_summary(group_rows_mrp, metric_key="mrp_l1", major_only=True, major_mass=major_mass)
-                md += "\n" + f"- mrp: worst={mrp_s['worst']:.6f}, p90={mrp_s['p90']:.6f}, weighted={mrp_s['weighted']:.6f}"
+                mrp_s = _group_metric_summary(
+                    group_rows_mrp, metric_key="mrp_l1", major_only=True, major_mass=major_mass
+                )
+                md += (
+                    "\n"
+                    + f"- mrp: worst={mrp_s['worst']:.6f}, p90={mrp_s['p90']:.6f}, weighted={mrp_s['weighted']:.6f}"
+                )
 
             meta = {
                 "scenario": scenario,
@@ -322,4 +374,3 @@ def render_scenario_tab(root: Path) -> None:
                 mime="application/zip",
             )
             st.success("Done. Use the ZIP contents directly in your report.")
-

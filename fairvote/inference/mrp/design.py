@@ -14,8 +14,8 @@ format: a numeric 2-D design matrix.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import asdict, dataclass
-from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -24,9 +24,9 @@ import numpy as np
 class DesignInfo:
     """Metadata needed to reproduce an integer-coded one-hot encoding."""
 
-    feature_names: List[str]
-    feature_levels: Dict[str, List[str]]
-    col_slices: Dict[str, slice]
+    feature_names: list[str]
+    feature_levels: dict[str, list[str]]
+    col_slices: dict[str, slice]
     n_cols: int
     has_intercept: bool
 
@@ -45,21 +45,18 @@ class FeatureSpec:
     """
 
     name: str
-    categories: List[str]
+    categories: list[str]
 
     def to_jsonable(self) -> dict:
         return {"name": self.name, "categories": list(self.categories)}
 
 
 def _validate_feature_order(
-    features: Dict[str, np.ndarray],
-    feature_levels: Dict[str, List[str]],
+    features: dict[str, np.ndarray],
+    feature_levels: dict[str, list[str]],
     feature_order: Sequence[str] | None,
 ) -> list[str]:
-    if feature_order is None:
-        order = sorted(features.keys())
-    else:
-        order = list(feature_order)
+    order = sorted(features.keys()) if feature_order is None else list(feature_order)
     if not order:
         raise ValueError("feature_order cannot be empty")
     duplicates = sorted({f for f in order if order.count(f) > 1})
@@ -93,12 +90,12 @@ def _validate_integer_feature_values(values: np.ndarray, *, feature: str, n_leve
 
 
 def build_design_matrix(
-    features: Dict[str, np.ndarray],
-    feature_levels: Dict[str, List[str]],
+    features: dict[str, np.ndarray],
+    feature_levels: dict[str, list[str]],
     *,
-    feature_order: Optional[Sequence[str]] = None,
+    feature_order: Sequence[str] | None = None,
     intercept: bool = True,
-) -> Tuple[np.ndarray, DesignInfo]:
+) -> tuple[np.ndarray, DesignInfo]:
     """Build a full one-hot design matrix from integer-coded features.
 
     Each feature contributes one indicator column per level.  This encoder is
@@ -133,7 +130,7 @@ def build_design_matrix(
         X[:, 0] = 1.0
         col = 1
 
-    col_slices: Dict[str, slice] = {}
+    col_slices: dict[str, slice] = {}
     row_idx = np.arange(n)
     for feature in order:
         level_count = len(feature_levels[feature])
@@ -170,15 +167,15 @@ class DesignMatrix:
             raise ValueError(f"feature_names contains duplicates: {duplicates}")
         self.feature_names = names
         self.require_columns = bool(require_columns)
-        self.specs: List[FeatureSpec] = []
-        self._col_offsets: Dict[str, Tuple[int, int]] = {}
+        self.specs: list[FeatureSpec] = []
+        self._col_offsets: dict[str, tuple[int, int]] = {}
 
-    def _validate_rows(self, rows: Sequence[Dict[str, str]], *, fitted: bool) -> list[Dict[str, str]]:
+    def _validate_rows(self, rows: Sequence[dict[str, str]], *, fitted: bool) -> list[dict[str, str]]:
         checked = list(rows)
         if not checked:
             raise ValueError("rows cannot be empty")
         if self.require_columns:
-            missing: dict[str, int] = {name: 0 for name in self.feature_names}
+            missing: dict[str, int] = dict.fromkeys(self.feature_names, 0)
             for row in checked:
                 for name in self.feature_names:
                     if name not in row:
@@ -189,9 +186,9 @@ class DesignMatrix:
                 raise ValueError(f"Cannot {phase} design matrix: missing feature columns {missing}")
         return checked
 
-    def fit(self, rows: Sequence[Dict[str, str]]) -> "DesignMatrix":
+    def fit(self, rows: Sequence[dict[str, str]]) -> DesignMatrix:
         checked = self._validate_rows(rows, fitted=False)
-        specs: List[FeatureSpec] = []
+        specs: list[FeatureSpec] = []
         for feature in self.feature_names:
             vals: list[str] = []
             for row in checked:
@@ -216,7 +213,7 @@ class DesignMatrix:
             total += max(0, len(spec.categories) - 1)
         return total
 
-    def transform(self, rows: Sequence[Dict[str, str]]) -> np.ndarray:
+    def transform(self, rows: Sequence[dict[str, str]]) -> np.ndarray:
         if not self.specs:
             raise RuntimeError("DesignMatrix must be fitted before transform()")
         checked = self._validate_rows(rows, fitted=True)
@@ -235,7 +232,7 @@ class DesignMatrix:
                     X[row_idx, start + level_idx - 1] = 1.0
         return X
 
-    def feature_columns(self) -> List[str]:
+    def feature_columns(self) -> list[str]:
         if not self.specs:
             return ["intercept"]
         cols = ["intercept"]

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Dict, Optional, Protocol, Sequence
+from typing import Protocol
 
 import numpy as np
 
@@ -23,13 +24,13 @@ class PostStratResult:
     """Post-stratification outputs."""
 
     overall: np.ndarray
-    by_feature: Dict[str, Dict[str, np.ndarray]]
+    by_feature: dict[str, dict[str, np.ndarray]]
     cell_theta: np.ndarray
     cell_counts: np.ndarray
     weights: np.ndarray
 
 
-def build_features_from_cells(cells: np.ndarray, by: Sequence[str]) -> Dict[str, np.ndarray]:
+def build_features_from_cells(cells: np.ndarray, by: Sequence[str]) -> dict[str, np.ndarray]:
     """Convert integer-coded poststratification cells to feature arrays."""
     cells = np.asarray(cells)
     if cells.ndim != 2:
@@ -61,9 +62,7 @@ def _validate_cells_against_design(cells: np.ndarray, by: Sequence[str], design_
         level_count = len(design_info.feature_levels[feature])
         values = cells[:, column]
         if np.any((values < 0) | (values >= level_count)):
-            raise ValueError(
-                f"Poststrat cells for feature '{feature}' contain values outside [0, {level_count - 1}]"
-            )
+            raise ValueError(f"Poststrat cells for feature '{feature}' contain values outside [0, {level_count - 1}]")
 
 
 def normalise_poststrat_weights(counts: np.ndarray, *, expected_n: int | None = None) -> np.ndarray:
@@ -101,7 +100,7 @@ def poststratify(
     counts: np.ndarray,
     by: Sequence[str],
     design_info: DesignInfo,
-    include_features: Optional[Sequence[str]] = None,
+    include_features: Sequence[str] | None = None,
 ) -> PostStratResult:
     """Post-stratify a fitted model using integer-coded population cells."""
     if getattr(model, "W", None) is None:
@@ -128,19 +127,16 @@ def poststratify(
 
     overall = _normalise_distribution((weights[:, None] * cell_theta).sum(axis=0), name="overall")
 
-    if include_features is None:
-        selected_features = list(design_info.feature_names)
-    else:
-        selected_features = list(include_features)
+    selected_features = list(design_info.feature_names) if include_features is None else list(include_features)
 
-    by_feature: Dict[str, Dict[str, np.ndarray]] = {}
+    by_feature: dict[str, dict[str, np.ndarray]] = {}
     by_list = list(by)
     for feature in selected_features:
         if feature not in design_info.feature_levels or feature not in by_list:
             continue
         column = by_list.index(feature)
         levels = design_info.feature_levels[feature]
-        feature_out: Dict[str, np.ndarray] = {}
+        feature_out: dict[str, np.ndarray] = {}
         for level_idx, level_name in enumerate(levels):
             mask = cells_int[:, column] == level_idx
             if not np.any(mask):

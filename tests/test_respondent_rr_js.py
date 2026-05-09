@@ -3,6 +3,7 @@
 The browser app uses JavaScript for the local privacy mechanism. These tests run
 that implementation directly with Node when Node is available.
 """
+
 from __future__ import annotations
 
 import json
@@ -14,7 +15,6 @@ from pathlib import Path
 import pytest
 
 from fairvote.privacy.mechanisms.kary_rr import rr_params
-
 
 ROOT = Path(__file__).resolve().parents[1]
 RR_JS = ROOT / "respondent" / "static" / "rr.js"

@@ -1,4 +1,5 @@
 """Statistical tests for the k-ary Randomized Response mechanism."""
+
 from __future__ import annotations
 
 import warnings

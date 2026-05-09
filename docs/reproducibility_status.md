@@ -19,7 +19,7 @@ This is a CPU-sized final-style run, not the full `final_evidence` preset. It is
 - methods `baseline_rr_debias`, `mrp_rr_poststrat`, `hierarchical_rr_mrp_poststrat` and `neural_rr_mrp`;
 - `raw_trials.csv`, `summary_with_ci.csv`, `paired_comparisons.csv`, `ablations.csv`, `runtime_profile.csv`, `failures.csv`, `config.json`, `manifest.json`, `environment.json`, `sha256sums.txt` and plots.
 
-The older `2026-05-05_*` evidence directories are retained only as superseded/supporting traceability artefacts and should not be treated as the primary final evidence.
+Older exploratory final-evidence directories are not included in this archive to avoid ambiguity. The canonical `2026-05-06_004647_mrp_vs_baselines` run is the only final evidence run used for report tables, generated summaries and viva claims.
 
 ## Generated report artefacts
 

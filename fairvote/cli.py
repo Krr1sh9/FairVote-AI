@@ -21,11 +21,9 @@ Notes:
 from __future__ import annotations
 
 import argparse
-import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 
 def _project_root() -> Path:
@@ -36,10 +34,10 @@ def _project_root() -> Path:
 
 def _run_python_module(
     module: str,
-    argv: List[str],
+    argv: list[str],
     *,
     dry_run: bool = False,
-    cwd: Optional[Path] = None,
+    cwd: Path | None = None,
 ) -> int:
     cmd = [sys.executable, "-m", module, *argv]
     printable = " ".join(cmd)
@@ -62,9 +60,7 @@ def _ensure_exists(path: Path, what: str) -> None:
 def _validate_positive_int(value: int, name: str, minimum: int = 1) -> int:
     """Validate that a value is a positive integer >= minimum."""
     if not isinstance(value, int) or value < minimum:
-        raise SystemExit(
-            f"--{name} must be an integer >= {minimum}, got: {value}"
-        )
+        raise SystemExit(f"--{name} must be an integer >= {minimum}, got: {value}")
     return value
 
 
@@ -72,13 +68,11 @@ def _validate_positive_float(value: float, name: str, minimum: float = 0.0) -> f
     """Validate that a value is a positive float >= minimum."""
     try:
         val = float(value)
-    except (TypeError, ValueError):
-        raise SystemExit(f"--{name} must be a float, got: {value}")
-    
+    except (TypeError, ValueError) as err:
+        raise SystemExit(f"--{name} must be a float, got: {value}") from err
+
     if val < minimum:
-        raise SystemExit(
-            f"--{name} must be >= {minimum}, got: {val}"
-        )
+        raise SystemExit(f"--{name} must be >= {minimum}, got: {val}")
     return val
 
 
@@ -86,13 +80,11 @@ def _validate_probability(value: float, name: str) -> float:
     """Validate that a value is a valid probability (0.0 to 1.0)."""
     try:
         val = float(value)
-    except (TypeError, ValueError):
-        raise SystemExit(f"--{name} must be a float, got: {value}")
-    
+    except (TypeError, ValueError) as err:
+        raise SystemExit(f"--{name} must be a float, got: {value}") from err
+
     if val < 0.0 or val > 1.0:
-        raise SystemExit(
-            f"--{name} must be in [0.0, 1.0], got: {val}"
-        )
+        raise SystemExit(f"--{name} must be in [0.0, 1.0], got: {val}")
     return val
 
 
@@ -100,20 +92,16 @@ def _validate_epsilon_list(eps_str: str) -> list:
     """Parse and validate comma-separated epsilon values."""
     try:
         epsilons = [float(e.strip()) for e in eps_str.split(",")]
-    except ValueError:
-        raise SystemExit(
-            f"--eps must be comma-separated floats, got: {eps_str}"
-        )
-    
+    except ValueError as err:
+        raise SystemExit(f"--eps must be comma-separated floats, got: {eps_str}") from err
+
     if not epsilons:
         raise SystemExit("--eps must specify at least one epsilon value")
-    
+
     for eps in epsilons:
         if eps <= 0.0:
-            raise SystemExit(
-                f"All epsilon values must be > 0, got: {eps}"
-            )
-    
+            raise SystemExit(f"All epsilon values must be > 0, got: {eps}")
+
     return epsilons
 
 
@@ -187,7 +175,9 @@ def _parse_args() -> argparse.Namespace:
     tables.add_argument("--run_dir", type=str, required=True)
     tables.add_argument("--metric", type=str, default="overall_l1")
     tables.add_argument("--include_all", action="store_true", default=True)
-    tables.add_argument("--out_md", type=str, default=None, help="Output markdown path. Default: <run_dir>/table_<metric>.md")
+    tables.add_argument(
+        "--out_md", type=str, default=None, help="Output markdown path. Default: <run_dir>/table_<metric>.md"
+    )
     tables.add_argument("--no_std", action="store_true")
     tables.add_argument("--summary_csv", type=str, default=None, help="Optional override path to summary.csv")
 
@@ -199,7 +189,9 @@ def _parse_args() -> argparse.Namespace:
     honesty.add_argument("--seed", type=int, default=123)
     honesty.add_argument("--ndp", type=int, default=4)
 
-    recommend = rep_sub.add_parser("recommend", help="Pick recommended methods from summary.csv; optionally write Pareto CSVs.")
+    recommend = rep_sub.add_parser(
+        "recommend", help="Pick recommended methods from summary.csv; optionally write Pareto CSVs."
+    )
     recommend.add_argument("--run_dir", type=str, required=True)
     recommend.add_argument("--summary_csv", type=str, default=None, help="Optional override path to summary.csv")
     recommend.add_argument("--write_pareto", action="store_true")
@@ -240,8 +232,8 @@ def main() -> int:
         # Validate required arguments
         _validate_positive_int(args.trials, "trials", minimum=1)
         _validate_positive_float(args.major_mass, "major_mass", minimum=0.0)
-        epsilons = _validate_epsilon_list(args.eps)
-        
+        _validate_epsilon_list(args.eps)
+
         # Validate optional arguments if provided
         if args.k is not None:
             _validate_positive_int(args.k, "k", minimum=2)
@@ -249,8 +241,8 @@ def main() -> int:
             _validate_positive_int(args.n_sample, "n", minimum=1)
         if args.shy_category is not None:
             _validate_positive_int(args.shy_category, "shy_category", minimum=0)
-        
-        argv: List[str] = [
+
+        argv: list[str] = [
             "--trials",
             str(args.trials),
             "--eps",
@@ -303,7 +295,7 @@ def main() -> int:
     if args.cmd == "report" and args.rep_cmd == "honesty":
         run_dir = Path(args.run_dir)
         _results_trials_csv_from_run_dir(run_dir)  # ensure exists
-        
+
         # Validate numeric parameters
         _validate_positive_int(args.n_boot, "n_boot", minimum=1)
         _validate_probability(args.alpha, "alpha")
@@ -331,7 +323,7 @@ def main() -> int:
     if args.cmd == "report" and args.rep_cmd == "recommend":
         run_dir = Path(args.run_dir)
         summary_csv = Path(args.summary_csv) if args.summary_csv else _summary_csv_from_run_dir(run_dir)
-        
+
         # Validate optional numeric parameters if provided
         if args.epsilon_max is not None:
             _validate_positive_float(args.epsilon_max, "epsilon_max")

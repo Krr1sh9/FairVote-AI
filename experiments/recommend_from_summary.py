@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-from typing import List, Optional
 
 from fairvote.optimisation.recommend import (
     Constraints,
@@ -21,7 +20,7 @@ from fairvote.optimisation.recommend import (
 )
 
 
-def _parse_list(s: str) -> List[str]:
+def _parse_list(s: str) -> list[str]:
     return [x.strip() for x in s.split(",") if x.strip()]
 
 
@@ -182,17 +181,14 @@ def main() -> int:
         epsilon_min=args.epsilon_min,
         overall_l1_max=args.overall_l1_max,
         overall_mae_max=args.overall_mae_max,
-
         worst_region_l1_max=args.worst_region_l1_max,
         worst_age_l1_max=args.worst_age_l1_max,
-
         worst_region_l1_major_max=args.worst_region_l1_major_max,
         worst_age_l1_major_max=args.worst_age_l1_major_max,
         weighted_region_l1_max=args.weighted_region_l1_max,
         weighted_age_l1_max=args.weighted_age_l1_max,
         p90_region_l1_major_max=args.p90_region_l1_major_max,
         p90_age_l1_major_max=args.p90_age_l1_major_max,
-
         min_n_effective=args.min_n_effective,
     )
 
@@ -223,11 +219,7 @@ def main() -> int:
         scen_list = scenarios if scenarios is not None else sorted({c.scenario for c in cands})
 
         # If methods specified, write separate pareto per method too
-        method_list: List[Optional[str]]
-        if methods is None:
-            method_list = [None]  # all methods together
-        else:
-            method_list = [m for m in methods]
+        method_list: list[str | None] = [None] if methods is None else list(methods)  # all methods together
 
         for s in scen_list:
             for m in method_list:

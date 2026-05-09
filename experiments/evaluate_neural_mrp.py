@@ -6,6 +6,7 @@ explicitly re-exporting the tested public compatibility API.  Do not use
 ``import *`` here: underscored helpers used by legacy tests are not exported by
 star-imports and that caused a submission-breaking regression.
 """
+
 from __future__ import annotations
 
 from experiments.legacy.evaluate_neural_mrp import (
@@ -24,6 +25,8 @@ from experiments.legacy.evaluate_neural_mrp import (
     build_method_rankings,
     build_neural_comparison,
     build_neural_verdict,
+)
+from experiments.legacy.evaluate_neural_mrp import (
     main as _legacy_main,
 )
 

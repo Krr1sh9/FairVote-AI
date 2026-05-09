@@ -6,10 +6,10 @@ using an additional transition from true preference to stated preference before
 the RR channel is applied. They are baselines for scenarios such as shy-voter
 behaviour.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 import numpy as np
 
@@ -22,7 +22,7 @@ def validate_row_stochastic(M: np.ndarray, *, atol: float = 1e-6) -> None:
     M = np.asarray(M, dtype=float)
     if M.ndim != 2 or M.shape[0] != M.shape[1]:
         raise ValueError("misreport matrix must be square (k x k)")
-    if np.any(M < -atol):
+    if np.any(-atol > M):
         raise ValueError("misreport matrix has negative entries")
     row_sums = M.sum(axis=1)
     if not np.allclose(row_sums, 1.0, atol=atol):
@@ -59,7 +59,6 @@ def shy_misreport_matrix(k: int, shy_category: int, honesty: float) -> np.ndarra
     return M
 
 
-
 @dataclass
 class MisreportRRMultinomialModel:
     """
@@ -76,16 +75,17 @@ class MisreportRRMultinomialModel:
       - fit(X, reported, eps, lr, steps, batch_size, verbose_every)
       - predict_theta(X) -> (n, k)
     """
+
     k: int
     l2: float = 1.0
     seed: int = 0
-    misreport: Optional[np.ndarray] = None  # (k, k) row-stochastic
+    misreport: np.ndarray | None = None  # (k, k) row-stochastic
 
     def __post_init__(self) -> None:
         if self.k <= 1:
             raise ValueError("k must be >= 2")
         self.rng = np.random.default_rng(self.seed)
-        self.W: Optional[np.ndarray] = None
+        self.W: np.ndarray | None = None
 
         if self.misreport is None:
             self.M = identity_misreport(self.k)
@@ -135,17 +135,17 @@ class MisreportRRMultinomialModel:
         # Training loop (mini-batch SGD)
         for step in range(1, steps + 1):
             idx = self.rng.integers(0, n, size=min(batch_size, n))
-            Xb = X[idx]                     # (b, d)
-            yb = y[idx]                     # (b,)
+            Xb = X[idx]  # (b, d)
+            yb = y[idx]  # (b,)
 
-            logits = Xb @ self.W            # (b, k)
-            theta = softmax_rows(logits)    # (b, k)
+            logits = Xb @ self.W  # (b, k)
+            theta = softmax_rows(logits)  # (b, k)
 
             likelihood = reported_label_likelihood(theta, C, yb)
             p = likelihood.observed_probs
 
             # Gradient for W; likelihood.grad_logits is already averaged over the batch.
-            grad = Xb.T @ likelihood.grad_logits          # (d, k)
+            grad = Xb.T @ likelihood.grad_logits  # (d, k)
             grad += self.l2 * self.W
 
             self.W -= lr * grad

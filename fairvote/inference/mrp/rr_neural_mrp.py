@@ -4,6 +4,7 @@ Implementation is split under :mod:`fairvote.inference.mrp.neural` so the old
 single 800-line module no longer carries training, diagnostics and ensemble
 logic in one place. Existing imports continue to work.
 """
+
 from __future__ import annotations
 
 from .neural import (

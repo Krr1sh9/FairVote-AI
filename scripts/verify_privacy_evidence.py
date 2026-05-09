@@ -1,12 +1,27 @@
 """Verify committed privacy-evidence artefacts exist and contain the expected proof points."""
+
 from __future__ import annotations
 
 from pathlib import Path
 
 REQUIRED = {
-    Path("evidence/privacy/browser_network_capture.md"): ["perturbed_answer", "selected_answer", "not present", "tests/test_browser_respondent_privacy.py"],
-    Path("evidence/privacy/api_rejection_examples.md"): ["HTTP 400", "true_answer", "metadata.raw_answer", "not stored"],
-    Path("evidence/privacy/privacy_report_example.json"): ["rare_cell_count", "timestamp_precision", "individual_export_enabled"],
+    Path("evidence/privacy/browser_network_capture.md"): [
+        "perturbed_answer",
+        "selected_answer",
+        "not present",
+        "tests/test_browser_respondent_privacy.py",
+    ],
+    Path("evidence/privacy/api_rejection_examples.md"): [
+        "HTTP 400",
+        "true_answer",
+        "metadata.raw_answer",
+        "not stored",
+    ],
+    Path("evidence/privacy/privacy_report_example.json"): [
+        "rare_cell_count",
+        "timestamp_precision",
+        "individual_export_enabled",
+    ],
 }
 
 

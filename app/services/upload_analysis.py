@@ -4,10 +4,11 @@ This module intentionally keeps real respondent data separate from synthetic
 experiment data.  A ``true_choice``/truth column is useful for simulations, but
 it must not be silently used on real respondent exports.
 """
+
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Optional, Sequence
 
 SYNTHETIC_TRUTH_COLUMN_NAMES = frozenset(
     {
@@ -26,7 +27,7 @@ class UploadRunLabels:
     """Column choices made for one uploaded analysis run."""
 
     response_col: str
-    truth_col: Optional[str]
+    truth_col: str | None
     group_cols: tuple[str, ...]
     poststrat_cols: tuple[str, ...]
     synthetic_evaluation_mode: bool = False
@@ -47,9 +48,9 @@ def candidate_truth_columns(columns: Sequence[str]) -> list[str]:
 
 def validate_truth_column_policy(
     *,
-    truth_col: Optional[str],
+    truth_col: str | None,
     synthetic_evaluation_mode: bool,
-) -> Optional[str]:
+) -> str | None:
     """Return the truth column if explicitly permitted; otherwise reject it.
 
     Real respondent exports should contain only perturbed answers and

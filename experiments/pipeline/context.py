@@ -1,8 +1,9 @@
 """Population and poststratification context for experiments."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any
 
 import numpy as np
 
@@ -12,9 +13,10 @@ from fairvote.simulation.population import (
     poststrat_table,
     subgroup_true_distribution,
 )
+
 from .config import ExperimentConfig
-from .scenarios import ScenarioInfo, apply_truth_scenario, scenario_info
 from .metrics import feature_masses_from_cells, truth_overall
+from .scenarios import ScenarioInfo, apply_truth_scenario, scenario_info
 
 
 @dataclass(frozen=True)
@@ -23,14 +25,14 @@ class ExperimentContext:
 
     pop: Any
     truth_overall: np.ndarray
-    truth_region: Dict[str, np.ndarray]
-    truth_age: Dict[str, np.ndarray]
-    by: List[str]
+    truth_region: dict[str, np.ndarray]
+    truth_age: dict[str, np.ndarray]
+    by: list[str]
     cells: np.ndarray
     cell_counts: np.ndarray
     X_cells: np.ndarray
-    region_masses: Dict[str, float]
-    age_masses: Dict[str, float]
+    region_masses: dict[str, float]
+    age_masses: dict[str, float]
     include_features: tuple[str, str] = ("region", "age_group")
     scenario_info: ScenarioInfo | None = None
 

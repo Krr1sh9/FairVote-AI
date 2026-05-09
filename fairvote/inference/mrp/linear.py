@@ -19,8 +19,9 @@ from __future__ import annotations
 
 import json
 import time
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Optional, Sequence
+from typing import Any
 
 import numpy as np
 
@@ -28,7 +29,6 @@ from fairvote.inference.mrp.design import DesignInfo, DesignMatrix
 from fairvote.inference.mrp.diagnostics import FitDiagnostics
 from fairvote.inference.mrp.likelihood import reported_label_likelihood, softmax_rows
 from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
-
 
 
 def validate_design_matrix(X: np.ndarray, *, name: str = "X") -> np.ndarray:
@@ -45,7 +45,9 @@ def validate_design_matrix(X: np.ndarray, *, name: str = "X") -> np.ndarray:
     return arr
 
 
-def validate_reported_labels(y_reported: Sequence[int] | np.ndarray, *, k: int, expected_n: int | None = None) -> np.ndarray:
+def validate_reported_labels(
+    y_reported: Sequence[int] | np.ndarray, *, k: int, expected_n: int | None = None
+) -> np.ndarray:
     """Validate RR-reported category labels."""
     if not isinstance(k, int) or k < 2:
         raise ValueError("k must be an int >= 2")
@@ -119,10 +121,10 @@ class LinearRRMRPModel:
         self.l2 = float(l2)
         self.exclude_intercept_from_l2 = bool(exclude_intercept_from_l2)
         self.seed = int(seed)
-        self.W: Optional[np.ndarray] = None
-        self.A: Optional[np.ndarray] = None
-        self.fit_diagnostics: Optional[FitDiagnostics] = None
-        self.design_info: Optional[DesignInfo | DesignMatrix] = None
+        self.W: np.ndarray | None = None
+        self.A: np.ndarray | None = None
+        self.fit_diagnostics: FitDiagnostics | None = None
+        self.design_info: DesignInfo | DesignMatrix | None = None
         if self.epsilon is not None:
             self.A = rr_transition_matrix(self.epsilon, self.k)
 
@@ -301,7 +303,9 @@ class LinearRRMRPModel:
 
     def save_metadata(self, path: str | Path, *, include_weights: bool = False) -> None:
         """Write :meth:`export_metadata` output as JSON."""
-        Path(path).write_text(json.dumps(self.export_metadata(include_weights=include_weights), indent=2), encoding="utf-8")
+        Path(path).write_text(
+            json.dumps(self.export_metadata(include_weights=include_weights), indent=2), encoding="utf-8"
+        )
 
 
 # Backwards-compatible public names.  Both point to the same canonical class.

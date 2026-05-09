@@ -1,11 +1,12 @@
 """Privacy-boundary validation and individual-export controls."""
+
 from __future__ import annotations
 
 import hashlib
 import hmac
 import os
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from .config import (
@@ -34,7 +35,9 @@ FORBIDDEN_RAW_ANSWER_KEYS = frozenset(
         "chosen_answer",
     }
 )
-FORBIDDEN_RAW_ANSWER_KEY_NORMALISED = frozenset(re.sub(r"[^a-z0-9]", "", key.lower()) for key in FORBIDDEN_RAW_ANSWER_KEYS)
+FORBIDDEN_RAW_ANSWER_KEY_NORMALISED = frozenset(
+    re.sub(r"[^a-z0-9]", "", key.lower()) for key in FORBIDDEN_RAW_ANSWER_KEYS
+)
 
 
 class PayloadRejected(ValueError):
@@ -83,7 +86,9 @@ def validate_demographics(demographics: Any, poll_config: dict[str, Any]) -> dic
         if not isinstance(value, str):
             raise PayloadRejected(f"demographic value for {key!r} must be a string")
         if len(value) > MAX_DEMOGRAPHIC_VALUE_LENGTH:
-            raise PayloadRejected(f"demographic value for {key!r} exceeds maximum length {MAX_DEMOGRAPHIC_VALUE_LENGTH}")
+            raise PayloadRejected(
+                f"demographic value for {key!r} exceeds maximum length {MAX_DEMOGRAPHIC_VALUE_LENGTH}"
+            )
         if value == "":
             continue
         if value not in schema[key]["options"]:
@@ -99,7 +104,7 @@ def validate_demographics(demographics: Any, poll_config: dict[str, Any]) -> dic
 def timestamp_for_storage() -> str | None:
     """Return a reduced-precision timestamp, or None when disabled."""
     precision = os.getenv("FAIRVOTE_TIMESTAMP_PRECISION", DEFAULT_TIMESTAMP_PRECISION).lower()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     if precision in {"none", "off", "false", "0"}:
         return None
     if precision == "day":
@@ -134,9 +139,14 @@ def authorised_for_response_export(auth_header: str) -> tuple[bool, str]:
     if os.getenv("FAIRVOTE_DISABLE_INDIVIDUAL_EXPORT", "").lower() in {"1", "true", "yes", "on"}:
         return False, "Full response export is disabled by FAIRVOTE_DISABLE_INDIVIDUAL_EXPORT."
     configured_plain = [part.strip() for part in os.getenv("FAIRVOTE_ANALYST_TOKEN", "").split(",") if part.strip()]
-    configured_hashes = [part.strip().lower() for part in os.getenv("FAIRVOTE_ANALYST_TOKEN_SHA256", "").split(",") if part.strip()]
+    configured_hashes = [
+        part.strip().lower() for part in os.getenv("FAIRVOTE_ANALYST_TOKEN_SHA256", "").split(",") if part.strip()
+    ]
     if not configured_plain and not configured_hashes:
-        return False, "Full response export is disabled because FAIRVOTE_ANALYST_TOKEN or FAIRVOTE_ANALYST_TOKEN_SHA256 is not set."
+        return (
+            False,
+            "Full response export is disabled because FAIRVOTE_ANALYST_TOKEN or FAIRVOTE_ANALYST_TOKEN_SHA256 is not set.",
+        )
     prefix = "Bearer "
     if not auth_header.startswith(prefix):
         return False, "Missing Authorization: Bearer token header."
@@ -182,7 +192,9 @@ def rare_cell_export_allowed() -> bool:
     return os.getenv("FAIRVOTE_ALLOW_RISKY_INDIVIDUAL_EXPORT", "").lower() in {"1", "true", "yes", "on"}
 
 
-def exportable_individual_records(records: list[dict[str, Any]], *, k_anonymity: int = DEFAULT_K_ANONYMITY) -> tuple[list[dict[str, Any]], dict[str, Any], str | None]:
+def exportable_individual_records(
+    records: list[dict[str, Any]], *, k_anonymity: int = DEFAULT_K_ANONYMITY
+) -> tuple[list[dict[str, Any]], dict[str, Any], str | None]:
     """Return individual records only when the privacy report passes k-anonymity.
 
     The endpoint is for controlled research audits, not normal analysis.  Normal
@@ -194,7 +206,11 @@ def exportable_individual_records(records: list[dict[str, Any]], *, k_anonymity:
     """
     report = privacy_report(records, k_anonymity=k_anonymity)
     if report["rare_cell_count"] and not rare_cell_export_allowed():
-        return [], report, "Individual export blocked: demographic rare cells fail k-anonymity. Use /api/results or aggregate exports."
+        return (
+            [],
+            report,
+            "Individual export blocked: demographic rare cells fail k-anonymity. Use /api/results or aggregate exports.",
+        )
     clean: list[dict[str, Any]] = []
     for rec in records:
         leaked = find_forbidden_fields(rec)

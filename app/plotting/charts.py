@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import contextlib
 import io
-from typing import Any, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
 
@@ -35,19 +37,15 @@ def apply_readable_grid(ax: Any, orientation: str = "vertical") -> None:
 
     if orientation == "horizontal":
         if AutoMinorLocator is not None:
-            try:
+            with contextlib.suppress(Exception):
                 ax.xaxis.set_minor_locator(AutoMinorLocator(2))
-            except Exception:
-                pass
         ax.grid(True, which="major", axis="x", alpha=0.35, linewidth=0.8)
         ax.grid(True, which="minor", axis="x", alpha=0.18, linewidth=0.5)
         ax.grid(True, which="major", axis="y", alpha=0.12, linewidth=0.5)
     elif orientation == "vertical":
         if AutoMinorLocator is not None:
-            try:
+            with contextlib.suppress(Exception):
                 ax.yaxis.set_minor_locator(AutoMinorLocator(2))
-            except Exception:
-                pass
         ax.grid(True, which="major", axis="y", alpha=0.35, linewidth=0.8)
         ax.grid(True, which="minor", axis="y", alpha=0.18, linewidth=0.5)
         ax.grid(True, which="major", axis="x", alpha=0.12, linewidth=0.5)
@@ -57,7 +55,7 @@ def plot_overall_distributions(
     labels: Sequence[str],
     series: Sequence[tuple[str, np.ndarray]],
     title: str,
-) -> Optional[bytes]:
+) -> bytes | None:
     if not HAS_MPL or plt is None:
         return None
 
@@ -93,7 +91,7 @@ def plot_group_bars(
     title: str,
     metric_key: str,
     top_n: int = 20,
-) -> Optional[bytes]:
+) -> bytes | None:
     if not HAS_MPL or plt is None or not group_rows:
         return None
 

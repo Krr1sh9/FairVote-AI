@@ -8,18 +8,18 @@ real respondent app, which never receives or stores true choices.
 # fairvote/simulation/bias_models.py
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Dict, Optional, Sequence, Tuple
 
 import numpy as np
 
 from fairvote.simulation.population import Population
 from fairvote.simulation.sampling import Sample
 
-
 # =============================================================================
 # Response / turnout (non-response) models
 # =============================================================================
+
 
 @dataclass(frozen=True)
 class FeatureNonresponseProfile:
@@ -34,8 +34,9 @@ class FeatureNonresponseProfile:
 
     Levels not specified use base_rate.
     """
+
     base_rate: float = 0.85
-    feature_response_rates: Optional[Dict[str, Dict[str, float]]] = None
+    feature_response_rates: dict[str, dict[str, float]] | None = None
 
 
 @dataclass(frozen=True)
@@ -49,16 +50,17 @@ class PreferenceNonresponseProfile:
     This is useful to simulate "shy voters" / "hard-to-reach supporters"
     where response depends on the target variable itself.
     """
-    category_response_rates: Dict[int, float]
+
+    category_response_rates: dict[int, float]
 
 
 def apply_nonresponse(
     sample: Sample,
     pop: Population,
     *,
-    rng: Optional[np.random.Generator] = None,
-    feature_profile: Optional[FeatureNonresponseProfile] = None,
-    preference_profile: Optional[PreferenceNonresponseProfile] = None,
+    rng: np.random.Generator | None = None,
+    feature_profile: FeatureNonresponseProfile | None = None,
+    preference_profile: PreferenceNonresponseProfile | None = None,
 ) -> Sample:
     """
     Apply non-response to a Sample, returning a smaller Sample.
@@ -166,6 +168,7 @@ def make_default_feature_nonresponse_profile() -> FeatureNonresponseProfile:
 # Misreporting models (pre-LDP response bias)
 # =============================================================================
 
+
 @dataclass(frozen=True)
 class MisreportModel:
     """
@@ -177,6 +180,7 @@ class MisreportModel:
 
     This models systematic response bias (e.g., "shy" supporters who claim another option).
     """
+
     confusion: np.ndarray  # shape (K, K)
 
 
@@ -194,7 +198,7 @@ def make_shy_supporter_model(
     shy_category: int,
     *,
     honesty: float = 0.85,
-    shift_to: Optional[Sequence[float]] = None,
+    shift_to: Sequence[float] | None = None,
 ) -> MisreportModel:
     """
     Create a misreport model where supporters of `shy_category` are less truthful.
@@ -256,7 +260,7 @@ def apply_misreporting(
     true_categories: np.ndarray,
     model: MisreportModel,
     *,
-    rng: Optional[np.random.Generator] = None,
+    rng: np.random.Generator | None = None,
 ) -> np.ndarray:
     """
     Apply misreporting to true categories to produce stated categories (pre-LDP).
@@ -276,7 +280,7 @@ def apply_misreporting(
     C = model.confusion
     k = C.shape[0]
     if np.any((t < 0) | (t >= k)):
-        raise ValueError(f"true_categories values must be in [0, {k-1}]")
+        raise ValueError(f"true_categories values must be in [0, {k - 1}]")
 
     # Sample one categorical per row using inverse CDF.  This is the same
     # technique used in population.py but operates on a per-person confusion
@@ -293,6 +297,7 @@ def apply_misreporting(
 # =============================================================================
 # Privacy -> honesty/participation (scenario helpers)
 # =============================================================================
+
 
 def honesty_from_epsilon(
     epsilon: float,
@@ -359,7 +364,7 @@ def build_shy_model_from_epsilon(
     max_honesty: float = 0.95,
     midpoint: float = 1.0,
     steepness: float = 2.0,
-    shift_to: Optional[Sequence[float]] = None,
+    shift_to: Sequence[float] | None = None,
 ) -> MisreportModel:
     """
     Convenience: create a shy-supporter misreport model where honesty depends on epsilon.
@@ -377,6 +382,7 @@ def build_shy_model_from_epsilon(
 # =============================================================================
 # Internal validation
 # =============================================================================
+
 
 def _validate_confusion(C: np.ndarray) -> None:
     C = np.asarray(C, dtype=float)

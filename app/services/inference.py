@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import importlib.util
-from typing import Optional
 
 import numpy as np
 
@@ -129,7 +128,7 @@ def available_method_options() -> list[str]:
     return options
 
 
-def resolve_estimation_method(requested: str) -> tuple[str, Optional[str]]:
+def resolve_estimation_method(requested: str) -> tuple[str, str | None]:
     """Return the usable method plus a warning message when falling back.
 
     This pure function lets tests verify method selection without Streamlit.

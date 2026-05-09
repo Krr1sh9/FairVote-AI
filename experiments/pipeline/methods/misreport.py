@@ -1,4 +1,5 @@
 """Misreport-aware RR-MRP estimator runners and conversion helpers."""
+
 from __future__ import annotations
 
 import time
@@ -9,10 +10,12 @@ import numpy as np
 from fairvote.inference.mrp.learned_misreport_rr import LearnedShyMisreportRRMultinomialModel
 from fairvote.inference.mrp.misreport_rr import MisreportRRMultinomialModel, identity_misreport
 from fairvote.simulation.bias_models import apply_misreporting
+
 from ..config import ExperimentConfig, MethodResult, TrialConfig
 from ..context import ExperimentContext
 from .common import TrialData
 from .linear_mrp import _poststratify_model_predictions
+
 
 def misreport_to_matrix(mis: Any, k: int, *, mc_samples_per_true: int = 20_000) -> np.ndarray:
     """Convert common misreport model representations into a row-stochastic matrix."""
@@ -51,9 +54,7 @@ def misreport_to_matrix(mis: Any, k: int, *, mc_samples_per_true: int = 20_000) 
         matrix = np.clip(matrix, 0.0, None)
         return matrix / np.maximum(matrix.sum(axis=1, keepdims=True), 1e-12)
     except Exception as exc:
-        raise TypeError(
-            f"Don't know how to convert misreport model of type {type(mis)} to a (k,k) matrix."
-        ) from exc
+        raise TypeError(f"Don't know how to convert misreport model of type {type(mis)} to a (k,k) matrix.") from exc
 
 
 def mrp_misreport_rr_poststrat(
@@ -80,7 +81,9 @@ def mrp_misreport_rr_poststrat(
         batch_size=config.mrp_batch_size,
         verbose_every=config.verbose_every,
     )
-    overall, by_feature = _poststratify_model_predictions(context=context, cell_theta=model.predict_theta(context.X_cells))
+    overall, by_feature = _poststratify_model_predictions(
+        context=context, cell_theta=model.predict_theta(context.X_cells)
+    )
     return MethodResult("mrp_misreport_rr_poststrat", overall, by_feature, time.perf_counter() - start)
 
 
@@ -126,7 +129,9 @@ def mrp_learned_misreport_rr_poststrat(
         batch_size=config.mrp_batch_size,
         verbose_every=config.verbose_every,
     )
-    overall, by_feature = _poststratify_model_predictions(context=context, cell_theta=model.predict_theta(context.X_cells))
+    overall, by_feature = _poststratify_model_predictions(
+        context=context, cell_theta=model.predict_theta(context.X_cells)
+    )
     return MethodResult(
         "mrp_learned_misreport_rr_poststrat",
         overall,

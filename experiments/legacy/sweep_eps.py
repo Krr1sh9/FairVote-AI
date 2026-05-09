@@ -5,20 +5,26 @@ This script compares estimators across Randomized Response privacy levels,
 sampling settings, and bias scenarios. It writes machine-readable outputs for
 analysis and reporting.
 """
+
 from __future__ import annotations
 
 import argparse
 import csv
 import json
-import os
-from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 import numpy as np
 
 from fairvote.privacy import estimate_distribution, estimate_distribution_central_dp, privatize_many
+from fairvote.simulation.bias_models import (
+    apply_misreporting,
+    apply_nonresponse,
+    build_shy_model_from_epsilon,
+    make_default_feature_nonresponse_profile,
+    make_identity_misreport_model,
+    make_shy_supporter_model,
+)
 from fairvote.simulation.population import (
     Population,
     make_realistic_uk_like_population,
@@ -29,21 +35,13 @@ from fairvote.simulation.sampling import (
     simple_random_sample,
     stratified_sample,
 )
-from fairvote.simulation.bias_models import (
-    apply_misreporting,
-    apply_nonresponse,
-    build_shy_model_from_epsilon,
-    make_default_feature_nonresponse_profile,
-    make_identity_misreport_model,
-    make_shy_supporter_model,
-)
-
 
 # -----------------------------------------------------------------------------
 # Helpers
 # -----------------------------------------------------------------------------
 
-def _parse_eps_list(s: str) -> List[float]:
+
+def _parse_eps_list(s: str) -> list[float]:
     """Parse epsilon values without changing the requested sweep grid."""
     vals = []
     for part in s.split(","):
@@ -58,21 +56,21 @@ def _parse_eps_list(s: str) -> List[float]:
     return vals
 
 
-def _parse_strata_list(s: str) -> List[str]:
+def _parse_strata_list(s: str) -> list[str]:
     out = [x.strip() for x in s.split(",") if x.strip()]
     if not out:
         raise ValueError("No strata parsed. Provide --strata like 'region,age_group'.")
     return out
 
 
-def _parse_level_multipliers(s: str) -> Dict[str, float]:
+def _parse_level_multipliers(s: str) -> dict[str, float]:
     """
     Parse "London=1.4,Wales=0.7,Scotland=1.1" into dict.
     """
     s = s.strip()
     if not s:
         return {}
-    out: Dict[str, float] = {}
+    out: dict[str, float] = {}
     for item in s.split(","):
         item = item.strip()
         if not item:
@@ -150,30 +148,31 @@ def _estimate_subgroup_central_dp(
 # Experiment core
 # -----------------------------------------------------------------------------
 
+
 def run_sweep(
     pop: Population,
     *,
     k: int,
-    eps_list: List[float],
-    n_samples: List[int],
+    eps_list: list[float],
+    n_samples: list[int],
     trials: int,
     seed: int,
     sampling: str,
-    strata: List[str],
+    strata: list[str],
     allocation: str,
     min_per_stratum: int,
     biased_feature: str,
-    biased_multipliers: Dict[str, float],
+    biased_multipliers: dict[str, float],
     scenario: str,
     shy_category: int,
     shy_honesty: float,
-) -> Tuple[List[dict], List[dict]]:
+) -> tuple[list[dict], list[dict]]:
     """
     Returns:
       - rows: per (trial, epsilon) metrics
       - summary: aggregated per epsilon (mean/std)
     """
-    rng_master = np.random.default_rng(seed)
+    np.random.default_rng(seed)
 
     # Ground-truth subgroup distributions (population truth)
     truth_region = subgroup_true_distribution(pop, "region")
@@ -184,7 +183,8 @@ def run_sweep(
     age_levels = pop.feature_levels["age_group"]
 
     import itertools
-    rows: List[dict] = []
+
+    rows: list[dict] = []
 
     for n_sample, t in itertools.product(n_samples, range(trials)):
         target_n_sample = n_sample
@@ -225,13 +225,15 @@ def run_sweep(
         if sample.idx.size < max(50, int(0.05 * n_sample)):
             # Record as skipped; continue
             for eps in eps_list:
-                rows.append({
-                    "trial": t,
-                    "epsilon": eps,
-                    "n_target": int(target_n_sample),
-                    "n_effective": int(sample.idx.size),
-                    "skipped": 1,
-                })
+                rows.append(
+                    {
+                        "trial": t,
+                        "epsilon": eps,
+                        "n_target": int(target_n_sample),
+                        "n_effective": int(sample.idx.size),
+                        "skipped": 1,
+                    }
+                )
             continue
 
         # True categories of the respondents (pre-misreport)
@@ -288,7 +290,7 @@ def run_sweep(
             for lvl_idx, lvl_name in enumerate(region_levels):
                 if lvl_name not in truth_region:
                     continue
-                mask = (region_vals == lvl_idx)
+                mask = region_vals == lvl_idx
                 est = _estimate_subgroup(reported, eps, k, mask)
                 ldp_region_est[lvl_name] = est
                 ldp_region_l1s.append(_l1(est, truth_region[lvl_name]))
@@ -298,7 +300,7 @@ def run_sweep(
             for lvl_idx, lvl_name in enumerate(age_levels):
                 if lvl_name not in truth_age:
                     continue
-                mask = (age_vals == lvl_idx)
+                mask = age_vals == lvl_idx
                 est = _estimate_subgroup(reported, eps, k, mask)
                 ldp_age_est[lvl_name] = est
                 ldp_age_l1s.append(_l1(est, truth_age[lvl_name]))
@@ -307,26 +309,26 @@ def run_sweep(
             ldp_region_ratio = _error_ratio(ldp_region_l1s)
             ldp_age_ratio = _error_ratio(ldp_age_l1s)
 
-            rows.append({
-                "trial": t,
-                "epsilon": float(eps),
-                "method": "ldp_rr_debias",
-                "n_target": int(target_n_sample),
-                "n_effective": int(sample.idx.size),
-                "skipped": 0,
-
-                "overall_l1": ldp_overall_l1,
-                "overall_linf": ldp_overall_linf,
-                "overall_mae": ldp_overall_mae,
-                "correct_winner": ldp_correct_winner,
-
-                "worst_region_l1": float(np.max(ldp_region_l1s)) if ldp_region_l1s else float("nan"),
-                "avg_region_l1": float(np.mean(ldp_region_l1s)) if ldp_region_l1s else float("nan"),
-                "worst_age_l1": float(np.max(ldp_age_l1s)) if ldp_age_l1s else float("nan"),
-                "avg_age_l1": float(np.mean(ldp_age_l1s)) if ldp_age_l1s else float("nan"),
-                "error_ratio_region": ldp_region_ratio,
-                "error_ratio_age": ldp_age_ratio,
-            })
+            rows.append(
+                {
+                    "trial": t,
+                    "epsilon": float(eps),
+                    "method": "ldp_rr_debias",
+                    "n_target": int(target_n_sample),
+                    "n_effective": int(sample.idx.size),
+                    "skipped": 0,
+                    "overall_l1": ldp_overall_l1,
+                    "overall_linf": ldp_overall_linf,
+                    "overall_mae": ldp_overall_mae,
+                    "correct_winner": ldp_correct_winner,
+                    "worst_region_l1": float(np.max(ldp_region_l1s)) if ldp_region_l1s else float("nan"),
+                    "avg_region_l1": float(np.mean(ldp_region_l1s)) if ldp_region_l1s else float("nan"),
+                    "worst_age_l1": float(np.max(ldp_age_l1s)) if ldp_age_l1s else float("nan"),
+                    "avg_age_l1": float(np.mean(ldp_age_l1s)) if ldp_age_l1s else float("nan"),
+                    "error_ratio_region": ldp_region_ratio,
+                    "error_ratio_age": ldp_age_ratio,
+                }
+            )
 
             # =================================================================
             # Method B: Central DP (Laplace on aggregate counts)
@@ -345,7 +347,7 @@ def run_sweep(
             for lvl_idx, lvl_name in enumerate(region_levels):
                 if lvl_name not in truth_region:
                     continue
-                mask = (region_vals == lvl_idx)
+                mask = region_vals == lvl_idx
                 rng_sub = np.random.default_rng(seed + 10_000 * t + int(round(eps * 10_000)) + 200 + lvl_idx)
                 est = _estimate_subgroup_central_dp(stated, eps, k, mask, rng_sub)
                 cdp_region_l1s.append(_l1(est, truth_region[lvl_name]))
@@ -354,7 +356,7 @@ def run_sweep(
             for lvl_idx, lvl_name in enumerate(age_levels):
                 if lvl_name not in truth_age:
                     continue
-                mask = (age_vals == lvl_idx)
+                mask = age_vals == lvl_idx
                 rng_sub = np.random.default_rng(seed + 10_000 * t + int(round(eps * 10_000)) + 300 + lvl_idx)
                 est = _estimate_subgroup_central_dp(stated, eps, k, mask, rng_sub)
                 cdp_age_l1s.append(_l1(est, truth_age[lvl_name]))
@@ -363,37 +365,38 @@ def run_sweep(
             cdp_region_ratio = _error_ratio(cdp_region_l1s)
             cdp_age_ratio = _error_ratio(cdp_age_l1s)
 
-            rows.append({
-                "trial": t,
-                "epsilon": float(eps),
-                "method": "central_dp_laplace",
-                "n_target": int(target_n_sample),
-                "n_effective": int(sample.idx.size),
-                "skipped": 0,
-
-                "overall_l1": cdp_overall_l1,
-                "overall_linf": cdp_overall_linf,
-                "overall_mae": cdp_overall_mae,
-                "correct_winner": cdp_correct_winner,
-
-                "worst_region_l1": float(np.max(cdp_region_l1s)) if cdp_region_l1s else float("nan"),
-                "avg_region_l1": float(np.mean(cdp_region_l1s)) if cdp_region_l1s else float("nan"),
-                "worst_age_l1": float(np.max(cdp_age_l1s)) if cdp_age_l1s else float("nan"),
-                "avg_age_l1": float(np.mean(cdp_age_l1s)) if cdp_age_l1s else float("nan"),
-                "error_ratio_region": cdp_region_ratio,
-                "error_ratio_age": cdp_age_ratio,
-            })
+            rows.append(
+                {
+                    "trial": t,
+                    "epsilon": float(eps),
+                    "method": "central_dp_laplace",
+                    "n_target": int(target_n_sample),
+                    "n_effective": int(sample.idx.size),
+                    "skipped": 0,
+                    "overall_l1": cdp_overall_l1,
+                    "overall_linf": cdp_overall_linf,
+                    "overall_mae": cdp_overall_mae,
+                    "correct_winner": cdp_correct_winner,
+                    "worst_region_l1": float(np.max(cdp_region_l1s)) if cdp_region_l1s else float("nan"),
+                    "avg_region_l1": float(np.mean(cdp_region_l1s)) if cdp_region_l1s else float("nan"),
+                    "worst_age_l1": float(np.max(cdp_age_l1s)) if cdp_age_l1s else float("nan"),
+                    "avg_age_l1": float(np.mean(cdp_age_l1s)) if cdp_age_l1s else float("nan"),
+                    "error_ratio_region": cdp_region_ratio,
+                    "error_ratio_age": cdp_age_ratio,
+                }
+            )
 
     # Aggregate summary per (epsilon, method, n_target)
     methods = sorted({r.get("method", "ldp_rr_debias") for r in rows if r.get("skipped", 0) == 0})
-    summary: List[dict] = []
-    
+    summary: list[dict] = []
+
     # We must preserve the order of eps_list and n_samples
     for eps in eps_list:
         for method in methods:
             for n_val in n_samples:
                 sub = [
-                    r for r in rows
+                    r
+                    for r in rows
                     if r.get("epsilon") == float(eps)
                     and r.get("method", "ldp_rr_debias") == method
                     and r.get("n_target", n_val) == n_val
@@ -403,8 +406,10 @@ def run_sweep(
                     summary.append({"epsilon": float(eps), "method": method, "n_target": n_val, "n_rows": 0})
                     continue
 
-                def stats(key: str) -> Tuple[float, float]:
-                    vals = np.array([r[key] for r in sub], dtype=float)
+                stats_rows = list(sub)
+
+                def stats(key: str, rows_for_stats=stats_rows) -> tuple[float, float]:
+                    vals = np.array([r[key] for r in rows_for_stats], dtype=float)
                     return float(np.mean(vals)), float(np.std(vals, ddof=1)) if vals.size > 1 else 0.0
 
                 m_l1, s_l1 = stats("overall_l1")
@@ -418,41 +423,43 @@ def run_sweep(
 
                 # RMSE (per-trial squared L1, then root-mean)
                 l1_vals = np.array([r["overall_l1"] for r in sub], dtype=float)
-                rmse_overall = float(np.sqrt(np.mean(l1_vals ** 2)))
+                rmse_overall = float(np.sqrt(np.mean(l1_vals**2)))
 
                 # Error ratio stats
                 m_ratio_reg, s_ratio_reg = stats("error_ratio_region")
                 m_ratio_age, s_ratio_age = stats("error_ratio_age")
 
-                summary.append({
-                    "epsilon": float(eps),
-                    "method": method,
-                    "n_target": n_val,
-                    "n_rows": len(sub),
-                    "mean_overall_l1": m_l1,
-                    "std_overall_l1": s_l1,
-                    "mean_overall_mae": m_mae,
-                    "std_overall_mae": s_mae,
-                    "rmse_overall": rmse_overall,
-                    "correct_winner_prob": cw_prob,
-                    "mean_worst_region_l1": m_wreg,
-                    "std_worst_region_l1": s_wreg,
-                    "mean_worst_age_l1": m_wage,
-                    "std_worst_age_l1": s_wage,
-                    "mean_error_ratio_region": m_ratio_reg,
-                    "std_error_ratio_region": s_ratio_reg,
-                    "mean_error_ratio_age": m_ratio_age,
-                    "std_error_ratio_age": s_ratio_age,
-                })
+                summary.append(
+                    {
+                        "epsilon": float(eps),
+                        "method": method,
+                        "n_target": n_val,
+                        "n_rows": len(sub),
+                        "mean_overall_l1": m_l1,
+                        "std_overall_l1": s_l1,
+                        "mean_overall_mae": m_mae,
+                        "std_overall_mae": s_mae,
+                        "rmse_overall": rmse_overall,
+                        "correct_winner_prob": cw_prob,
+                        "mean_worst_region_l1": m_wreg,
+                        "std_worst_region_l1": s_wreg,
+                        "mean_worst_age_l1": m_wage,
+                        "std_worst_age_l1": s_wage,
+                        "mean_error_ratio_region": m_ratio_reg,
+                        "std_error_ratio_region": s_ratio_reg,
+                        "mean_error_ratio_age": m_ratio_age,
+                        "std_error_ratio_age": s_ratio_age,
+                    }
+                )
 
     return rows, summary
 
 
-def _write_csv(path: Path, rows: List[dict]) -> None:
+def _write_csv(path: Path, rows: list[dict]) -> None:
     if not rows:
         path.write_text("", encoding="utf-8")
         return
-    keys = sorted({k for r in rows for k in r.keys()})
+    keys = sorted({k for r in rows for k in r})
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=keys)
         w.writeheader()
@@ -460,7 +467,7 @@ def _write_csv(path: Path, rows: List[dict]) -> None:
             w.writerow(r)
 
 
-def _plot_summary(run_dir: Path, summary: List[dict]) -> None:
+def _plot_summary(run_dir: Path, summary: list[dict]) -> None:
     # Optional plotting (matplotlib). If not installed, silently skip.
     try:
         import matplotlib.pyplot as plt
@@ -480,10 +487,10 @@ def _plot_summary(run_dir: Path, summary: List[dict]) -> None:
         "ldp_rr_debias": {"marker": "o", "linestyle": "-"},
         "central_dp_laplace": {"marker": "s", "linestyle": "--"},
     }
-    
+
     n_targets_set = sorted({r.get("n_target") for r in valid if "n_target" in r})
     epsilons_set = sorted({r["epsilon"] for r in valid})
-    
+
     is_1d_sweep = len(n_targets_set) <= 1
 
     if is_1d_sweep:
@@ -573,11 +580,11 @@ def _plot_summary(run_dir: Path, summary: List[dict]) -> None:
         # --- 2D Mode: Sample Complexity Curves (X = n_sample, Y = L1 error, lines = epsilon) ---
         for metric, title, filename in [
             ("mean_overall_l1", "Sample Complexity (Overall L1 Error)", "overall_l1_vs_nsample.png"),
-            ("mean_worst_region_l1", "Sample Complexity (Worst Region L1 Error)", "worst_region_vs_nsample.png")
+            ("mean_worst_region_l1", "Sample Complexity (Worst Region L1 Error)", "worst_region_vs_nsample.png"),
         ]:
             plt.figure(figsize=(10, 6))
             colors = plt.cm.viridis(np.linspace(0, 1, len(epsilons_set)))
-            
+
             for m in methods:
                 for i, eps in enumerate(epsilons_set):
                     rows_me = [r for r in valid if r.get("method", "") == m and r["epsilon"] == eps]
@@ -585,17 +592,17 @@ def _plot_summary(run_dir: Path, summary: List[dict]) -> None:
                         continue
                     x_n = [r["n_target"] for r in rows_me]
                     y_err = [r[metric] for r in rows_me]
-                    
+
                     label = f"{method_labels.get(m, m)} (ε={eps})"
                     style = method_styles.get(m, {"marker": "o", "linestyle": "-"})
                     plt.plot(x_n, y_err, label=label, color=colors[i], **style)
-            
+
             plt.xscale("log")
             plt.xlabel("Sample Size (n_target, log scale)")
             plt.ylabel(title)
             plt.title(title)
             # Create legend outside the plot area
-            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+            plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
             plt.tight_layout()
             plt.savefig(run_dir / "plots" / filename, dpi=200)
             plt.close()
@@ -604,6 +611,7 @@ def _plot_summary(run_dir: Path, summary: List[dict]) -> None:
 # -----------------------------------------------------------------------------
 # CLI
 # -----------------------------------------------------------------------------
+
 
 def main() -> int:
     """Sweep epsilon/sample settings for aggregate and subgroup metrics."""
@@ -618,7 +626,9 @@ def main() -> int:
 
     # Sampling
     p.add_argument("--sampling", type=str, default="srs", choices=["srs", "stratified", "biased"])
-    p.add_argument("--strata", type=str, default="region", help="Strata for stratified sampling, e.g. 'region,age_group'")
+    p.add_argument(
+        "--strata", type=str, default="region", help="Strata for stratified sampling, e.g. 'region,age_group'"
+    )
     p.add_argument("--allocation", type=str, default="proportional", choices=["proportional", "equal", "sqrt"])
     p.add_argument("--min_per_stratum", type=int, default=0, help="Min per stratum cell (stratified only).")
 
@@ -660,15 +670,12 @@ def main() -> int:
         "n_samples": n_samples,
         "trials": args.trials,
         "seed": args.seed,
-
         "sampling": args.sampling,
         "strata": strata,
         "allocation": args.allocation,
         "min_per_stratum": args.min_per_stratum,
-
         "biased_feature": args.biased_feature,
         "multipliers": multipliers,
-
         "scenario": args.scenario,
         "shy_category": args.shy_category,
         "shy_honesty": args.shy_honesty,

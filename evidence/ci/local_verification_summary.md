@@ -54,4 +54,4 @@ Acceptance status from the canonical run and regenerated `paper/generated/FINAL_
 
 The run is CPU-sized final-style evidence: 20 trials per condition, sample sizes 500/1000, epsilons 0.5/1.0/2.0, four scenarios, four deployable methods, 1920 raw rows, 96 summary rows and 24 paired comparison rows.
 
-The older `2026-05-05_*` runs are retained as superseded/supporting evidence only and should not be cited as the primary final evidence.
+Older exploratory final-evidence runs are not included in this archive to avoid ambiguity. The canonical `2026-05-06_004647_mrp_vs_baselines` run is the only final evidence run used for report tables, generated summaries and viva claims.

@@ -1,11 +1,11 @@
 """Optional plot generation for experiment summaries."""
+
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, List
 
 
-def plot_summary(run_dir: Path, summary_rows: List[Dict]) -> None:
+def plot_summary(run_dir: Path, summary_rows: list[dict]) -> None:
     """Write standard summary plots when matplotlib is installed."""
     try:
         import matplotlib
@@ -45,7 +45,18 @@ def plot_summary(run_dir: Path, summary_rows: List[Dict]) -> None:
         )
 
 
-def _line_plot(plt, run_dir: Path, rows_s: List[Dict], methods: List[str], eps: List[float], *, key: str, ylabel: str, title: str, filename: str) -> None:
+def _line_plot(
+    plt,
+    run_dir: Path,
+    rows_s: list[dict],
+    methods: list[str],
+    eps: list[float],
+    *,
+    key: str,
+    ylabel: str,
+    title: str,
+    filename: str,
+) -> None:
     plt.figure()
     for method in methods:
         xs = []

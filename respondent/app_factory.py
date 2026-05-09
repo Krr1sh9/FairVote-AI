@@ -1,4 +1,5 @@
 """Flask app factory for the respondent collection server."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -9,8 +10,7 @@ try:
     from werkzeug.exceptions import RequestEntityTooLarge
 except ImportError as exc:  # pragma: no cover - exercised only without Flask installed
     raise ImportError(
-        "Flask is required for the respondent server.\n"
-        'Install it with:  pip install -e ".[respondent]"'
+        'Flask is required for the respondent server.\nInstall it with:  pip install -e ".[respondent]"'
     ) from exc
 
 try:  # pragma: no cover - optional dependency branch
@@ -133,7 +133,7 @@ def create_app(config_path: Path | None = None, data_path: Path | None = None) -
             if isinstance(perturbed, bool):
                 raise ValueError
             perturbed = int(perturbed)
-        except (TypeError, ValueError):
+        except (TypeError, ValueError) as _exc:
             return jsonify({"error": "'perturbed_answer' must be an integer"}), 400
         if perturbed < 0 or perturbed >= k:
             return jsonify({"error": f"'perturbed_answer' must be in [0, {k - 1}]"}), 400

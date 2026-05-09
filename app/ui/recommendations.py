@@ -10,7 +10,9 @@ import streamlit as st
 
 def render_recommendations_tab() -> None:
     st.subheader("Optimisation & Recommendations")
-    st.markdown("Upload a `summary.csv` from an experiment run to find the optimal privacy-utility configuration that satisfies your requirements.")
+    st.markdown(
+        "Upload a `summary.csv` from an experiment run to find the optimal privacy-utility configuration that satisfies your requirements."
+    )
 
     rec_csv = st.file_uploader("Upload summary.csv from an experiment run", type=["csv"], key="rec_csv")
     if rec_csv is None:
@@ -31,7 +33,7 @@ def render_recommendations_tab() -> None:
             st.warning("No valid candidates found in CSV.")
             return
 
-        st.success(f"Loaded {len(cands)} candidates across {len(set(c.scenario for c in cands))} scenarios.")
+        st.success(f"Loaded {len(cands)} candidates across {len({c.scenario for c in cands})} scenarios.")
 
         colR1, colR2 = st.columns(2)
         with colR1:
@@ -43,10 +45,15 @@ def render_recommendations_tab() -> None:
 
         with colR2:
             st.markdown("**Fairness Constraints**")
-            w_reg_l1 = st.number_input("Max Worst Region L1 (Major)", min_value=0.0, max_value=2.0, value=2.0, step=0.01)
+            w_reg_l1 = st.number_input(
+                "Max Worst Region L1 (Major)", min_value=0.0, max_value=2.0, value=2.0, step=0.01
+            )
             w_age_l1 = st.number_input("Max Worst Age L1 (Major)", min_value=0.0, max_value=2.0, value=2.0, step=0.01)
 
-        obj_primary = st.selectbox("Optimize Objective (minimise)", ["mean_overall_l1", "mean_worst_region_l1_major", "mean_worst_age_l1_major", "mean_overall_mae", "epsilon"])
+        obj_primary = st.selectbox(
+            "Optimize Objective (minimise)",
+            ["mean_overall_l1", "mean_worst_region_l1_major", "mean_worst_age_l1_major", "mean_overall_mae", "epsilon"],
+        )
 
         if st.button("Generate Recommendations", type="primary"):
             cons = Constraints(

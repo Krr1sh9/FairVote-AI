@@ -23,10 +23,9 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 
-def _read_csv(path: Path) -> List[dict]:
+def _read_csv(path: Path) -> list[dict]:
     with path.open("r", newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
@@ -44,7 +43,7 @@ def _fmt(x: float, ndp: int = 4) -> str:
     return f"{x:.{ndp}f}"
 
 
-def _md_table(headers: List[str], rows: List[List[str]]) -> str:
+def _md_table(headers: list[str], rows: list[list[str]]) -> str:
     out = []
     out.append("| " + " | ".join(headers) + " |")
     out.append("|" + "|".join(["---"] * len(headers)) + "|")
@@ -54,16 +53,16 @@ def _md_table(headers: List[str], rows: List[List[str]]) -> str:
 
 
 def _best_rows(
-    summary: List[dict],
+    summary: list[dict],
     *,
     metric: str,
-    eps_max: Optional[float],
-) -> List[dict]:
+    eps_max: float | None,
+) -> list[dict]:
     """
     Select one "best" row per scenario.
     Preference: eps <= eps_max (if provided), then minimal metric.
     """
-    by_scen: Dict[str, List[dict]] = {}
+    by_scen: dict[str, list[dict]] = {}
     for r in summary:
         scen = r.get("scenario", "")
         if not scen:
@@ -71,7 +70,7 @@ def _best_rows(
         by_scen.setdefault(scen, []).append(r)
 
     best = []
-    for scen, rows in sorted(by_scen.items(), key=lambda x: x[0]):
+    for _scen, rows in sorted(by_scen.items(), key=lambda x: x[0]):
         # filter by eps constraint if provided
         if eps_max is not None:
             rows2 = [r for r in rows if _try_float(r.get("epsilon")) <= eps_max]
@@ -79,7 +78,7 @@ def _best_rows(
                 rows = rows2
 
         # choose minimal metric, tie-break by smaller epsilon
-        def keyfun(r: dict) -> Tuple[float, float, str]:
+        def keyfun(r: dict) -> tuple[float, float, str]:
             return (_try_float(r.get(metric)), _try_float(r.get("epsilon")), str(r.get("method", "")))
 
         rows_sorted = sorted(rows, key=keyfun)
@@ -91,8 +90,12 @@ def main() -> int:
     """Write a Markdown summary from existing experiment CSV outputs."""
     ap = argparse.ArgumentParser(description="Write a report-ready RESULTS_SUMMARY.md for a run folder.")
     ap.add_argument("--run_dir", required=True, type=str, help="Run directory containing summary.csv")
-    ap.add_argument("--metric", default="overall_l1", type=str, help="Metric to optimise when selecting best per scenario.")
-    ap.add_argument("--eps_max", default=None, type=float, help="If provided, restrict best-choice selection to epsilon <= eps_max.")
+    ap.add_argument(
+        "--metric", default="overall_l1", type=str, help="Metric to optimise when selecting best per scenario."
+    )
+    ap.add_argument(
+        "--eps_max", default=None, type=float, help="If provided, restrict best-choice selection to epsilon <= eps_max."
+    )
     ap.add_argument("--ndp", default=4, type=int, help="Decimal places in tables.")
     args = ap.parse_args()
 
@@ -111,7 +114,7 @@ def main() -> int:
     best = _best_rows(summary, metric=args.metric, eps_max=args.eps_max)
 
     # Map learned honesty mean by (scenario, epsilon) if available
-    learned_map: Dict[Tuple[str, float], dict] = {}
+    learned_map: dict[tuple[str, float], dict] = {}
     for r in learned:
         scen = r.get("scenario", "")
         eps = _try_float(r.get("epsilon"))
@@ -128,10 +131,15 @@ def main() -> int:
 
     # Best per scenario table
     headers = [
-        "Scenario", "Method", "Epsilon",
-        "overall_l1", "overall_mae",
-        "worst_region_l1_major", "worst_age_l1_major",
-        "p90_region_l1_major", "p90_age_l1_major",
+        "Scenario",
+        "Method",
+        "Epsilon",
+        "overall_l1",
+        "overall_mae",
+        "worst_region_l1_major",
+        "worst_age_l1_major",
+        "p90_region_l1_major",
+        "p90_age_l1_major",
         "learned_honesty_mean",
     ]
     rows = []
@@ -144,18 +152,20 @@ def main() -> int:
         if key in learned_map:
             hmean = _fmt(_try_float(learned_map[key].get("mean_learned_honesty")), args.ndp)
 
-        rows.append([
-            scen,
-            method,
-            _fmt(eps, 3),
-            _fmt(_try_float(r.get("overall_l1")), args.ndp),
-            _fmt(_try_float(r.get("overall_mae")), args.ndp),
-            _fmt(_try_float(r.get("worst_region_l1_major")), args.ndp),
-            _fmt(_try_float(r.get("worst_age_l1_major")), args.ndp),
-            _fmt(_try_float(r.get("p90_region_l1_major")), args.ndp),
-            _fmt(_try_float(r.get("p90_age_l1_major")), args.ndp),
-            hmean,
-        ])
+        rows.append(
+            [
+                scen,
+                method,
+                _fmt(eps, 3),
+                _fmt(_try_float(r.get("overall_l1")), args.ndp),
+                _fmt(_try_float(r.get("overall_mae")), args.ndp),
+                _fmt(_try_float(r.get("worst_region_l1_major")), args.ndp),
+                _fmt(_try_float(r.get("worst_age_l1_major")), args.ndp),
+                _fmt(_try_float(r.get("p90_region_l1_major")), args.ndp),
+                _fmt(_try_float(r.get("p90_age_l1_major")), args.ndp),
+                hmean,
+            ]
+        )
 
     md.append("## Best method per scenario (by chosen metric)\n\n")
     md.append(_md_table(headers, rows))
@@ -164,29 +174,35 @@ def main() -> int:
     # Learned honesty section
     if learned:
         md.append("## Learned honesty (shy parameter)\n\n")
-        md.append("This shows the estimated honesty parameter h (higher means more truthful reporting for the shy category).\n\n")
+        md.append(
+            "This shows the estimated honesty parameter h (higher means more truthful reporting for the shy category).\n\n"
+        )
         h_headers = ["Scenario", "Epsilon", "Trials", "Mean h", "Std", "CI low", "CI high", "Median"]
         h_rows = []
         # Try to detect CI column names in the CSV
-        ci_low_key = next((k for k in learned[0].keys() if k.endswith("_low")), None)
-        ci_high_key = next((k for k in learned[0].keys() if k.endswith("_high")), None)
+        ci_low_key = next((k for k in learned[0] if k.endswith("_low")), None)
+        ci_high_key = next((k for k in learned[0] if k.endswith("_high")), None)
 
         for r in sorted(learned, key=lambda x: (x.get("scenario", ""), _try_float(x.get("epsilon")))):
-            h_rows.append([
-                str(r.get("scenario", "")),
-                _fmt(_try_float(r.get("epsilon")), 3),
-                str(r.get("n_trials", "")),
-                _fmt(_try_float(r.get("mean_learned_honesty")), args.ndp),
-                _fmt(_try_float(r.get("std_learned_honesty")), args.ndp),
-                _fmt(_try_float(r.get(ci_low_key)) if ci_low_key else float("nan"), args.ndp),
-                _fmt(_try_float(r.get(ci_high_key)) if ci_high_key else float("nan"), args.ndp),
-                _fmt(_try_float(r.get("median_learned_honesty")), args.ndp),
-            ])
+            h_rows.append(
+                [
+                    str(r.get("scenario", "")),
+                    _fmt(_try_float(r.get("epsilon")), 3),
+                    str(r.get("n_trials", "")),
+                    _fmt(_try_float(r.get("mean_learned_honesty")), args.ndp),
+                    _fmt(_try_float(r.get("std_learned_honesty")), args.ndp),
+                    _fmt(_try_float(r.get(ci_low_key)) if ci_low_key else float("nan"), args.ndp),
+                    _fmt(_try_float(r.get(ci_high_key)) if ci_high_key else float("nan"), args.ndp),
+                    _fmt(_try_float(r.get("median_learned_honesty")), args.ndp),
+                ]
+            )
         md.append(_md_table(h_headers, h_rows))
         md.append("\n")
     else:
         md.append("## Learned honesty (shy parameter)\n\n")
-        md.append("No learned honesty summary found. If you generated it, ensure `learned_honesty_summary.csv` exists in the run directory.\n\n")
+        md.append(
+            "No learned honesty summary found. If you generated it, ensure `learned_honesty_summary.csv` exists in the run directory.\n\n"
+        )
 
     # Pareto section
     if pareto_files:
@@ -199,8 +215,12 @@ def main() -> int:
     # Next steps for report inclusion
     md.append("## What to paste into your report\n\n")
     md.append("- The **Best method per scenario** table above (copy/paste).\n")
-    md.append("- The **Learned honesty** table (evidence about the fitted honesty parameter estimated from privatized reports).\n")
-    md.append("- A short paragraph interpreting the privacy–utility–fairness trade-off (reference pareto CSVs and any plots).\n\n")
+    md.append(
+        "- The **Learned honesty** table (evidence about the fitted honesty parameter estimated from privatized reports).\n"
+    )
+    md.append(
+        "- A short paragraph interpreting the privacy–utility–fairness trade-off (reference pareto CSVs and any plots).\n\n"
+    )
 
     out_md = run_dir / "RESULTS_SUMMARY.md"
     out_md.write_text("".join(md), encoding="utf-8")

@@ -1,13 +1,14 @@
 """Typed configuration objects for the MRP-vs-baselines experiment pipeline."""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 from .scenarios import validate_scenarios
 
 
-def default_methods(enable_neural: bool) -> List[str]:
+def default_methods(enable_neural: bool) -> list[str]:
     """Return the backwards-compatible core method order used by default."""
     methods = [
         "raw_reported_distribution",
@@ -21,7 +22,7 @@ def default_methods(enable_neural: bool) -> List[str]:
     return methods
 
 
-def research_methods(enable_neural: bool) -> List[str]:
+def research_methods(enable_neural: bool) -> list[str]:
     """Return the richer method set used for the neural-vs-linear research question."""
     methods = [
         "oracle_true_sample_distribution",
@@ -40,7 +41,7 @@ def research_methods(enable_neural: bool) -> List[str]:
     return methods
 
 
-def resolve_methods(spec: str | List[str] | None, *, enable_neural: bool) -> List[str]:
+def resolve_methods(spec: str | list[str] | None, *, enable_neural: bool) -> list[str]:
     """Resolve a method preset or comma/list specification."""
     if spec is None or spec == []:
         return default_methods(enable_neural)
@@ -67,19 +68,19 @@ class ExperimentConfig:
     """
 
     k: int
-    eps_list: List[float]
-    scenarios: List[str]
+    eps_list: list[float]
+    scenarios: list[str]
     population_n: int
     n_sample: int
     trials: int
     seed: int
     sampling: str
-    strata: List[str]
+    strata: list[str]
     allocation: str
     min_per_stratum: int
     biased_feature: str
-    biased_multipliers: Dict[str, float]
-    feature_order: List[str]
+    biased_multipliers: dict[str, float]
+    feature_order: list[str]
     shy_category: int
     shy_honesty: float
     mrp_steps: int
@@ -88,7 +89,7 @@ class ExperimentConfig:
     mrp_batch_size: int
     verbose_every: int
     enable_neural: bool
-    neural_hidden_layers: Tuple[int, ...]
+    neural_hidden_layers: tuple[int, ...]
     neural_steps: int
     neural_lr: float
     neural_batch_size: int
@@ -98,8 +99,8 @@ class ExperimentConfig:
     major_mass: float
     neural_validation_fraction: float = 0.2
     neural_patience: int = 20
-    methods: List[str] = field(default_factory=list)
-    sample_sizes: List[int] = field(default_factory=list)
+    methods: list[str] = field(default_factory=list)
+    sample_sizes: list[int] = field(default_factory=list)
     preset: str = "custom"
     continue_on_error: bool = True
     hierarchical_global_l2: float = 0.01
@@ -147,11 +148,11 @@ class ExperimentConfig:
         return int(self.n_sample)
 
     @property
-    def sample_size_grid(self) -> List[int]:
+    def sample_size_grid(self) -> list[int]:
         """All sample sizes included in this run."""
         return list(self.sample_sizes or [self.n_sample])
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         d = asdict(self)
         d["neural_hidden_layers"] = list(self.neural_hidden_layers)
         d["eps"] = list(self.eps_list)
@@ -184,20 +185,20 @@ class MethodResult:
 
     method: str
     estimate_overall: Any
-    by_feature: Dict[str, Dict[str, Any]]
+    by_feature: dict[str, dict[str, Any]]
     runtime_sec: float
-    extra: Dict[str, Any] = field(default_factory=dict)
+    extra: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
 class ExperimentResult:
     """In-memory result bundle returned by the modular experiment pipeline."""
 
-    rows: List[Dict[str, Any]]
-    summary: List[Dict[str, Any]]
-    paired_comparisons: List[Dict[str, Any]]
-    ablations: List[Dict[str, Any]]
-    runtime_profile: List[Dict[str, Any]]
-    failures: List[Dict[str, Any]]
+    rows: list[dict[str, Any]]
+    summary: list[dict[str, Any]]
+    paired_comparisons: list[dict[str, Any]]
+    ablations: list[dict[str, Any]]
+    runtime_profile: list[dict[str, Any]]
+    failures: list[dict[str, Any]]
     config: ExperimentConfig
-    manifest: Dict[str, Any]
+    manifest: dict[str, Any]

@@ -13,11 +13,10 @@ are used only by the simulator to compute evaluation metrics after fitting.
 from __future__ import annotations
 
 import argparse
-import csv
 import json
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, List, Mapping, Sequence, Tuple
 
 import numpy as np
 
@@ -45,7 +44,7 @@ class NeuralMRPPreset:
     """
 
     eps: str
-    sample_sizes: Tuple[int, ...]
+    sample_sizes: tuple[int, ...]
     scenarios: str
     population_n: int
     trials: int
@@ -56,7 +55,7 @@ class NeuralMRPPreset:
     mrp_batch_size: int
 
 
-PRESETS: Dict[str, NeuralMRPPreset] = {
+PRESETS: dict[str, NeuralMRPPreset] = {
     "small": NeuralMRPPreset(
         eps="0.5,1.0",
         sample_sizes=(120, 250),
@@ -83,7 +82,7 @@ PRESETS: Dict[str, NeuralMRPPreset] = {
     ),
 }
 
-SCENARIO_ALIASES: Dict[str, str] = {
+SCENARIO_ALIASES: dict[str, str] = {
     "no_bias": "no_bias",
     "simple_linear": "simple_linear",
     "nonlinear_interaction": "nonlinear_interaction",
@@ -99,7 +98,7 @@ SCENARIO_ALIASES: Dict[str, str] = {
     "shy_privacy_helps": "shy_privacy_helps",
 }
 
-DISPLAY_SCENARIO_NAMES: Dict[str, str] = {
+DISPLAY_SCENARIO_NAMES: dict[str, str] = {
     "no_bias": "no_bias",
     "simple_linear": "simple_linear",
     "nonlinear_interaction": "nonlinear_interaction",
@@ -142,7 +141,7 @@ LOWER_IS_BETTER_METRICS = [
 HIGHER_IS_BETTER_METRICS = ["mean_winner_correct"]
 
 
-def _parse_sample_sizes(s: str) -> List[int]:
+def _parse_sample_sizes(s: str) -> list[int]:
     vals = [int(x.strip()) for x in str(s).split(",") if x.strip()]
     if not vals:
         raise ValueError("Provide --sample_sizes like '500,1000,5000'.")
@@ -151,8 +150,8 @@ def _parse_sample_sizes(s: str) -> List[int]:
     return vals
 
 
-def _normalise_scenarios(scenarios: Sequence[str]) -> List[str]:
-    out: List[str] = []
+def _normalise_scenarios(scenarios: Sequence[str]) -> list[str]:
+    out: list[str] = []
     for raw in scenarios:
         key = raw.strip()
         if not key:
@@ -185,8 +184,10 @@ def _float_or_nan(value: object) -> float:
         return float("nan")
 
 
-def _index_summary(summary_rows: Sequence[Mapping[str, object]]) -> Dict[Tuple[str, float, int, str], Mapping[str, object]]:
-    indexed: Dict[Tuple[str, float, int, str], Mapping[str, object]] = {}
+def _index_summary(
+    summary_rows: Sequence[Mapping[str, object]],
+) -> dict[tuple[str, float, int, str], Mapping[str, object]]:
+    indexed: dict[tuple[str, float, int, str], Mapping[str, object]] = {}
     for row in summary_rows:
         if int(row.get("n_rows", 0) or 0) <= 0:
             continue
@@ -200,7 +201,7 @@ def _index_summary(summary_rows: Sequence[Mapping[str, object]]) -> Dict[Tuple[s
     return indexed
 
 
-def build_neural_comparison(summary_rows: Sequence[Mapping[str, object]]) -> List[dict]:
+def build_neural_comparison(summary_rows: Sequence[Mapping[str, object]]) -> list[dict]:
     """Compare neural RR-MRP against each baseline for every condition.
 
     Deltas are defined as ``neural - baseline``. For error/runtime metrics,
@@ -209,8 +210,8 @@ def build_neural_comparison(summary_rows: Sequence[Mapping[str, object]]) -> Lis
     """
 
     indexed = _index_summary(summary_rows)
-    conditions = sorted({(s, e, n) for (s, e, n, _m) in indexed.keys()}, key=lambda x: (x[0], x[2], x[1]))
-    out: List[dict] = []
+    conditions = sorted({(s, e, n) for (s, e, n, _m) in indexed}, key=lambda x: (x[0], x[2], x[1]))
+    out: list[dict] = []
 
     for scenario, eps, n_sample in conditions:
         neural = indexed.get((scenario, eps, n_sample, "neural_rr_mrp"))
@@ -267,21 +268,21 @@ def build_neural_comparison(summary_rows: Sequence[Mapping[str, object]]) -> Lis
     return out
 
 
-def build_method_rankings(summary_rows: Sequence[Mapping[str, object]]) -> List[dict]:
+def build_method_rankings(summary_rows: Sequence[Mapping[str, object]]) -> list[dict]:
     """Rank methods within each condition by key metrics.
 
     Rank 1 is best. This makes failure cases visible: if neural is not rank 1,
     the output says so without narrative spin.
     """
 
-    grouped: Dict[Tuple[str, float, int], List[Mapping[str, object]]] = {}
+    grouped: dict[tuple[str, float, int], list[Mapping[str, object]]] = {}
     for row in summary_rows:
         if int(row.get("n_rows", 0) or 0) <= 0:
             continue
         key = (str(row["scenario"]), float(row["epsilon"]), int(row["n_sample"]))
         grouped.setdefault(key, []).append(row)
 
-    out: List[dict] = []
+    out: list[dict] = []
     rank_metrics = [
         "mean_overall_l1",
         "mean_weighted_region_l1",
@@ -297,28 +298,30 @@ def build_method_rankings(summary_rows: Sequence[Mapping[str, object]]) -> List[
                     vals.append((val, str(row["method"])))
             vals.sort(key=lambda x: x[0])
             for rank, (val, method) in enumerate(vals, start=1):
-                out.append({
-                    "scenario": scenario,
-                    "scenario_label": _display_scenario(scenario),
-                    "epsilon": eps,
-                    "n_sample": n_sample,
-                    "metric": metric,
-                    "rank": rank,
-                    "method": method,
-                    "value": val,
-                    "is_neural": int(method == "neural_rr_mrp"),
-                })
+                out.append(
+                    {
+                        "scenario": scenario,
+                        "scenario_label": _display_scenario(scenario),
+                        "epsilon": eps,
+                        "n_sample": n_sample,
+                        "metric": metric,
+                        "rank": rank,
+                        "method": method,
+                        "value": val,
+                        "is_neural": int(method == "neural_rr_mrp"),
+                    }
+                )
     return out
 
 
-def build_neural_verdict(comparison_rows: Sequence[Mapping[str, object]]) -> List[dict]:
+def build_neural_verdict(comparison_rows: Sequence[Mapping[str, object]]) -> list[dict]:
     """Aggregate machine-readable verdict rows by baseline method.
 
     This does not decide that neural is globally justified. It reports win rates
     and average deltas so the dissertation/report can make a cautious claim.
     """
 
-    out: List[dict] = []
+    out: list[dict] = []
     baselines = sorted({str(r["baseline_method"]) for r in comparison_rows})
     for baseline in baselines:
         rows = [r for r in comparison_rows if r["baseline_method"] == baseline]
@@ -350,8 +353,8 @@ def build_neural_verdict(comparison_rows: Sequence[Mapping[str, object]]) -> Lis
     return out
 
 
-def _add_common_metadata(rows: Iterable[dict], *, preset: str, n_sample: int) -> List[dict]:
-    out: List[dict] = []
+def _add_common_metadata(rows: Iterable[dict], *, preset: str, n_sample: int) -> list[dict]:
+    out: list[dict] = []
     for row in rows:
         r = dict(row)
         r["preset"] = preset
@@ -432,8 +435,8 @@ def run_justification_experiment(args: argparse.Namespace) -> Path:
 
     # Rows remain machine-readable so downstream tables can be reproduced from
     # the saved CSV files without re-running the experiment.
-    all_rows: List[dict] = []
-    all_summary: List[dict] = []
+    all_rows: list[dict] = []
+    all_summary: list[dict] = []
 
     for n_sample in sample_sizes:
         rows, summary = run_experiment(
@@ -502,7 +505,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--k", type=int, default=5)
     p.add_argument("--eps", type=str, default=None, help="Override preset eps list, e.g. '0.2,0.5,1.0,2.0'.")
     p.add_argument("--sample_sizes", type=str, default=None, help="Override preset sample sizes, e.g. '500,1000'.")
-    p.add_argument("--scenarios", type=str, default=None, help="Override preset scenarios. Aliases: shy_voter, privacy_helps.")
+    p.add_argument(
+        "--scenarios", type=str, default=None, help="Override preset scenarios. Aliases: shy_voter, privacy_helps."
+    )
     p.add_argument("--population_n", type=int, default=None)
     p.add_argument("--trials", type=int, default=None)
     p.add_argument("--seed", type=int, default=123)
@@ -525,7 +530,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--mrp_batch_size", type=int, default=None)
     p.add_argument("--verbose_every", type=int, default=0)
 
-    p.add_argument("--disable_neural", action="store_true", help="For infrastructure debugging only; defeats the main purpose.")
+    p.add_argument(
+        "--disable_neural", action="store_true", help="For infrastructure debugging only; defeats the main purpose."
+    )
     p.add_argument("--neural_hidden_layers", type=str, default=None)
     p.add_argument("--neural_steps", type=int, default=None)
     p.add_argument("--neural_lr", type=float, default=0.01)

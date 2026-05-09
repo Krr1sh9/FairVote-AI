@@ -1,12 +1,14 @@
 """Reproducible output helpers for experiment runs."""
+
 from __future__ import annotations
 
 import csv
 import hashlib
 import json
+from collections.abc import Sequence
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Sequence
+from typing import Any
 
 from .config import ExperimentResult
 
@@ -31,12 +33,12 @@ def timestamped_run_dir(base: Path, name: str) -> Path:
     return run_dir
 
 
-def write_json(path: Path, obj: Dict[str, Any]) -> None:
+def write_json(path: Path, obj: dict[str, Any]) -> None:
     path.write_text(json.dumps(obj, indent=2, sort_keys=True), encoding="utf-8")
 
 
-def write_csv(path: Path, rows: List[Dict[str, Any]], fieldnames: Sequence[str] | None = None) -> None:
-    keys = list(fieldnames) if fieldnames is not None else sorted({k for r in rows for k in r.keys()})
+def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: Sequence[str] | None = None) -> None:
+    keys = list(fieldnames) if fieldnames is not None else sorted({k for r in rows for k in r})
     if not keys:
         path.write_text("", encoding="utf-8")
         return
@@ -147,34 +149,82 @@ def write_run_readme(path: Path, result: ExperimentResult) -> None:
 
 def _paired_fieldnames() -> list[str]:
     return [
-        "config_seed", "scenario", "epsilon", "sample_size", "population_n", "sampling", "feature_set",
-        "linear_method", "neural_method", "n_paired_trials",
-        "mean_linear_overall_l1", "mean_neural_overall_l1", "mean_delta_overall_l1", "win_rate_delta_overall_l1",
-        "ci95_low_delta_overall_l1", "ci95_high_delta_overall_l1",
-        "mean_linear_worst_group_l1_major", "mean_neural_worst_group_l1_major", "mean_delta_worst_group_l1",
-        "win_rate_delta_worst_group_l1", "ci95_low_delta_worst_group_l1", "ci95_high_delta_worst_group_l1",
+        "config_seed",
+        "scenario",
+        "epsilon",
+        "sample_size",
+        "population_n",
+        "sampling",
+        "feature_set",
+        "linear_method",
+        "neural_method",
+        "n_paired_trials",
+        "mean_linear_overall_l1",
+        "mean_neural_overall_l1",
+        "mean_delta_overall_l1",
+        "win_rate_delta_overall_l1",
+        "ci95_low_delta_overall_l1",
+        "ci95_high_delta_overall_l1",
+        "mean_linear_worst_group_l1_major",
+        "mean_neural_worst_group_l1_major",
+        "mean_delta_worst_group_l1",
+        "win_rate_delta_worst_group_l1",
+        "ci95_low_delta_worst_group_l1",
+        "ci95_high_delta_worst_group_l1",
     ]
 
 
 def _ablation_fieldnames() -> list[str]:
     return [
-        "config_seed", "scenario", "epsilon", "sample_size", "population_n", "reference_method", "ablation_method",
-        "n_paired_trials", "mean_reference_overall_l1", "mean_comparison_overall_l1", "mean_delta_overall_l1",
-        "win_rate_delta_overall_l1", "ci95_low_delta_overall_l1", "ci95_high_delta_overall_l1",
-        "mean_reference_worst_group_l1_major", "mean_comparison_worst_group_l1_major", "mean_delta_worst_group_l1",
-        "win_rate_delta_worst_group_l1", "ci95_low_delta_worst_group_l1", "ci95_high_delta_worst_group_l1",
+        "config_seed",
+        "scenario",
+        "epsilon",
+        "sample_size",
+        "population_n",
+        "reference_method",
+        "ablation_method",
+        "n_paired_trials",
+        "mean_reference_overall_l1",
+        "mean_comparison_overall_l1",
+        "mean_delta_overall_l1",
+        "win_rate_delta_overall_l1",
+        "ci95_low_delta_overall_l1",
+        "ci95_high_delta_overall_l1",
+        "mean_reference_worst_group_l1_major",
+        "mean_comparison_worst_group_l1_major",
+        "mean_delta_worst_group_l1",
+        "win_rate_delta_worst_group_l1",
+        "ci95_low_delta_worst_group_l1",
+        "ci95_high_delta_worst_group_l1",
     ]
 
 
 def _runtime_fieldnames() -> list[str]:
     return [
-        "config_seed", "scenario", "epsilon", "sample_size", "method", "n_rows", "n_failures", "n_skipped",
-        "mean_runtime_sec", "std_runtime_sec", "total_runtime_sec",
+        "config_seed",
+        "scenario",
+        "epsilon",
+        "sample_size",
+        "method",
+        "n_rows",
+        "n_failures",
+        "n_skipped",
+        "mean_runtime_sec",
+        "std_runtime_sec",
+        "total_runtime_sec",
     ]
 
 
 def _failure_fieldnames() -> list[str]:
     return [
-        "config_seed", "sample_size", "scenario", "trial", "epsilon", "method", "runtime_sec",
-        "error_type", "error_message", "traceback",
+        "config_seed",
+        "sample_size",
+        "scenario",
+        "trial",
+        "epsilon",
+        "method",
+        "runtime_sec",
+        "error_type",
+        "error_message",
+        "traceback",
     ]

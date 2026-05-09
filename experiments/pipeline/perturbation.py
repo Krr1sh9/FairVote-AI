@@ -1,4 +1,5 @@
 """Misreporting and Randomized Response perturbation helpers."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,6 +13,7 @@ from fairvote.simulation.bias_models import (
     build_shy_model_from_epsilon,
     make_shy_supporter_model,
 )
+
 from .config import ExperimentConfig
 from .scenarios import EPSILON_DEPENDENT_MISREPORT_SCENARIOS, SHY_MISREPORT_SCENARIOS, VALID_SCENARIOS
 

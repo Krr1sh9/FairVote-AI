@@ -16,8 +16,8 @@ def test_group_metrics_known_values():
         "B": np.array([0.2, 0.8]),
     }
     truth = {
-        "A": np.array([0.5, 0.5]),   # L1 = 0.2
-        "B": np.array([0.0, 1.0]),   # L1 = 0.4
+        "A": np.array([0.5, 0.5]),  # L1 = 0.2
+        "B": np.array([0.0, 1.0]),  # L1 = 0.4
     }
     masses = {"A": 0.7, "B": 0.3}
 

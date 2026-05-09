@@ -1,14 +1,16 @@
 """Metric and result-row helpers for the MRP-vs-baselines experiment."""
+
 from __future__ import annotations
 
-from typing import Any, Dict, Mapping, Sequence, Tuple
+from collections.abc import Mapping, Sequence
+from typing import Any
 
 import numpy as np
 
 from fairvote.metrics.group_metrics import correct_winner, p90_group_l1, weighted_group_l1, worst_group_l1
+
 from .config import ExperimentConfig, TrialConfig
 from .scenarios import scenario_info
-
 
 METRIC_COLUMNS = [
     "overall_l1",
@@ -86,7 +88,7 @@ def feature_masses_from_cells(
     by: Sequence[str],
     feature: str,
     feature_levels: Mapping[str, Sequence[str]],
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Compute population masses for each level of a feature from poststrat cells."""
     by_list = list(by)
     if feature not in by_list:
@@ -95,11 +97,8 @@ def feature_masses_from_cells(
     levels = list(feature_levels[feature])
     total = float(np.sum(counts))
     if total <= 0:
-        return {lvl: 0.0 for lvl in levels}
-    return {
-        lvl_name: float(np.sum(counts[cells[:, j] == lvl_idx]) / total)
-        for lvl_idx, lvl_name in enumerate(levels)
-    }
+        return dict.fromkeys(levels, 0.0)
+    return {lvl_name: float(np.sum(counts[cells[:, j] == lvl_idx]) / total) for lvl_idx, lvl_name in enumerate(levels)}
 
 
 def poststrat_from_cell_theta(
@@ -110,18 +109,18 @@ def poststrat_from_cell_theta(
     by: Sequence[str],
     feature_levels: Mapping[str, Sequence[str]],
     include_features: Sequence[str],
-) -> Tuple[np.ndarray, Dict[str, Dict[str, np.ndarray]]]:
+) -> tuple[np.ndarray, dict[str, dict[str, np.ndarray]]]:
     """Poststratify cell-level category probabilities to overall and subgroup estimates."""
     total = float(np.sum(counts))
     overall = (counts[:, None] * cell_theta).sum(axis=0) / total
-    by_feature: Dict[str, Dict[str, np.ndarray]] = {}
+    by_feature: dict[str, dict[str, np.ndarray]] = {}
     by_list = list(by)
     for feat in include_features:
         if feat not in by_list:
             continue
         j = by_list.index(feat)
         levels = list(feature_levels[feat])
-        out: Dict[str, np.ndarray] = {}
+        out: dict[str, np.ndarray] = {}
         for lvl_idx, lvl_name in enumerate(levels):
             mask = cells[:, j] == lvl_idx
             w = counts[mask]
@@ -152,7 +151,7 @@ def score_method_result(
     age_masses: Mapping[str, float],
     runtime_sec: float,
     extra: Mapping[str, Any] | None = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Build the complete auditable result row for one method."""
     region_est = dict(by_feature.get("region", {}))
     age_est = dict(by_feature.get("age_group", {}))
@@ -163,10 +162,8 @@ def score_method_result(
     worst_region_major = worst_group_l1(
         region_est, truth_region, group_masses=dict(region_masses), min_mass=config.major_mass
     )
-    worst_age_major = worst_group_l1(
-        age_est, truth_age, group_masses=dict(age_masses), min_mass=config.major_mass
-    )
-    row: Dict[str, Any] = {
+    worst_age_major = worst_group_l1(age_est, truth_age, group_masses=dict(age_masses), min_mass=config.major_mass)
+    row: dict[str, Any] = {
         "config_seed": int(config.seed),
         "random_seed": int(trial.random_seed),
         "sample_seed": int(trial.sample_seed),
@@ -199,16 +196,14 @@ def score_method_result(
         "p90_region_l1_major": p90_group_l1(
             region_est, truth_region, group_masses=dict(region_masses), min_mass=config.major_mass
         ),
-        "p90_age_l1_major": p90_group_l1(
-            age_est, truth_age, group_masses=dict(age_masses), min_mass=config.major_mass
-        ),
+        "p90_age_l1_major": p90_group_l1(age_est, truth_age, group_masses=dict(age_masses), min_mass=config.major_mass),
     }
     if extra:
         row.update(dict(extra))
     return row
 
 
-def skipped_row(config: ExperimentConfig, trial: TrialConfig, method: str, n_effective: int) -> Dict[str, Any]:
+def skipped_row(config: ExperimentConfig, trial: TrialConfig, method: str, n_effective: int) -> dict[str, Any]:
     """Row emitted when a trial cell has too few usable respondents."""
     info = scenario_info(trial.scenario)
     return {

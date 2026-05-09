@@ -13,7 +13,7 @@ def _ci_low_high(ci):
     # Support direct tuple return
     if isinstance(ci, tuple) and len(ci) == 2:
         return ci[0], ci[1]
-    
+
     # Support dict-like or attribute-like return types.
     if isinstance(ci, dict):
         lo = ci.get("low") or ci.get("lo") or ci.get("lower")
@@ -28,9 +28,9 @@ def _ci_low_high(ci):
 
 def test_bootstrap_ci_returns_bounds():
     privacy = pytest.importorskip("fairvote.privacy")
-    bootstrap_ci = getattr(privacy, "bootstrap_ci")
-    privatize_many = getattr(privacy, "privatize_many")
-    estimate_distribution = getattr(privacy, "estimate_distribution")
+    bootstrap_ci = privacy.bootstrap_ci
+    privatize_many = privacy.privatize_many
+    estimate_distribution = privacy.estimate_distribution
 
     rng = np.random.default_rng(7)
     k = 5
