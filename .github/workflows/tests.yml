@@ -1,0 +1,55 @@
+name: FairVote-AI tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install FairVote-AI
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[experiments,app,dev]"
+
+      - name: Verify dependencies
+        run: python -m pip check
+
+      - name: Check formatting
+        run: python -m ruff format --check .
+
+      - name: Run Ruff
+        run: python -m ruff check .
+
+      - name: Compile Python files
+        run: python -m compileall fairvote experiments app.py
+
+      - name: Run tests
+        run: |
+          python -m pytest -q \
+            --cov=fairvote \
+            --cov=experiments \
+            --cov-report=term-missing
+
+      - name: Run quick experiment
+        run: |
+          python -m experiments.run_experiments \
+            --quick \
+            --output-dir ci_results
