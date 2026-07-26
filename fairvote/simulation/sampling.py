@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from fairvote.experiment_grid import BIAS_CONDITIONS
 from fairvote.privacy.mechanisms.kary_rr import privatize_many
 from fairvote.simulation.population import Population
 
@@ -13,7 +14,7 @@ BIAS_MULTIPLIERS: dict[str, dict[str, float]] = {
     "strong": {"18-34": 3.5, "35-54": 1.0, "55+": 0.3},
 }
 
-BIAS_LEVELS: tuple[str, ...] = tuple(BIAS_MULTIPLIERS)
+BIAS_LEVELS: tuple[str, ...] = BIAS_CONDITIONS
 
 
 @dataclass(frozen=True)

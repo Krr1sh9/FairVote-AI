@@ -2,16 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import matplotlib
-
-matplotlib.use("Agg")
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.patches import Patch
 
 from fairvote.study import METHOD_LABELS, METHODS, SUPPORTED_BIAS_LEVELS
+
+plt.switch_backend("Agg")
 
 REFERENCE_EPSILON = 1.0
 REFERENCE_SAMPLE_SIZE = 1000
@@ -22,14 +20,14 @@ METHOD_COLOURS = {method: _DEFAULT_COLOURS[index] for index, method in enumerate
 
 def make_plots(results: pd.DataFrame, plots_dir: Path) -> list[Path]:
     plots_dir.mkdir(parents=True, exist_ok=True)
-    for stale_plot in plots_dir.glob("*.png"):
-        stale_plot.unlink()
-
     paths = [
         plots_dir / "l1_vs_epsilon.png",
         plots_dir / "l1_vs_sample_size.png",
         plots_dir / "l1_by_bias.png",
     ]
+    for path in paths:
+        path.unlink(missing_ok=True)
+
     _plot_l1_vs_epsilon(results, paths[0])
     _plot_l1_vs_sample_size(results, paths[1])
     _plot_l1_by_bias(results, paths[2])
@@ -135,10 +133,39 @@ def _plot_l1_by_bias(results: pd.DataFrame, path: Path) -> None:
         widths=0.65,
         showmeans=True,
         patch_artist=True,
+        meanprops={
+            "marker": "^",
+            "markerfacecolor": "white",
+            "markeredgecolor": "black",
+            "markeredgewidth": 1.2,
+            "markersize": 7,
+        },
+        medianprops={
+            "color": "black",
+            "linewidth": 1.6,
+        },
+        whiskerprops={
+            "color": "black",
+            "linewidth": 1.1,
+        },
+        capprops={
+            "color": "black",
+            "linewidth": 1.1,
+        },
+        flierprops={
+            "marker": "o",
+            "markerfacecolor": "white",
+            "markeredgecolor": "black",
+            "markeredgewidth": 1.0,
+            "markersize": 4,
+            "alpha": 0.8,
+        },
     )
     for index, box in enumerate(boxplot["boxes"]):
         method = METHODS[index % len(METHODS)]
         box.set_facecolor(METHOD_COLOURS[method])
+        box.set_edgecolor("black")
+        box.set_linewidth(1.0)
 
     axis.set_xticks(group_centres)
     axis.set_xticklabels(bias_levels)

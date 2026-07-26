@@ -7,19 +7,9 @@ import numpy as np
 import pandas as pd
 
 from experiments.plots import make_plots
+from fairvote import experiment_grid
 from fairvote.simulation.population import default_population
-from fairvote.study import (
-    METHODS,
-    SUPPORTED_BIAS_LEVELS,
-    SUPPORTED_EPSILONS,
-    SUPPORTED_SAMPLE_SIZES,
-    evaluate_poll,
-)
-
-FULL_REPETITIONS = 30
-QUICK_REPETITIONS = 3
-QUICK_EPSILONS: tuple[float, ...] = (0.5, 1.0)
-QUICK_SAMPLE_SIZES: tuple[int, ...] = (500, 1000)
+from fairvote.study import METHODS, evaluate_poll
 
 RESULT_COLUMNS: tuple[str, ...] = (
     "epsilon",
@@ -46,38 +36,36 @@ SUMMARY_COLUMNS: tuple[str, ...] = (
 
 def run_grid(quick: bool = False) -> pd.DataFrame:
     population = default_population()
-    epsilons = QUICK_EPSILONS if quick else SUPPORTED_EPSILONS
-    sample_sizes = QUICK_SAMPLE_SIZES if quick else SUPPORTED_SAMPLE_SIZES
-    repetitions = QUICK_REPETITIONS if quick else FULL_REPETITIONS
-
     rows: list[dict[str, object]] = []
-    for epsilon in epsilons:
-        epsilon_index = SUPPORTED_EPSILONS.index(epsilon)
-        for n_respondents in sample_sizes:
-            size_index = SUPPORTED_SAMPLE_SIZES.index(n_respondents)
-            for bias_index, bias in enumerate(SUPPORTED_BIAS_LEVELS):
-                for repetition in range(repetitions):
-                    seed = 1000 + repetition
-                    rng = np.random.default_rng([seed, epsilon_index, size_index, bias_index])
-                    study = evaluate_poll(
-                        population,
-                        n_respondents,
-                        epsilon,
-                        bias,
-                        rng,
-                    )
-                    for method in METHODS:
-                        rows.append(
-                            {
-                                "epsilon": epsilon,
-                                "n_respondents": n_respondents,
-                                "bias": bias,
-                                "seed": seed,
-                                "method": method,
-                                "l1_error": study.l1_errors[method],
-                                "max_abs_error": study.max_abs_errors[method],
-                            }
-                        )
+    for (
+        epsilon,
+        n_respondents,
+        bias,
+        seed,
+        epsilon_index,
+        size_index,
+        bias_index,
+    ) in experiment_grid.iter_experiment_grid(quick=quick):
+        rng = np.random.default_rng([seed, epsilon_index, size_index, bias_index])
+        study = evaluate_poll(
+            population,
+            n_respondents,
+            epsilon,
+            bias,
+            rng,
+        )
+        for method in METHODS:
+            rows.append(
+                {
+                    "epsilon": epsilon,
+                    "n_respondents": n_respondents,
+                    "bias": bias,
+                    "seed": seed,
+                    "method": method,
+                    "l1_error": study.l1_errors[method],
+                    "max_abs_error": study.max_abs_errors[method],
+                }
+            )
 
     return pd.DataFrame(rows, columns=RESULT_COLUMNS)
 

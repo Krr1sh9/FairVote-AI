@@ -116,7 +116,7 @@ def invert_rr_counts(
 
     total = float(count_vector.sum())
     if total <= 0.0:
-        raise ValueError("counts must sum to > 0; estimation is impossible with no reports.")
+        raise ValueError("counts must sum to more than 0 because estimation is impossible with no reports.")
 
     reported_frequencies = count_vector / total
     theta_hat = (reported_frequencies - params.q) / (params.p - params.q)

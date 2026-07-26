@@ -4,15 +4,16 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from fairvote.experiment_grid import BIAS_CONDITIONS, FULL_EPSILONS, FULL_SAMPLE_SIZES
 from fairvote.metrics import l1_error, max_absolute_error
 from fairvote.poststratification import poststratified_estimate
 from fairvote.privacy.estimators import debiased_estimate, raw_frequencies
 from fairvote.simulation.population import Population
-from fairvote.simulation.sampling import BIAS_LEVELS, run_synthetic_poll
+from fairvote.simulation.sampling import run_synthetic_poll
 
-SUPPORTED_EPSILONS: tuple[float, ...] = (0.25, 0.5, 1.0, 2.0)
-SUPPORTED_SAMPLE_SIZES: tuple[int, ...] = (250, 500, 1000, 2000)
-SUPPORTED_BIAS_LEVELS: tuple[str, ...] = BIAS_LEVELS
+SUPPORTED_EPSILONS: tuple[float, ...] = FULL_EPSILONS
+SUPPORTED_SAMPLE_SIZES: tuple[int, ...] = FULL_SAMPLE_SIZES
+SUPPORTED_BIAS_LEVELS: tuple[str, ...] = BIAS_CONDITIONS
 
 METHODS: tuple[str, ...] = ("raw_frequencies", "rr_debiased", "poststratified")
 METHOD_LABELS: dict[str, str] = {
