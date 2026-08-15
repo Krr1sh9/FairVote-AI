@@ -40,5 +40,8 @@ temp/
 *.tmp
 *.log
 ci_results/
+ci_ai_results/
+verification_results/
+verification_ai_results/
 temp_quick_results/
 *.zip
