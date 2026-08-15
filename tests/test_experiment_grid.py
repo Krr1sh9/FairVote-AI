@@ -1,0 +1,155 @@
+from __future__ import annotations
+
+import ast
+from pathlib import Path
+
+import pandas as pd
+import pytest
+
+from experiments import run_experiments
+from fairvote import experiment_grid
+from fairvote.ai import features
+from fairvote.study import METHODS
+
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+FULL_EXPERIMENT_RESULTS_PATH = REPOSITORY_ROOT / "results" / "experiment_results.csv"
+FULL_SELECTOR_DATASET_PATH = REPOSITORY_ROOT / "results" / "ai" / "selector_dataset.csv"
+FULL_AI_TARGET_RESULTS_AVAILABLE = FULL_EXPERIMENT_RESULTS_PATH.is_file() and FULL_SELECTOR_DATASET_PATH.is_file()
+
+GRID_CONSTANTS = {
+    "FULL_EPSILONS",
+    "QUICK_EPSILONS",
+    "FULL_SAMPLE_SIZES",
+    "QUICK_SAMPLE_SIZES",
+    "BIAS_CONDITIONS",
+    "FULL_REPETITIONS",
+    "QUICK_REPETITIONS",
+    "BASE_SEED",
+}
+
+EXCLUDED_SCAN_DIRECTORIES = {
+    ".git",
+    ".venv",
+    "venv",
+    "env",
+    "__pycache__",
+    ".pytest_cache",
+    ".ruff_cache",
+    "build",
+    "dist",
+}
+
+
+def test_shared_grid_values_are_exact() -> None:
+    assert experiment_grid.FULL_EPSILONS == (0.25, 0.5, 1.0, 2.0)
+    assert experiment_grid.QUICK_EPSILONS == (0.5, 1.0)
+    assert experiment_grid.FULL_SAMPLE_SIZES == (250, 500, 1000, 2000)
+    assert experiment_grid.QUICK_SAMPLE_SIZES == (500, 1000)
+    assert experiment_grid.BIAS_CONDITIONS == ("none", "moderate", "strong")
+    assert experiment_grid.FULL_REPETITIONS == 30
+    assert experiment_grid.QUICK_REPETITIONS == 3
+    assert experiment_grid.BASE_SEED == 1000
+
+
+def test_shared_grid_preserves_all_required_shapes() -> None:
+    full_configurations = (
+        len(experiment_grid.FULL_EPSILONS)
+        * len(experiment_grid.FULL_SAMPLE_SIZES)
+        * len(experiment_grid.BIAS_CONDITIONS)
+    )
+    quick_configurations = (
+        len(experiment_grid.QUICK_EPSILONS)
+        * len(experiment_grid.QUICK_SAMPLE_SIZES)
+        * len(experiment_grid.BIAS_CONDITIONS)
+    )
+    assert full_configurations == 48
+    assert quick_configurations == 12
+    assert experiment_grid.poll_row_count(quick=False) == 1440
+    assert experiment_grid.poll_row_count(quick=True) == 36
+    assert experiment_grid.poll_row_count(quick=False) * len(METHODS) == 4320
+    assert experiment_grid.poll_row_count(quick=True) * len(METHODS) == 108
+    assert full_configurations * len(METHODS) == 144
+    assert quick_configurations * len(METHODS) == 36
+
+
+def test_seed_derivation_and_full_indices_are_unchanged() -> None:
+    quick = list(experiment_grid.iter_experiment_grid(quick=True))
+    assert quick[0] == (0.5, 500, "none", 1000, 1, 1, 0)
+    assert quick[2] == (0.5, 500, "none", 1002, 1, 1, 0)
+    assert quick[-1] == (1.0, 1000, "strong", 1002, 2, 2, 2)
+
+
+def test_grid_constants_are_defined_only_in_the_shared_module() -> None:
+    duplicate_assignments: list[tuple[str, str]] = []
+    shared_path = REPOSITORY_ROOT / "fairvote" / "experiment_grid.py"
+    for path in REPOSITORY_ROOT.rglob("*.py"):
+        if path == shared_path or any(part in EXCLUDED_SCAN_DIRECTORIES for part in path.parts):
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in tree.body:
+            names: list[str] = []
+            if isinstance(node, (ast.Assign, ast.AnnAssign)):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                for target in targets:
+                    if isinstance(target, ast.Name):
+                        names.append(target.id)
+            for name in names:
+                if name in GRID_CONSTANTS:
+                    duplicate_assignments.append((str(path.relative_to(REPOSITORY_ROOT)), name))
+    assert duplicate_assignments == []
+
+
+def test_both_pipelines_use_the_shared_grid(monkeypatch) -> None:
+    calls: list[bool] = []
+    configuration = (0.5, 500, "none", 1000, 1, 1, 0)
+
+    def shared_iterator(quick: bool = False):
+        calls.append(quick)
+        yield configuration
+
+    monkeypatch.setattr(experiment_grid, "iter_experiment_grid", shared_iterator)
+    statistical = run_experiments.run_grid(quick=True)
+    selector = features.build_selector_dataset(quick=True)
+
+    assert calls == [True, True]
+    assert len(statistical) == len(METHODS)
+    assert len(selector) == 1
+
+
+@pytest.mark.skipif(
+    not FULL_AI_TARGET_RESULTS_AVAILABLE,
+    reason="Full generated statistical and AI results are not present in this checkout.",
+)
+def test_full_ai_targets_match_full_experiment_l1_errors() -> None:
+    experiment = pd.read_csv(FULL_EXPERIMENT_RESULTS_PATH)
+    selector = pd.read_csv(FULL_SELECTOR_DATASET_PATH)
+    keys = ["epsilon", "n_respondents", "bias", "seed"]
+    targets = (
+        experiment.pivot(index=keys, columns="method", values="l1_error")
+        .rename(columns={method: f"{method}_l1" for method in METHODS})
+        .reset_index()
+    )
+    merged = selector.merge(targets, on=keys, suffixes=("_selector", "_experiment"), validate="one_to_one")
+    for method in METHODS:
+        column = f"{method}_l1"
+        left = merged[f"{column}_selector"].to_numpy()
+        right = merged[f"{column}_experiment"].to_numpy()
+        assert (left == right).all()
+
+
+def test_fairvote_never_imports_experiments() -> None:
+    imports: list[tuple[str, str]] = []
+    for path in (REPOSITORY_ROOT / "fairvote").rglob("*.py"):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    if alias.name == "experiments" or alias.name.startswith("experiments."):
+                        imports.append((str(path.relative_to(REPOSITORY_ROOT)), alias.name))
+            if (
+                isinstance(node, ast.ImportFrom)
+                and node.module
+                and (node.module == "experiments" or node.module.startswith("experiments."))
+            ):
+                imports.append((str(path.relative_to(REPOSITORY_ROOT)), node.module))
+    assert imports == []
