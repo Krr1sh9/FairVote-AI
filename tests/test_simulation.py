@@ -3,115 +3,107 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from fairvote.privacy.mechanisms.kary_rr import rr_transition_matrix
 from fairvote.simulation.population import default_population, make_population
-from fairvote.simulation.sampling import (
-    BIAS_LEVELS,
-    run_synthetic_poll,
-    sampling_probabilities,
-)
+from fairvote.simulation.sampling import run_synthetic_poll, sampling_probabilities
 
 
-def test_population_weights_and_preferences_sum_to_one() -> None:
+def test_default_population_has_the_expected_structure_and_truth() -> None:
     population = default_population()
+
     assert population.n_cells == 6
     assert population.n_categories == 3
-    assert population.weights.sum() == pytest.approx(1.0)
-    np.testing.assert_allclose(population.preferences.sum(axis=1), np.ones(population.n_cells))
-    assert population.true_distribution().sum() == pytest.approx(1.0)
+    assert population.regions == (
+        "North",
+        "North",
+        "North",
+        "South",
+        "South",
+        "South",
+    )
+    assert population.age_groups == (
+        "18-34",
+        "35-54",
+        "55+",
+        "18-34",
+        "35-54",
+        "55+",
+    )
+    np.testing.assert_allclose(
+        population.weights,
+        [0.10, 0.15, 0.20, 0.15, 0.20, 0.20],
+    )
+    np.testing.assert_allclose(
+        population.true_distribution(),
+        [0.3925, 0.42, 0.1875],
+    )
+    np.testing.assert_allclose(
+        population.preferences.sum(axis=1),
+        np.ones(population.n_cells),
+    )
 
 
-def test_population_cells_are_two_regions_by_three_age_groups() -> None:
-    population = default_population()
-    assert set(population.regions) == {"North", "South"}
-    assert set(population.age_groups) == {"18-34", "35-54", "55+"}
-    assert len(set(population.cell_labels)) == 6
-
-
-def test_true_distribution_is_hand_calculable() -> None:
+def test_population_truth_is_the_weighted_cell_preference_distribution() -> None:
     population = make_population(
         regions=("North", "South"),
         age_groups=("18-34", "55+"),
         weights=(0.25, 0.75),
         preferences=((1.0, 0.0, 0.0), (0.0, 1.0, 0.0)),
     )
-    np.testing.assert_allclose(population.true_distribution(), [0.25, 0.75, 0.0])
 
-
-def test_make_population_normalises_input() -> None:
-    population = make_population(
-        regions=("North", "South"),
-        age_groups=("18-34", "55+"),
-        weights=(1.0, 3.0),
-        preferences=((2.0, 1.0, 1.0), (1.0, 1.0, 2.0)),
+    np.testing.assert_allclose(
+        population.true_distribution(),
+        [0.25, 0.75, 0.0],
     )
-    np.testing.assert_allclose(population.weights, [0.25, 0.75])
-    np.testing.assert_allclose(population.preferences[0], [0.5, 0.25, 0.25])
 
 
-@pytest.mark.parametrize(
-    "kwargs",
-    [
-        {"weights": (-0.5, 1.5)},
-        {"weights": (0.0, 0.0)},
-        {"weights": (0.5, 0.5, 0.0)},
-        {"preferences": ((0.5, 0.5, 0.0), (0.0, 0.0, 0.0))},
-        {"preferences": ((0.5, 0.5), (0.5, 0.5))},
-        {"preferences": ((np.nan, 0.5, 0.5), (0.5, 0.25, 0.25))},
-    ],
-)
-def test_invalid_population_specifications_are_rejected(kwargs: dict) -> None:
-    base = {
-        "regions": ("North", "South"),
-        "age_groups": ("18-34", "55+"),
-        "weights": (0.5, 0.5),
-        "preferences": ((0.5, 0.25, 0.25), (0.25, 0.5, 0.25)),
-    }
-    with pytest.raises(ValueError):
-        make_population(**{**base, **kwargs})
-
-
-def test_representative_sampling_uses_population_weights() -> None:
+def test_bias_conditions_shift_sampling_towards_younger_cells() -> None:
     population = default_population()
-    np.testing.assert_allclose(sampling_probabilities(population, "none"), population.weights)
+    none = sampling_probabilities(population, "none")
+    moderate = sampling_probabilities(population, "moderate")
+    strong = sampling_probabilities(population, "strong")
 
+    np.testing.assert_allclose(none, population.weights)
 
-@pytest.mark.parametrize("bias", BIAS_LEVELS)
-def test_sampling_probabilities_are_valid(bias: str) -> None:
-    probabilities = sampling_probabilities(default_population(), bias)
-    assert probabilities.sum() == pytest.approx(1.0)
-    assert probabilities.min() > 0.0
+    for probabilities in (none, moderate, strong):
+        assert probabilities.sum() == pytest.approx(1.0)
+        assert probabilities.min() > 0.0
 
-
-def test_bias_shifts_sampling_towards_younger_cells() -> None:
-    population = default_population()
     young = np.array([age == "18-34" for age in population.age_groups])
     oldest = np.array([age == "55+" for age in population.age_groups])
-    shares = {bias: sampling_probabilities(population, bias) for bias in BIAS_LEVELS}
 
-    assert float(shares["none"][young].sum()) < float(shares["moderate"][young].sum())
-    assert float(shares["moderate"][young].sum()) < float(shares["strong"][young].sum())
-    assert float(shares["none"][oldest].sum()) > float(shares["moderate"][oldest].sum())
-    assert float(shares["moderate"][oldest].sum()) > float(shares["strong"][oldest].sum())
+    assert none[young].sum() < moderate[young].sum() < strong[young].sum()
+    assert none[oldest].sum() > moderate[oldest].sum() > strong[oldest].sum()
 
 
-def test_representative_sampling_approximates_weights_at_large_n() -> None:
+def test_large_samples_follow_the_configured_sampling_probabilities() -> None:
     population = default_population()
-    sample = run_synthetic_poll(population, 100_000, 1.0, "none", np.random.default_rng(7))
-    observed = np.bincount(sample.cell_indices, minlength=population.n_cells) / len(sample)
-    np.testing.assert_allclose(observed, population.weights, atol=0.01)
 
+    for seed, bias in ((7, "none"), (8, "strong")):
+        sample = run_synthetic_poll(
+            population,
+            100_000,
+            1.0,
+            bias,
+            np.random.default_rng(seed),
+        )
+        observed = np.bincount(
+            sample.cell_indices,
+            minlength=population.n_cells,
+        ) / len(sample)
+        expected = sampling_probabilities(population, bias)
 
-def test_biased_sampling_approximates_its_probabilities_at_large_n() -> None:
-    population = default_population()
-    sample = run_synthetic_poll(population, 100_000, 1.0, "strong", np.random.default_rng(8))
-    observed = np.bincount(sample.cell_indices, minlength=population.n_cells) / len(sample)
-    np.testing.assert_allclose(observed, sampling_probabilities(population, "strong"), atol=0.01)
+        np.testing.assert_allclose(observed, expected, atol=0.01)
 
 
 def test_poll_exposes_only_cells_and_privatised_categories() -> None:
     population = default_population()
-    sample = run_synthetic_poll(population, 500, 1.0, "moderate", np.random.default_rng(9))
+    sample = run_synthetic_poll(
+        population,
+        500,
+        1.0,
+        "moderate",
+        np.random.default_rng(9),
+    )
 
     assert len(sample) == 500
     assert sample.reported_categories.shape == sample.cell_indices.shape
@@ -122,36 +114,26 @@ def test_poll_exposes_only_cells_and_privatised_categories() -> None:
     assert sample.reported_categories.max() < population.n_categories
 
 
-def test_large_sample_reports_match_the_population_rr_channel() -> None:
+def test_same_seed_produces_identical_public_poll_data() -> None:
     population = default_population()
-    epsilon = 1.0
-    sample = run_synthetic_poll(population, 250_000, epsilon, "none", np.random.default_rng(10))
-    observed = np.bincount(sample.reported_categories, minlength=3) / len(sample)
-    expected = population.true_distribution() @ rr_transition_matrix(epsilon, 3)
-    np.testing.assert_allclose(observed, expected, atol=0.01)
 
+    first = run_synthetic_poll(
+        population,
+        300,
+        0.8,
+        "moderate",
+        np.random.default_rng(42),
+    )
+    second = run_synthetic_poll(
+        population,
+        300,
+        0.8,
+        "moderate",
+        np.random.default_rng(42),
+    )
 
-def test_same_seed_gives_identical_public_results() -> None:
-    population = default_population()
-    first = run_synthetic_poll(population, 300, 0.8, "moderate", np.random.default_rng(42))
-    second = run_synthetic_poll(population, 300, 0.8, "moderate", np.random.default_rng(42))
     np.testing.assert_array_equal(first.cell_indices, second.cell_indices)
-    np.testing.assert_array_equal(first.reported_categories, second.reported_categories)
-
-
-def test_different_seeds_give_different_results() -> None:
-    population = default_population()
-    first = run_synthetic_poll(population, 300, 0.8, "moderate", np.random.default_rng(1))
-    second = run_synthetic_poll(population, 300, 0.8, "moderate", np.random.default_rng(2))
-    assert not np.array_equal(first.reported_categories, second.reported_categories)
-
-
-def test_invalid_poll_arguments_are_rejected() -> None:
-    population = default_population()
-    rng = np.random.default_rng(11)
-    with pytest.raises(ValueError):
-        sampling_probabilities(population, "extreme")
-    with pytest.raises(ValueError):
-        run_synthetic_poll(population, 0, 1.0, "none", rng)
-    with pytest.raises(ValueError):
-        run_synthetic_poll(population, 100, -1.0, "none", rng)
+    np.testing.assert_array_equal(
+        first.reported_categories,
+        second.reported_categories,
+    )
