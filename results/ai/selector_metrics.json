@@ -1,0 +1,230 @@
+{
+  "dataset": {
+    "n_rows": 1440,
+    "epsilons": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "sample_sizes": [
+      250,
+      500,
+      1000,
+      2000
+    ],
+    "bias_levels": [
+      "moderate",
+      "none",
+      "strong"
+    ],
+    "n_seeds": 30
+  },
+  "grouped_cross_validation": {
+    "n_predictions": 1440,
+    "regression": {
+      "raw_frequencies_l1": {
+        "mae": 0.029090580681314274,
+        "rmse": 0.0387118524801099
+      },
+      "rr_debiased_l1": {
+        "mae": 0.10580773970257341,
+        "rmse": 0.1514124914056298
+      },
+      "poststratified_l1": {
+        "mae": 0.10888829762516802,
+        "rmse": 0.15828302874871264
+      }
+    },
+    "recommendation": {
+      "argmin_accuracy": 0.5875,
+      "mean_selected_l1": 0.17932784738373997,
+      "mean_regret": 0.029357749870742043,
+      "median_regret": 0.0,
+      "approximate_tie_rate": 0.5395833333333333,
+      "non_tie_coverage": 0.46041666666666664,
+      "non_tie_argmin_accuracy": 0.717948717948718
+    },
+    "n_splits": 5,
+    "grouping_column": "seed"
+  },
+  "leave_one_epsilon_out": {
+    "n_predictions": 1440,
+    "regression": {
+      "raw_frequencies_l1": {
+        "mae": 0.0486115713422442,
+        "rmse": 0.0594159289585141
+      },
+      "rr_debiased_l1": {
+        "mae": 0.15423123287607884,
+        "rmse": 0.21148691140686904
+      },
+      "poststratified_l1": {
+        "mae": 0.17788832638916052,
+        "rmse": 0.23965793234584779
+      }
+    },
+    "recommendation": {
+      "argmin_accuracy": 0.5256944444444445,
+      "mean_selected_l1": 0.1919768304937261,
+      "mean_regret": 0.04200673298072818,
+      "median_regret": 0.0,
+      "approximate_tie_rate": 0.5833333333333334,
+      "non_tie_coverage": 0.4166666666666667,
+      "non_tie_argmin_accuracy": 0.5816666666666667
+    },
+    "held_out_epsilons": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "per_epsilon": {
+      "0.25": {
+        "n_predictions": 360,
+        "regression": {
+          "raw_frequencies_l1": {
+            "mae": 0.04086274560949477,
+            "rmse": 0.05130939231606318
+          },
+          "rr_debiased_l1": {
+            "mae": 0.2351534999004351,
+            "rmse": 0.3089283768686792
+          },
+          "poststratified_l1": {
+            "mae": 0.2585349926534375,
+            "rmse": 0.3382646795585419
+          }
+        },
+        "recommendation": {
+          "argmin_accuracy": 0.575,
+          "mean_selected_l1": 0.3011496663339237,
+          "mean_regret": 0.06335414338324365,
+          "median_regret": 0.0,
+          "approximate_tie_rate": 0.55,
+          "non_tie_coverage": 0.45,
+          "non_tie_argmin_accuracy": 0.7407407407407407
+        }
+      },
+      "0.5": {
+        "n_predictions": 360,
+        "regression": {
+          "raw_frequencies_l1": {
+            "mae": 0.04162997948573738,
+            "rmse": 0.0520005058996808
+          },
+          "rr_debiased_l1": {
+            "mae": 0.2050787446155571,
+            "rmse": 0.24325872546247254
+          },
+          "poststratified_l1": {
+            "mae": 0.23560462770199275,
+            "rmse": 0.28205581748087144
+          }
+        },
+        "recommendation": {
+          "argmin_accuracy": 0.49444444444444446,
+          "mean_selected_l1": 0.2205589803853665,
+          "mean_regret": 0.04657587508425757,
+          "median_regret": 0.00105360903334753,
+          "approximate_tie_rate": 0.14444444444444443,
+          "non_tie_coverage": 0.8555555555555555,
+          "non_tie_argmin_accuracy": 0.4902597402597403
+        }
+      },
+      "1": {
+        "n_predictions": 360,
+        "regression": {
+          "raw_frequencies_l1": {
+            "mae": 0.049941758303896695,
+            "rmse": 0.05792782120059371
+          },
+          "rr_debiased_l1": {
+            "mae": 0.1147532687588493,
+            "rmse": 0.13475334104393147
+          },
+          "poststratified_l1": {
+            "mae": 0.13798348047656245,
+            "rmse": 0.16164632503862755
+          }
+        },
+        "recommendation": {
+          "argmin_accuracy": 0.48333333333333334,
+          "mean_selected_l1": 0.15385539080600744,
+          "mean_regret": 0.03694243495456141,
+          "median_regret": 0.0005094524673708717,
+          "approximate_tie_rate": 0.7611111111111111,
+          "non_tie_coverage": 0.2388888888888889,
+          "non_tie_argmin_accuracy": 0.5581395348837209
+        }
+      },
+      "2": {
+        "n_predictions": 360,
+        "regression": {
+          "raw_frequencies_l1": {
+            "mae": 0.062011801969847964,
+            "rmse": 0.07367951976837528
+          },
+          "rr_debiased_l1": {
+            "mae": 0.06193941822947382,
+            "rmse": 0.07833800045202903
+          },
+          "poststratified_l1": {
+            "mae": 0.07943020472464951,
+            "rmse": 0.09816153083060855
+          }
+        },
+        "recommendation": {
+          "argmin_accuracy": 0.55,
+          "mean_selected_l1": 0.0923432844496068,
+          "mean_regret": 0.021154478500850078,
+          "median_regret": 0.0,
+          "approximate_tie_rate": 0.8777777777777778,
+          "non_tie_coverage": 0.12222222222222222,
+          "non_tie_argmin_accuracy": 0.6818181818181818
+        }
+      }
+    }
+  },
+  "fixed_baselines": {
+    "raw_frequencies": {
+      "mean_selected_l1": 0.20725972222222228,
+      "mean_regret": 0.05728962470922435,
+      "median_regret": 0.04242959912093179
+    },
+    "rr_debiased": {
+      "mean_selected_l1": 0.27243826456950404,
+      "mean_regret": 0.12246816705650612,
+      "median_regret": 0.07554189378149274
+    },
+    "poststratified": {
+      "mean_selected_l1": 0.25737705784236176,
+      "mean_regret": 0.10740696032936378,
+      "median_regret": 0.01154171085787288
+    },
+    "oracle": {
+      "mean_selected_l1": 0.14997009751299792,
+      "mean_regret": 0.0,
+      "median_regret": 0.0
+    }
+  },
+  "final_model_tie_threshold": 0.05949056795731868,
+  "model_parameters": {
+    "max_depth": 4,
+    "min_samples_leaf": 20,
+    "random_state": 42
+  },
+  "feature_columns": [
+    "epsilon",
+    "n_respondents",
+    "demographic_imbalance",
+    "cell_proportion_min",
+    "cell_proportion_max",
+    "cell_proportion_std"
+  ],
+  "target_columns": [
+    "raw_frequencies_l1",
+    "rr_debiased_l1",
+    "poststratified_l1"
+  ]
+}
