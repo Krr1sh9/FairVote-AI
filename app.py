@@ -28,8 +28,11 @@ from fairvote.study import (
     evaluate_poll,
 )
 
+# The app reads the selector dataset from the default output location used by the recommender experiment pipeline.
 AI_DATASET_PATH = Path("results") / "ai" / "selector_dataset.csv"
 AI_GENERATION_COMMAND = "python -m experiments.train_selector"
+
+# The recommender has only been evaluated within the fixed synthetic study.
 AI_LIMITATION = (
     "The recommendation is learned from the fixed synthetic experiment grid. It has not been "
     "validated on real polling data or settings outside this simulation."
@@ -45,6 +48,8 @@ RESEARCH_QUESTION = (
 
 @st.cache_resource
 def _load_selector(dataset_path: str, modified: float) -> FittedSelector:
+    # modified is deliberately part of the function signature.
+    # Passing the dataset modification time makes it part of Streamlit's cache key, so a different timestamp produces a different cache key.
     dataset = pd.read_csv(dataset_path)
     validate_selector_dataset(dataset)
     return train_selector(dataset)
@@ -53,6 +58,7 @@ def _load_selector(dataset_path: str, modified: float) -> FittedSelector:
 def _render_recommendation(result: StudyResult, epsilon: float, n_respondents: int) -> None:
     st.subheader("AI-assisted estimator recommendation")
 
+    # The statistical simulation remains usable even when the selector dataset has not been generated.
     if not AI_DATASET_PATH.is_file():
         st.write("The recommender dataset has not been generated yet, so no recommendation is available.")
         st.write("Create it with the following command and then reload this page.")
@@ -60,10 +66,14 @@ def _render_recommendation(result: StudyResult, epsilon: float, n_respondents: i
         return
 
     selector = _load_selector(str(AI_DATASET_PATH), AI_DATASET_PATH.stat().st_mtime)
+
+    # Feature extraction uses the same feature definition as selector training.
+    # Building the NumPy row in FEATURE_COLUMNS order keeps the prediction values aligned with the expected model feature order.
     features = extract_features(result, epsilon, n_respondents)
     feature_row = np.array([[features[column] for column in FEATURE_COLUMNS]], dtype=float)
     prediction = recommend(selector, feature_row)
 
+    # The table shows the predicted L1 error for every estimator so the recommendation can be inspected directly.
     predicted = pd.DataFrame(
         [
             {
@@ -75,6 +85,7 @@ def _render_recommendation(result: StudyResult, epsilon: float, n_respondents: i
     ).set_index("Method")
     st.dataframe(predicted.style.format("{:.4f}"), width="stretch")
 
+    # An approximate tie is reported when the gap between the two lowest predicted errors is within the selector's tie threshold.
     if prediction.approximate_tie:
         tied = " and ".join(METHOD_LABELS[method] for method in prediction.tied_methods)
         st.write(f"Approximate tie between {tied}.")
@@ -89,6 +100,7 @@ def _render_recommendation(result: StudyResult, epsilon: float, n_respondents: i
     )
     st.caption(AI_LIMITATION)
 
+    # The expander exposes the exact feature values used for the recommendation and the text rules for one fitted decision tree.
     with st.expander("Model inputs and decision rules"):
         inputs = pd.DataFrame(
             {
@@ -111,6 +123,7 @@ def main() -> None:
     st.caption("Privacy-Preserving Polling with Randomised Response and Poststratification")
     st.write(f"Research question: {RESEARCH_QUESTION}")
 
+    # These controls use the epsilon, sample-size and bias values supported by the shared study workflow.
     st.sidebar.header("Poll settings")
     epsilon = st.sidebar.select_slider(
         "Privacy budget (epsilon)",
@@ -139,6 +152,8 @@ def main() -> None:
         )
     )
 
+    # The interactive seed controls the random generator for this single displayed synthetic poll.
+    # The batch experiment initialises each generator from the repetition seed together with the epsilon, sample-size and bias indices.
     population = default_population()
     result = evaluate_poll(
         population,
@@ -148,6 +163,7 @@ def main() -> None:
         np.random.default_rng(seed),
     )
 
+    # The selected settings are displayed so the shown output can be associated with the exact interactive configuration.
     st.subheader("Selected settings")
     settings = pd.DataFrame(
         {
@@ -167,6 +183,7 @@ def main() -> None:
     )
     st.dataframe(settings, hide_index=True, width="stretch")
 
+    # evaluate_poll returns the known synthetic population truth and all three estimator outputs for the same poll.
     st.subheader("Population truth and estimates")
     shares = pd.DataFrame(
         {
@@ -178,6 +195,8 @@ def main() -> None:
     st.bar_chart(shares)
     st.dataframe(shares.style.format("{:.3f}"), width="stretch")
 
+    # Error can be calculated directly because the synthetic population truth is fixed and known.
+    # These measured errors are displayed for evaluation and are not passed to the recommender as input features.
     st.subheader("Error against the known truth")
     errors = pd.DataFrame(
         [
@@ -191,8 +210,10 @@ def main() -> None:
     ).set_index("Method")
     st.dataframe(errors.style.format("{:.4f}"), width="stretch")
 
+    # The recommender derives its six model features from this StudyResult together with the selected epsilon and sample size.
     _render_recommendation(result, epsilon, n_respondents)
 
+    # The diagnostics show the realised demographic composition and the number of cells that required fallback handling.
     with st.expander("Technical diagnostics"):
         diagnostics = pd.DataFrame(
             {
@@ -220,6 +241,7 @@ def main() -> None:
             "RR correction before the final population estimate is projected."
         )
 
+    # The method summary uses the same estimator definitions as the shared study workflow.
     with st.expander("Method summary"):
         st.write("Raw privatised reports are the uncorrected response frequencies.")
         st.write("Overall RR correction analytically inverts the Randomised Response channel.")

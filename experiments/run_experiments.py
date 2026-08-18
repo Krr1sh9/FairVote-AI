@@ -11,6 +11,7 @@ from fairvote import experiment_grid
 from fairvote.simulation.population import default_population
 from fairvote.study import METHODS, evaluate_poll
 
+# These columns define the estimator-level rows written to the main experiment results table.
 RESULT_COLUMNS: tuple[str, ...] = (
     "epsilon",
     "n_respondents",
@@ -21,6 +22,7 @@ RESULT_COLUMNS: tuple[str, ...] = (
     "max_abs_error",
 )
 
+# These columns define the grouped summary table produced from the estimator-level results.
 SUMMARY_COLUMNS: tuple[str, ...] = (
     "method",
     "bias",
@@ -35,8 +37,11 @@ SUMMARY_COLUMNS: tuple[str, ...] = (
 
 
 def run_grid(quick: bool = False) -> pd.DataFrame:
+    # Every poll in the experiment uses the same fixed synthetic population specification.
     population = default_population()
     rows: list[dict[str, object]] = []
+
+    # The shared grid iterator supplies both the visible experiment settings and their full-grid indices.
     for (
         epsilon,
         n_respondents,
@@ -46,7 +51,10 @@ def run_grid(quick: bool = False) -> pd.DataFrame:
         size_index,
         bias_index,
     ) in experiment_grid.iter_experiment_grid(quick=quick):
+        # The repetition seed and three grid indices jointly initialise a deterministic random generator for this grid position.
         rng = np.random.default_rng([seed, epsilon_index, size_index, bias_index])
+
+        # One synthetic poll is generated and all three estimators are scored against the known population truth.
         study = evaluate_poll(
             population,
             n_respondents,
@@ -54,6 +62,8 @@ def run_grid(quick: bool = False) -> pd.DataFrame:
             bias,
             rng,
         )
+
+        # Each poll contributes one result row for every estimator in the shared method order.
         for method in METHODS:
             rows.append(
                 {
@@ -67,10 +77,12 @@ def run_grid(quick: bool = False) -> pd.DataFrame:
                 }
             )
 
+    # The explicit column list fixes the output schema even if the row collection is empty.
     return pd.DataFrame(rows, columns=RESULT_COLUMNS)
 
 
 def summarise(results: pd.DataFrame) -> pd.DataFrame:
+    # Results are grouped by estimator and experiment setting so the repetition-level errors can be summarised.
     summary = results.groupby(
         ["method", "bias", "epsilon", "n_respondents"],
         as_index=False,
@@ -81,6 +93,8 @@ def summarise(results: pd.DataFrame) -> pd.DataFrame:
         max_abs_error_mean=("max_abs_error", "mean"),
         max_abs_error_std=("max_abs_error", "std"),
     )
+
+    # The returned table uses the declared schema and a deterministic row ordering.
     return (
         summary.loc[:, SUMMARY_COLUMNS]
         .sort_values(["method", "bias", "epsilon", "n_respondents"])
@@ -89,6 +103,7 @@ def summarise(results: pd.DataFrame) -> pd.DataFrame:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # The command-line interface supports either the full experiment or the reduced quick grid.
     parser = argparse.ArgumentParser(description="Run the FairVote-AI estimator comparison.")
     parser.add_argument(
         "--quick",
@@ -103,20 +118,28 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
+    # The output directory is created if needed before the statistical CSV files are regenerated.
     output_dir: Path = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Only the two CSV files owned by this experiment runner are removed here before new results are written.
     for stale_csv in (output_dir / "experiment_results.csv", output_dir / "summary.csv"):
         stale_csv.unlink(missing_ok=True)
 
+    # The repetition-level results are generated first and then aggregated into the summary table.
     results = run_grid(quick=args.quick)
     summary = summarise(results)
 
+    # Both CSV tables are written without DataFrame index columns.
     results_path = output_dir / "experiment_results.csv"
     summary_path = output_dir / "summary.csv"
     results.to_csv(results_path, index=False)
     summary.to_csv(summary_path, index=False)
+
+    # Plot generation receives the estimator-level results for the selected run mode and writes into the output directory's plots subdirectory.
     plot_paths = make_plots(results, output_dir / "plots")
 
+    # A concise console summary records the run mode, output locations and mean L1 error for each estimator.
     mode = "quick" if args.quick else "full"
     print(f"FairVote-AI experiment finished ({mode} mode).")
     print(f"  rows written        : {len(results)}")
@@ -131,4 +154,5 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
+    # Running this module as a script exits with the integer status returned by main.
     raise SystemExit(main())

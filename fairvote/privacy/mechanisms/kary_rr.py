@@ -12,16 +12,27 @@ IntArrayLike = Sequence[int] | np.ndarray
 
 @dataclass(frozen=True)
 class RRParams:
+    # epsilon is the privacy-budget value used to parameterise the k-ary Randomised Response mechanism.
     epsilon: float
+
+    # k is the number of possible response categories.
     k: int
+
+    # p is the probability that the mechanism reports the respondent's true category.
     p: float
+
+    # q is the probability assigned to each specific category different from the respondent's true category.
     q: float
 
 
 def rr_params(epsilon: float, k: int) -> RRParams:
     epsilon_f, k_i = _validate_epsilon_k(epsilon, k)
+
+    # Using exp(-epsilon) gives the same probabilities as the standard form while avoiding an unnecessary positive exponential.
     exp_neg = math.exp(-epsilon_f)
     denominator = 1.0 + (k_i - 1) * exp_neg
+
+    # These probabilities satisfy p plus (k - 1) times q equals one and p divided by q equals exp(epsilon).
     return RRParams(
         epsilon=epsilon_f,
         k=k_i,
@@ -32,6 +43,8 @@ def rr_params(epsilon: float, k: int) -> RRParams:
 
 def rr_transition_matrix(epsilon: float, k: int) -> np.ndarray:
     params = rr_params(epsilon, k)
+
+    # Off-diagonal entries use q and diagonal entries use p, matching the probabilities of reporting each category.
     matrix = np.full((params.k, params.k), params.q, dtype=float)
     np.fill_diagonal(matrix, params.p)
     return matrix
@@ -47,9 +60,11 @@ def privatize_one(
     _validate_category(true_category, k_i)
     params = rr_params(epsilon_f, k_i)
 
+    # The true category is reported directly with probability p.
     if rng.random() < params.p:
         return int(true_category)
 
+    # Otherwise one of the other k - 1 categories is chosen uniformly, giving each alternative probability q overall.
     drawn = int(rng.integers(0, k_i - 1))
     return drawn if drawn < int(true_category) else drawn + 1
 
@@ -72,14 +87,18 @@ def privatize_many(
     params = rr_params(epsilon_f, k_i)
     n = int(categories.size)
 
+    # Independent uniform draws decide which respondents keep their true category.
     keep_true = rng.random(n) < params.p
     reports = np.empty(n, dtype=int)
     reports[keep_true] = categories[keep_true]
 
+    # Respondents not keeping the truth are assigned uniformly among the other k - 1 categories.
     flipped = np.flatnonzero(~keep_true)
     if flipped.size:
         drawn = rng.integers(0, k_i - 1, size=flipped.size, dtype=int)
         true_values = categories[flipped]
+
+        # Values at or above the true category are shifted by one so the true category cannot be selected as an alternative.
         reports[flipped] = np.where(drawn < true_values, drawn, drawn + 1)
 
     return reports
@@ -94,6 +113,8 @@ def counts_from_reports(reported_categories: IntArrayLike, k: int) -> np.ndarray
         return np.zeros(k_i, dtype=int)
     if np.any((reports < 0) | (reports >= k_i)):
         raise ValueError(f"All reported categories must be in [0, {k_i - 1}].")
+
+    # minlength keeps zero-count categories in their fixed positions within the length-k count vector.
     return np.bincount(reports, minlength=k_i).astype(int)
 
 
@@ -118,11 +139,15 @@ def invert_rr_counts(
     if total <= 0.0:
         raise ValueError("counts must sum to more than 0 because estimation is impossible with no reports.")
 
+    # The expected reported frequency for category j is q plus (p - q) times its true population proportion.
     reported_frequencies = count_vector / total
     theta_hat = (reported_frequencies - params.q) / (params.p - params.q)
 
+    # Finite-sample noise can make the unconstrained analytical inversion fall outside the probability range.
     if clip:
         theta_hat = np.clip(theta_hat, 0.0, 1.0)
+
+    # Renormalisation makes the returned values sum to one when requested.
     if renormalize:
         mass = float(theta_hat.sum())
         theta_hat = np.full(params.k, 1.0 / params.k) if mass <= 0.0 else theta_hat / mass

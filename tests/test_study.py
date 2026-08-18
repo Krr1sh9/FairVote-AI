@@ -9,6 +9,7 @@ from fairvote.study import METHODS, evaluate_poll
 
 
 def test_evaluate_poll_integrates_all_three_estimators_and_metrics() -> None:
+    # This integration test runs one complete synthetic poll through the shared study workflow.
     population = default_population()
     result = evaluate_poll(
         population,
@@ -18,11 +19,13 @@ def test_evaluate_poll_integrates_all_three_estimators_and_metrics() -> None:
         np.random.default_rng(5),
     )
 
+    # The study result must retain the known synthetic population truth and provide outputs for every configured estimator.
     np.testing.assert_allclose(result.truth, population.true_distribution())
     assert set(result.estimates) == set(METHODS)
     assert set(result.l1_errors) == set(METHODS)
     assert set(result.max_abs_errors) == set(METHODS)
 
+    # Every estimator output must be a finite three-category probability distribution with metrics consistent with the shared metric functions.
     for method in METHODS:
         estimate = result.estimates[method]
         assert estimate.shape == (population.n_categories,)
@@ -32,6 +35,7 @@ def test_evaluate_poll_integrates_all_three_estimators_and_metrics() -> None:
         assert result.l1_errors[method] == pytest.approx(l1_error(estimate, result.truth))
         assert result.max_abs_errors[method] == pytest.approx(max_absolute_error(estimate, result.truth))
 
+    # Respondent counts and proportions must describe the full sample, while the two demographic diagnostics must remain non-negative counts or distances.
     assert result.sample_cell_counts.sum() == 1000
     assert result.sample_cell_proportions.sum() == pytest.approx(1.0)
     assert result.demographic_imbalance >= 0.0
@@ -39,6 +43,7 @@ def test_evaluate_poll_integrates_all_three_estimators_and_metrics() -> None:
 
 
 def test_evaluate_poll_is_deterministic_for_a_fixed_seed() -> None:
+    # Two independently created generators with the same seed are evaluated under identical poll settings.
     population = default_population()
 
     first = evaluate_poll(
@@ -56,6 +61,7 @@ def test_evaluate_poll_is_deterministic_for_a_fixed_seed() -> None:
         np.random.default_rng(22),
     )
 
+    # The fixed synthetic truth and the sampled demographic diagnostics must be reproduced exactly.
     np.testing.assert_array_equal(first.truth, second.truth)
     np.testing.assert_array_equal(
         first.sample_cell_counts,
@@ -66,6 +72,7 @@ def test_evaluate_poll_is_deterministic_for_a_fixed_seed() -> None:
         second.sample_cell_proportions,
     )
 
+    # Each estimator's returned distribution and both stored error metrics must also be identical across the two runs.
     for method in METHODS:
         np.testing.assert_array_equal(
             first.estimates[method],
@@ -74,5 +81,6 @@ def test_evaluate_poll_is_deterministic_for_a_fixed_seed() -> None:
         assert first.l1_errors[method] == second.l1_errors[method]
         assert first.max_abs_errors[method] == second.max_abs_errors[method]
 
+    # The remaining scalar diagnostics must match exactly for the repeated fixed-seed evaluation.
     assert first.demographic_imbalance == second.demographic_imbalance
     assert first.fallback_cells == second.fallback_cells
