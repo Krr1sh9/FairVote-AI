@@ -238,7 +238,8 @@ def main() -> None:
         st.caption(
             f"The population contains {population.n_cells} cells: "
             f"{', '.join(population.cell_labels)}. Empty cells borrow the raw whole-sample "
-            "RR correction before the final population estimate is projected."
+            "RR correction before clipping and renormalisation are applied to the "
+            "final population estimate."
         )
 
     # The method summary uses the same estimator definitions as the shared study workflow.
@@ -246,8 +247,9 @@ def main() -> None:
         st.write("Raw privatised reports are the uncorrected response frequencies.")
         st.write("Overall RR correction analytically inverts the Randomised Response channel.")
         st.write(
-            "Poststratified RR estimate computes raw cell-wise RR inversions, weights "
-            "them by known population shares, and projects only the final combined estimate."
+            "Poststratified RR estimate computes unconstrained cell-wise RR inversions, weights "
+            "them by known population shares, and applies clipping and renormalisation only to the "
+            "final combined estimate."
         )
 
 
